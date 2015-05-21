@@ -1,7 +1,7 @@
 {
-  "name": "rgi-assessment-tool",
+  "name": "mga-assessment-tool",
   "version": "0.0.0",
-  "homepage": "https://github.com/NRGI/rgi-assessment-tool",
+  "homepage": "https://github.com/NRGI/mga-assessment-tool",
   "authors": [
     "Chris Perry <byndcivilization@gmail.com>"
   ],
@@ -24,5 +24,8 @@
   },
   "moduleType": [
     "node"
-  ]
+  ],
+  "devDependencies": {
+    "lodash": "~3.9.0"
+  }
 }

@@ -1,6 +1,6 @@
 'use strict';
-var mongoose = require('mongoose');
-    // userModel = require('../models/User'),
+var mongoose = require('mongoose'),
+    userModel = require('../models/User');
     // mendelyTokenModel = require('../models/MendeleyToken'),
     // questionModel = require('../models/Question'),
     // answerModel = require('../models/Answers'),
@@ -23,7 +23,7 @@ module.exports = function (config, user, pass, env) {
     });
 
     // import data
-    // userModel.createDefaultUsers();
+    userModel.createDefaultUsers();
     // questionModel.createDefaultQuestions();
     // assessmentModel.createDefaultAssessments();
 };
