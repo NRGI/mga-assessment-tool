@@ -1,7 +1,7 @@
 'use strict';
 var angular;
 // angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'alasql', '']);
-angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'ngSanitize', 'ngCsv', 'angularFileUpload', 'ui.bootstrap']);
+angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'ngSanitize', 'ngCsv', 'angularFileUpload', 'ui.bootstrap', 'angular.filter']);
 
 angular.module('app').config(function ($routeProvider, $locationProvider) {
   // role checks
@@ -54,23 +54,18 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             templateUrl: '/partials/admin/users/user-admin-edit',
             controller:  'mgaUserAdminDetailCtrl',
             resolve: routeRoleChecks.supervisor
+        })
+        // QUESTIONS
+        .when('/admin/question-admin', {
+            templateUrl: '/partials/admin/questions/question-admin',
+            controller:  'mgaQuestionAdminCtrl',
+            resolve: routeRoleChecks.supervisor
+        })
+        .when('/admin/question-admin-edit/:id', {
+            templateUrl: '/partials/admin/questions/question-admin-edit',
+            controller:  'mgaQuestionAdminDetailCtrl',
+            resolve: routeRoleChecks.supervisor
         });
-        // // QUESTIONS
-        // .when('/admin/question-admin', {
-        //     templateUrl: '/partials/admin/questions/question-admin',
-        //     controller:  'rgiQuestionAdminCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
-        // .when('/admin/question-admin-view/:id', {
-        //     templateUrl: '/partials/admin/questions/question-admin-view',
-        //     controller:  'rgiQuestionAdminDetailCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
-        // .when('/admin/question-admin-edit/:id', {
-        //     templateUrl: '/partials/admin/questions/question-admin-edit',
-        //     controller:  'rgiQuestionAdminDetailCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
         // // ASSESSMENTS
         // .when('/admin/assessment-admin', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin',

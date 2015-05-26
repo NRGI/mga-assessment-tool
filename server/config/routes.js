@@ -3,10 +3,10 @@
 var auth = require('./auth'),
     // authMendeley = require('./authMendeley'),
     bodyParser = require('body-parser'),
-    users = require('../controllers/users');
+    users = require('../controllers/users'),
     // mendeley = require('../controllers/mendeley.js'),
     // answers = require('../controllers/answers'),
-    // questions = require('../controllers/questions'),
+    questions = require('../controllers/questions');
     // assessments = require('../controllers/assessments'),
     // documents = require('../controllers/documents'),
     // multipart = require('connect-multiparty'),
@@ -21,7 +21,7 @@ module.exports = function (app) {
     app.get('/api/users', auth.requiresApiLogin, users.getUsers);
     app.get('/api/users/:id', auth.requiresRole('supervisor'), users.getUsersByID);
     app.get('/api/user-list/:id', auth.requiresApiLogin, users.getUsersListByID);
-    
+
     // POST
     app.post('/api/users', auth.requiresRole('supervisor'), users.createUser);
 
@@ -31,21 +31,21 @@ module.exports = function (app) {
     // DELETE
     app.delete('/api/users/:id', auth.requiresRole('supervisor'), users.deleteUser);
 
-    // /////////////////////////////
-    // ///// QUESTIONS CRUD ////////
-    // /////////////////////////////
-    // // GET
-    // app.get('/api/questions', auth.requiresApiLogin, questions.getQuestions);
-    // app.get('/api/questions/:id', auth.requiresApiLogin, questions.getQuestionsByID);
+    /////////////////////////////
+    ///// QUESTIONS CRUD ////////
+    /////////////////////////////
+    // GET
+    app.get('/api/questions', auth.requiresApiLogin, questions.getQuestions);
+    app.get('/api/questions/:id', auth.requiresApiLogin, questions.getQuestionsByID);
 
-    // // POST
-    // app.post('/api/questions', auth.requiresRole('supervisor'), questions.createQuestions);
+    // POST
+    app.post('/api/questions', auth.requiresRole('supervisor'), questions.createQuestions);
 
-    // // PUT
-    // app.put('/api/questions', auth.requiresApiLogin, questions.updateQuestion);
+    // PUT
+    app.put('/api/questions', auth.requiresApiLogin, questions.updateQuestion);
 
-    // // DELETE
-    // app.delete('/api/questions/:id', auth.requiresRole('supervisor'), questions.deleteQuestion);
+    // DELETE
+    app.delete('/api/questions/:id', auth.requiresRole('supervisor'), questions.deleteQuestion);
 
     // //////////////////////////////////////
     // ///// ASSESSMENT ANSWERS CRUD ////////

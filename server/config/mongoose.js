@@ -1,8 +1,8 @@
 'use strict';
 var mongoose = require('mongoose'),
-    userModel = require('../models/User');
+    userModel = require('../models/User'),
     // mendelyTokenModel = require('../models/MendeleyToken'),
-    // questionModel = require('../models/Question'),
+    questionModel = require('../models/Question');
     // answerModel = require('../models/Answers'),
     // documentModel = require('../models/Documents'),
     // assessmentModel = require('../models/Assessment');

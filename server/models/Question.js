@@ -21,21 +21,12 @@ var commentSchema = new mongoose.Schema({
 });
 
 var questionSchema = mongoose.Schema({
+    assessment_ID: {type: String, required: '{PATH} is required'},
     question_order: {type: Number, required: '{PATH} is required'},
     question_mode: {type: String, required: '{PATH} is required'},
+    question_mode_text: {type: String, required: '{PATH} is required'},
     question_text: {type: String, required: '{PATH} is required'},
     question_data_type: {type: String, required: '{PATH} is required'},
-    year: String,
-    version: String,
-    root_question_ID: ObjectId,
-    assessment_ID: {type: String, required: '{PATH} is required'},
-    question_choices: [
-        {
-            name: String,
-            order: Number,
-            criteria: String
-        }
-    ],
     comments: [commentSchema],
     modified: [modificationSchema]
 });
