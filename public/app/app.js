@@ -1,7 +1,7 @@
 'use strict';
 var angular;
 // angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'alasql', '']);
-angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'ngSanitize', 'ngCsv', 'angularFileUpload']);
+angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'ngSanitize', 'ngCsv', 'angularFileUpload', 'ui.bootstrap']);
 
 angular.module('app').config(function ($routeProvider, $locationProvider) {
   // role checks
@@ -25,41 +25,36 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         .when('/', {
             templateUrl: '/partials/main/main',
             controller: 'mgaMainCtrl'
-        });
-        // // User Account Routes
-        // .when('/profile', {
-        //     templateUrl: '/partials/account/profile',
-        //     controller:  'rgiProfileCtrl',
-        //     resolve: routeRoleChecks.user
-        // })
+        })
+        // User Account Routes
+        .when('/profile', {
+            templateUrl: '/partials/account/profile',
+            controller:  'mgaProfileCtrl',
+            resolve: routeRoleChecks.user
+        })
 
-        // ///// Admin Routes
-        // // USERS
-        // .when('/admin/create-user', {
-        //     templateUrl: '/partials/admin/users/create-user',
-        //     controller:  'rgiCreateUserCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
-        // .when('/admin/user-admin', {
-        //     templateUrl: '/partials/admin/users/user-admin',
-        //     controller:  'rgiUserAdminCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
-        // .when('/admin/user-admin/:id', {
-        //     templateUrl: '/partials/admin/users/user-admin-update',
-        //     controller:  'rgiUserAdminUpdateCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
-        // .when('/admin/user-admin-view/:id', {
-        //     templateUrl: '/partials/admin/users/user-admin-view',
-        //     controller:  'rgiUserAdminDetailCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
-        // .when('/admin/user-admin-edit/:id', {
-        //     templateUrl: '/partials/admin/users/user-admin-edit',
-        //     controller:  'rgiUserAdminDetailCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
+        ///// Admin Routes
+        // USERS
+        .when('/admin/user-create', {
+            templateUrl: '/partials/admin/users/user-create',
+            controller:  'mgaCreateUserCtrl',
+            resolve: routeRoleChecks.supervisor
+        })
+        .when('/admin/user-admin', {
+            templateUrl: '/partials/admin/users/user-admin',
+            controller:  'mgaUserAdminCtrl',
+            resolve: routeRoleChecks.supervisor
+        })
+        .when('/admin/user-admin-view/:id', {
+            templateUrl: '/partials/admin/users/user-admin-view',
+            controller:  'mgaUserAdminDetailCtrl',
+            resolve: routeRoleChecks.supervisor
+        })
+        .when('/admin/user-admin-edit/:id', {
+            templateUrl: '/partials/admin/users/user-admin-edit',
+            controller:  'mgaUserAdminDetailCtrl',
+            resolve: routeRoleChecks.supervisor
+        });
         // // QUESTIONS
         // .when('/admin/question-admin', {
         //     templateUrl: '/partials/admin/questions/question-admin',

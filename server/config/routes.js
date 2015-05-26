@@ -2,8 +2,8 @@
 
 var auth = require('./auth'),
     // authMendeley = require('./authMendeley'),
-    bodyParser = require('body-parser');
-    // users = require('../controllers/users'),
+    bodyParser = require('body-parser'),
+    users = require('../controllers/users');
     // mendeley = require('../controllers/mendeley.js'),
     // answers = require('../controllers/answers'),
     // questions = require('../controllers/questions'),
@@ -14,22 +14,22 @@ var auth = require('./auth'),
 
 module.exports = function (app) {
 
-    // /////////////////////////
-    // ///// USERS CRUD ////////
-    // /////////////////////////
-    // // GET
-    // app.get('/api/users', auth.requiresApiLogin, users.getUsers);
-    // app.get('/api/users/:id', auth.requiresRole('supervisor'), users.getUsersByID);
-    // app.get('/api/user-list/:id', auth.requiresApiLogin, users.getUsersListByID);
+    /////////////////////////
+    ///// USERS CRUD ////////
+    /////////////////////////
+    // GET
+    app.get('/api/users', auth.requiresApiLogin, users.getUsers);
+    app.get('/api/users/:id', auth.requiresRole('supervisor'), users.getUsersByID);
+    app.get('/api/user-list/:id', auth.requiresApiLogin, users.getUsersListByID);
+    
+    // POST
+    app.post('/api/users', auth.requiresRole('supervisor'), users.createUser);
 
-    // // POST
-    // app.post('/api/users', auth.requiresRole('supervisor'), users.createUser);
+    // PUT
+    app.put('/api/users', auth.requiresApiLogin, users.updateUser);
 
-    // // PUT
-    // app.put('/api/users', auth.requiresApiLogin, users.updateUser);
-
-    // // DELETE
-    // app.delete('/api/users/:id', auth.requiresRole('supervisor'), users.deleteUser);
+    // DELETE
+    app.delete('/api/users/:id', auth.requiresRole('supervisor'), users.deleteUser);
 
     // /////////////////////////////
     // ///// QUESTIONS CRUD ////////

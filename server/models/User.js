@@ -24,7 +24,6 @@ var userSchema = mongoose.Schema({
     hashed_pwd:  {type: String, required: '{PATH} is required!'},
     /////// Do we need to deal with multiple roles here ///////////////////
     role:  {type: String, required: '{PATH} is required!',  default: 'None'},
-    /////// Rename to assessments ///////////////////
     assessments: [{
         assessment_id:  String, // ISO3 Identifier
         country_name:  String // Text name of country
