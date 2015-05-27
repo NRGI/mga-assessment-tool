@@ -7,7 +7,8 @@ var auth = require('./auth'),
     // mendeley = require('../controllers/mendeley.js'),
     // answers = require('../controllers/answers'),
     questions = require('../controllers/questions'),
-    assessments = require('../controllers/assessments');
+    assessments = require('../controllers/assessments'),
+    countries = require('../controllers/countries');
     // documents = require('../controllers/documents'),
     // multipart = require('connect-multiparty'),
     // multipartMiddleware = multipart();
@@ -74,7 +75,7 @@ module.exports = function (app) {
     app.put('/api/assessments/:assessment_ID', auth.requiresApiLogin, assessments.updateAssessment);
 
     // /////////////////////////
-    // //// DOCUMNETS  /////////
+    // //// DOCUMENTS  /////////
     // /////////////////////////
     // // GET
     // app.get('/api/documents', auth.requiresApiLogin, documents.getDocuments);
@@ -96,6 +97,9 @@ module.exports = function (app) {
     ////////////////////
     ///// OTHER ////////
     ////////////////////
+     // GET COUNTRY
+    app.get('/api/countries', countries.getCountries);
+    app.get('/api/countries/:country_ID', countries.getCountriesByID);
     app.get('/partials/*', function (req, res) {
         res.render('../../public/app/' + req.params[0]);
     });

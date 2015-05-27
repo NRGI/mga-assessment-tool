@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     // mendelyTokenModel = require('../models/MendeleyToken'),
     questionModel = require('../models/Question'),
     // answerModel = require('../models/Answers'),
+    countryModel = require('../models/Countries'),
     // documentModel = require('../models/Documents'),
     assessmentModel = require('../models/Assessment');
 
@@ -25,5 +26,6 @@ module.exports = function (config, user, pass, env) {
     // import data
     userModel.createDefaultUsers();
     // questionModel.createDefaultQuestions();
+    countryModel.createDefaultCountries();
     assessmentModel.createDefaultAssessments();
 };

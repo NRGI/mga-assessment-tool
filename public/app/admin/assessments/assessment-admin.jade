@@ -3,7 +3,7 @@
 	.well.left-padding-lg.right-padding-lg
 		legend Assessment Status Dashboard
 		.pull-left
-			.btn.btn-success(ng-click="" ng-show="identity.currentUser.isSupervisor()") Deploy Assessment
+			.btn.btn-success(ng-click="newAssessmentDialog()" ng-show="identity.currentUser.isSupervisor()") Deploy Assessment
 			//- .btn.btn-success(ng-click="newAssessmentDialog()", ng-disabled="false", tooltip="yes") Deploy Assessment
 		.pull-right
 			form.form-inline
