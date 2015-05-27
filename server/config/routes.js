@@ -6,8 +6,8 @@ var auth = require('./auth'),
     users = require('../controllers/users'),
     // mendeley = require('../controllers/mendeley.js'),
     // answers = require('../controllers/answers'),
-    questions = require('../controllers/questions');
-    // assessments = require('../controllers/assessments'),
+    questions = require('../controllers/questions'),
+    assessments = require('../controllers/assessments');
     // documents = require('../controllers/documents'),
     // multipart = require('connect-multiparty'),
     // multipartMiddleware = multipart();
@@ -64,14 +64,14 @@ module.exports = function (app) {
     // ///// ASSESSMENT OVERVIEW CRUD/////////
     // ///////////////////////////////////////
     // // GET
-    // app.get('/api/assessments', auth.requiresApiLogin, assessments.getAssessments);
-    // app.get('/api/assessments/:assessment_ID', auth.requiresApiLogin, assessments.getAssessmentsByID);
+    app.get('/api/assessments', auth.requiresApiLogin, assessments.getAssessments);
+    app.get('/api/assessments/:assessment_ID', auth.requiresApiLogin, assessments.getAssessmentsByID);
 
-    // // POST
-    // app.post('/api/assessments', auth.requiresRole('supervisor'), assessments.createAssessments);
+    // POST
+    app.post('/api/assessments', auth.requiresRole('supervisor'), assessments.createAssessment);
 
-    // // PUT
-    // app.put('/api/assessments/:assessment_ID', auth.requiresApiLogin, assessments.updateAssessment);
+    // PUT
+    app.put('/api/assessments/:assessment_ID', auth.requiresApiLogin, assessments.updateAssessment);
 
     // /////////////////////////
     // //// DOCUMNETS  /////////

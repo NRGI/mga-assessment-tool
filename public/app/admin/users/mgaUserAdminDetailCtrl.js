@@ -5,6 +5,12 @@ var angular;
 angular.module('app').controller('mgaUserAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, mgaNotifier, mgaUserSrvc, mgaUserMethodSrvc) {
 
     $scope.user = mgaUserSrvc.get({_id: $routeParams.id});
+    $scope.roleOptions = [
+        // {value: 'admin', text: 'Administrator'},
+        {value: 'supervisor', text: 'Supervisor'},
+        {value: 'researcher', text: 'Researcher'},
+        {value: 'reviewer', text: 'Reviewer'}
+    ];
 
     $scope.userUpdate = function () {
         var new_user_data = $scope.user;

@@ -2,10 +2,10 @@
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     // mendelyTokenModel = require('../models/MendeleyToken'),
-    questionModel = require('../models/Question');
+    questionModel = require('../models/Question'),
     // answerModel = require('../models/Answers'),
     // documentModel = require('../models/Documents'),
-    // assessmentModel = require('../models/Assessment');
+    assessmentModel = require('../models/Assessment');
 
 module.exports = function (config, user, pass, env) {
     // connect to mongo
@@ -25,5 +25,5 @@ module.exports = function (config, user, pass, env) {
     // import data
     userModel.createDefaultUsers();
     // questionModel.createDefaultQuestions();
-    // assessmentModel.createDefaultAssessments();
+    assessmentModel.createDefaultAssessments();
 };

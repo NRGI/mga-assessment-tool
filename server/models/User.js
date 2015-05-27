@@ -25,8 +25,9 @@ var userSchema = mongoose.Schema({
     /////// Do we need to deal with multiple roles here ///////////////////
     role:  {type: String, required: '{PATH} is required!',  default: 'None'},
     assessments: [{
-        assessment_id:  String, // ISO3 Identifier
-        country_name:  String // Text name of country
+        assessment_ID:  String,
+        country:  String, // Text name of country
+        year: String // Year of assessment
     }],
     createdBy:  ObjectId,
     creationDate:  {type:  Date, default: Date.now},
@@ -54,19 +55,102 @@ function createDefaultUsers() {
             var salt, hash;
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'jcust');
-            User.create({firstName: 'Jim', lastName: 'Cust', username: 'jcust', email: 'jcust@resourcegovernance.org', salt:  salt, hashed_pwd:  hash, role: 'supervisor',  language:  'English'});
+            User.create({
+                firstName: 'Jim',
+                lastName: 'Cust',
+                username: 'jcust',
+                email: 'jcust@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash,
+                role: 'supervisor',
+                language:  'English'
+            });
+
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'cperry');
-            User.create({firstName: 'Chris', lastName: 'Perry', username: 'cperry', email: 'cperry@resourcegovernance.org', salt:  salt, hashed_pwd:  hash, role: 'researcher', assessments: [], language:  'English'});
+            User.create({firstName: 'Chris',
+                lastName: 'Perry',
+                username: 'cperry',
+                email: 'cperry@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash, role: 'researcher',
+                language:  'English',
+                assessments: [
+                    {
+                        assessment_ID: 'TZ-2015',
+                        country:  'Tanzania',
+                        year: '2015'
+                    },
+                    {
+                        assessment_ID: 'NG-2015',
+                        country:  'Nigeria',
+                        year: '2015'
+                    }
+                ]});
+
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'apederson');
-            User.create({firstName: 'Anders', lastName: 'Pederson', username: 'apederson', email: 'apederson@resourcegovernance.org', salt:  salt, hashed_pwd:  hash, role: 'reviewer', assessments: [], language:  'English'});
+            User.create({firstName: 'Anders',
+                lastName: 'Pederson',
+                username: 'apederson',
+                email: 'apederson@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash, role: 'reviewer',
+                language:  'English',
+                assessments: [
+                    {
+                        assessment_ID: 'TZ-2015',
+                        country:  'Tanzania',
+                        year: '2015'
+                    },
+                    {
+                        assessment_ID: 'NG-2015',
+                        country:  'Nigeria',
+                        year: '2015'
+                    }
+                ]});
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'ahasermann');
-            User.create({firstName: 'Anna', lastName: 'Hasermann', username: 'ahasermann', email: 'ahasermann@resourcegovernance.org', salt:  salt, hashed_pwd:  hash, role: 'researcher', assessments: [], language:  'English'});
+            User.create({firstName: 'Anna',
+                lastName: 'Hasermann',
+                username: 'ahasermann',
+                email: 'ahasermann@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash, role: 'researcher',
+                language:  'English',
+                assessments: [
+                    {
+                        assessment_ID: 'TZ-2015',
+                        country:  'Tanzania',
+                        year: '2015'
+                    },
+                    {
+                        assessment_ID: 'NG-2015',
+                        country:  'Nigeria',
+                        year: '2015'
+                    }
+                ]});
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'dmihalyi');
-            User.create({firstName: 'David', lastName: 'Mihalyi', username: 'dmihalyi', email: 'dmihalyi@resourcegovernance.org', salt: salt, hashed_pwd:  hash, role: 'reviewer', assessments: [], language:  'English'});
+            User.create({firstName: 'David',
+                lastName: 'Mihalyi',
+                username: 'dmihalyi',
+                email: 'dmihalyi@resourcegovernance.org',
+                salt: salt,
+                hashed_pwd:  hash, role: 'reviewer',
+                language:  'English',
+                assessments: [
+                    {
+                        assessment_ID: 'TZ-2015',
+                        country:  'Tanzania',
+                        year: '2015'
+                    },
+                    {
+                        assessment_ID: 'NG-2015',
+                        country:  'Nigeria',
+                        year: '2015'
+                    }
+                ]});
         }
     });
 }

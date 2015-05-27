@@ -8,7 +8,7 @@
 					.col-md-10
 						input.form-control(name="firstName"
 							type="text"
-						    ng-model="user.firstName"
+							ng-model="user.firstName"
 							required)
 				.form-group
 					label.col-md-2.control-label(form="lastName") Last Name *
@@ -32,22 +32,24 @@
 							ng-model="user.email"
 							required)
 				.form-group
-					label.col-md-2.control-label(form="role") Role
+					label.col-md-2.control-label(form="role") Role *
 					.col-md-10
-						input.form-control(name="role"
-							type="text"
+						select.form-control(name="role"
 							ng-model="user.role"
-							readonly)
+							ng-options="item.value as item.text for item in roleOptions"
+							required)
 				.form-group
 					label.col-md-2.control-label(form="password") Password
 					.col-md-10
 						input.form-control(name="password"
+							placeholder="New password"
 							type="password"
 							ng-model="password")
 				.form-group
 					label.col-md-2.control-label(form="password") Repeat Password
 					.col-md-10
 						input.form-control(name="password"
+							placeholder="Repeat password"
 							type="password"
 							ng-model="password_rep")
 				.form-group

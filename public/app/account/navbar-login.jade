@@ -18,22 +18,16 @@
 
     //- AUTHENTICATED NAVBAR
     ul.nav.navbar-nav.navbar-right.right-padding-lg(ng-show="identity.isAuthenticated()")
-
-        //- REGULAR USER
-        ul.nav.navbar-nav(ng-hide="identity.currentUser.isSupervisor()")
-            li
-                a(href="/assessments"
-                    title="Assessment dashboard") Assessments
-        //- ADMIN USER
+        //- ASSESSMENT ADMIN
         ul.nav.navbar-nav.dropdown
-            li.dropdown(ng-show="identity.currentUser.isSupervisor()")
+            li.dropdown
                 a.dropdown-toggle(data-toggle="dropdown") Assessment Admin
                     b.caret
                 ul.dropdown-menu
                     li
                         a(href="/admin/assessment-admin") All assessments
-                    li(ng-repeat="version in versions")
-                        a(href="/admin/assessment-admin/subs/{{version.url}}") {{version.name}}
+                    li(ng-repeat="assessment_link in assessment_links")
+                        a(href="/admin/assessment-admin/subs/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
 
         //- ADMIN DROPDOWN
         ul.nav.navbar-nav.dropdown

@@ -65,13 +65,12 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             templateUrl: '/partials/admin/questions/question-admin-edit',
             controller:  'mgaQuestionAdminDetailCtrl',
             resolve: routeRoleChecks.supervisor
+        })
+        // ASSESSMENTS
+        .when('/admin/assessment-admin', {
+            templateUrl: '/partials/admin/assessments/assessment-admin',
+            controller:  'mgaAssessmentAdminCtrl'
         });
-        // // ASSESSMENTS
-        // .when('/admin/assessment-admin', {
-        //     templateUrl: '/partials/admin/assessments/assessment-admin',
-        //     controller:  'rgiAssessmentAdminCtrl',
-        //     resolve: routeRoleChecks.supervisor
-        // })
         // .when('/admin/assessment-admin/subs/:version', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin',
         //     controller:  'rgiAssessmentAdminSubsCtrl',

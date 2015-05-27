@@ -5,13 +5,16 @@ var Question = require('mongoose').model('Question');
 
 exports.getQuestions = function (req, res) {
     var query = Question.find(req.query);
+
     query.exec(function (err, collection) {
         res.send(collection);
     });
 };
 
 exports.getQuestionsByID = function (req, res) {
-    Question.findOne({_id: req.params.id}).exec(function (err, question) {
+    var query = Question.findOne({_id: req.params.id});
+
+    query.exec(function (err, question) {
         res.send(question);
     });
 };
@@ -19,6 +22,7 @@ exports.getQuestionsByID = function (req, res) {
 
 exports.getQuestionTextByID = function (req, res) {
     var query = Question.findOne({_id: req.params.id}).select({ "question_text": 1});
+
     query.exec(function (err, question) {
         res.send(question);
     });
