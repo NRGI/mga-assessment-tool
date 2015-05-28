@@ -7,9 +7,10 @@ angular.module('app').factory('mgaAnswerMethodSrvc', function ($q, mgaAnswerSrvc
         insertAnswerSet: function (new_answer_set) {
             var dfd = $q.defer(),
                 new_answers = new mgaAnswerSrvc(new_answer_set);
+
             new_answers.length = new_answer_set.length;
-            console.log(new_answers);
-            newAnswers.$save().then(function () {
+
+            new_answers.$save().then(function () {
                 dfd.resolve();
             }, function (response) {
                 dfd.reject(response.data.reason);

@@ -27,5 +27,5 @@ module.exports = function (config, user, pass, env) {
     userModel.createDefaultUsers();
     // questionModel.createDefaultQuestions();
     countryModel.createDefaultCountries();
-    assessmentModel.createDefaultAssessments();
+    //assessmentModel.createDefaultAssessments();
 };
