@@ -4,7 +4,6 @@
 		legend Assessment Status Dashboard
 		.pull-left
 			.btn.btn-success(ng-click="newAssessmentDialog()" ng-show="identity.currentUser.isSupervisor()") Deploy Assessment
-			//- .btn.btn-success(ng-click="newAssessmentDialog()", ng-disabled="false", tooltip="yes") Deploy Assessment
 		.pull-right
 			form.form-inline
 				.form-group
@@ -15,45 +14,31 @@
 		table.table.table-hover
 			thead
 				tr
-					th Country
-					th Year
-					th Status
-					th Started
-					th Last Edit
-					th.text-center Assign
-					th.text-center Review
+					th.col-med-2 Country
+					th.col-med-1 Year
+					th.col-med-1 Status
+					th.col-med-1 Started
+					th.col-med-2 Last Edit
+					th.text-center.col-med-1(ng-show="identity.currentUser.isSupervisor()") Assign
+					th.text-center.col-med-1 Start
+					//th.text-center.col-med-1 Review
 			tbody
 				tr(ng-repeat="assessment in assessments | filter: searchText | orderBy:sortOrder")
-					td(ng-if="assessment.status=='created'") {{assessment.country | ucfirst}}
-					td(ng-if="assessment.status!='created'")
+					td.col-med-2(ng-if="assessment.status=='created'") {{assessment.country | ucfirst}}
+					td.col-med-2(ng-if="assessment.status!='created'")
 						a(href="admin/assessments-admin/{{assessment.assessment_ID}}") {{assessment.country}}
-					td {{assessment.year}}
-					td {{assessment.status | ucfirst}}
-					td {{assessment.start_date.started_date | date}}
-					td(ng-if="assessment.edited_by")
+					td.col-med-1 {{assessment.year}}
+					td.col-med-1 {{assessment.status | ucfirst}}
+					td.col-med-1 {{assessment.start_date.started_date | date}}
+					td.col-med-2(ng-if="assessment.edited_by")
 						a(href="mailto:{{assessment.edited_by.email}}") {{assessment.edited_by.lastName}} 
 						text - 
 						span(ng-repeat="mod in assessment.modified")
 							em(ng-show="$last") {{mod.modified_date | date}}
-					td(ng-if="!assessment.edited_by")
-					td
-						button.btn.btn-col.btn-primary(
-							ng-click="assessmentStartReview(assessment.assessment_ID)"
-							ng-if="assessment.status === 'submitted'"
-							) Start Review
-						a.btn.btn-col.center-block.btn-primary(
-							href="/admin/assessment-review/{{assessment.assessment_ID}}"
-							ng-if="assessment.status=='under_review' || assessment.status === 'resubmitted'"
-							) Continue review
-						a.btn.btn-col.center-block.btn-primary(
-							href="/admin/assessment-review/{{assessment.assessment_ID}}"
-							ng-if="assessment.status=='approved'"
-							) Send to external
-						a.btn.center-block.btn-default.disabled(
-							href=""
-							ng-if="assessment.status==='review_researcher' || assessment.status==='review_reviewer'"
-							) Under review
-						a.btn.center-block.btn-default.disabled(
-							href=""
-							ng-if="assessment.status !=='unassigned' && assessment.status!=='submitted' && assessment.status !== 'resubmitted' && assessment.status!=='under_review' && assessment.status!=='review_researcher' && assessment.status!=='review_reviewer' && assessment.status!=='approved'"
-							) Waiting for submission
+					td.col-med-2(ng-if="!assessment.edited_by")
+
+					td.col-med-1(ng-show="identity.currentUser.isSupervisor()")
+						button.btn.btn-col.btn-primary(ng-click="assignAssessmentDialog(assessment.assessment_ID)") Assign
+					td.col-med-1
+						button.btn.btn-col.btn-success(ng-click="assessmentStart(assessment.assessment_ID)" ng-if="assessment.status === 'created'") Start
+						a.btn.btn-col.btn-success(href="admin/assessments-admin/{{assessment.assessment_ID}}" ng-if="assessment.status !== 'created'") Continue

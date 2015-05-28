@@ -1,8 +1,8 @@
 'use strict';
-var angular;
 /*jslint nomen: true unparam: true regexp: true*/
+var angular;
 
-angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaUserListSrvc, mgaAssessmentMethodSrvc) {
+angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc) {
     var assessment;
     // filtering options
     $scope.sortOptions = [
@@ -18,7 +18,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
     if ($scope.identity.currentUser.role === 'supervisor') {
         $scope.assessments = mgaAssessmentSrvc.query();
     } else {
-        $scope.identity.currentUser.assessments.forEach(function (el, i) {
+        $scope.identity.currentUser.assessments.forEach(function (el) {
             assessment = mgaAssessmentSrvc.get({assessment_ID: el.assessment_ID});
             $scope.assessments.push(assessment);
         });
@@ -29,6 +29,17 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
         ngDialog.open({
             template: 'partials/admin/assessments/new-assessment-dialog',
             controller: 'mgaNewAssessmentDialogCtrl',
+            className: 'ngdialog-theme-plain',
+            scope: $scope
+        });
+    };
+    // Deploy new assessment
+    $scope.assignAssessmentDialog = function (assessment_ID) {
+        $scope.value = true;
+        $scope.assessment_ID = assessment_ID;
+        ngDialog.open({
+            template: 'partials/admin/assessments/assign-assessment-dialog',
+            controller: 'mgaAssignAssessmentDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope
         });

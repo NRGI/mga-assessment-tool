@@ -22,7 +22,8 @@ var assessmentSchema = mongoose.Schema({
     modified: [modificationSchema],
     questions_flagged: {type: Number, default: 0},
     questions_unfinalized: {type: Number, required: '{PATH} is required'},
-    question_length: {type: Number, required: '{PATH} is required'}
+    question_length: {type: Number, required: '{PATH} is required'},
+    users: [ObjectId]
     // researcher_ID: {type: ObjectId, index: true}, // pulled from user_id
     // reviewer_ID: {type: ObjectId, index: true}, // pulled from user_id
     // edit_control: ObjectId, // user_ID of editing rights
@@ -39,13 +40,14 @@ var Assessment = mongoose.model('Assessment', assessmentSchema);
 function createDefaultAssessments() {
     Assessment.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
-            Assessment.create({assessment_ID: "TZ-2015", ISO3: "TZA", year: "2015", country: "Tanzania", questions_unfinalized: 41, question_length: 41});
+            Assessment.create({assessment_ID: "TZ-2015", ISO3: "TZA", year: "2015", country: "Tanzania", questions_unfinalized: 41, question_length: 41, users:["5564fd88952bb683837112ca","5564fd88952bb683837112d3"]});
             Assessment.create({assessment_ID: "NG-2015", ISO3: "NGA", year: "2015", country: "Nigeria", questions_unfinalized: 41, question_length: 41});
             Assessment.create({assessment_ID: "MM-2015", ISO3: "MMR", year: "2015", country: "Myanmar", questions_unfinalized: 41, question_length: 41});
             Assessment.create({assessment_ID: "AO-2015", ISO3: "AGO", year: "2015", country: "Angola", questions_unfinalized: 41, question_length: 41});
             Assessment.create({assessment_ID: "RU-2015", ISO3: "RUS", year: "2015", country: "Russian Federation", questions_unfinalized: 41, question_length: 41});
             Assessment.create({assessment_ID: "MX-2015", ISO3: "MEX", year: "2015", country: "Mexico", questions_unfinalized: 41, question_length: 41});
             // Assessment.create({assessment_ID: "EG-2015", ISO3: "EGY", year: "2015", country: "Egypt, Arab Rep.", questions_unfinalized: 41, question_length: 41});
+            // Assessment.create({assessment_ID: "IR-2015", ISO3: "IRN", year: "2015", country: "Iran, Islamic Rep.", questions_unfinalized: 41, question_length: 41});
             // Assessment.create({assessment_ID: "IR-2015", ISO3: "IRN", year: "2015", country: "Iran, Islamic Rep.", questions_unfinalized: 41, question_length: 41});
             // Assessment.create({assessment_ID: "DZ-2015", ISO3: "DZA", year: "2015", country: "Algeria", questions_unfinalized: 41, question_length: 41});
             // Assessment.create({assessment_ID: "IQ-2015", ISO3: "IRQ", year: "2015", country: "Iraq", questions_unfinalized: 41, question_length: 41});

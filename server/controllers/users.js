@@ -8,7 +8,7 @@ var User = require('mongoose').model('User'),
     // client.send(template, options, done);
 
 
-exports.getUsers = function (req, res) {
+exports.getUsers = function (req, res, next) {
     var query;
     if (req.user.hasRole('supervisor')) {
         query = User.find(req.query);
@@ -16,8 +16,10 @@ exports.getUsers = function (req, res) {
         query = User.find(req.query).select({ "firstName": 1, "lastName": 1});
     }
 
-    query.exec(function (err, collection) {
-        res.send(collection);
+    query.exec(function (err, users, next) {
+        if (err) { return next(err); }
+        if (!users) { return next(new Error('No users found')); }
+        res.send(users);
     });
 };
 
@@ -25,6 +27,8 @@ exports.getUsersByID = function (req, res) {
     var query = User.findOne({_id: req.params.id});
 
     query.exec(function (err, user) {
+        if (err) { return next(err); }
+        if (!user) { return next(new Error('No user found')); }
         res.send(user);
     });
 };
@@ -146,7 +150,7 @@ exports.updateUser = function (req, res) {
 };
 
 exports.deleteUser = function (req, res) {
-    var query = User.remove({_id: req.params.id})
+    var query = User.remove({_id: req.params.id});
 
     query.exec(function (err) {
         if (!err) {

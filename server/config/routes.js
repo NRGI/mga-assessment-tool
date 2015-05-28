@@ -5,7 +5,7 @@ var auth = require('./auth'),
     bodyParser = require('body-parser'),
     users = require('../controllers/users'),
     // mendeley = require('../controllers/mendeley.js'),
-    // answers = require('../controllers/answers'),
+    answers = require('../controllers/answers'),
     questions = require('../controllers/questions'),
     assessments = require('../controllers/assessments'),
     countries = require('../controllers/countries');
@@ -48,18 +48,18 @@ module.exports = function (app) {
     // DELETE
     app.delete('/api/questions/:id', auth.requiresRole('supervisor'), questions.deleteQuestion);
 
-    // //////////////////////////////////////
-    // ///// ASSESSMENT ANSWERS CRUD ////////
-    // //////////////////////////////////////
-    // // GET
-    // app.get('/api/answers', auth.requiresApiLogin, answers.getAnswers);
-    // app.get('/api/answers/:answer_ID', auth.requiresApiLogin, answers.getAnswersByID);
+     //////////////////////////////////////
+     ///// ASSESSMENT ANSWERS CRUD ////////
+     //////////////////////////////////////
+     // GET
+     app.get('/api/answers', auth.requiresApiLogin, answers.getAnswers);
+     app.get('/api/answers/:answer_ID', auth.requiresApiLogin, answers.getAnswersByID);
 
-    // // POST
-    // app.post('/api/answers', auth.requiresApiLogin, answers.createAnswers);
+     // POST
+     app.post('/api/answers', auth.requiresApiLogin, answers.createAnswers);
 
-    // // PUT
-    // app.put('/api/answers/:answer_ID', auth.requiresApiLogin, answers.updateAnswer);
+     // PUT
+     app.put('/api/answers/:answer_ID', auth.requiresApiLogin, answers.updateAnswer);
 
     // ///////////////////////////////////////
     // ///// ASSESSMENT OVERVIEW CRUD/////////

@@ -5,24 +5,28 @@ var Assessment = require('mongoose').model('Assessment'),
     User = require('mongoose').model('User'),
     mandrill = require('node-mandrill')(process.env.MANDRILL_APIKEY);
 
-exports.getAssessments = function (req, res) {
+exports.getAssessments = function (req, res, next) {
     var query = Assessment.find(req.query);
 
-    query.exec(function (err, collection) {
-        res.send(collection);
+    query.exec(function (err, assessments) {
+        if (err) { return next(err); }
+        if (!assessments) { return next(new Error('No answers found')); }
+        res.send(assessments);
     });
 };
 
 
-exports.getAssessmentsByID = function (req, res) {
+exports.getAssessmentsByID = function (req, res, next) {
     var query = Assessment.findOne({assessment_ID: req.params.assessment_ID});
 
     query.exec(function (err, assessment) {
+        if (err) { return next(err); }
+        if (!assessment) { return next(new Error('No assessment found')); }
         res.send(assessment);
     });
 };
 
-exports.createAssessment = function (req, res, next) {
+exports.createAssessment = function (req, res) {
     var new_assessments, i;
 
     new_assessments = req.body;
@@ -39,12 +43,12 @@ exports.createAssessment = function (req, res, next) {
 };
 
 exports.updateAssessment = function (req, res) {
-    var assessmentUpdates = req.body,
+    var assessment_updates = req.body,
         timestamp = new Date().toISOString(),
-        edit_control_id = assessmentUpdates.edit_control,
-        researcher_id = assessmentUpdates.researcher_ID,
-        reviewer_id = assessmentUpdates.reviewer_ID,
-        assessment_title = assessmentUpdates.country + " " + assessmentUpdates.year + " " + assessmentUpdates.version,
+        //edit_control_id = assessment_updates.edit_control,
+        //researcher_id = assessment_updates.researcher_ID,
+        //reviewer_id = assessment_updates.reviewer_ID,
+        assessment_title = assessment_updates.country + " " + assessment_updates.year + " " + assessment_updates.version,
         admin_email,
         admin_name;
 
@@ -53,7 +57,7 @@ exports.updateAssessment = function (req, res) {
         admin_email = req.user.email;
     }
 
-    if (String(req.user._id) !== String(assessmentUpdates.researcher_ID) && String(req.user._id) !== String(assessmentUpdates.reviewer_ID) && !req.user.hasRole('supervisor')) {
+    if (String(req.user._id) !== String(assessment_updates.researcher_ID) && String(req.user._id) !== String(assessment_updates.reviewer_ID) && !req.user.hasRole('supervisor')) {
         res.sendStatus(404);
         return res.end();
     }
@@ -77,48 +81,48 @@ exports.updateAssessment = function (req, res) {
                     editor_role = user_editor.role,
                     editor_email = user_editor.email;
 
-                Assessment.findOne({_id: assessmentUpdates._id}).exec(function (err, assessment) {
+                Assessment.findOne({_id: assessment_updates._id}).exec(function (err, assessment) {
                     if (err) {
                         res.sendStatus(400);
                         return res.send({ reason: err.toString() });
                     }
                     if (!(assessment.hasOwnProperty('researcher_ID'))) {
-                        assessment.researcher_ID = assessmentUpdates.researcher_ID;
+                        assessment.researcher_ID = assessment_updates.researcher_ID;
                     }
                     if (!(assessment.hasOwnProperty('reviewer_ID'))) {
-                        assessment.reviewer_ID = assessmentUpdates.reviewer_ID;
+                        assessment.reviewer_ID = assessment_updates.reviewer_ID;
                     }
                     if (!(assessment.hasOwnProperty('assignment'))) {
                         assessment.assignment = {assigned_by: req.user._id, assigned_date: timestamp};
                     }
 
-                    if (assessmentUpdates.hasOwnProperty('start_date')) {
+                    if (assessment_updates.hasOwnProperty('start_date')) {
                         if (!(assessment.hasOwnProperty('start_date'))) {
-                            assessment.start_date = {started_by: assessmentUpdates.start_date.started_by, started_date: timestamp};
+                            assessment.start_date = {started_by: assessment_updates.start_date.started_by, started_date: timestamp};
                         }
                     }
-                    if (assessmentUpdates.hasOwnProperty('submit_date')) {
+                    if (assessment_updates.hasOwnProperty('submit_date')) {
                         if (!(assessment.hasOwnProperty('submit_date'))) {
-                            assessment.submit_date = {submited_by: assessmentUpdates.submit_date.submited_by, submited_date: timestamp};
+                            assessment.submit_date = {submited_by: assessment_updates.submit_date.submited_by, submited_date: timestamp};
                         }
                     }
-                    if (assessmentUpdates.hasOwnProperty('review_date')) {
+                    if (assessment_updates.hasOwnProperty('review_date')) {
                         if (!(assessment.hasOwnProperty('review_date'))) {
-                            assessment.review_date = {reviewed_by: assessmentUpdates.review_date.reviewed_by, reviewed_date: timestamp};
+                            assessment.review_date = {reviewed_by: assessment_updates.review_date.reviewed_by, reviewed_date: timestamp};
                         }
                     }
-                    if (assessmentUpdates.hasOwnProperty('approval')) {
+                    if (assessment_updates.hasOwnProperty('approval')) {
                         if (!(assessment.hasOwnProperty('approval'))) {
-                            assessment.approval = {approved_by: assessmentUpdates.approval.approved_by, approved_date: timestamp};
+                            assessment.approval = {approved_by: assessment_updates.approval.approved_by, approved_date: timestamp};
                         }
                     }
 
-                    assessment.questions_complete = assessmentUpdates.questions_complete;
-                    assessment.questions_flagged = assessmentUpdates.questions_flagged;
-                    assessment.questions_resubmitted = assessmentUpdates.questions_resubmitted;
-                    assessment.questions_unfinalized = assessmentUpdates.questions_unfinalized;
-                    assessment.edit_control = assessmentUpdates.edit_control;
-                    assessment.status = assessmentUpdates.status;
+                    assessment.questions_complete = assessment_updates.questions_complete;
+                    assessment.questions_flagged = assessment_updates.questions_flagged;
+                    assessment.questions_resubmitted = assessment_updates.questions_resubmitted;
+                    assessment.questions_unfinalized = assessment_updates.questions_unfinalized;
+                    assessment.edit_control = assessment_updates.edit_control;
+                    assessment.status = assessment_updates.status;
 
                     if (assessment.modified) {
                         assessment.modified.push({modified_by: req.user._id, modified_date: timestamp});
@@ -136,7 +140,7 @@ exports.updateAssessment = function (req, res) {
                 // MAIL OPTIONS
                 ///////////////////////////////
                 // assignment flow
-                switch (assessmentUpdates.status) {
+                switch (assessment_updates.status) {
 
                 case 'assigned':
                     console.log('assigned email');

@@ -3,18 +3,22 @@
 
 var Question = require('mongoose').model('Question');
 
-exports.getQuestions = function (req, res) {
+exports.getQuestions = function (req, res, next) {
     var query = Question.find(req.query);
 
-    query.exec(function (err, collection) {
-        res.send(collection);
+    query.exec(function (err, questions) {
+        if (err) { return next(err); }
+        if (!questions) { return next(new Error('No questions found')); }
+        res.send(questions);
     });
 };
 
-exports.getQuestionsByID = function (req, res) {
+exports.getQuestionsByID = function (req, res, next) {
     var query = Question.findOne({_id: req.params.id});
 
     query.exec(function (err, question) {
+        if (err) { return next(err); }
+        if (!question) { return next(new Error('No question found')); }
         res.send(question);
     });
 };

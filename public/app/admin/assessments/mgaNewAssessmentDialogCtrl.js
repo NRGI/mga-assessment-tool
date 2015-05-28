@@ -1,8 +1,16 @@
 'use strict';
-var angular;
 /*jslint unparam: true nomen: true*/
+var angular;
 
-angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $location, mgaNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaQuestionMethodSrvc, mgaUserListSrvc) {
+angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $location, mgaNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
+
+    function zeroFill(number, width) {
+        width -= number.toString().length;
+        if (width > 0) {
+            return new Array( width + (/\./.test(number) ? 2 : 1) ).join('0') + number;
+        }
+        return number + ""; // always return a string
+    }
 
     $scope.new_assessment = {
         year: "",
@@ -24,56 +32,66 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
         ngDialog.close();
     };
     $scope.assessmentDeploy = function () {
-        var newAssessmentData = [],
-            newQuestionData = [];
+        var new_assessment_data = [],
+            new_answer_data = [],
+            timestamp = new Date().toISOString();
 
-        rgiQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
-
-            $scope.new_assessment.assessment_countries.forEach(function (el, i) {
-                newAssessmentData.push({
-                    assessment_ID: el.country.iso2 + "-" + String($scope.new_assessment.year) + "-" + $scope.new_assessment.version.slice(0, 2).toUpperCase(),
-                    ISO3: el.country.iso3,
-                    year: $scope.new_assessment.year,
-                    version: $scope.new_assessment.version,
-                    country: el.country.country,
-                    questions_unfinalized: data.length,
-                    question_length: data.length
-                });
+        mgaQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
+            new_assessment_data.push({
+                assessment_ID: $scope.new_assessment.assessment_country.iso2 + '-' + String($scope.new_assessment.year),
+                ISO3: $scope.new_assessment.assessment_country.country_ID,
+                country: $scope.new_assessment.assessment_country.country,
+                year: $scope.new_assessment.year,
+                status: 'created',
+                questions_flagged: 0,
+                questions_unfinalized: data.length,
+                question_length: data.length,
+                modified: [{
+                    modifiedBy: $scope.$parent.identity.currentUser._id,
+                    modifiedDate: timestamp
+                }],
+                create_date: {
+                    createded_by: $scope.$parent.identity.currentUser._id,
+                    date: timestamp
+                }
             });
 
-            data.forEach(function (el, i) {
-                newQuestionData.push({
+            data.forEach(function (el) {
+                new_answer_data.push({
                     root_question_ID: el._id,
+                    answer_ID: $scope.new_assessment.assessment_country.iso2 + '-' + String($scope.new_assessment.year) + '-' + String(zeroFill(el.question_order, 3)),
                     year: String($scope.new_assessment.year),
-                    version: $scope.new_assessment.version,
-                    assessment_ID: String($scope.new_assessment.year) + "-" + $scope.new_assessment.version.slice(0, 2).toUpperCase(),
-                    component: el.component,
-                    component_text: el.component_text,
-                    indicator_name: el.indicator_name,
-                    nrc_precept: el.nrc_precept,
-                    old_reference: el.old_reference,
-                    question_order: el.question_order,
-                    question_choices: [],
+                    assessment_ID: $scope.new_assessment.assessment_country.iso2 + '-' + String($scope.new_assessment.year),
+                    status: 'created',
                     question_text: el.question_text,
-                    section_name: el.section_name,
-                    sub_indicator_name: el.sub_indicator_name
+                    question_mode: el.question_mode,
+                    question_data_type: el.question_data_type,
+                    question_order: el.question_order,
+                    answer_text: "",
+                    answer_options: [],
+                    modified: [{
+                        modifiedBy: $scope.$parent.identity.currentUser._id,
+                        modifiedDate: timestamp
+                    }]
                 });
-
-                el.question_choices.forEach(function (q_el, j) {
-                    newQuestionData[newQuestionData.length - 1].question_choices.push({'criteria': q_el.criteria, 'name': q_el.name, 'order': q_el.order});
-                });
+                if (el.question_data_type === "score") {
+                    new_answer_data[new_answer_data.length - 1]['answer_options'].push({option_order: 1, option_text: 'Yes', value: 4});
+                    new_answer_data[new_answer_data.length - 1]['answer_options'].push({option_order: 2, option_text: 'Partial', value: 2.5});
+                    new_answer_data[new_answer_data.length - 1]['answer_options'].push({option_order: 3, option_text: 'No', value: 1});
+                    new_answer_data[new_answer_data.length - 1]['answer_options'].push({option_order: 4, option_text: 'N/A', value: 0});
+                }
             });
-
-            // send to mongo
-            rgiAssessmentMethodSrvc.createAssessment(newAssessmentData)
-                .then(rgiQuestionMethodSrvc.insertQuestionSet(newQuestionData))
+            //send to mongo
+            mgaAssessmentMethodSrvc.createAssessment(new_assessment_data)
+                .then(mgaAnswerMethodSrvc.insertAnswerSet(new_answer_data))
                 .then(function () {
-                    rgiNotifier.notify('Assessment deployed!');
+                    mgaNotifier.notify('Assessment deployed!');
                     $scope.closeThisDialog();
                     $location.path('/admin/assessment-admin');
                 }, function (reason) {
-                    rgiNotifier.error(reason);
+                    mgaNotifier.error(reason);
                 });
+
         });
     };
 });
