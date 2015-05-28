@@ -63,59 +63,6 @@ exports.createAnswers = function (req, res, next) {
     res.send();
 };
 
-//exports.createAnswers = function (req, res, next) {
-//    var new_answers, i, j;
-//    new_answers = req.body;
-//    //answer_ID: {type: String, required: '{PATH} is required', index: true}, // combination assessment_ID + question_order in Question Model with 2 leading 0's
-//    //year: String,
-//    //    question_order: {type: Number, required: '{PATH} is required'}, // generated from the order_ID of Question Model
-//    //question_text: String,
-//    //    question_mode: {type: String, required: '{PATH} is required'},
-//    //question_data_type: {type: String, required: '{PATH} is required'},
-//    //root_question_ID: {type: ObjectId, required: '{PATH} is required', index: true}, // generated from _id value of Question Model
-//    //status: {type: String, default: 'created'}, // saved, submitted, flagged, reviewed, approved
-//    //flags: [commentSchema],
-//    //    answer_score: Number,
-//    //    answer_text: String,
-//    //    score_history: [scoreHistorySchema],
-//    //    comments: [commentSchema],
-//    //    references: {
-//    //    citation: [citationSchema],
-//    //        web: [webSchema],
-//    //        human: [humanSchema]
-//    //},
-//    //modified: [modificationSchema],
-//
-//    //"_id" : ObjectId("5565ebefeefbfe21c302226b"),
-//    //    "question_text" : "Who has the title to minerals in the ground?",
-//    //    "question_mode_text" : "desk research",
-//    //    "assessment_ID" : "base",
-//    //    "question_data_type" : "text",
-//    //    "question_order" : 1,
-//    //    "question_mode" : "desk_research"
-//
-//
-//
-//    //Question.find({}).exec(function (err, questions) {
-//    //    for (i = questions.length - 1; i >= 0; i -= 1) {
-//    //
-//    //        for (j = new_answers.length - 1; j >= 0; j -= 1) {
-//    //
-//    //            if (questions[i]._id == new_answers[j].question_ID) {
-//    //                new_answers[j].question_text = questions[i].question_text;
-//    //                //Answer.create(new_answers[j], function (err, answer) {
-//    //                //    if (err) {
-//    //                //        res.status(400);
-//    //                //        return res.send({reason: err.toString()});
-//    //                //    }
-//    //                //});
-//    //            }
-//    //        }
-//    //    }
-//    //});
-//    res.send();
-//};
-
 exports.updateAnswer = function (req, res) {
     var answer_update = req.body,
         timestamp = new Date().toISOString();
@@ -130,7 +77,7 @@ exports.updateAnswer = function (req, res) {
         answer.comments = answer_update.comments;
         answer.refereces = answer_update.refereces;
         answer.flags = answer_update.flags;
-        answer.questions_flagged = answer.questions_flagged;
+        answer.questions_flagged = answer_update.questions_flagged;
         answer.references = answer_update.references;
         if (answer.modified) {
             answer.modified.push({modifiedBy: req.user._id, modifiedDate: timestamp});

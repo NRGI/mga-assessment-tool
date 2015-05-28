@@ -47,8 +47,8 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                 questions_unfinalized: data.length,
                 question_length: data.length,
                 modified: [{
-                    modifiedBy: $scope.$parent.identity.currentUser._id,
-                    modifiedDate: timestamp
+                    modified_by: $scope.$parent.identity.currentUser._id,
+                    modified_date: timestamp
                 }],
                 create_date: {
                     createded_by: $scope.$parent.identity.currentUser._id,
@@ -86,6 +86,8 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                 .then(mgaAnswerMethodSrvc.insertAnswerSet(new_answer_data))
                 .then(function () {
                     mgaNotifier.notify('Assessment deployed!');
+                    new_assessment_data = undefined;
+                    new_answer_data = undefined;
                     $scope.closeThisDialog();
                     $location.path('/admin/assessment-admin');
                 }, function (reason) {

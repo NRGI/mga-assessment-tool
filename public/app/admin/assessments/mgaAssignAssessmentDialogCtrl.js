@@ -42,12 +42,13 @@ angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($sco
                 .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                 .then(function () {
                     mgaNotifier.notify('Assessment assigned!');
+                    new_assessment_data = undefined;
+                    new_user_data = undefined;
                     $scope.closeThisDialog();
                     $location.path('/admin/assessment-admin');
                 }, function (reason) {
                     mgaNotifier.error(reason);
                 });
-
         });
     };
 });

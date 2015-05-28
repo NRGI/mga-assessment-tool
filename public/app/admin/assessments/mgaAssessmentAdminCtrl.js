@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 var angular;
 
-angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaUserListSrvc) {
     var assessment;
     // filtering options
     $scope.sortOptions = [
@@ -16,11 +16,63 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
     $scope.identity = mgaIdentitySrvc;
     $scope.assessments = [];
     if ($scope.identity.currentUser.role === 'supervisor') {
-        $scope.assessments = mgaAssessmentSrvc.query();
+        mgaAssessmentSrvc.query(function (data) {
+            data.forEach(function (el) {
+                assessment = {
+                    assessment_ID: el.assessment_ID,
+                    country: el.country,
+                    start_date: el.start_date,
+                    year: el.year,
+                    status: el.status,
+                    ISO3: el.ISO3,
+                    question_length: el.question_length,
+                    questions_flagged: el.questions_flagged,
+                    questions_unfinalized: el.questions_unfinalized,
+                    users: []
+                };
+                if (el.modified[0] !== undefined) {
+                    assessment.modified = el.modified;
+                    assessment.edited_by = mgaUserListSrvc.get({_id: el.modified[el.modified.length - 1].modified_by});
+                }
+
+                if(el.users[0] !== undefined) {
+                    el.users.forEach(function (element) {
+                        var insert_user = mgaUserListSrvc.get({_id: element});
+                        assessment.users.push(insert_user);
+                    });
+                }
+
+                $scope.assessments.push(assessment);
+            });
+        });
     } else {
         $scope.identity.currentUser.assessments.forEach(function (el) {
-            assessment = mgaAssessmentSrvc.get({assessment_ID: el.assessment_ID});
-            $scope.assessments.push(assessment);
+            mgaAssessmentSrvc.get({assessment_ID: el.assessment_ID}, function (data) {
+                assessment = {
+                    assessment_ID: data.assessment_ID,
+                    country: data.country,
+                    start_date: data.start_date,
+                    year: data.year,
+                    status: data.status,
+                    ISO3: data.ISO3,
+                    question_length: data.question_length,
+                    questions_flagged: data.questions_flagged,
+                    questions_unfinalized: data.questions_unfinalized,
+                    users: []
+                };
+                if (data.modified[0] !== undefined) {
+                    assessment.modified = data.modified;
+                    assessment.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
+                }
+
+                if(data.users[0] !== undefined) {
+                    data.users.forEach(function (element) {
+                        var insert_user = mgaUserListSrvc.get({_id: element});
+                        assessment.users.push(insert_user);
+                    });
+                }
+                $scope.assessments.push(assessment);
+            });
         });
     }
     // Deploy new assessment

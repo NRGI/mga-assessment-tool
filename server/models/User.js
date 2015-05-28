@@ -75,18 +75,8 @@ function createDefaultUsers() {
                 salt:  salt,
                 hashed_pwd:  hash, role: 'researcher',
                 language:  'English',
-                assessments: [
-                    {
-                        assessment_ID: 'TZ-2015',
-                        country:  'Tanzania',
-                        year: '2015'
-                    },
-                    {
-                        assessment_ID: 'NG-2015',
-                        country:  'Nigeria',
-                        year: '2015'
-                    }
-                ]});
+                assessments: []
+            });
 
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'apederson');
@@ -97,18 +87,8 @@ function createDefaultUsers() {
                 salt:  salt,
                 hashed_pwd:  hash, role: 'reviewer',
                 language:  'English',
-                assessments: [
-                    {
-                        assessment_ID: 'TZ-2015',
-                        country:  'Tanzania',
-                        year: '2015'
-                    },
-                    {
-                        assessment_ID: 'NG-2015',
-                        country:  'Nigeria',
-                        year: '2015'
-                    }
-                ]});
+                assessments: []
+            });
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'ahasermann');
             User.create({firstName: 'Anna',
@@ -118,18 +98,8 @@ function createDefaultUsers() {
                 salt:  salt,
                 hashed_pwd:  hash, role: 'researcher',
                 language:  'English',
-                assessments: [
-                    {
-                        assessment_ID: 'TZ-2015',
-                        country:  'Tanzania',
-                        year: '2015'
-                    },
-                    {
-                        assessment_ID: 'NG-2015',
-                        country:  'Nigeria',
-                        year: '2015'
-                    }
-                ]});
+                assessments: []
+            });
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'dmihalyi');
             User.create({firstName: 'David',
@@ -139,18 +109,8 @@ function createDefaultUsers() {
                 salt: salt,
                 hashed_pwd:  hash, role: 'reviewer',
                 language:  'English',
-                assessments: [
-                    {
-                        assessment_ID: 'TZ-2015',
-                        country:  'Tanzania',
-                        year: '2015'
-                    },
-                    {
-                        assessment_ID: 'NG-2015',
-                        country:  'Nigeria',
-                        year: '2015'
-                    }
-                ]});
+                assessments: []
+            });
         }
     });
 }

@@ -30,7 +30,6 @@ angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, mgaUserS
         },
         updateUser: function (new_user_data) {
             var dfd = $q.defer();
-            console.log(new_user_data);
             
             new_user_data.$update().then(function () {
                 dfd.resolve();
