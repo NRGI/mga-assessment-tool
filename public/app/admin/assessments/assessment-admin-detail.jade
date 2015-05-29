@@ -14,11 +14,6 @@
 			.row
 				text Status: {{assessment.status | ucfirst}}
 			.row
-				text {{assessment.status | ucfirst}} by
-				a(href="mailto:{{assessment.assigned_by.email}}") {{assessment.assigned_by.firstName}} {{assessment.assigned_by.lastName}} 
-				text on 
-				em {{assessment.assignment.assigned_date | date}}
-			.row
 				text Last edited by 
 				a(href="mailto:{{assessment.edited_by.email}}")  {{assessment.edited_by.firstName}}  {{assessment.edited_by.lastName}} 
 				text on 
