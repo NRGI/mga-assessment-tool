@@ -76,6 +76,8 @@ var answerOptionSchema = new mongoose.Schema({
 
 var answerSchema = mongoose.Schema({
     answer_ID: {type: String, required: '{PATH} is required', index: true}, // combination assessment_ID + question_order in Question Model with 2 leading 0's
+    assessment_ID: {type: String, required: '{PATH} is required', index: true},
+    country: {type: String, required: '{PATH} is required', index: true},
     year: String,
     question_order: {type: Number, required: '{PATH} is required'}, // generated from the order_ID of Question Model
     question_text: String,

@@ -70,6 +70,10 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         .when('/admin/assessment-admin', {
             templateUrl: '/partials/admin/assessments/assessment-admin',
             controller:  'mgaAssessmentAdminCtrl'
+        })
+        .when('/admin/assessments-admin/:assessment_ID', {
+            templateUrl: '/partials/admin/assessments/assessment-admin-detail',
+            controller:  'mgaAssessmentAdminDetailCtrl'
         });
         // .when('/admin/assessment-admin/subs/:version', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin',
@@ -80,11 +84,6 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         //     templateUrl: '/partials/admin/assessments/assessment-admin-assign',
         //     controller:  'rgiAssessmentAdminAssignCtrl',
         //     resolve: routeRoleChecks.supervisor
-        // })
-        // .when('/admin/assessments-admin/:assessment_ID', {
-        //     templateUrl: '/partials/admin/assessments/assessment-admin-detail',
-        //     controller:  'rgiAssessmentAdminDetailCtrl',
-        //     resolve: routeRoleChecks.user
         // })
         // .when('/admin/assessment-review/:assessment_ID', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin-review',
