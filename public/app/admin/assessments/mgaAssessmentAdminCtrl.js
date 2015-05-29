@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 var angular;
 
-angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaUserListSrvc) {
+angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaAnswerSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc) {
     var assessment;
     // filtering options
     $scope.sortOptions = [
@@ -75,6 +75,43 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
             });
         });
     }
+
+    $scope.assessmentStart = function (assessment_ID) {
+        var timestamp = new Date().toISOString(),
+            question_desk_research_length;
+
+        mgaAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
+            new_assessment_data.start_date = {started_by: $scope.identity.currentUser._id, date: timestamp};
+            new_assessment_data.status = 'desk_research';
+            new_assessment_data.question_desk_research_length = 0;
+            new_assessment_data.question_interview_length = 0;
+            new_assessment_data.question_secondary_sources_length = 0;
+            mgaAnswerSrvc.query({assessment_ID: assessment_ID}, function (data) {
+                data.forEach(function (el) {
+                    switch(el.question_mode) {
+                        case 'desk_research':
+                            new_assessment_data.question_desk_research_length += 1;
+                            break;
+                        case 'interview':
+                            new_assessment_data.question_interview_length += 1;
+                            break;
+                        case 'secondary_sources':
+                            new_assessment_data.question_secondary_sources_length += 1;
+                            break;
+                        default:
+                            console.log('question mode' + el.question_mode + ' does not exist')
+                    }
+                });
+
+                mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
+                    $location.path('/admin/assessment-admin/answer/' + assessment_ID + '-001');
+                    mgaNotifier.notify('Assessment review started!');
+                }, function (reason) {
+                    mgaNotifier.error(reason);
+                });
+            });
+        });
+    };
     // Deploy new assessment
     $scope.newAssessmentDialog = function () {
         $scope.value = true;
@@ -96,23 +133,4 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
             scope: $scope
         });
     };
-    //$scope.assessmentStartReview = function (assessment_ID) {
-    //
-    //    mgaAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
-    //        new_assessment_data.status = 'under_review';
-    //        mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
-    //            $location.path('/admin/assessment-review/answer-review-edit/' + assessment_ID + '-001');
-    //            mgaNotifier.notify('Assessment review started!');
-    //        }, function (reason) {
-    //            mgaNotifier.error(reason);
-    //        });
-    //    });
-    //};
 });
-
-// // Angular capitilaize filter
-// angular.module('app').filter('capitalize', function () {
-//     return function (input) {
-//         return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function (txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); }) :  '';
-//     };
-// });

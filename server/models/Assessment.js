@@ -16,13 +16,16 @@ var assessmentSchema = mongoose.Schema({
     ISO3: {type: String, required: '{PATH} is required'}, // ISO3 of country
     country: {type: String, required: '{PATH} is required'}, // String of country name
     year: {type: String, required: '{PATH} is required'},
-    status: {type: String, required: '{PATH} is required', default: 'created'}, // unassigned, assigned, started, submitted, review, reassigned, approved
+    status: {type: String, required: '{PATH} is required', default: 'created'}, // created, desk_research, interviews, review, approved
     create_date: {createded_by: ObjectId, date: Date},
     start_date: {started_by: ObjectId, date: Date},
     modified: [modificationSchema],
     questions_flagged: {type: Number, default: 0},
     questions_unfinalized: {type: Number, required: '{PATH} is required'},
     question_length: {type: Number, required: '{PATH} is required'},
+    question_desk_research_length: Number,
+    question_interview_length: Number,
+    question_secondary_sources_length: Number,
     users: [ObjectId]
     // researcher_ID: {type: ObjectId, index: true}, // pulled from user_id
     // reviewer_ID: {type: ObjectId, index: true}, // pulled from user_id

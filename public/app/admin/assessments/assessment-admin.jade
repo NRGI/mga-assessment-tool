@@ -24,16 +24,14 @@
 					th.col-med-1
 			tbody
 				tr(ng-repeat="assessment in assessments | filter: searchText | orderBy:sortOrder")
-					td.col-med-2(ng-if="assessment.status=='created'") {{assessment.country | ucfirst}}
-					td.col-med-2(ng-if="assessment.status!='created'")
-						a(href="admin/assessments-admin/{{assessment.assessment_ID}}") {{assessment.country}}
+					td.col-med-2 {{assessment.country | ucfirst}}
 					td.col-med-1 {{assessment.year}}
 					td.col-med-3
 						.row(ng-repeat="user in assessment.users")
 							a(href="mailto:{{user.email}}") {{user.firstName}} {{user.lastName}}
 							text - {{user.role}}
-					td.col-med-1 {{assessment.status | ucfirst}}
-					td.col-med-1 {{assessment.start_date.started_date | date}}
+					td.col-med-1 {{assessment.status | addSpaces | ucfirst}}
+					td.col-med-1 {{assessment.start_date.date | date}}
 					td.col-med-2(ng-if="assessment.edited_by")
 						a(href="mailto:{{assessment.edited_by.email}}") {{assessment.edited_by.lastName}}
 						text - 
@@ -42,6 +40,8 @@
 					td.col-med-2(ng-if="!assessment.edited_by")
 
 					td.col-med-1(ng-show="identity.currentUser.isSupervisor()")
-						button.btn.btn-col.btn-primary(ng-click="assignAssessmentDialog(assessment.assessment_ID)") Assign
-					td.col-med-1
-						a.btn.btn-col.btn-success(href="admin/assessments-admin/{{assessment.assessment_ID}}") Continue
+						button.btn.btn-col.btn-default(ng-click="assignAssessmentDialog(assessment.assessment_ID)") Assign
+					td.col-med-1(ng-if="assessment.status!=='created'")
+						a.btn.btn-col.btn-primary(href="admin/assessments-admin/{{assessment.assessment_ID}}") Continue
+					td.col-med-1(ng-if="assessment.status==='created'")
+						button.btn.btn-col.btn-success(ng-click="assessmentStart(assessment.assessment_ID)") Start

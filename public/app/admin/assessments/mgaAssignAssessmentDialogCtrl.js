@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 var angular;
 
-angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($scope, $location, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserSrvc, mgaUserMethodSrvc) {
+angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserSrvc, mgaUserMethodSrvc) {
     mgaUserSrvc.query({}, function (data) {
         $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: $scope.$parent.assessment_ID});
         $scope.users = [];

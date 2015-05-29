@@ -74,6 +74,10 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         .when('/admin/assessments-admin/:assessment_ID', {
             templateUrl: '/partials/admin/assessments/assessment-admin-detail',
             controller:  'mgaAssessmentAdminDetailCtrl'
+        })
+        .when('/admin/assessments-admin/answer/:answer_ID', {
+            templateUrl: '/partials/admin/assessments/answer-page-edit',
+            controller:  'mgaAnswerCtrl'
         });
         // .when('/admin/assessment-admin/subs/:version', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin',
