@@ -21,6 +21,7 @@ var assessmentSchema = mongoose.Schema({
     start_date: {started_by: ObjectId, date: Date},
     modified: [modificationSchema],
     questions_flagged: {type: Number, default: 0},
+    questions_complete: {type: Number, default: 0},
     questions_unfinalized: {type: Number, required: '{PATH} is required'},
     question_length: {type: Number, required: '{PATH} is required'},
     question_desk_research_length: Number,
@@ -34,7 +35,6 @@ var assessmentSchema = mongoose.Schema({
     // submit_date: {submitted_by: ObjectId, date: Date},
     // review_date: {reviewed_by: ObjectId, date: Date},
     // approval: {approved_by: ObjectId, date: Date},
-    // questions_complete: {type: Number, default: 0},
     // questions_resubmitted: {type: Number, default: 0}
 });
 

@@ -42,11 +42,11 @@ exports.createAssessment = function (req, res) {
     res.send();
 };
 
-exports.updateAssessment = function (req, res) {
+exports.updateAssessment = function (req, res, next) {
     var assessment_updates = req.body,
         timestamp = new Date().toISOString();
 
-    if (String(req.user._id) !== String(assessment_updates.researcher_ID) && String(req.user._id) !== String(assessment_updates.reviewer_ID) && !req.user.hasRole('supervisor')) {
+    if (assessment_updates.users.indexOf(String(req.user._id)) < 0 && !req.user.hasRole('supervisor')) {
         res.sendStatus(404);
         return res.end();
     }

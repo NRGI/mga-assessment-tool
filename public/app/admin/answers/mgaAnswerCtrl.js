@@ -10,8 +10,29 @@ function zeroFill(number, width) {
     return number + ""; // always return a string
 }
 
-angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, ngDialog, mgaAnswerSrvc, mgaAssessmentSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, FileUploader, ngDialog, mgaNotifier, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
     $scope.identity = mgaIdentitySrvc;
+
+    mgaAnswerSrvc.get({answer_ID: $routeParams.answer_ID, assessment_ID: $routeParams.answer_ID.substring(0, 2)}, function (data) {
+        $scope.answer = data;
+        $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: data.assessment_ID});
+        $scope.question = mgaQuestionSrvc.get({_id: data.root_question_ID});
+        $scope.current_user = mgaIdentitySrvc.currentUser;
+        $scope.answer_start = angular.copy($scope.answer);
+
+        var citations = [];
+
+        data.references.citation.forEach(function (el, i) {
+            //mgaDocumentSrvc.get({_id: el.document_ID}, function (doc) {
+            //    console.log(doc);
+            //    doc.comment = el.comment;
+            //    citations.push(doc);
+            //});
+        });
+        $scope.citations = citations;
+
+    });
+
 
     $scope.ref_type = [
         {text: 'Add Document', value: 'document'},
@@ -41,61 +62,79 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
         {value: 'film', text: 'Film'},
         {value: 'bill', text: 'Bill'}
     ];
-    mgaAnswerSrvc.get({answer_ID: $routeParams.answer_ID, assessment_ID: $routeParams.answer_ID.substring(0, 2)}, function (data) {
-        $scope.answer = data;
-        $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: data.assessment_ID});
-        $scope.question = mgaQuestionSrvc.get({_id: data.root_question_ID});
+
+    $scope.answerClear = function () {
+        $scope.answer = angular.copy($scope.answer_start);
+    };
+
+    $scope.answerSave = function () {
+        var new_answer_data = $scope.answer;
+
+        if (new_answer_data.status === 'created') {
+            new_answer_data.status = 'saved';
+        }
+        mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
+            mgaNotifier.notify('Answer saved');
+        }, function (reason) {
+            mgaNotifier.notify(reason);
+        });
+    };
+
+    $scope.answerSubmit = function () {
+        var new_answer_data = $scope.answer,
+            new_assessment_data = $scope.assessment;
+
+        if (new_answer_data.status !== 'submitted') {
+            new_answer_data.status = 'submitted';
+            new_assessment_data.questions_complete += 1;
+        }
+
+        mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+            .then(rgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+            .then(function () {
+                if (new_assessment_data.questions_complete !== new_assessment_data.question_length && new_answer_data.question_order !== new_assessment_data.question_length) {
+                    $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" +String(zeroFill((new_answer_data.question_order + 1), 3)));
+                } else {
+                    $location.path('/assessments/' + new_answer_data.assessment_ID);
+                }
+                rgiNotifier.notify('Answer submitted');
+            }, function (reason) {
+                rgiNotifier.notify(reason);
+            });
+    };
+
+    var uploader = $scope.uploader = new FileUploader({
+        isHTML5: true,
+        withCredentials: true,
+        url: 'file-upload'
     });
+    uploader.filters.push({
+        name: 'customFilter',
+        fn: function (item /*{File|FileLikeObject}*/, options) {
+            return this.queue.length < 1;
+        }
+    });
+    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+        $scope.new_document = response;
+        if ($scope.new_document.status === 'created') {
+            $scope.new_document.authors = [{first_name: "", last_name: ""}];
+            $scope.new_document.editors = [{first_name: "", last_name: ""}];
+        }
+        $scope.uploader.queue = [];
+    };
+
+
 });
 
 //angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, ngDialog, mgaAnswerSrvc, mgaIdentitySrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaAnswerMethodSrvc, mgaNotifier, $location) {
 ////angular.module('app').controller('mgaAnswerCtrl', function (FileUploader, mgaDocumentSrvc, mgaDocumentMethodSrvc, ) {
 
 
-////
-//        // var assessment_ID = $routeParams.answer_ID.substring(0,2);
-//        mgaAnswerSrvc.get({answer_ID: $routeParams.answer_ID, assessment_ID: $routeParams.answer_ID.substring(0, 2)}, function (data) {
-//
-//
-//
-//            $scope.current_user = mgaIdentitySrvc.currentUser;
-//            $scope.answer_start = angular.copy($scope.answer);
-//            $scope.answer_start = angular.copy($scope.answer);
-//
-//            var citations = [];
-//
-//            data.references.citation.forEach(function (el, i) {
-//                //mgaDocumentSrvc.get({_id: el.document_ID}, function (doc) {
-//                //    console.log(doc);
-//                //    doc.comment = el.comment;
-//                //    citations.push(doc);
-//                //});
-//            });
-//            $scope.citations = citations;
-//
-//        });
+
 ////
 ////        var question = mgaAnswerSrvc.get({answer_ID: $routeParams.answer_ID});
 ////
-////        var uploader = $scope.uploader = new FileUploader({
-////            isHTML5: true,
-////            withCredentials: true,
-////            url: 'file-upload'
-////        });
-////        uploader.filters.push({
-////            name: 'customFilter',
-////            fn: function (item /*{File|FileLikeObject}*/, options) {
-////                return this.queue.length < 1;
-////            }
-////        });
-////        uploader.onCompleteItem = function (fileItem, response, status, headers) {
-////            $scope.new_document = response;
-////            if ($scope.new_document.status === 'created') {
-////                $scope.new_document.authors = [{first_name: "", last_name: ""}];
-////                $scope.new_document.editors = [{first_name: "", last_name: ""}];
-////            }
-////            $scope.uploader.queue = [];
-////        };
+
 ////
 ////        $scope.flagCheck = function (flags) {
 ////            var disabled = false;
@@ -109,49 +148,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
 ////            return disabled;
 ////        };
 ////
-////        $scope.answerClear = function () {
-////            $scope.answer = angular.copy($scope.answer_start);
-////        };
-////
-////        $scope.answerSave = function () {
-////            var new_answer_data = $scope.answer;
-////
-////            if (new_answer_data.status === 'assigned') {
-////                new_answer_data.status = 'saved';
-////            }
-////
-////            mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
-////                rgiNotifier.notify('Answer saved');
-////            }, function (reason) {
-////                rgiNotifier.notify(reason);
-////            });
-////        };
-////
-////        $scope.answerSubmit = function () {
-////            var new_answer_data, new_assessment_data;
-////
-////            new_answer_data = $scope.answer;
-////            new_assessment_data = $scope.assessment;
-////
-////            if (new_answer_data.status !== 'submitted') {
-////                new_answer_data.status = 'submitted';
-////                new_assessment_data.questions_complete += 1;
-////            }
-////
-////            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-////                .then(rgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-////                .then(function () {
-////                    if (new_answer_data.question_order !== 4) {
-////                        $location.path('/assessments/assessment-edit/' + new_answer_data.assessment_ID + "-" +String(zeroFill((new_answer_data.question_order + 1), 3)));
-////                    } else {
-////                        $location.path('/assessments/' + new_answer_data.assessment_ID);
-////                    }
-////                    // $location.path();
-////                    rgiNotifier.notify('Answer submitted');
-////                }, function (reason) {
-////                    rgiNotifier.notify(reason);
-////                });
-////        };
+
 ////
 ////        $scope.answerResubmit = function () {
 ////            var new_answer_data, new_assessment_data;

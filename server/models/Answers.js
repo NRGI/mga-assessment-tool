@@ -64,7 +64,11 @@ var humanSchema = new mongoose.Schema({
 var scoreHistorySchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     order: Number,
-    score: Number,
+    score: {
+        option_order: Number,
+        option_text: String,
+        value: Number
+    },
     text: String
 });
 
@@ -86,7 +90,12 @@ var answerSchema = mongoose.Schema({
     root_question_ID: {type: ObjectId, required: '{PATH} is required', index: true}, // generated from _id value of Question Model
     status: {type: String, default: 'created'}, // created, saved, submitted, flagged, reviewed, approved
     flags: [commentSchema],
-    answer_score: Number,
+    answer_score: {
+        option_order: Number,
+        option_text: String,
+        value: Number,
+        _id: ObjectId
+    },
     answer_text: String,
     answer_options:[answerOptionSchema],
     score_history: [scoreHistorySchema],
@@ -100,3 +109,4 @@ var answerSchema = mongoose.Schema({
 });
 
 var Answer = mongoose.model('Answer', answerSchema);
+

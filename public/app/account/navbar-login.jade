@@ -27,7 +27,7 @@
                     li
                         a(href="/admin/assessment-admin") All assessments
                     li(ng-repeat="assessment_link in assessment_links")
-                        a(href="/admin/assessment-admin/subs/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
+                        a(href="/admin/assessments-admin/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
 
         //- ADMIN DROPDOWN
         ul.nav.navbar-nav.dropdown

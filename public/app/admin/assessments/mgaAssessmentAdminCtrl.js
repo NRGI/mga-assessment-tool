@@ -77,8 +77,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
     }
 
     $scope.assessmentStart = function (assessment_ID) {
-        var timestamp = new Date().toISOString(),
-            question_desk_research_length;
+        var timestamp = new Date().toISOString();
 
         mgaAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
             new_assessment_data.start_date = {started_by: $scope.identity.currentUser._id, date: timestamp};
@@ -104,7 +103,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
                 });
 
                 mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
-                    $location.path('/admin/assessment-admin/answer/' + assessment_ID + '-001');
+                    $location.path('/admin/assessments-admin/answer/' + assessment_ID + '-001');
                     mgaNotifier.notify('Assessment review started!');
                 }, function (reason) {
                     mgaNotifier.error(reason);

@@ -37,13 +37,14 @@ exports.getAnswers = function (req, res, next) {
 exports.getAnswersByID = function (req, res, next) {
     var query = Answer.findOne({answer_ID: req.params.answer_ID});
 
-    query.exec(function (err, answer) {
-        if (err) { return next(err); }
+    query.exec(function (err, answer, next) {
         if (!answer) { return next(new Error('No answer found')); }
-        if (String(req.user._id) !== String(answer.researcher_ID) && String(req.user._id) !== String(answer.reviewer_ID) && !req.user.hasRole('supervisor')) {
-            res.sendStatus(404);
-            return res.end();
-        }
+        Assessment.findOne({assessment_ID: answer.assessment_ID}, function (err, assessment) {
+            if (assessment.users.indexOf(String(req.user._id)) < 0 && !req.user.hasRole('supervisor')) {
+                res.sendStatus(404);
+                return res.end();
+            }
+        });
         res.send(answer);
     });
 };
@@ -65,46 +66,48 @@ exports.createAnswers = function (req, res, next) {
 
 exports.updateAnswer = function (req, res) {
     var answer_update = req.body,
-        timestamp = new Date().toISOString();
+        timestamp = new Date().toISOString(),
+        answer_history_update = {};
 
-    if (String(req.user._id) !== String(answer_update.researcher_ID) && String(req.user._id) !== String(answer_update.reviewer_ID) && !req.user.hasRole('supervisor')) {
-        res.sendStatus(404);
-        return res.end();
-    }
+    Assessment.findOne({assessment_ID: answer_update.assessment_ID}, function (err, assessment) {
+        if (assessment.users.indexOf(String(req.user._id)) < 0 && !req.user.hasRole('supervisor')) {
+            res.sendStatus(404);
+            return res.end();
+        }
 
-    Answer.findOne({answer_ID: answer_update.answer_ID}, function (err, answer) {
-        answer.status = answer_update.status;
-        answer.comments = answer_update.comments;
-        answer.refereces = answer_update.refereces;
-        answer.flags = answer_update.flags;
-        answer.questions_flagged = answer_update.questions_flagged;
-        answer.references = answer_update.references;
-        if (answer.modified) {
+        Answer.findOne({answer_ID: answer_update.answer_ID}, function (err, answer) {
+            answer.status = answer_update.status;
+            answer.comments = answer_update.comments;
+            answer.refereces = answer_update.refereces;
+            answer.flags = answer_update.flags;
+            answer.questions_flagged = answer_update.questions_flagged;
+            answer.references = answer_update.references;
             answer.modified.push({modifiedBy: req.user._id, modifiedDate: timestamp});
-        } else {
-            answer.modified = {modifiedBy: req.user._id, modifiedDate: timestamp};
-        }
 
-        if (answer_update.hasOwnProperty('researcher_score')) {
-            answer.researcher_score_history.push({date: timestamp, order: answer.researcher_score_history.length + 1, score: answer.researcher_score});
-            answer.researcher_score = answer_update.researcher_score;
-            answer.researcher_justification = answer_update.researcher_justification;
-        }
-        if (answer_update.hasOwnProperty('reviewer_score')) {
-            answer.reviewer_score_history.push({date: timestamp, order: answer.reviewer_score_history.length + 1, score: answer.reviewer_score});
-            answer.reviewer_score = answer_update.reviewer_score;
-            answer.reviewer_justification = answer_update.reviewer_justification;
-        }
-        if (answer_update.hasOwnProperty('final_score')) {
-            answer.final_score = answer_update.final_score;
-            answer.final_role = answer_update.final_role;
-            answer.final_justification = answer_update.final_justification;
-        }
-
-        answer.save(function (err) {
-            if (err) {
-                res.send({ reason: err.toString() });
+            if (answer_update.hasOwnProperty('answer_score') && answer_update.hasOwnProperty('answer_text')) {
+                answer_history_update.date = timestamp;
+                answer_history_update.order = answer_update.score_history.length + 1;
             }
+
+            if (answer_update.hasOwnProperty('answer_score')) {
+                answer.answer_score = answer_update.answer_score;
+                answer_history_update.score = answer_update.answer_score;
+            }
+
+            if (answer_update.hasOwnProperty('answer_text')) {
+                answer.answer_text = answer_update.answer_text;
+                answer_history_update.text = answer_update.answer_text;
+            }
+
+            if (answer_history_update.hasOwnProperty('date')) {
+                answer.score_history.push(answer_history_update);
+            }
+
+            answer.save(function (err) {
+                if (err) {
+                    res.send({ reason: err.toString() });
+                }
+            });
         });
     });
     res.send();

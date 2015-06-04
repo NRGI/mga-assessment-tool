@@ -75,8 +75,9 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             templateUrl: '/partials/admin/assessments/assessment-admin-detail',
             controller:  'mgaAssessmentAdminDetailCtrl'
         })
+        // ANSWERS
         .when('/admin/assessments-admin/answer/:answer_ID', {
-            templateUrl: '/partials/admin/assessments/answer-page-edit',
+            templateUrl: '/partials/admin/answers/answer-page-edit',
             controller:  'mgaAnswerCtrl'
         });
         // .when('/admin/assessment-admin/subs/:version', {
@@ -133,7 +134,6 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // });
 
 });
-
 angular.module('app').run(function ($rootScope, $location) {
     $rootScope.$on('$routeChangeError', function (evt, current, previous, rejection) {
         if (rejection === 'not authorized') {
