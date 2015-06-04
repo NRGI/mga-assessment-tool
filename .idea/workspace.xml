@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4b6ea34b-b8c9-4c90-88f6-6a9d3b0405ee" name="Default" comment="document upload started">
+    <list default="true" id="4b6ea34b-b8c9-4c90-88f6-6a9d3b0405ee" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/admin/answers/answer-page-edit.jade" afterPath="$PROJECT_DIR$/public/app/admin/answers/answer-page-edit.jade" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/app.js" afterPath="$PROJECT_DIR$/public/app/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/admin/assessments/assessment-admin-detail.html" afterPath="$PROJECT_DIR$/public/app/admin/assessments/assessment-admin-detail.html" />
