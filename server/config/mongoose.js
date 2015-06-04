@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     questionModel = require('../models/Question'),
     answerModel = require('../models/Answers'),
     countryModel = require('../models/Countries'),
-    // documentModel = require('../models/Documents'),
+    documentModel = require('../models/Documents'),
     assessmentModel = require('../models/Assessment');
 
 module.exports = function (config, user, pass, env) {

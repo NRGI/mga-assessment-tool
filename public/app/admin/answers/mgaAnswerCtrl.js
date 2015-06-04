@@ -10,8 +10,10 @@ function zeroFill(number, width) {
     return number + ""; // always return a string
 }
 
-angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, FileUploader, ngDialog, mgaNotifier, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, $location, FileUploader, ngDialog, mgaNotifier, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
     $scope.identity = mgaIdentitySrvc;
+    $scope.birthDate = '2013-07-23';
+    $scope.dateOptions = {};
 
     mgaAnswerSrvc.get({answer_ID: $routeParams.answer_ID, assessment_ID: $routeParams.answer_ID.substring(0, 2)}, function (data) {
         $scope.answer = data;
@@ -63,6 +65,58 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
         {value: 'bill', text: 'Bill'}
     ];
 
+    //$scope.flagCheck = function (flags) {
+    //    var disabled = false;
+    //    if (flags.length !== 0) {
+    //        flags.forEach(function (el, i) {
+    //            if (el.addressed === false) {
+    //                disabled = true;
+    //            }
+    //        });
+    //    }
+    //    return disabled;
+    //};
+    //
+    //$scope.answerFlag = function (current_user) {
+    //    var new_answer_data = $scope.answer,
+    //        new_assessment_data = $scope.assessment,
+    //        new_flag_data = {
+    //            content: $scope.answer.new_flag,
+    //            author_name: current_user.firstName + ' ' + current_user.lastName,
+    //            author: current_user._id,
+    //            role: current_user.role,
+    //            date: new Date().toISOString(),
+    //            addressed: false
+    //        };
+    //    new_answer_data.flags.push(new_flag_data);
+    //
+    //    if (new_answer_data.status === 'submitted') {
+    //        new_answer_data.status = 'flagged';
+    //        new_assessment_data.questions_complete += 1;
+    //        new_assessment_data.questions_flagged += 1;
+    //    } else if (new_answer_data.status === 'resubmitted') {
+    //        new_answer_data.status = 'flagged';
+    //
+    //    } else if (new_answer_data.status === 'approved') {
+    //        new_answer_data.status = 'flagged';
+    //        new_assessment_data.questions_flagged += 1;
+    //    }
+    //
+    //    mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+    //        .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+    //        .then(function () {
+    //            if (new_answer_data.question_order !== 4 || new_assessment_data.status === 'resubmitted') {
+    //                $location.path('admin/assessment-review/answer-review-edit/' + new_answer_data.assessment_ID + "-" +String(zeroFill((new_answer_data.question_order + 1), 3)));
+    //            } else {
+    //                $location.path('/admin/assessment-review/' + new_answer_data.assessment_ID);
+    //            }
+    //            // $location.path();
+    //            mgaNotifier.notify('Answer flagged');
+    //        }, function (reason) {
+    //            mgaNotifier.notify(reason);
+    //        });
+    //};
+
     $scope.answerClear = function () {
         $scope.answer = angular.copy($scope.answer_start);
     };
@@ -90,17 +144,116 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
         }
 
         mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-            .then(rgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+            .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
                 if (new_assessment_data.questions_complete !== new_assessment_data.question_length && new_answer_data.question_order !== new_assessment_data.question_length) {
                     $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" +String(zeroFill((new_answer_data.question_order + 1), 3)));
                 } else {
                     $location.path('/assessments/' + new_answer_data.assessment_ID);
                 }
-                rgiNotifier.notify('Answer submitted');
+                mgaNotifier.notify('Answer submitted');
             }, function (reason) {
-                rgiNotifier.notify(reason);
+                mgaNotifier.notify(reason);
             });
+    };
+
+    $scope.commentSubmit = function (current_user) {
+        var new_comment_data = {
+                content: $scope.answer.new_comment,
+                author_name: current_user.firstName + ' ' + current_user.lastName,
+                author: current_user._id,
+                role: current_user.role,
+                date: new Date().toISOString()
+            },
+            new_answer_data = $scope.answer;
+
+        new_answer_data.comments.push(new_comment_data);
+
+        if (new_answer_data.status === 'assigned') {
+            new_answer_data.status = 'saved';
+        }
+
+        mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
+            mgaNotifier.notify('Comment added');
+            $scope.answer.new_comment = undefined;
+        }, function (reason) {
+            mgaNotifier.notify(reason);
+        });
+    };
+
+    $scope.humanRefSubmit = function (current_user) {
+        var new_answer_data = $scope.answer,
+
+            new_ref_data = {
+                first_name: $scope.answer.human_ref_first_name,
+                last_name: $scope.answer.human_ref_last_name,
+                phone: $scope.answer.human_ref_phone,
+                email: $scope.answer.human_ref_email,
+                contact_date: new Date().toISOString(),
+                comment: {
+                    date: new Date().toISOString(),
+                    author: current_user._id,
+                    author_name: current_user.firstName + ' ' + current_user.lastName,
+                    role: current_user.role
+                }
+            };
+        console.log(new_ref_data);
+        if ($scope.answer.human_ref_comment !== undefined) {
+            new_ref_data.comment.content = $scope.answer.human_ref_comment;
+        }
+        new_answer_data.references.human.push(new_ref_data);
+
+
+        mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
+            mgaNotifier.notify('reference added');
+            $scope.answer.human_ref_first_name = "";
+            $scope.answer.human_ref_last_name = "";
+            $scope.answer.human_ref_phone = "";
+            $scope.answer.human_ref_email = "";
+            $scope.answer.human_ref_contact_date = "";
+            $scope.answer.human_ref_comment = "";
+            $scope.ref_selection = "";
+        }, function (reason) {
+            mgaNotifier.notify(reason);
+        });
+    };
+
+    $scope.webRefSubmit = function (current_user) {
+        var new_answer_data = $scope.answer,
+            new_ref_data,
+            new_url;
+        if ($scope.answer.web_ref_url.indexOf('http://') > -1 || $scope.answer.web_ref_url.indexOf('https://') > -1) {
+            new_url = $scope.answer.web_ref_url;
+        } else {
+            new_url = 'https://' + $scope.answer.web_ref_url;
+        }
+
+        new_ref_data = {
+            title: $scope.answer.web_ref_title,
+            URL: new_url,
+            comment: {
+                date: new Date().toISOString(),
+                author: current_user._id,
+                author_name: current_user.firstName + ' ' + current_user.lastName,
+                role: current_user.role
+            }
+        };
+
+        if ($scope.answer.web_ref_comment !== undefined) {
+            new_ref_data.comment.content = $scope.answer.web_ref_comment;
+        }
+        new_answer_data.references.web.push(new_ref_data);
+
+        mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
+            mgaNotifier.notify('reference added');
+            $scope.ref_selection = "";
+            $scope.answer.web_ref_title = "";
+            $scope.answer.web_ref_url = "";
+            $scope.answer.web_ref_comment = "";
+            $scope.answer.web_ref_comment = "";
+        }, function (reason) {
+            mgaNotifier.notify(reason);
+        });
     };
 
     var uploader = $scope.uploader = new FileUploader({
@@ -123,6 +276,92 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
         $scope.uploader.queue = [];
     };
 
+    //$scope.documentRefSubmit = function (new_document) {
+    //    var assessment_ID = $scope.assessment.assessment_ID,
+    //        question_ID = $scope.question._id,
+    //        answer_ID = $scope.answer.answer_ID,
+    //        current_user_ID = $scope.current_user._id,
+    //        current_user_name = $scope.current_user.firstName + ' ' + $scope.current_user.lastName,
+    //        current_user_role = $scope.current_user.role,
+    //        new_answer_data = $scope.answer,
+    //        new_doc_data = new mgaDocumentSrvc(new_document),
+    //        new_ref_data = {
+    //            document_ID: new_document._id,
+    //            // mendeley_ID
+    //            file_hash: new_document.file_hash,
+    //            comment: {
+    //                date: new Date().toISOString(),
+    //                author: current_user_ID,
+    //                author_name: current_user_name,
+    //                role: current_user_role
+    //            }
+    //        };
+    //
+    //    if (new_doc_data.status === 'created') {
+    //        new_doc_data.status = 'submitted';
+    //    }
+    //
+    //    if (new_doc_data.assessments !== undefined) {
+    //        new_doc_data.assessments.push(assessment_ID);
+    //    } else {
+    //        new_doc_data.assessments = [assessment_ID];
+    //    }
+    //
+    //    if (new_doc_data.questions !== undefined) {
+    //        new_doc_data.questions.push(question_ID);
+    //    } else {
+    //        new_doc_data.questions = [question_ID];
+    //    }
+    //
+    //    if (new_doc_data.answers !== undefined) {
+    //        new_doc_data.answers.push(answer_ID);
+    //    } else {
+    //        new_doc_data.answers = [answer_ID];
+    //    }
+    //
+    //    if (new_doc_data.users !== undefined) {
+    //        new_doc_data.users.push(current_user_ID);
+    //    } else {
+    //        new_doc_data.users = [current_user_ID];
+    //    }
+    //
+    //    console.log(new_ref_data);
+    //    if ($scope.answer.new_ref_comment !== undefined) {
+    //        new_ref_data.comment.content = $scope.answer.new_ref_comment;
+    //    }
+    //
+    //    new_answer_data.references.citation.push(new_ref_data);
+    //    new_ref_data = {};
+    //
+    //    mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+    //        .then(mgaDocumentMethodSrvc.updateDocument(new_doc_data))
+    //        .then(function () {
+    //            mgaNotifier.notify('reference added');
+    //            $scope.ref_selection = "";
+    //            $scope.new_document.title = "";
+    //            $scope.new_document.type = "";
+    //            $scope.new_document.authors = "";
+    //            $scope.new_document.editors = "";
+    //            $scope.new_document.source = "";
+    //            $scope.new_document.year = "";
+    //            $scope.new_document.pages = "";
+    //            $scope.new_document.volume = "";
+    //            $scope.new_document.issue = "";
+    //            $scope.new_document.publisher = "";
+    //            $scope.new_document.city = "";
+    //            $scope.new_document.edition = "";
+    //            $scope.new_document.institution = "";
+    //            $scope.new_document.series = "";
+    //            $scope.new_document.chapter = "";
+    //            $scope.new_document.country = "";
+    //            $scope.new_document.translators = "";
+    //            $scope.new_document.series_editor = "";
+    //            $scope.answer.new_ref_comment = "";
+    //        }, function (reason) {
+    //            mgaNotifier.notify(reason);
+    //        });
+    //};
+
 
 });
 
@@ -135,21 +374,6 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
 ////        var question = mgaAnswerSrvc.get({answer_ID: $routeParams.answer_ID});
 ////
 
-////
-////        $scope.flagCheck = function (flags) {
-////            var disabled = false;
-////            if (flags.length !== 0) {
-////                flags.forEach(function (el, i) {
-////                    if (el.addressed === false) {
-////                        disabled = true;
-////                    }
-////                });
-////            }
-////            return disabled;
-////        };
-////
-
-////
 ////        $scope.answerResubmit = function () {
 ////            var new_answer_data, new_assessment_data;
 ////
@@ -200,224 +424,9 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
 ////                });
 ////        };
 ////
-////        $scope.answerFlag = function (current_user) {
-////            var new_answer_data = $scope.answer,
-////                new_assessment_data = $scope.assessment,
-////                new_flag_data = {
-////                    content: $scope.answer.new_flag,
-////                    author_name: current_user.firstName + ' ' + current_user.lastName,
-////                    author: current_user._id,
-////                    role: current_user.role,
-////                    date: new Date().toISOString(),
-////                    addressed: false
-////                };
-////            new_answer_data.flags.push(new_flag_data);
-////
-////            if (new_answer_data.status === 'submitted') {
-////                new_answer_data.status = 'flagged';
-////                new_assessment_data.questions_complete += 1;
-////                new_assessment_data.questions_flagged += 1;
-////            } else if (new_answer_data.status === 'resubmitted') {
-////                new_answer_data.status = 'flagged';
-////
-////            } else if (new_answer_data.status === 'approved') {
-////                new_answer_data.status = 'flagged';
-////                new_assessment_data.questions_flagged += 1;
-////            }
-////
-////            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-////                .then(rgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-////                .then(function () {
-////                    if (new_answer_data.question_order !== 4 || new_assessment_data.status === 'resubmitted') {
-////                        $location.path('admin/assessment-review/answer-review-edit/' + new_answer_data.assessment_ID + "-" +String(zeroFill((new_answer_data.question_order + 1), 3)));
-////                    } else {
-////                        $location.path('/admin/assessment-review/' + new_answer_data.assessment_ID);
-////                    }
-////                    // $location.path();
-////                    rgiNotifier.notify('Answer flagged');
-////                }, function (reason) {
-////                    rgiNotifier.notify(reason);
-////                });
-////        };
-////
-////        $scope.commentSubmit = function (current_user) {
-////            var new_comment_data = {
-////                    content: $scope.answer.new_comment,
-////                    author_name: current_user.firstName + ' ' + current_user.lastName,
-////                    author: current_user._id,
-////                    role: current_user.role,
-////                    date: new Date().toISOString()
-////                },
-////                new_answer_data = $scope.answer;
-////
-////            new_answer_data.comments.push(new_comment_data);
-////
-////            if (new_answer_data.status === 'assigned') {
-////                new_answer_data.status = 'saved';
-////            }
-////
-////            mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
-////                rgiNotifier.notify('Comment added');
-////                $scope.answer.new_comment = undefined;
-////            }, function (reason) {
-////                rgiNotifier.notify(reason);
-////            });
-////        };
-////
-////        $scope.documentRefSubmit = function (new_document) {
-////            var assessment_ID = $scope.assessment.assessment_ID,
-////                question_ID = $scope.question._id,
-////                answer_ID = $scope.answer.answer_ID,
-////                current_user_ID = $scope.current_user._id,
-////                current_user_name = $scope.current_user.firstName + ' ' + $scope.current_user.lastName,
-////                current_user_role = $scope.current_user.role,
-////                new_answer_data = $scope.answer,
-////                new_doc_data = new mgaDocumentSrvc(new_document),
-////                new_ref_data = {
-////                    document_ID: new_document._id,
-////                    // mendeley_ID
-////                    file_hash: new_document.file_hash,
-////                    comment: {
-////                        date: new Date().toISOString(),
-////                        author: current_user_ID,
-////                        author_name: current_user_name,
-////                        role: current_user_role
-////                    }
-////                };
-////
-////            if (new_doc_data.status === 'created') {
-////                new_doc_data.status = 'submitted';
-////            }
-////
-////            if (new_doc_data.assessments !== undefined) {
-////                new_doc_data.assessments.push(assessment_ID);
-////            } else {
-////                new_doc_data.assessments = [assessment_ID];
-////            }
-////
-////            if (new_doc_data.questions !== undefined) {
-////                new_doc_data.questions.push(question_ID);
-////            } else {
-////                new_doc_data.questions = [question_ID];
-////            }
-////
-////            if (new_doc_data.answers !== undefined) {
-////                new_doc_data.answers.push(answer_ID);
-////            } else {
-////                new_doc_data.answers = [answer_ID];
-////            }
-////
-////            if (new_doc_data.users !== undefined) {
-////                new_doc_data.users.push(current_user_ID);
-////            } else {
-////                new_doc_data.users = [current_user_ID];
-////            }
-////
-////            console.log(new_ref_data);
-////            if ($scope.answer.new_ref_comment !== undefined) {
-////                new_ref_data.comment.content = $scope.answer.new_ref_comment;
-////            }
-////
-////            new_answer_data.references.citation.push(new_ref_data);
-////            new_ref_data = {};
-////
-////            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-////                .then(rgiDocumentMethodSrvc.updateDocument(new_doc_data))
-////                .then(function () {
-////                    rgiNotifier.notify('reference added');
-////                    $scope.ref_selection = "";
-////                    $scope.new_document.title = "";
-////                    $scope.new_document.type = "";
-////                    $scope.new_document.authors = "";
-////                    $scope.new_document.editors = "";
-////                    $scope.new_document.source = "";
-////                    $scope.new_document.year = "";
-////                    $scope.new_document.pages = "";
-////                    $scope.new_document.volume = "";
-////                    $scope.new_document.issue = "";
-////                    $scope.new_document.publisher = "";
-////                    $scope.new_document.city = "";
-////                    $scope.new_document.edition = "";
-////                    $scope.new_document.institution = "";
-////                    $scope.new_document.series = "";
-////                    $scope.new_document.chapter = "";
-////                    $scope.new_document.country = "";
-////                    $scope.new_document.translators = "";
-////                    $scope.new_document.series_editor = "";
-////                    $scope.answer.new_ref_comment = "";
-////                }, function (reason) {
-////                    rgiNotifier.notify(reason);
-////                });
-////        };
-////
-////        $scope.webRefSubmit = function (current_user) {
-////            var new_answer_data = $scope.answer,
-////
-////                new_ref_data = {
-////                    title: $scope.answer.web_ref_title,
-////                    URL: $scope.answer.web_ref_url,
-////                    comment: {
-////                        date: new Date().toISOString(),
-////                        author: current_user._id,
-////                        author_name: current_user.firstName + ' ' + current_user.lastName,
-////                        role: current_user.role
-////                    }
-////                };
-////            console.log(new_ref_data);
-////            if ($scope.answer.web_ref_comment !== undefined) {
-////                new_ref_data.comment.content = $scope.answer.web_ref_comment;
-////            }
-////            new_answer_data.references.web.push(new_ref_data);
-////
-////            mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
-////                rgiNotifier.notify('reference added');
-////                $scope.ref_selection = "";
-////                $scope.answer.web_ref_title = "";
-////                $scope.answer.web_ref_url = "";
-////                $scope.answer.web_ref_comment = "";
-////                $scope.answer.web_ref_comment = "";
-////            }, function (reason) {
-////                rgiNotifier.notify(reason);
-////            });
-////        };
-////
-////        $scope.humanRefSubmit = function (current_user) {
-////            var new_answer_data = $scope.answer,
-////
-////                new_ref_data = {
-////                    first_name: $scope.answer.human_ref_first_name,
-////                    last_name: $scope.answer.human_ref_last_name,
-////                    phone: $scope.answer.human_ref_phone,
-////                    email: $scope.answer.human_ref_email,
-////                    // contact_date: $scope.answer.human_ref_contact_date,
-////                    contact_date: new Date().toISOString(),
-////                    comment: {
-////                        date: new Date().toISOString(),
-////                        author: current_user._id,
-////                        author_name: current_user.firstName + ' ' + current_user.lastName,
-////                        role: current_user.role
-////                    }
-////                };
-////            console.log(new_ref_data);
-////            if ($scope.answer.human_ref_comment !== undefined) {
-////                new_ref_data.comment.content = $scope.answer.human_ref_comment;
-////            }
-////            new_answer_data.references.human.push(new_ref_data);
-////
-////
-////            mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
-////                rgiNotifier.notify('reference added');
-////                $scope.answer.human_ref_first_name = "";
-////                $scope.answer.human_ref_last_name = "";
-////                $scope.answer.human_ref_phone = "";
-////                $scope.answer.human_ref_email = "";
-////                $scope.answer.human_ref_contact_date = "";
-////                $scope.answer.human_ref_comment = "";
-////                $scope.ref_selection = "";
-////            }, function (reason) {
-////                rgiNotifier.notify(reason);
-////            });
-////        };
+
+
+
 ////
 ////        // make final choice
 ////        $scope.finalChoiceDialog = function () {

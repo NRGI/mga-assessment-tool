@@ -8,10 +8,10 @@ var auth = require('./auth'),
     answers = require('../controllers/answers'),
     questions = require('../controllers/questions'),
     assessments = require('../controllers/assessments'),
-    countries = require('../controllers/countries');
-    // documents = require('../controllers/documents'),
-    // multipart = require('connect-multiparty'),
-    // multipartMiddleware = multipart();
+    countries = require('../controllers/countries'),
+    documents = require('../controllers/documents'),
+    multipart = require('connect-multiparty'),
+    multipartMiddleware = multipart();
 
 module.exports = function (app) {
 
@@ -74,25 +74,25 @@ module.exports = function (app) {
     // PUT
     app.put('/api/assessments/:assessment_ID', auth.requiresApiLogin, assessments.updateAssessment);
 
-    // /////////////////////////
-    // //// DOCUMENTS  /////////
-    // /////////////////////////
-    // // GET
-    // app.get('/api/documents', auth.requiresApiLogin, documents.getDocuments);
-    // app.get('/api/documents/:id', auth.requiresApiLogin, documents.getDocumentsByID);
+     /////////////////////////
+     //// DOCUMENTS  /////////
+     /////////////////////////
+     // GET
+     app.get('/api/documents', auth.requiresApiLogin, documents.getDocuments);
+     app.get('/api/documents/:id', auth.requiresApiLogin, documents.getDocumentsByID);
 
-    // // // POST
-    // // app.post('/api/documents', auth.requiresApiLogin, documents.createDocuments);
+      //// POST
+      //app.post('/api/documents', auth.requiresApiLogin, documents.createDocuments);
 
-    // // PUT
-    // app.put('/api/documents', auth.requiresApiLogin, documents.updateDocument);
+     // PUT
+     app.put('/api/documents', auth.requiresApiLogin, documents.updateDocument);
 
 
-    // /////////////////////////
-    // //// UPLOAD DOCUMENTS ///
-    // /////////////////////////
+     /////////////////////////
+     //// UPLOAD DOCUMENTS ///
+     /////////////////////////
 
-    // app.post('/file-upload', auth.requiresApiLogin,  multipartMiddleware, documents.fileCheck);
+     app.post('/file-upload', auth.requiresApiLogin,  multipartMiddleware, documents.fileCheck);
 
     ////////////////////
     ///// OTHER ////////
