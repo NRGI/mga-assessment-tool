@@ -1,6 +1,6 @@
 'use strict';
 //var angular;
-/*jslint nomen: true*/
+/*jslint true*/
 
 angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, mgaNotifier, mgaQuestionMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
 

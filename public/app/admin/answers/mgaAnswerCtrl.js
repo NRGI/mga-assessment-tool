@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint nomen: true*/
 
 function zeroFill(number, width) {
@@ -15,7 +15,10 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
     $scope.birthDate = '2013-07-23';
     $scope.dateOptions = {};
 
-    mgaAnswerSrvc.get({answer_ID: $routeParams.answer_ID, assessment_ID: $routeParams.answer_ID.substring(0, 2)}, function (answer) {
+    mgaAnswerSrvc.get({
+        answer_ID: $routeParams.answer_ID,
+        assessment_ID: $routeParams.answer_ID.substring(0, 2)
+    }, function (answer) {
         mgaDocumentSrvc.query({}, function (documents) {
             $scope.answer = answer;
             $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: answer.assessment_ID});
@@ -33,7 +36,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
             $scope.document_selectors = document_selectors;
 
             var citations = [];
-            answer.references.citation.forEach(function (el, i) {
+            answer.references.citation.forEach(function (el) {
                 mgaDocumentSrvc.get({_id: el.document_ID}, function (doc) {
                     doc.comment = el.comment;
                     citations.push(doc);
@@ -75,7 +78,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
     $scope.flagCheck = function (flags) {
         var disabled = false;
         if (flags.length !== 0) {
-            flags.forEach(function (el, i) {
+            flags.forEach(function (el) {
                 if (el.addressed === false) {
                     disabled = true;
                 }
@@ -127,7 +130,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
             .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
                 if (new_assessment_data.questions_complete !== new_assessment_data.question_length && new_answer_data.question_order !== new_assessment_data.question_length) {
-                    $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" +String(zeroFill((new_answer_data.question_order + 1), 3))); //TODO figure out nonsequential question order as well as end question
+                    $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_order + 1), 3))); //TODO figure out nonsequential question order as well as end question
                 } else {
                     $location.path('/assessments/' + new_answer_data.assessment_ID);
                 }
@@ -315,7 +318,6 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
         }
 
         new_answer_data.references.citation.push(new_ref_data);
-        new_ref_data = {};
 
         mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
             .then(mgaDocumentMethodSrvc.updateDocument(new_doc_data))
@@ -341,7 +343,6 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
                 $scope.new_document.translators = "";
                 $scope.new_document.series_editor = "";
                 $scope.answer.new_ref_comment = "";
-                $location
             }, function (reason) {
                 mgaNotifier.notify(reason);
             });

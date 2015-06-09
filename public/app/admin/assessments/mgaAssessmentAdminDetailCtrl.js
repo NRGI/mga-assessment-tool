@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint nomen: true regexp: true*/
 
 angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, mgaAssessmentSrvc, mgaUserListSrvc, mgaAnswerSrvc, $routeParams) {
@@ -12,8 +12,11 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
 
     // pull assessment data and add
     mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
-        $scope.answer_list =[];
-        mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID, question_mode: data.status}, function (answers) {
+        $scope.answer_list = [];
+        mgaAnswerSrvc.query({
+            assessment_ID: $routeParams.assessment_ID,
+            question_mode: data.status
+        }, function (answers) {
             $scope.question_set_length = answers.length;
 
             $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});

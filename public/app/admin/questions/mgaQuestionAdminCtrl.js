@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint nomen: true unparam: true*/
 
 angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQuestionSrvc, ngDialog) {
@@ -17,7 +17,7 @@ angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQu
         $scope.questions = data;
         $scope.getArray = [];
 
-        data.forEach(function (el, i) {
+        data.forEach(function (el) {
             question = {
                 question_order: el.question_order,
                 question_mode: el.question_mode,
@@ -33,13 +33,13 @@ angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQu
 
     // $scope.questions = mgaQuestionSrvc.query();
 
-     $scope.newQuestionDialog = function () {
-         $scope.value = true;
-         ngDialog.open({
-             template: 'partials/dialogs/new-question-dialog',
-             controller: 'mgaNewQuestionDialogCtrl',
-             className: 'ngdialog-theme-plain',
-             scope: $scope
-         });
-     };
+    $scope.newQuestionDialog = function () {
+        $scope.value = true;
+        ngDialog.open({
+            template: 'partials/dialogs/new-question-dialog',
+            controller: 'mgaNewQuestionDialogCtrl',
+            className: 'ngdialog-theme-plain',
+            scope: $scope
+        });
+    };
 });

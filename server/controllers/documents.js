@@ -20,8 +20,8 @@ var crypto                 = require('crypto'),
                                     // any other options are passed to new AWS.S3() 
                                     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property 
                                 }
-                            }),
-    upload_bucket           = 'mga-uploads';
+    }),
+    upload_bucket = 'mga-uploads';
 
 exports.fileCheck = function (req, res, next) {
     // get temp path of file upload
@@ -57,11 +57,11 @@ exports.fileCheck = function (req, res, next) {
                     var params = {
                       localFile: file_path,
                       s3Params: {
-                        Bucket: upload_bucket,
+                          Bucket: upload_bucket,
                         Key: String(file_hash) + '.pdf'
-                        // other options supported by putObject, except Body and ContentLength.
-                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
-                      },
+                          // other options supported by putObject, except Body and ContentLength.
+                          // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
+                      }
                     };
                     //
                     var uploader = client.uploadFile(params);
@@ -143,7 +143,7 @@ exports.updateDocument = function (req, res) {
         });
 
         var input_array = ['source', 'year', 'pages', 'volume', 'issue', 'websites', 'publisher', 'city', 'edition', 'institution', 'series', 'chapter', 'editors', 'country', 'translators', 'series_editor'];
-        input_array.forEach(function (el, i) {
+        input_array.forEach(function (el) {
             if (el in document_update) {
                 document[el] = document_update[el];
             }

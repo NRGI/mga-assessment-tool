@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint newcap: true */
 
 angular.module('app').factory('mgaAnswerMethodSrvc', function ($q, mgaAnswerSrvc) {
