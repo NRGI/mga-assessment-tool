@@ -18,6 +18,7 @@ exports.authenticate = function (req, res, next) {
     auth(req, res, next);
 };
 
+//noinspection JSUnusedLocalSymbols
 exports.passUser = function (req, res, next) {
     return res.send({success: true, user: req.user});
 };

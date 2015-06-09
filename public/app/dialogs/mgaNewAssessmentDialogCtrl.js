@@ -1,6 +1,6 @@
 'use strict';
 /*jslint unparam: true nomen: true*/
-var angular;
+//var angular;
 
 angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $location, mgaNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
 
@@ -51,7 +51,7 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                     modified_date: timestamp
                 }],
                 create_date: {
-                    createded_by: $scope.$parent.identity.currentUser._id,
+                    created_by: $scope.$parent.identity.currentUser._id,
                     date: timestamp
                 }
             });

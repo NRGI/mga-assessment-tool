@@ -1,0 +1,12 @@
+branch-defaults:
+  master:
+    environment: mga-assessment-tool-pr
+  staging:
+    environment: null
+global:
+  application_name: mga-assessment-tool
+  default_ec2_keyname: mga-tool
+  default_platform: Docker 1.5.0
+  default_region: us-east-1
+  profile: eb-cli
+  sc: git

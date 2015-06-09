@@ -1,6 +1,6 @@
 'use strict';
 /*jslint unparam: true nomen: true*/
-var angular;
+//var angular;
 
 angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserSrvc, mgaUserMethodSrvc) {
     mgaUserSrvc.query({}, function (data) {

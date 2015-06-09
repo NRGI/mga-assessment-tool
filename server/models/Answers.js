@@ -12,7 +12,7 @@ var modificationSchema = new mongoose.Schema({
 var commentSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     content: String,
-    author: ObjectId, // Pull from curretn user _id value
+    author: ObjectId, // Pull from current user _id value
     author_name: String,
     role: String,
     addressed: Boolean
@@ -25,7 +25,7 @@ var citationSchema = new mongoose.Schema({
     comment: {
         date: {type: Date, default: Date.now},
         content: String,
-        author: ObjectId, // Pull from curretn user _id value
+        author: ObjectId, // Pull from current user _id value
         author_name: String,
         role: String,
         addressed: Boolean
@@ -38,7 +38,7 @@ var webSchema = new mongoose.Schema({
     comment: {
         date: {type: Date, default: Date.now},
         content: String,
-        author: ObjectId, // Pull from curretn user _id value
+        author: ObjectId, // Pull from current user _id value
         author_name: String,
         role: String,
         addressed: Boolean

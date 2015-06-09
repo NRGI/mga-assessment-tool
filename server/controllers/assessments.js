@@ -1,6 +1,7 @@
 'use strict';
 /*jslint nomen: true unparam: true*/
 
+//noinspection JSUnusedGlobalSymbols
 var Assessment = require('mongoose').model('Assessment'),
     User = require('mongoose').model('User'),
     mandrill = require('node-mandrill')(process.env.MANDRILL_APIKEY);
@@ -32,6 +33,7 @@ exports.createAssessment = function (req, res) {
     new_assessments = req.body;
 
     for (i = 0; i < new_assessments.length; i += 1) {
+        //noinspection JSUnusedLocalSymbols
         Assessment.create(new_assessments[i], function (err, assessment) {
             if (err) {
                 res.status(400);
@@ -42,6 +44,7 @@ exports.createAssessment = function (req, res) {
     res.send();
 };
 
+//noinspection JSUnusedLocalSymbols
 exports.updateAssessment = function (req, res, next) {
     var assessment_updates = req.body,
         timestamp = new Date().toISOString();

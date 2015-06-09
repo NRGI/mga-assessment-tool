@@ -1,6 +1,6 @@
 'use strict';
 /*jslint nomen: true unparam: true regexp: true*/
-var angular;
+//var angular;
 
 angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaAnswerSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc) {
     var assessment;
@@ -35,7 +35,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
                     assessment.edited_by = mgaUserListSrvc.get({_id: el.modified[el.modified.length - 1].modified_by});
                 }
 
-                if(el.users[0] !== undefined) {
+                if (el.users[0] !== undefined) {
                     el.users.forEach(function (element) {
                         var insert_user = mgaUserListSrvc.get({_id: element});
                         assessment.users.push(insert_user);
@@ -47,7 +47,8 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
         });
     } else {
         $scope.identity.currentUser.assessments.forEach(function (el) {
-            mgaAssessmentSrvc.get({assessment_ID: el.assessment_ID}, function (data) {
+            mgaAssessmentSrvc.get({
+                assessment_ID: el.assessment_ID}, function (data) {
                 assessment = {
                     assessment_ID: data.assessment_ID,
                     country: data.country,
@@ -65,7 +66,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
                     assessment.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
                 }
 
-                if(data.users[0] !== undefined) {
+                if (data.users[0] !== undefined) {
                     data.users.forEach(function (element) {
                         var insert_user = mgaUserListSrvc.get({_id: element});
                         assessment.users.push(insert_user);

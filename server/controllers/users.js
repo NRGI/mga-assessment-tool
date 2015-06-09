@@ -8,6 +8,7 @@ var User = require('mongoose').model('User'),
     // client.send(template, options, done);
 
 
+//noinspection JSUnusedLocalSymbols
 exports.getUsers = function (req, res, next) {
     var query;
     if (req.user.hasRole('supervisor')) {
@@ -41,6 +42,7 @@ exports.getUsersListByID = function (req, res) {
     });
 };
 
+//noinspection JSUnusedLocalSymbols
 exports.createUser = function (req, res, next) {
     var user_data = req.body,
         rec_email = user_data.email,
@@ -55,6 +57,7 @@ exports.createUser = function (req, res, next) {
     user_data.hashed_pwd = encrypt.hashPwd(user_data.salt, user_data.password);
     user_data.createdBy = req.user._id;
 
+    //noinspection JSUnusedLocalSymbols
     User.create(user_data, function (err, user) {
         if (err) {
             if (err.toString().indexOf('E11000') > -1) {

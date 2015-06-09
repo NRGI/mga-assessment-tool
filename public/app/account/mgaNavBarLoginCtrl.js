@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint newcap: true unparam: true*/
 
 angular.module('app').controller('mgaNavBarLoginCtrl', function ($scope, $location, mgaNotifier, mgaIdentitySrvc, mgaAuthSrvc, mgaAssessmentSrvc) {
@@ -10,7 +10,7 @@ angular.module('app').controller('mgaNavBarLoginCtrl', function ($scope, $locati
     url_array = [];
     if (mgaIdentitySrvc.currentUser !== undefined && mgaIdentitySrvc.currentUser.role === 'supervisor') {
         mgaAssessmentSrvc.query({}, function (data) {
-            data.forEach(function (el, i) {
+            data.forEach(function (el) {
                 if (url_array.indexOf(el.assessment_ID) < 0) {
                     url_array.push(el.assessment_ID);
                     $scope.assessment_links.push({
@@ -22,7 +22,7 @@ angular.module('app').controller('mgaNavBarLoginCtrl', function ($scope, $locati
             });
         });
     } else if (mgaIdentitySrvc.currentUser !== undefined) {
-        mgaIdentitySrvc.currentUser.assessments.forEach(function (el, i) {
+        mgaIdentitySrvc.currentUser.assessments.forEach(function (el) {
             if (url_array.indexOf(el.assessment_ID) < 0) {
                 url_array.push(el.assessment_ID);
                 $scope.assessment_links.push({
@@ -43,7 +43,7 @@ angular.module('app').controller('mgaNavBarLoginCtrl', function ($scope, $locati
                 url_array = [];
                 if (mgaIdentitySrvc.currentUser !== undefined && mgaIdentitySrvc.currentUser.role === 'supervisor') {
                     mgaAssessmentSrvc.query({}, function (data) {
-                        data.forEach(function (el, i) {
+                        data.forEach(function (el) {
                             if (url_array.indexOf(el.assessment_ID) < 0) {
                                 url_array.push(el.assessment_ID);
                                 $scope.assessment_links.push({
@@ -55,7 +55,7 @@ angular.module('app').controller('mgaNavBarLoginCtrl', function ($scope, $locati
                         });
                     });
                 } else if (mgaIdentitySrvc.currentUser !== undefined) {
-                    mgaIdentitySrvc.currentUser.assessments.forEach(function (el, i) {
+                    mgaIdentitySrvc.currentUser.assessments.forEach(function (el) {
                         if (url_array.indexOf(el.assessment_ID) < 0) {
                             url_array.push(el.assessment_ID);
                             $scope.assessment_links.push({

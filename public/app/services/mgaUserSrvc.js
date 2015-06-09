@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint nomen: true */
 
 // query user or get user by id

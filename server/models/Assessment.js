@@ -17,7 +17,7 @@ var assessmentSchema = mongoose.Schema({
     country: {type: String, required: '{PATH} is required'}, // String of country name
     year: {type: String, required: '{PATH} is required'},
     status: {type: String, required: '{PATH} is required', default: 'created'}, // created, desk_research, interviews, review, approved
-    create_date: {createded_by: ObjectId, date: Date},
+    create_date: {created_by: ObjectId, date: Date},
     start_date: {started_by: ObjectId, date: Date},
     modified: [modificationSchema],
     questions_flagged: {type: Number, default: 0},

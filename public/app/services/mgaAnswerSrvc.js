@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 
 // query answers
 angular.module('app').factory('mgaAnswerSrvc', function ($resource) {

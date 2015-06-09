@@ -1,7 +1,5 @@
 'use strict';
-var angular, toastr;
-// var angular;
-
+//var angular, toastr;
 angular.module('app').value('mgaToastr', toastr);
 
 angular.module('app').factory('mgaNotifier', function (mgaToastr) {

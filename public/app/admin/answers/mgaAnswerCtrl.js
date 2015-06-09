@@ -12,8 +12,6 @@ function zeroFill(number, width) {
 
 angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, $location, FileUploader, ngDialog, mgaNotifier, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
     $scope.identity = mgaIdentitySrvc;
-    $scope.birthDate = '2013-07-23';
-    $scope.dateOptions = {};
 
     mgaAnswerSrvc.get({
         answer_ID: $routeParams.answer_ID,
@@ -121,6 +119,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
         if (new_answer_data.status === 'flagged') {
             new_answer_data.status = 'submitted';
             new_assessment_data.questions_flagged -= 1;
+            new_assessment_data.questions_complete += 1;
         } else if (new_answer_data.status !== 'submitted') {
             new_answer_data.status = 'submitted';
             new_assessment_data.questions_complete += 1;
@@ -130,7 +129,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
             .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
                 if (new_assessment_data.questions_complete !== new_assessment_data.question_length && new_answer_data.question_order !== new_assessment_data.question_length) {
-                    $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_order + 1), 3))); //TODO figure out nonsequential question order as well as end question
+                    $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_order + 1), 3))); //TODO figure out non-sequential question order as well as end question
                 } else {
                     $location.path('/assessments/' + new_answer_data.assessment_ID);
                 }
@@ -243,17 +242,19 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
         withCredentials: true,
         url: 'file-upload'
     });
+    //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols
     uploader.filters.push({
         name: 'customFilter',
         fn: function (item /*{File|FileLikeObject}*/, options) {
             return this.queue.length < 1;
         }
     });
+    //noinspection JSUnusedLocalSymbols
     uploader.onCompleteItem = function (fileItem, response, status, headers) {
         if (status === 400) {
             $scope.uploader.queue = [];
             mgaNotifier.error(response.reason);
-        } else {// TODO add cancel upload after initial documnt pass
+        } else {// TODO add cancel upload after initial document pass
             $scope.new_document = response;
             if ($scope.new_document.status === 'created') {
                 $scope.new_document.authors = [{first_name: "", last_name: ""}];

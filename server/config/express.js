@@ -17,7 +17,7 @@ module.exports = function (app, config) {
     app.set('view engine', 'jade');
     // set up logger
     app.use(logger('dev'));
-    // authentication cofigs
+    // authentication configs
     app.use(cookieParser());
 
     app.use(bodyParser.urlencoded({
@@ -25,6 +25,7 @@ module.exports = function (app, config) {
         limit: 100000000
     }));
 
+    //noinspection JSCheckFunctionSignatures
     app.use(bodyParser.json({limit: '50mb'}));
 
     app.use(session({

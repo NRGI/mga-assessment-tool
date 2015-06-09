@@ -1,6 +1,6 @@
 'use strict';
 /*jslint newcap: true */
-var angular;
+//var angular;
 
 angular.module('app').factory('mgaAssessmentMethodSrvc', function ($http, $q, mgaIdentitySrvc, mgaAssessmentSrvc) {
     return {
@@ -32,6 +32,7 @@ angular.module('app').factory('mgaAssessmentMethodSrvc', function ($http, $q, mg
         updateAssessment: function (new_assessment_data) {
             var dfd = $q.defer();
 
+            //noinspection CommaExpressionJS
             new_assessment_data.$update().then(function () {
                 dfd.resolve();
             }), function(response) {

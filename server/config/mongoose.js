@@ -1,4 +1,5 @@
 'use strict';
+//noinspection JSUnusedGlobalSymbols
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     // mendelyTokenModel = require('../models/MendeleyToken'),

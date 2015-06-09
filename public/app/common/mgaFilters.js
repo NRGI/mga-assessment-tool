@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 
 // Angular replace filter
 angular.module('app').filter('addSpaces', function () {

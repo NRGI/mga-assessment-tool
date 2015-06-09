@@ -4,17 +4,17 @@ var angular;
 
 angular.module('app').factory('mgaQuestionMethodSrvc', function ($q, mgaQuestionSrvc) {
     return {
-        insertQuestionSet: function (new_question_set) {
-            var dfd = $q.defer(),
-                newQuestions = new mgaQuestionSrvc(new_question_set);
-            newQuestions.length = new_question_set.length;
-            newQuestions.$save().then(function () {
-                dfd.resolve();
-            }, function (response) {
-                dfd.reject(response.data.reason);
-            });
-            return dfd.promise;
-        },
+        //insertQuestionSet: function (new_question_set) {
+        //    var dfd = $q.defer(),
+        //        newQuestions = new mgaQuestionSrvc(new_question_set);
+        //    newQuestions.length = new_question_set.length;
+        //    newQuestions.$save().then(function () {
+        //        dfd.resolve();
+        //    }, function (response) {
+        //        dfd.reject(response.data.reason);
+        //    });
+        //    return dfd.promise;
+        //},
         // insertQuestionSet: function (new_question_set) {
         //     var dfd = $q.defer(),
         //         // new_question;

@@ -1,5 +1,6 @@
 'use strict';
 var oauth2 = require('simple-oauth2');
+//noinspection JSUnusedGlobalSymbols
 var mendeley = require('../controllers/mendeley');
 var clientId = process.env.MENDELEY_CLIENTID;
 var clientCredential = process.env.MENDELEY_CLIENTCRED;

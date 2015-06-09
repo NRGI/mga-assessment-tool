@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
 angular.module('app').controller('mgaDeleteProfileDialogCtrl', function ($scope, $location, ngDialog, mgaUserMethodSrvc, mgaNotifier) {

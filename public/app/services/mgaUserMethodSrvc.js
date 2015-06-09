@@ -1,6 +1,6 @@
 'use strict';
 /*jslint nomen: true newcap: true */
-var angular;
+//var angular;
 
 angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, mgaUserSrvc) {
     return {
@@ -21,6 +21,7 @@ angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, mgaUserS
 
             delete_ID.id = user_deletion;
 
+            //noinspection CommaExpressionJS
             delete_ID.$delete().then(function () {
                 dfd.resolve();
             }), function (response) {
@@ -31,6 +32,7 @@ angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, mgaUserS
         updateUser: function (new_user_data) {
             var dfd = $q.defer();
             
+            //noinspection CommaExpressionJS
             new_user_data.$update().then(function () {
                 dfd.resolve();
             }), function (response) {

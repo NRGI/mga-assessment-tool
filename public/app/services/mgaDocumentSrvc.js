@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 
 // query documents or get documents by id
 angular.module('app').factory('mgaDocumentSrvc', function ($resource) {

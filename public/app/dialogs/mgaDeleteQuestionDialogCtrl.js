@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
 angular.module('app').controller('mgaDeleteQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaQuestionMethodSrvc, mgaNotifier) {

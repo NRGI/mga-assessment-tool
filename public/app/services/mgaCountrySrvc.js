@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 
 // query assessments or get assessments by id
 angular.module('app').factory('mgaCountrySrvc', function ($resource) {

@@ -34,6 +34,7 @@ exports.getAnswers = function (req, res, next) {
     }
 };
 
+//noinspection JSUnusedLocalSymbols
 exports.getAnswersByID = function (req, res, next) {
     var query = Answer.findOne({answer_ID: req.params.answer_ID});
 
@@ -49,11 +50,13 @@ exports.getAnswersByID = function (req, res, next) {
     });
 };
 
+//noinspection JSUnusedLocalSymbols
 exports.createAnswers = function (req, res, next) {
     var new_answers, i;
     new_answers = req.body;
 
     for (i = 0; i < new_answers.length; i += 1) {
+        //noinspection JSUnusedLocalSymbols
         Answer.create(new_answers[i], function (err, answer) {
             if (err) {
                 res.status(400);

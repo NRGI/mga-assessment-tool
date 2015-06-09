@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 
 angular.module('app').controller('mgaCreateUserCtrl', function ($scope, $location, mgaNotifier, mgaUserMethodSrvc) {
     $scope.roleOptions = [

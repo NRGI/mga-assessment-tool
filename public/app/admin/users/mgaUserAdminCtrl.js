@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 
 angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc) {
 // angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {

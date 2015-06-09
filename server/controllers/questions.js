@@ -60,11 +60,7 @@ exports.updateQuestion = function (req, res) {
     }
 
     Question.findOne({_id: question_update._id}).exec(function (err, question) {
-        String.prototype.capitalize = function () {
-            return this.replace(/^./, function (match) {
-                return match.toUpperCase();
-            });
-        };
+
         if (err) {
             res.status(400);
             return res.send({ reason: err.toString() });

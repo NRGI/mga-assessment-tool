@@ -3,18 +3,19 @@
 
 var mongoose = require('mongoose');
 
+//noinspection JSUnusedGlobalSymbols
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var Schemalesss = mongoose.Schema.Types.Mixed;
+var Schemaless = mongoose.Schema.Types.Mixed;
 
 var modificationSchema = new mongoose.Schema({
-    modifiedBy: Schemalesss, // Pull from curretn user _id value but needs to handle legacy comments
+    modifiedBy: Schemaless, // Pull from current user _id value but needs to handle legacy comments
     modifiedDate: {type: Date, default: Date.now}
 });
 
 var commentSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     content: String,
-    author: Schemalesss, // Pull from curretn user _id value but needs to handle legacy comments
+    author: Schemaless, // Pull from current user _id value but needs to handle legacy comments
     author_name: String,
     // ACTUAL CHANGE
     role: String

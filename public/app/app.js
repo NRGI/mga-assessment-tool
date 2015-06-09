@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'ngSanitize', 'ngCsv', 'angularFileUpload', 'angular.filter']);
 
 angular.module('app').config(function ($routeProvider, $locationProvider) {
@@ -78,6 +78,10 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         .when('/admin/assessments-admin/answer/:answer_ID', {
             templateUrl: '/partials/admin/answers/answer-page-edit',
             controller:  'mgaAnswerCtrl'
+        })
+        .when('/admin/assessments-admin/secondary-sources/:assessment_ID', {
+            templateUrl: '/partials/admin/answers/secondary-sources-list',
+            controller:  'mgaSecondarySourcesListCtrl'
         });
         // .when('/admin/assessment-admin/subs/:version', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin',

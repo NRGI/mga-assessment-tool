@@ -1,8 +1,8 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint newcap: true */
 
-angular.module('app').factory('mgaDocumentMethodSrvc', function ($q, mgaDocumentSrvc) {
+angular.module('app').factory('mgaDocumentMethodSrvc', function ($q) {
     return {
         updateDocument: function (new_doc_data) {
             var dfd = $q.defer();

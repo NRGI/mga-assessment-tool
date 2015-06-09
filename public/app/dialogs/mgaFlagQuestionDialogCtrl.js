@@ -1,6 +1,6 @@
 'use strict';
 /*jslint unparam: true nomen: true*/
-var angular;
+//var angular;
 
 angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAnswerMethodSrvc, mgaAssessmentMethodSrvc) {
 
@@ -20,7 +20,11 @@ angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, 
 
         new_answer_data.flags.push(new_flag_data);
 
-        if (new_answer_data.status !== 'flagged') {
+        if (new_answer_data.status==='submitted') {
+            new_answer_data.status = 'flagged';
+            new_assessment_data.questions_complete -= 1;
+            new_assessment_data.questions_flagged += 1;
+        } else if (new_answer_data.status !== 'flagged') {
             new_answer_data.status = 'flagged';
             new_assessment_data.questions_flagged += 1;
         }

@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 
 angular.module('app').controller('mgaMainCtrl', function ($scope, mgaIdentitySrvc) {
     // bring in current user data to customize front page

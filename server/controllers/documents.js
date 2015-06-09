@@ -23,6 +23,7 @@ var crypto                 = require('crypto'),
     }),
     upload_bucket = 'mga-uploads';
 
+//noinspection JSUnusedLocalSymbols
 exports.fileCheck = function (req, res, next) {
     // get temp path of file upload
     var file_path = req.files.file.path,

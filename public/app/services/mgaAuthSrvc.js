@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint newcap: true */
 
 angular.module('app').factory('mgaAuthSrvc', function ($http, $q, mgaIdentitySrvc, mgaUserSrvc) {

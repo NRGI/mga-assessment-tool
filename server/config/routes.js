@@ -1,5 +1,6 @@
 'use strict';
 
+//noinspection JSUnusedGlobalSymbols
 var auth = require('./auth'),
     // authMendeley = require('./authMendeley'),
     bodyParser = require('body-parser'),
