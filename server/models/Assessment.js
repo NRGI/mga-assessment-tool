@@ -24,9 +24,6 @@ var assessmentSchema = mongoose.Schema({
     questions_complete: {type: Number, default: 0},
     questions_unfinalized: {type: Number, required: '{PATH} is required'},
     question_length: {type: Number, required: '{PATH} is required'},
-    question_desk_research_length: Number,
-    question_interview_length: Number,
-    question_secondary_sources_length: Number,
     users: [ObjectId]
     // researcher_ID: {type: ObjectId, index: true}, // pulled from user_id
     // reviewer_ID: {type: ObjectId, index: true}, // pulled from user_id

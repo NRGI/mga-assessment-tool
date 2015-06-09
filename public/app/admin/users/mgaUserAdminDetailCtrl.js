@@ -37,7 +37,7 @@ angular.module('app').controller('mgaUserAdminDetailCtrl', function ($scope, $ro
     $scope.deleteConfirmDialog = function () {
         $scope.value = true;
         ngDialog.open({
-            template: 'partials/admin/users/user-delete-confirmation-dialog',
+            template: 'partials/dialogs/delete-profile-confirmation-dialog',
             controller: 'mgaDeleteProfileDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope

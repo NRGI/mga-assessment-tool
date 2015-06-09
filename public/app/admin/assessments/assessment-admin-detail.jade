@@ -24,6 +24,9 @@
                 text  on
                 span(ng-repeat="mod in assessment.modified")
                     em(ng-show="$last")  {{mod.modified_date | date}}
+            .row questions_flagged: {{assessment.questions_flagged}}
+            .row questions_complete: {{assessment.questions_complete}}
+            .row question_set_length: {{question_set_length}}
             //.row(ng-if="assessment.questions_complete===0")
             //	text(ng) Number of questions complete: {{assessment.questions_complete}} (0%)
             //.row(ng-if="assessment.questions_complete!==0")
@@ -38,6 +41,7 @@
                     th.col-md-2 Question mode
                     th.col-md-5.text-center Question
                     th.col-md-1 Status
+                    th.col-md-1 Data type
                     th.col-md-1 Score
                     th.col-md-1.text-center
                     th.col-md-1.text-center(ng-if="answer.question_mode!=='desk_research'")
@@ -50,9 +54,14 @@
                         .text-danger(ng-if="answer.status==='created'") {{answer.status | ucfirst}}
                         .text-info(ng-if="answer.status==='saved'") {{answer.status | ucfirst}}
                         .text-success(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
-                    td.col-md-1(ng-if="answer.answer_score===undefined") None
+                        .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
+                    //td.col-md-1 {{answer.question_data_type | addSpaces | ucfirst}}
+                    td.col-md-1
+                        .glyphicon.glyphicon-pencil(ng-if="answer.question_data_type==='text'")  {{answer.question_data_type | addSpaces | ucfirst}}
+                        .glyphicon.glyphicon-check(ng-if="answer.question_data_type==='score'")  {{answer.question_data_type | addSpaces | ucfirst}}
+                    td.col-md-1(ng-if="answer.answer_score===undefined && answer.question_data_type!=='text'") None
                     td.col-md-1(ng-if="answer.question_data_type==='score' && answer.answer_score!==undefined") {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
-                    td.col-md-1(ng-if="answer.question_data_type==='text' && answer.answer_score!==undefined") Text
+                    td.col-md-1(ng-if="answer.question_data_type==='text'")
                     td
                         a.btn.center-block.btn-default(href="/admin/assessments-admin/answer/{{answer.answer_ID}}") Go to answer page
                     td(ng-if="answer.question_mode!=='desk_research'")

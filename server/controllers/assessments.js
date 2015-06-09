@@ -56,11 +56,9 @@ exports.updateAssessment = function (req, res, next) {
         assessment.start_date = assessment_updates.start_date;
         assessment.modified = assessment_updates.modified;
         assessment.questions_flagged = assessment_updates.questions_flagged;
+        assessment.questions_complete = assessment_updates.questions_complete;
         assessment.questions_unfinalized = assessment_updates.questions_unfinalized;
         assessment.question_length = assessment_updates.question_length;
-        assessment.question_desk_research_length = assessment_updates.question_desk_research_length;
-        assessment.question_interview_length = assessment_updates.question_interview_length;
-        assessment.question_secondary_sources_length = assessment_updates.question_secondary_sources_length;
         assessment.users = assessment_updates.users;
         assessment.modified.push({modified_by: req.user._id, modified_date: timestamp});
 

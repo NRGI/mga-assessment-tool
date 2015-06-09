@@ -1,5 +1,5 @@
 'use strict';
-var angular;
+//var angular;
 /*jslint nomen: true*/
 
 angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, mgaNotifier, mgaQuestionMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
@@ -35,7 +35,7 @@ angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope,
     $scope.deleteConfirmDialog = function () {
         $scope.value = true;
         ngDialog.open({
-            template: 'partials/admin/questions/question-delete-confirmation-dialog',
+            template: 'partials/dialogs/delete-question-delete-confirmation-dialog',
             controller: 'mgaDeleteQuestionDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope

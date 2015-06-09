@@ -19,7 +19,6 @@ angular.module('app').factory('mgaAnswerMethodSrvc', function ($q, mgaAnswerSrvc
         },
         updateAnswer: function (new_answer_data) {
             var dfd = $q.defer();
-            console.log(new_answer_data);
             new_answer_data.$update().then(function () {
                 dfd.resolve();
             }, function (response) {

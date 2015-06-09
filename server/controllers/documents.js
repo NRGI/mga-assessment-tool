@@ -20,7 +20,8 @@ var crypto                 = require('crypto'),
                                     // any other options are passed to new AWS.S3() 
                                     // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property 
                                 }
-                            });
+                            }),
+    upload_bucket           = 'mga-uploads';
 
 exports.fileCheck = function (req, res, next) {
     // get temp path of file upload
@@ -30,12 +31,18 @@ exports.fileCheck = function (req, res, next) {
         timestamp = new Date().toISOString(),
         file_extension = file_path.split('.')[file_path.split('.').length - 1];
 
-    if (file_extension === 'pdf') {
+    if (file_extension !== 'pdf') {
+        res.status(400);
+        res.send({reason: 'Document not a pdf'});
+    } else {
         fs.readFile(file_path, {encoding: 'utf8'}, function (err, data) {
+
             // Use the 'data' string here.
             hash.update(data);
+
             // get hashed value of file as fingerprint
             var file_hash = hash.digest('hex');
+
             // search documents for hashed file
             Document.findOne({file_hash: file_hash}, function (err, document) {
                 // if file exists tag for reference
@@ -44,19 +51,19 @@ exports.fileCheck = function (req, res, next) {
 
                 // if not upload to s3 with hashed value as file name,
                 // create record with hash value and end url
-                } else {
+                } else {  // TODO Add error handling for S3 upload errors
                     var new_document = {};
                     // upload parameters
                     var params = {
                       localFile: file_path,
                       s3Params: {
-                        Bucket: 'rgi-upload-test',
+                        Bucket: upload_bucket,
                         Key: String(file_hash) + '.pdf'
-                        // other options supported by putObject, except Body and ContentLength. 
-                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property 
+                        // other options supported by putObject, except Body and ContentLength.
+                        // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#putObject-property
                       },
                     };
-
+                    //
                     var uploader = client.uploadFile(params);
                     uploader.on('error', function(err) {
                       console.error("unable to upload:", err.stack);
@@ -81,7 +88,7 @@ exports.fileCheck = function (req, res, next) {
                     Document.create(new_document, function (err, document) {
                         if (err) {
                             res.status(400);
-                            res.send({reason: err.toString()});
+                            res.send({reason: 'unable to upload' + err.stack});
                         } else {
                             res.send(document);
                         }
@@ -89,9 +96,6 @@ exports.fileCheck = function (req, res, next) {
                 }
             });
         });
-    } else {
-        // res.status(400);
-        // res.send({reason: 'Document not a pdf'});
     }
     // destroy temp file
     // fs.unlink(req.files.file.path);

@@ -82,32 +82,11 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
         mgaAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
             new_assessment_data.start_date = {started_by: $scope.identity.currentUser._id, date: timestamp};
             new_assessment_data.status = 'desk_research';
-            new_assessment_data.question_desk_research_length = 0;
-            new_assessment_data.question_interview_length = 0;
-            new_assessment_data.question_secondary_sources_length = 0;
-            mgaAnswerSrvc.query({assessment_ID: assessment_ID}, function (data) {
-                data.forEach(function (el) {
-                    switch(el.question_mode) {
-                        case 'desk_research':
-                            new_assessment_data.question_desk_research_length += 1;
-                            break;
-                        case 'interview':
-                            new_assessment_data.question_interview_length += 1;
-                            break;
-                        case 'secondary_sources':
-                            new_assessment_data.question_secondary_sources_length += 1;
-                            break;
-                        default:
-                            console.log('question mode' + el.question_mode + ' does not exist')
-                    }
-                });
-
-                mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
-                    $location.path('/admin/assessments-admin/answer/' + assessment_ID + '-001');
-                    mgaNotifier.notify('Assessment review started!');
-                }, function (reason) {
-                    mgaNotifier.error(reason);
-                });
+            mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
+                $location.path('/admin/assessments-admin/answer/' + assessment_ID + '-001');
+                mgaNotifier.notify('Assessment review started!');
+            }, function (reason) {
+                mgaNotifier.error(reason);
             });
         });
     };
@@ -115,7 +94,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
     $scope.newAssessmentDialog = function () {
         $scope.value = true;
         ngDialog.open({
-            template: 'partials/admin/assessments/new-assessment-dialog',
+            template: 'partials/dialogs/new-assessment-dialog',
             controller: 'mgaNewAssessmentDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope
@@ -126,7 +105,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
         $scope.value = true;
         $scope.assessment_ID = assessment_ID;
         ngDialog.open({
-            template: 'partials/admin/assessments/assign-assessment-dialog',
+            template: 'partials/dialogs/assign-assessment-dialog',
             controller: 'mgaAssignAssessmentDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope

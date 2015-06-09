@@ -1,5 +1,4 @@
-//{{answer.question_data_type}}
-.container.top-padding-med
+.container.top-padding-med(ng-if="answer.question_mode==='desk_research'")
     .well.left-padding-lg.right-padding-lg
         legend {{assessment.country}} {{assessment.year}} {{assessment.version}} assessment
         .row.left-padding-lg.bottom-padding-med
@@ -11,10 +10,18 @@
             .col-md-pull-2
                 button.btn.btn-primary(ng-click="answerSave()") Save answer
                 | &nbsp;
+                //button.btn.btn-success(
+                //ng-click="answerSubmit()"
+                //ng-if="flagCheck(answer.flags)"
+                //) Submit answer
+                //| &nbsp;
                 button.btn.btn-success(
                 ng-click="answerSubmit()"
                 ng-if="!answer_text_form.$invalid && !answer_choice_form.$invalid"
+                ng-disabled="flagCheck(answer.flags)"
                 ) Submit answer
+                | &nbsp;
+                button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
                 | &nbsp;
                 button.btn.btn-danger(ng-click="answerClear()") Clear answer
                 | &nbsp;
@@ -24,6 +31,30 @@
                 label.col-med-2 Selected Score:
                 text  {{answer.answer_score.option_text}}
             div(ng-if="!answer.answer_score") No answer selected
+
+        .row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
+            div(id="flags_div").bottom-padding-med
+                legend Flags:
+                div(id="prev_flags_div")
+                    .row.left-padding-lg.bottom-padding-med(ng-repeat="flag in answer.flags")
+                        .row
+                            b {{flag.author_name}} (
+                            b {{flag.role}}
+                            b )
+                        .row
+                            em {{flag.date | date:'MM/dd/yyyy'}}
+                        .row
+                            div
+                                text Addressed?
+                                input(type="checkbox" ng-model="flag.addressed")
+
+                        div(ng-if="flag.addressed!==true")
+                            .row.col-md-11
+                                text.text-danger {{flag.content}}
+                            .row.col-md-offset-9.col-md-3
+                                date
+                                    small
+                                        em {{flag.date | date:'MM/dd/yyyy @ h:mma' : timezone}}
 
         .row.left-padding-lg.right-padding-lg
             .form-horizontal(name="answer_form")
@@ -86,20 +117,28 @@
                                     ng-click="commentSubmit(current_user)"
                                     ng-disabled="new_comment_form.$invalid"
                                     ) Submit comment
-
+        // TODO reset ref_selection
         .row.left-padding-lg.right-padding-lg
             div(id="biblio_div").bottom-padding-med
                 legend References:
+                //.row(ng-if="uploader.queue.length<1") //TODO figure out how to handle changing state depending on where in upload process
                 .row
                     .col-md-5.pull-left.top-padding-med
                         select.form-group.form-control.pull-left(ng-model="ref_selection")
                             option(value="" selected disabled) Select action
                             option(ng-repeat="ref in ref_type" value="{{ref.value}}") {{ref.text}}
+                    // TODO add dropdown with existing documents
+                    //.col-md-5.pull-left.top-padding-med(ng-if="ref_selection==='document'")
+                    //    select.form-group.form-control.pull-left
+                    //        select.form-group.form-control.pull-left(ng-model="new_doc_selection")
+                    //        option(value="" selected disabled) Select document
+                    //        option(ng-repeat="doc_selection in document_selectors" value="{{doc_selection._id}}") {{doc_selection.title}}
 
                     .col-md-1.pull-left(ng-if="ref_selection==='document'")
                         div.fileUpload.btn.btn-default
-                            span Select File
+                            span Upload File
                             input.upload(type="file" nv-file-select uploader="uploader")
+                 .row {{new_doc_selection}}
 
                 //- DOCUMENT UPLOAD
                 .row.left-padding-lg.right-padding-lg(ng-if="uploader.queue.length>0")
@@ -524,7 +563,7 @@
                     .row.left-padding-lg
                         label Citations
                         .row.left-padding-lg(ng-repeat="ref in citations")
-                            .row(ng-if="ref.author.length > 0") Author: {{ref.author}}
+                            //.row(ng-if="ref.author.length > 0") Author: {{ref.author}}
                             .row Author: {{ref.authors[0].first_name}} {{ref.authors[0].last_name}}
                             //- .row(ng-if="ref.author.length === 0") Author: N/A
                             .row Title: {{ref.title}} (
@@ -554,3 +593,6 @@
                             .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}
                             .row Comments: {{ref.comment.content}}
                             br
+
+//.container.top-padding-med(ng-if="answer.question_mode==='secondary_sources'")
+//.container.top-padding-med(ng-if="answer.question_mode==='interview'")
