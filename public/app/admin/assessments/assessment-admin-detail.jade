@@ -32,7 +32,12 @@
             .row questions_complete: {{assessment.questions_complete}}
             .row question_set_length: {{question_set_length}}
             .row.top-padding-med
-                a.btn.center-block.btn-primary.pull-left(href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Go to secondary sources
+                a.btn.center-block.btn-primary.pull-left.col-md-9(href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Go to secondary sources
+            .row.top-padding-med
+                a.btn.center-block.btn-default.pull-left.col-md-9(
+                href=""
+                ng-if="answer.question_mode!=='desk_research'"
+                disabled) Edit previous section
 
 
 
@@ -73,6 +78,4 @@
                     td.col-md-1(ng-if="answer.question_data_type==='text'")
                     td
                         a.btn.center-block.btn-default(href="/admin/assessments-admin/answer/{{answer.answer_ID}}") Go to answer page
-                    td(ng-if="answer.question_mode!=='desk_research'")
-                        a.btn.center-block.btn-default(href="") Edit previous section
 

@@ -72,6 +72,13 @@ var scoreHistorySchema = new mongoose.Schema({
     text: String
 });
 
+var interviewScoreSchema = new mongoose.Schema({
+    interviewee_ID: ObjectId,
+    option_order: Number,
+    option_text: String,
+    value: Number
+});
+
 var answerOptionSchema = new mongoose.Schema({
     option_order: Number,
     option_text: String,
@@ -96,6 +103,7 @@ var answerSchema = mongoose.Schema({
         value: Number,
         _id: ObjectId
     },
+    interview_score: [interviewScoreSchema],
     answer_text: String,
     answer_options:[answerOptionSchema],
     score_history: [scoreHistorySchema],

@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, mgaAssessmentSrvc, mgaUserListSrvc, mgaAnswerSrvc, $routeParams) {
+angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, $routeParams, $location, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by Question Number"},
@@ -31,7 +31,18 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
     });
     $scope.submitAssessment = function () {
         console.log($scope);
-        // change assessment status to interview
-        // reset que43stions complete
+        var new_assessment_data = $scope.assessment;
+
+        new_assessment_data.status = 'interview';
+        new_assessment_data.questions_complete = 0;
+
+        mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
+            mgaNotifier.notify('Assessment submited');
+            $location.path('/admin/assessments-admin');
+        }, function (reason) {
+            mgaNotifier.notify(reason);
+        });
+
+
     }
 });
