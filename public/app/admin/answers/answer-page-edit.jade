@@ -1,23 +1,17 @@
-.container.top-padding-med(ng-if="answer.question_mode==='desk_research'")
+.container.top-padding-med
     .well.left-padding-lg.right-padding-lg
-        legend {{assessment.country}} {{assessment.year}} {{assessment.version}} desk research
+        legend {{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}
         .row.left-padding-lg.bottom-padding-med
             h3
                 em Question {{answer.question_order}}. {{answer.question_text}}
 
-        //- Active buttons
+        //- ACTIVE BUTTONS
         .row.left-padding-lg.bottom-padding-lg
             .col-md-pull-2
                 button.btn.btn-primary(ng-click="answerSave()") Save answer
                 | &nbsp;
-                //button.btn.btn-success(
-                //ng-click="answerSubmit()"
-                //ng-if="flagCheck(answer.flags)"
-                //) Submit answer
-                //| &nbsp;
                 button.btn.btn-success(
                 ng-click="answerSubmit()"
-                ng-if="!answer_text_form.$invalid && !answer_choice_form.$invalid"
                 ng-disabled="flagCheck(answer.flags)"
                 ) Submit answer
                 | &nbsp;
@@ -26,12 +20,24 @@
                 button.btn.btn-danger(ng-click="answerClear()") Clear answer
                 | &nbsp;
                 a.btn.btn-default(href="/assessments/{{answer.assessment_ID}}") Return to assessment menu
-        .row.left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='score'")
-            div(ng-if="answer.answer_score")
-                label.col-med-2 Selected Score:
-                text  {{answer.answer_score.option_text}}
-            div(ng-if="!answer.answer_score") No answer selected
 
+        // DESK RESEARCH ANSWER DISPLAY
+        .row(ng-if="answer.question_mode==='desk_research'")
+            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='score'")
+                div(ng-if="answer.answer_score")
+                    label.col-med-2 Selected Score:
+                    text  {{answer.answer_score.option_text}}
+                div(ng-if="!answer.answer_score") No answer selected
+        // INTERVIEW ANSWER DISPLAY
+        .row(ng-if="answer.question_mode==='interview'")
+            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
+                .row(ng-repeat="score in answer.interview_score")
+                    text {{score}}
+                    //div
+                    //    label.col-med-2 Selected Score:
+                    //    text {{score.option_text}}
+
+        // FLAGS
         .row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
             div(id="flags_div").bottom-padding-med
                 legend Flags:
@@ -56,23 +62,24 @@
                                     small
                                         em {{flag.date | date:'MM/dd/yyyy @ h:mma' : timezone}}
 
-        .row.left-padding-lg.right-padding-lg
-            .form-horizontal(name="answer_form")
-                fieldset
+
+
+        //// DESK RESEARCH ANSWER FORM
+        .row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='desk_research'")
+            .form-horizontal(name="desk_research_answer_form")
+                fieldset(ng-if="answer.question_mode==='desk_research'")
                     div(id="answer_choice_div").bottom-padding-med
-                        legend(ng-if="answer.question_data_type==='score'") Choose one of the following answers (required):
+                        legend Choose one of the following answers (required):
                         ng-form(name="answer_choice_form")
-                            .form-group.left-padding-lg(ng-repeat="option in answer.answer_options")
+                            .form-group.left-padding-lg(ng-repeat="option in answer.answer_options" required)
                                 input(
                                 type="radio"
-                                name="option.option_text"
                                 ng-value="option"
-                                ng-model="answer.answer_score"
-                                required)
+                                ng-model="answer.answer_score")
                                 text.left-padding-med {{option.option_text}}
-                    div(id="answer_text_div").bottom-padding-med
-                        legend(ng-if="answer.question_data_type==='text'") Please provide a text based answer (required):
-                        ng-form(name="answer_text_form")
+
+                    div(id="answer_justification_div").bottom-padding-med
+                        ng-form(name="answer_justification_form")
                             .form-group.top-padding-med
                                 .row.left-padding-lg
                                     .col-md-11
@@ -80,11 +87,46 @@
                                         name="answer_text"
                                         type="text"
                                         ng-model="answer.answer_text"
-                                        placeholder="Please provide your text based answer... (required)"
+                                        placeholder="Please provide interview transcription... (required)")
+
+        // INTERVIEW ANSWER FORM
+        .row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='interview'")
+            .form-horizontal(name="interview_answer_form")
+                fieldset
+                    div(id="answer_choice_div").bottom-padding-med
+                        legend(ng-if="answer.question_data_type==='score'") Choose one of the following answers (required):
+                        ng-form.col-md-6(name="answer_choice_form")
+                            .form-group.left-padding-lg(ng-repeat="option in answer.answer_options")
+                                input(
+                                type="radio"
+                                ng-value="option"
+                                ng-model="new_interview_answer.score")
+                                text.left-padding-med {{option.option_text}}
+                        .col-md-5.pull-left.top-padding-med
+                            .row
+                                ng-form(name="interviewee_selection_form")
+                                    select.form-group.form-control(ng-model="new_interview_answer.interviewee_ID")
+                                        option(value="" selected disabled) Select interviewee
+                                        option(ng-repeat="interviewee in interviewees" value="{{interviewee._id}}") {{interviewee.firstName}} {{interviewee.lastName}} - {{interviewee.role}}
+                            .row
+                                //TODO add new interviewee function
+                                button.form-group.form-control.btn.center-block.btn-primary(ng-click="intervieweeAdd()") Add new interviewee
+                            //.row {{interviewees}}
+                    div(id="answer_text_div").bottom-padding-med
+                        legend(ng-if="answer.question_data_type==='text'") Please provide a text based answer (required):
+                        ng-form(name="interview_answer_text_form")
+                            .form-group.top-padding-med
+                                .row.left-padding-lg
+                                    .col-md-11
+                                        textarea.form-control(
+                                        name="answer_text"
+                                        type="text"
+                                        ng-model="new_interview_answer.interview_text"
+                                        placeholder="Please provide interview transcription... (required)"
                                         required)
 
 
-
+        // COMMENTING
         .row.left-padding-lg.right-padding-lg
             div(id="comments_div").bottom-padding-med
                 legend Comments:
@@ -118,6 +160,7 @@
                                     ng-disabled="new_comment_form.$invalid"
                                     ) Submit comment
         // TODO reset ref_selection
+        // REFERENCE ADD
         .row.left-padding-lg.right-padding-lg
             div(id="biblio_div").bottom-padding-med
                 legend References:
@@ -301,40 +344,3 @@
                             .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}
                             .row Comments: {{ref.comment.content}}
                             br
-
-
-.container.top-padding-med(ng-if="answer.question_mode==='interview'")
-    .well.left-padding-lg.right-padding-lg
-        legend {{assessment.country}} {{assessment.year}} {{assessment.version}} interviews
-        .row.left-padding-lg.bottom-padding-med
-            h3
-                em Question {{answer.question_order}}. {{answer.question_text}}
-
-        //- Active buttons
-        .row.left-padding-lg.bottom-padding-lg
-            .col-md-pull-2
-                button.btn.btn-primary(ng-click="answerSave()") Save answer
-                | &nbsp;
-                //button.btn.btn-success(
-                //ng-click="answerSubmit()"
-                //ng-if="flagCheck(answer.flags)"
-                //) Submit answer
-                //| &nbsp;
-                button.btn.btn-success(
-                ng-click="answerSubmit()"
-                ng-if="!answer_text_form.$invalid && !answer_choice_form.$invalid"
-                ng-disabled="flagCheck(answer.flags)"
-                ) Submit answer
-                | &nbsp;
-                button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
-                | &nbsp;
-                button.btn.btn-danger(ng-click="answerClear()") Clear answer
-                | &nbsp;
-                a.btn.btn-default(href="/assessments/{{answer.assessment_ID}}") Return to assessment menu
-
-        .row.left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
-            .row(ng-repeat="score in answer.interview_score")
-                text {{score}}
-                //div
-                //    label.col-med-2 Selected Score:
-                //    text {{score.option_text}}

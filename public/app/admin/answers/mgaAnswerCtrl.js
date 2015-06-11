@@ -10,37 +10,42 @@ function zeroFill(number, width) {
     return number + ""; // always return a string
 }
 
-angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, $location, FileUploader, ngDialog, mgaNotifier, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams, $q, $location, FileUploader, ngDialog, mgaNotifier, mgaIntervieweeSrvc, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
     $scope.identity = mgaIdentitySrvc;
+    $scope.new_interview_answer = {};
 
     mgaAnswerSrvc.get({
         answer_ID: $routeParams.answer_ID,
         assessment_ID: $routeParams.answer_ID.substring(0, 2)
     }, function (answer) {
         mgaDocumentSrvc.query({}, function (documents) {
-            $scope.answer = answer;
-            $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: answer.assessment_ID});
-            $scope.question = mgaQuestionSrvc.get({_id: answer.root_question_ID});
-            $scope.current_user = mgaIdentitySrvc.currentUser;
-            $scope.answer_start = angular.copy($scope.answer);
+            mgaIntervieweeSrvc.query({assessments: answer.assessment_ID}, function (interviewees) {
+                $scope.interviewees = interviewees;
+                $scope.answer = answer;
+                $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: answer.assessment_ID});
+                $scope.question = mgaQuestionSrvc.get({_id: answer.root_question_ID});
+                $scope.current_user = mgaIdentitySrvc.currentUser;
+                $scope.answer_start = angular.copy($scope.answer);
 
-            var document_selectors = [];
-            documents.forEach(function (el) {
-                document_selectors.push({
-                    _id: el._id,
-                    title: el.title
-                })
-            });
-            $scope.document_selectors = document_selectors;
-
-            var citations = [];
-            answer.references.citation.forEach(function (el) {
-                mgaDocumentSrvc.get({_id: el.document_ID}, function (doc) {
-                    doc.comment = el.comment;
-                    citations.push(doc);
+                var document_selectors = [];
+                documents.forEach(function (el) {
+                    document_selectors.push({
+                        _id: el._id,
+                        title: el.title
+                    })
                 });
+                $scope.document_selectors = document_selectors;
+
+                var citations = [];
+                answer.references.citation.forEach(function (el) {
+                    mgaDocumentSrvc.get({_id: el.document_ID}, function (doc) {
+                        doc.comment = el.comment;
+                        citations.push(doc);
+                    });
+                });
+                $scope.citations = citations;
             });
-            $scope.citations = citations;
+
         });
     });
 
@@ -125,18 +130,60 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $routeParams
             new_assessment_data.questions_complete += 1;
         }
 
-        mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-            .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-            .then(function () {
-                if (new_assessment_data.questions_complete !== new_assessment_data.question_length && new_answer_data.question_order !== new_assessment_data.question_length) {
-                    $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_order + 1), 3))); //TODO figure out non-sequential question order as well as end question
-                } else {
-                    $location.path('/assessments/' + new_answer_data.assessment_ID);
-                }
-                mgaNotifier.notify('Answer submitted');
-            }, function (reason) {
-                mgaNotifier.notify(reason);
-            });
+        if (new_answer_data.question_mode === 'desk_research') {
+            if (new_answer_data.answer_text === '') {
+                mgaNotifier.error('You must provde justification text to be able to submit this answer! Please save until you are ready.');
+            } else if (new_answer_data.question_data_type === 'score' && !new_answer_data.answer_score) {
+                mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.')
+            } else {
+                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                    .then(function () {
+                        if (new_assessment_data.questions_complete !== new_assessment_data.question_length && new_answer_data.question_order !== new_assessment_data.question_length) {
+                            $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_order + 1), 3))); //TODO figure out non-sequential question order as well as end question
+                        } else {
+                            $location.path('/assessments/' + new_answer_data.assessment_ID);
+                        }
+                        mgaNotifier.notify('Answer submitted');
+                    }, function (reason) {
+                        mgaNotifier.notify(reason);
+                    });
+            }
+        } else if (new_answer_data.question_mode === 'interview') {
+            if (!$scope.new_interview_answer.interviewee_ID) {
+                mgaNotifier.error('You must select and interview subject from the dropdown or add a new subject!');
+            } else if (!$scope.new_interview_answer.interview_text) {
+                mgaNotifier.error('You must provide a text transcript of the interview answer! Please save until you are ready.');
+            } else if (!$scope.new_interview_answer.score) {
+                mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
+
+            } else {
+                new_answer_data.interview_score.push({
+                    interviewee_ID: $scope.new_interview_answer.interviewee_ID,
+                    option_order: $scope.new_interview_answer.score.option_order,
+                    option_text: $scope.new_interview_answer.score.option_text,
+                    value: $scope.new_interview_answer.score.value,
+                    interview_text: $scope.new_interview_answer.interview_text
+                });
+                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                    .then(function () {
+                        mgaNotifier.notify('Interview submitted');
+                    }, function (reason) {
+                        mgaNotifier.notify(reason);
+                    });
+            }
+        }
+    };
+
+    $scope.intervieweeAdd = function () {
+        $scope.value = true;
+        ngDialog.open({
+            template: 'partials/dialogs/new-interviewee-dialog',
+            controller: 'mgaNewIntervieweeDialogCtrl',
+            className: 'ngdialog-theme-plain',
+            scope: $scope
+        });
     };
 
     $scope.commentSubmit = function (current_user) {

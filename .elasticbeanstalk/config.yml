@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: null
+    environment: mgaAssessmentTool-env
 global:
   application_name: mga-assessment-tool
   default_ec2_keyname: rgi-tool

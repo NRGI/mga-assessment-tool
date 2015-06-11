@@ -105,7 +105,6 @@ exports.updateUser = function (req, res) {
         user_updates.salt = encrypt.createSalt();
         user_updates.hashed_pwd = encrypt.hashPwd(req.user.salt, user_updates.password);
     }
-    console.log(user_updates);
 
     query.exec(function (err, user) {
         if (err) {

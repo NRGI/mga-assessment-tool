@@ -76,7 +76,8 @@ var interviewScoreSchema = new mongoose.Schema({
     interviewee_ID: ObjectId,
     option_order: Number,
     option_text: String,
-    value: Number
+    value: Number,
+    interview_text: String
 });
 
 var answerOptionSchema = new mongoose.Schema({

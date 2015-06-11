@@ -9,6 +9,7 @@ var auth = require('./auth'),
     answers = require('../controllers/answers'),
     questions = require('../controllers/questions'),
     assessments = require('../controllers/assessments'),
+    interviewees = require('../controllers/interviewees'),
     countries = require('../controllers/countries'),
     documents = require('../controllers/documents'),
     multipart = require('connect-multiparty'),
@@ -94,6 +95,22 @@ module.exports = function (app) {
      /////////////////////////
 
      app.post('/file-upload', auth.requiresApiLogin,  multipartMiddleware, documents.fileCheck);
+
+    /////////////////////////
+    ///// INTERVIEWEE CRUD ////////
+    /////////////////////////
+    // GET
+    app.get('/api/interviewees', auth.requiresApiLogin, interviewees.getInterviewees);
+    app.get('/api/interviewees/:id', auth.requiresRole('supervisor'), interviewees.getIntervieweesByID);
+
+    // POST
+    app.post('/api/interviewees', auth.requiresRole('supervisor'), interviewees.createInterviewee);
+
+    // PUT
+    app.put('/api/interviewees', auth.requiresApiLogin, interviewees.updateInterviewee);
+
+    // DELETE
+    app.delete('/api/interviewees/:id', auth.requiresRole('supervisor'), interviewees.deleteInterviewee);
 
     ////////////////////
     ///// OTHER ////////
