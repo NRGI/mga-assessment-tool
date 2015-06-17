@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, ngDialog, mgaNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, $route, ngDialog, mgaNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
     $scope.new_document = $scope.$parent.new_document;
 
     if ($scope.new_document.status === 'created') {
@@ -38,27 +38,27 @@ angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, n
                 new_doc_data.status = 'submitted';
             }
 
-            if (new_doc_data.assessments !== undefined) {
+            if (new_doc_data.assessments !== undefined && new_doc_data.assessments.indexOf(assessment_ID) < 0) {
                 new_doc_data.assessments.push(assessment_ID);
-            } else {
+            } else if (new_doc_data.assessments === undefined) {
                 new_doc_data.assessments = [assessment_ID];
             }
 
-            if (new_doc_data.questions !== undefined) {
+            if (new_doc_data.questions !== undefined && new_doc_data.questions.indexOf(question_ID) < 0) {
                 new_doc_data.questions.push(question_ID);
-            } else {
+            } else if (new_doc_data.questions === undefined) {
                 new_doc_data.questions = [question_ID];
             }
 
-            if (new_doc_data.answers !== undefined) {
+            if (new_doc_data.answers !== undefined && new_doc_data.answers.indexOf(answer_ID) < 0) {
                 new_doc_data.answers.push(answer_ID);
-            } else {
+            } else if (new_doc_data.answers === undefined) {
                 new_doc_data.answers = [answer_ID];
             }
 
-            if (new_doc_data.users !== undefined) {
+            if (new_doc_data.users !== undefined && new_doc_data.users.indexOf(current_user_ID) < 0) {
                 new_doc_data.users.push(current_user_ID);
-            } else {
+            } else if (new_doc_data.users === undefined) {
                 new_doc_data.users = [current_user_ID];
             }
 
@@ -73,11 +73,11 @@ angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, n
                 .then(function () {
                     $scope.closeThisDialog();
                     mgaNotifier.notify('reference added');
+                    $route.reload();
                 }, function (reason) {
                     mgaNotifier.error(reason);
                 });
         }
-
     };
 
     $scope.closeDialog = function () {

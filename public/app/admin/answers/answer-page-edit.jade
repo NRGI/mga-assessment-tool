@@ -12,14 +12,15 @@
                 | &nbsp;
                 button.btn.btn-success(
                 ng-click="answerSubmit()"
-                ng-disabled="flagCheck(answer.flags)"
+                ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' && !answer.answer_score)"
+                ng-if="answer.question_mode !== 'interview'"
                 ) Submit answer
                 | &nbsp;
                 button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
                 | &nbsp;
                 button.btn.btn-danger(ng-click="answerClear()") Clear answer
                 | &nbsp;
-                a.btn.btn-default(href="/assessments/{{answer.assessment_ID}}") Return to assessment menu
+                a.btn.btn-default(href="/admin/assessments-admin/{{answer.assessment_ID}}") Return to menu
 
         // DESK RESEARCH ANSWER DISPLAY
         .row(ng-if="answer.question_mode==='desk_research'")
@@ -76,7 +77,7 @@
             .form-horizontal(name="desk_research_answer_form")
                 fieldset(ng-if="answer.question_mode==='desk_research'")
                     div(id="answer_choice_div").bottom-padding-med
-                        legend Choose one of the following answers (required):
+                        legend(ng-if="answer.question_data_type==='score'") Choose one of the following answers (required):
                         ng-form(name="answer_choice_form")
                             .form-group.left-padding-lg(ng-repeat="option in answer.answer_options" required)
                                 input(
@@ -86,6 +87,7 @@
                                 text.left-padding-med {{option.option_text}}
 
                     div(id="answer_justification_div").bottom-padding-med
+                        legend(ng-if="answer.question_data_type==='text'") Please provide a text based response (required):
                         ng-form(name="answer_justification_form")
                             .form-group.top-padding-med
                                 .row.left-padding-lg
@@ -94,7 +96,8 @@
                                         name="answer_text"
                                         type="text"
                                         ng-model="answer.answer_text"
-                                        placeholder="Please provide interview transcription... (required)")
+                                        placeholder="Please provide interview transcription... (required)"
+                                        autocomplete="off")
 
         // INTERVIEW ANSWER FORM
         .row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='interview'")
@@ -129,10 +132,12 @@
                                         type="text"
                                         ng-model="new_interview_answer.interview_text"
                                         placeholder="Please provide interview transcription... (required)"
+                                        autocomplete="off"
                                         required)
                                     .col-md-1
                                         button.btn.btn-success(
                                         ng-click="answerSubmit()"
+                                        ng-disabled="!new_interview_answer.score|| !new_interview_answer.interview_text || !new_interview_answer.interviewee_ID"
                                         ) Submit interview
 
 
@@ -164,6 +169,7 @@
                                     type="text"
                                     ng-model="answer.new_comment"
                                     placeholder="New comment..."
+                                    autocomplete="off"
                                     required)
                                 .col-md-1
                                     button.btn.btn-success(
@@ -237,27 +243,29 @@
                 .row.bottom-padding-med(ng-if="ref_selection==='web'" id="new_web_form")
                     ng-form.form-horizontal(name="new_web_form")
                         fieldset
-                            .row.form-group.pull-left.left-padding-lg.col-lg-6
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 input.form-control(
                                 name="title"
                                 type="text"
                                 placeholder="Website title (required)..."
                                 ng-model="answer.web_ref_title"
+                                autocomplete="off"
                                 required)
-                            .row.form-group.pull-right.left-padding-lg.col-lg-6
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 input.form-control(
                                 name="url"
                                 type="text"
                                 placeholder="Website URL (required)..."
                                 ng-model="answer.web_ref_url"
+                                autocomplete="off"
                                 required)
-                            .row.form-group.pull-right.col-lg-12
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 textarea.form-control(
                                 name="comment"
                                 type="text"
                                 placeholder="Comments..."
+                                autocomplete="off"
                                 ng-model="answer.web_ref_comment")
-
                     .col-md-1.pull-left.top-padding-med.left-padding-lg(ng-if="ref_selection==='web'")
                         button.btn.btn-success(
                         ng-click="webRefSubmit(current_user)"
@@ -268,47 +276,50 @@
                 .row.bottom-padding-med(ng-if="ref_selection==='human'" id="new_human_form")
                     ng-form.form-horizontal(name="new_human_form")
                         fieldset
-                            .row.form-group.pull-left.left-padding-lg.col-lg-6
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 input.form-control(
                                 name="first_name"
                                 type="text"
                                 placeholder="First name (required)..."
                                 ng-model="answer.human_ref_first_name"
+                                autocomplete="off"
                                 required)
-                            .row.form-group.pull-right.left-padding-lg.col-lg-6
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 input.form-control(
                                 name="last_name"
                                 type="text"
                                 placeholder="Last name (required)..."
                                 ng-model="answer.human_ref_last_name"
+                                autocomplete="off"
                                 required)
-                            .row.form-group.pull-left.left-padding-lg.col-lg-6
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 input.form-control(
                                 name="email"
                                 type="text"
-                                placeholder="Email address (required)..."
+                                placeholder="Email address..."
                                 ng-model="answer.human_ref_email"
-                                required)
-                            .row.form-group.pull-right.left-padding-lg.col-lg-6
+                                autocomplete="off")
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 input.form-control(
                                 name="phone"
                                 type="text"
-                                placeholder="Phone number (required)..."
+                                placeholder="Phone number..."
                                 ng-model="answer.human_ref_phone"
-                                required)
-                            .row.form-group.pull-right.left-padding-lg.col-lg-6
+                                autocomplete="off")
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 input.form-control(
                                 name="date"
                                 type="text"
-                                placeholder="Date contacted (required)..."
+                                placeholder="Date contacted..."
                                 ng-model="answer.human_ref_contact_date"
-                                required)
-                            .row.form-group.pull-right.col-lg-12
+                                autocomplete="off")
+                            .row.form-group.left-padding-lg.right-padding-lg
                                 textarea.form-control(
                                 name="comment"
                                 type="text"
                                 placeholder="Comments..."
-                                ng-model="answer.human_ref_comment")
+                                ng-model="answer.human_ref_comment"
+                                autocomplete="off")
 
                     .col-md-1.pull-left.top-padding-med.left-padding-lg(ng-if="ref_selection==='human'")
                         button.btn.btn-success(

@@ -8,14 +8,15 @@
             <div class="col-md-pull-2">
                 <button ng-click="answerSave()" class="btn btn-primary">Save answer</button>
                 &nbsp;
-                <button ng-click="answerSubmit()" ng-disabled="flagCheck(answer.flags)" class="btn btn-success">Submit
-                    answer
+                <button ng-click="answerSubmit()"
+                        ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' &amp;&amp; !answer.answer_score)"
+                        ng-if="answer.question_mode !== 'interview'" class="btn btn-success">Submit answer
                 </button>
                 &nbsp;
                 <button ng-click="answerFlag(current_user)" class="btn btn-warning">Flag answer</button>
                 &nbsp;
                 <button ng-click="answerClear()" class="btn btn-danger">Clear answer</button>
-                &nbsp;<a href="/assessments/{{answer.assessment_ID}}" class="btn btn-default">Return to assessment
+                &nbsp;<a href="/admin/assessments-admin/{{answer.assessment_ID}}" class="btn btn-default">Return to
                 menu</a></div>
         </div>
         <!-- DESK RESEARCH ANSWER DISPLAY-->
@@ -83,7 +84,9 @@
             <div name="desk_research_answer_form" class="form-horizontal">
                 <fieldset ng-if="answer.question_mode==='desk_research'">
                     <div id="answer_choice_div" class="bottom-padding-med">
-                        <legend>Choose one of the following answers (required):</legend>
+                        <legend ng-if="answer.question_data_type==='score'">Choose one of the following answers
+                            (required):
+                        </legend>
                         <ng-form name="answer_choice_form">
                             <div ng-repeat="option in answer.answer_options" required="required"
                                  class="form-group left-padding-lg"><input type="radio" ng-value="option"
@@ -93,13 +96,17 @@
                         </ng-form>
                     </div>
                     <div id="answer_justification_div" class="bottom-padding-med">
+                        <legend ng-if="answer.question_data_type==='text'">Please provide a text based response
+                            (required):
+                        </legend>
                         <ng-form name="answer_justification_form">
                             <div class="form-group top-padding-med">
                                 <div class="row left-padding-lg">
                                     <div class="col-md-11"><textarea name="answer_text" type="text"
                                                                      ng-model="answer.answer_text"
                                                                      placeholder="Please provide interview transcription... (required)"
-                                                                     class="form-control"></textarea></div>
+                                                                     autocomplete="off" class="form-control"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </ng-form>
@@ -147,10 +154,12 @@
                                     <div class="col-md-10"><textarea name="answer_text" type="text"
                                                                      ng-model="new_interview_answer.interview_text"
                                                                      placeholder="Please provide interview transcription... (required)"
-                                                                     required="required"
+                                                                     autocomplete="off" required="required"
                                                                      class="form-control"></textarea></div>
                                     <div class="col-md-1">
-                                        <button ng-click="answerSubmit()" class="btn btn-success">Submit interview
+                                        <button ng-click="answerSubmit()"
+                                                ng-disabled="!new_interview_answer.score|| !new_interview_answer.interview_text || !new_interview_answer.interviewee_ID"
+                                                class="btn btn-success">Submit interview
                                         </button>
                                     </div>
                                 </div>
@@ -183,8 +192,9 @@
                             <div class="row left-padding-lg">
                                 <div class="col-md-10"><textarea name="comment" type="text"
                                                                  ng-model="answer.new_comment"
-                                                                 placeholder="New comment..." required="required"
-                                                                 class="form-control"></textarea></div>
+                                                                 placeholder="New comment..." autocomplete="off"
+                                                                 required="required" class="form-control"></textarea>
+                                </div>
                                 <div class="col-md-1">
                                     <button ng-click="commentSubmit(current_user)"
                                             ng-disabled="new_comment_form.$invalid" class="btn btn-success">Submit
@@ -273,24 +283,26 @@
                 <div ng-if="ref_selection==='web'" id="new_web_form" class="row bottom-padding-med">
                     <ng-form name="new_web_form" class="form-horizontal">
                         <fieldset>
-                            <div class="row form-group pull-left left-padding-lg col-lg-6"><input name="title"
-                                                                                                  type="text"
-                                                                                                  placeholder="Website title (required)..."
-                                                                                                  ng-model="answer.web_ref_title"
-                                                                                                  required="required"
-                                                                                                  class="form-control"/>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="title" type="text"
+                                                                                                placeholder="Website title (required)..."
+                                                                                                ng-model="answer.web_ref_title"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
                             </div>
-                            <div class="row form-group pull-right left-padding-lg col-lg-6"><input name="url"
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="url" type="text"
+                                                                                                placeholder="Website URL (required)..."
+                                                                                                ng-model="answer.web_ref_url"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><textarea name="comment"
                                                                                                    type="text"
-                                                                                                   placeholder="Website URL (required)..."
-                                                                                                   ng-model="answer.web_ref_url"
-                                                                                                   required="required"
-                                                                                                   class="form-control"/>
-                            </div>
-                            <div class="row form-group pull-right col-lg-12"><textarea name="comment" type="text"
-                                                                                       placeholder="Comments..."
-                                                                                       ng-model="answer.web_ref_comment"
-                                                                                       class="form-control"></textarea>
+                                                                                                   placeholder="Comments..."
+                                                                                                   autocomplete="off"
+                                                                                                   ng-model="answer.web_ref_comment"
+                                                                                                   class="form-control"></textarea>
                             </div>
                         </fieldset>
                     </ng-form>
@@ -303,45 +315,46 @@
                 <div ng-if="ref_selection==='human'" id="new_human_form" class="row bottom-padding-med">
                     <ng-form name="new_human_form" class="form-horizontal">
                         <fieldset>
-                            <div class="row form-group pull-left left-padding-lg col-lg-6"><input name="first_name"
-                                                                                                  type="text"
-                                                                                                  placeholder="First name (required)..."
-                                                                                                  ng-model="answer.human_ref_first_name"
-                                                                                                  required="required"
-                                                                                                  class="form-control"/>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="first_name"
+                                                                                                type="text"
+                                                                                                placeholder="First name (required)..."
+                                                                                                ng-model="answer.human_ref_first_name"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
                             </div>
-                            <div class="row form-group pull-right left-padding-lg col-lg-6"><input name="last_name"
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="last_name"
+                                                                                                type="text"
+                                                                                                placeholder="Last name (required)..."
+                                                                                                ng-model="answer.human_ref_last_name"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="email" type="text"
+                                                                                                placeholder="Email address..."
+                                                                                                ng-model="answer.human_ref_email"
+                                                                                                autocomplete="off"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="phone" type="text"
+                                                                                                placeholder="Phone number..."
+                                                                                                ng-model="answer.human_ref_phone"
+                                                                                                autocomplete="off"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="date" type="text"
+                                                                                                placeholder="Date contacted..."
+                                                                                                ng-model="answer.human_ref_contact_date"
+                                                                                                autocomplete="off"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><textarea name="comment"
                                                                                                    type="text"
-                                                                                                   placeholder="Last name (required)..."
-                                                                                                   ng-model="answer.human_ref_last_name"
-                                                                                                   required="required"
-                                                                                                   class="form-control"/>
-                            </div>
-                            <div class="row form-group pull-left left-padding-lg col-lg-6"><input name="email"
-                                                                                                  type="text"
-                                                                                                  placeholder="Email address (required)..."
-                                                                                                  ng-model="answer.human_ref_email"
-                                                                                                  required="required"
-                                                                                                  class="form-control"/>
-                            </div>
-                            <div class="row form-group pull-right left-padding-lg col-lg-6"><input name="phone"
-                                                                                                   type="text"
-                                                                                                   placeholder="Phone number (required)..."
-                                                                                                   ng-model="answer.human_ref_phone"
-                                                                                                   required="required"
-                                                                                                   class="form-control"/>
-                            </div>
-                            <div class="row form-group pull-right left-padding-lg col-lg-6"><input name="date"
-                                                                                                   type="text"
-                                                                                                   placeholder="Date contacted (required)..."
-                                                                                                   ng-model="answer.human_ref_contact_date"
-                                                                                                   required="required"
-                                                                                                   class="form-control"/>
-                            </div>
-                            <div class="row form-group pull-right col-lg-12"><textarea name="comment" type="text"
-                                                                                       placeholder="Comments..."
-                                                                                       ng-model="answer.human_ref_comment"
-                                                                                       class="form-control"></textarea>
+                                                                                                   placeholder="Comments..."
+                                                                                                   ng-model="answer.human_ref_comment"
+                                                                                                   autocomplete="off"
+                                                                                                   class="form-control"></textarea>
                             </div>
                         </fieldset>
                     </ng-form>

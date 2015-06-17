@@ -89,7 +89,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             controller: 'mgaDocumentAdminCtrl'
         })
         .when('/admin/documents-admin/:document_ID', {
-            templateUrl: '/partials/admin/assessments/document-admin-detail',
+            templateUrl: '/partials/admin/documents/document-admin-detail',
             controller: 'mgaDocumentAdminDetailCtrl'
         })
         // INTERVIEWEES

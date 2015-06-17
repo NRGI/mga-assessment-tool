@@ -13,6 +13,7 @@ div.top-padding-med
                             type="text"
                             placeholder="Title (required)..."
                             ng-model="new_document.title"
+                            autocomplete="off"
                             required)
 
                         // DOC TYPE
@@ -33,6 +34,7 @@ div.top-padding-med
                                         type="text"
                                         placeholder="Author first name (required)..."
                                         ng-model="author.first_name"
+                                        autocomplete="off"
                                         required)
                                     .pull-left.col-lg-6
                                         input.form-control(
@@ -40,6 +42,7 @@ div.top-padding-med
                                         type="text"
                                         placeholder="Author last name (required)..."
                                         ng-model="author.last_name"
+                                        autocomplete="off"
                                         required)
 
                         // EDITORS
@@ -52,14 +55,14 @@ div.top-padding-med
                                         type="text"
                                         placeholder="Editor first name..."
                                         ng-model="editor.first_name"
-                                        required)
+                                        autocomplete="off")
                                     .pull-left.col-lg-6
                                         input.form-control(
                                         name="editor_last"
                                         type="text"
                                         placeholder="Editor last name..."
                                         ng-model="editor.last_name"
-                                        required)
+                                        autocomplete="off")
 
                         // SOURCE
                         div
@@ -70,7 +73,8 @@ div.top-padding-med
                                         name="source"
                                         type="text"
                                         placeholder="Source URL..."
-                                        ng-model="new_document.source")
+                                        ng-model="new_document.source"
+                                        autocomplete="off")
 
 
                         div
@@ -82,7 +86,8 @@ div.top-padding-med
                                         name="year"
                                         type="text"
                                         placeholder="Year published..."
-                                        ng-model="new_document.year")
+                                        ng-model="new_document.year"
+                                        autocomplete="off")
 
                                     // PAGES
                                     .pull-left.col-lg-6
@@ -90,7 +95,8 @@ div.top-padding-med
                                         name="pages"
                                         type="text"
                                         placeholder="Pages..."
-                                        ng-model="editor.pages")
+                                        ng-model="new_document.pages"
+                                        autocomplete="off")
 
                         div
                             .row
@@ -101,7 +107,8 @@ div.top-padding-med
                                         name="volume"
                                         type="text"
                                         placeholder="Volume..."
-                                        ng-model="new_document.volume")
+                                        ng-model="new_document.volume"
+                                        autocomplete="off")
 
                                     //ISSUE
                                     .pull-left.col-lg-6
@@ -109,7 +116,8 @@ div.top-padding-med
                                         name="issue"
                                         type="text"
                                         placeholder="Issue..."
-                                        ng-model="editor.issue")
+                                        ng-model="new_document.issue"
+                                        autocomplete="off")
 
                         div
                             .row
@@ -120,7 +128,8 @@ div.top-padding-med
                                         name="publisher"
                                         type="text"
                                         placeholder="Publisher..."
-                                        ng-model="new_document.publisher")
+                                        ng-model="new_document.publisher"
+                                        autocomplete="off")
 
                                     // CITY
                                     .pull-left.col-lg-6
@@ -128,7 +137,8 @@ div.top-padding-med
                                         name="city"
                                         type="text"
                                         placeholder="City..."
-                                        ng-model="editor.city")
+                                        ng-model="new_document.city"
+                                        autocomplete="off")
 
                         div
                             .row
@@ -139,7 +149,8 @@ div.top-padding-med
                                         name="edition"
                                         type="text"
                                         placeholder="Edition..."
-                                        ng-model="new_document.edition")
+                                        ng-model="new_document.edition"
+                                        autocomplete="off")
 
                                     // INSTITUTION
                                     .pull-left.col-lg-6
@@ -147,7 +158,8 @@ div.top-padding-med
                                         name="institution"
                                         type="text"
                                         placeholder="Institution..."
-                                        ng-model="editor.institution")
+                                        ng-model="new_document.institution"
+                                        autocomplete="off")
 
                         div
                             .row
@@ -158,7 +170,8 @@ div.top-padding-med
                                         name="series"
                                         type="text"
                                         placeholder="Series..."
-                                        ng-model="new_document.series")
+                                        ng-model="new_document.series"
+                                        autocomplete="off")
 
                                     // CHAPTER
                                     .pull-left.col-lg-6
@@ -166,7 +179,8 @@ div.top-padding-med
                                         name="chapter"
                                         type="text"
                                         placeholder="Chapter..."
-                                        ng-model="editor.chapter")
+                                        ng-model="new_document.chapter"
+                                        autocomplete="off")
 
                         div
                             .row
@@ -177,7 +191,8 @@ div.top-padding-med
                                         name="country"
                                         type="text"
                                         placeholder="Country..."
-                                        ng-model="new_document.country")
+                                        ng-model="new_document.country"
+                                        autocomplete="off")
 
                                     // TRANSLATORS
                                     .pull-left.col-lg-6
@@ -185,7 +200,8 @@ div.top-padding-med
                                         name="translators"
                                         type="text"
                                         placeholder="Translators..."
-                                        ng-model="editor.translators")
+                                        ng-model="new_document.translators"
+                                        autocomplete="off")
                         // SERIES EDITOR
                         div
                             .row
@@ -196,7 +212,8 @@ div.top-padding-med
                                         name="series_editor"
                                         type="text"
                                         placeholder="Series editor..."
-                                        ng-model="new_document.series_editor")
+                                        ng-model="new_document.series_editor"
+                                        autocomplete="off")
 
                     // EXISTING DOC
                     div(ng-if="new_document.status==='submitted'")
@@ -336,7 +353,8 @@ div.top-padding-med
                                     name="comment"
                                     type="text"
                                     placeholder="Comments..."
-                                    ng-model="answer.new_ref_comment")
+                                    ng-model="answer.new_ref_comment"
+                                    autocomplete="off")
 
                     //- BUTTON CONTROL
                     div
