@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserSrvc, mgaUserMethodSrvc) {
+angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($scope, $route, $location, ngDialog, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserSrvc, mgaUserMethodSrvc) {
     mgaUserSrvc.query({}, function (data) {
         $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: $scope.$parent.assessment_ID});
         $scope.users = [];
@@ -45,7 +45,7 @@ angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($sco
                     new_assessment_data = undefined;
                     new_user_data = undefined;
                     $scope.closeThisDialog();
-                    $location.path('/admin/assessment-admin');
+                    $route.reload();
                 }, function (reason) {
                     mgaNotifier.error(reason);
                 });

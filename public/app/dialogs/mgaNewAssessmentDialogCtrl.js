@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $location, mgaNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $route, $location, mgaNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
 
     function zeroFill(number, width) {
         width -= number.toString().length;
@@ -90,7 +90,7 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                     new_assessment_data = undefined;
                     new_answer_data = undefined;
                     $scope.closeThisDialog();
-                    $location.path('/admin/assessment-admin');
+                    $route.reload();
                 }, function (reason) {
                     mgaNotifier.error(reason);
                 });

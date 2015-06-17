@@ -85,6 +85,11 @@ exports.updateAnswer = function (req, res) {
             answer.flags = answer_update.flags;
             answer.questions_flagged = answer_update.questions_flagged;
             answer.references = answer_update.references;
+            answer.interview_score = answer_update.interview_score;
+
+            if (!answer.interview_score.interview_date) {
+                answer_update.interview_score.interview_date = timestamp;
+            }
             answer.modified.push({modifiedBy: req.user._id, modifiedDate: timestamp});
 
             if (answer_update.hasOwnProperty('answer_score') && answer_update.hasOwnProperty('answer_text')) {

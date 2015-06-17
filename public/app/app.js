@@ -82,8 +82,27 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         .when('/admin/assessments-admin/secondary-sources/:assessment_ID', {
             templateUrl: '/partials/admin/answers/secondary-sources-list',
             controller:  'mgaSecondarySourcesListCtrl'
+        })
+        // DOCUMENTS
+        .when('/admin/documents-admin', {
+            templateUrl: '/partials/admin/documents/document-admin',
+            controller: 'mgaDocumentAdminCtrl'
+        })
+        .when('/admin/documents-admin/:document_ID', {
+            templateUrl: '/partials/admin/assessments/document-admin-detail',
+            controller: 'mgaDocumentAdminDetailCtrl'
+        })
+        // INTERVIEWEES
+        .when('/admin/interviewees-admin', {
+            templateUrl: '/partials/admin/interviewees/interviewee-admin',
+            controller: 'mgaIntervieweeAdminCtrl'
+        })
+        .when('/admin/interviewees-admin/:interviewee_ID', {
+            templateUrl: '/partials/admin/interviewees/interviewee-admin-detail',
+            controller: 'mgaIntervieweeAdminDetailCtrl'
         });
-        // .when('/admin/assessment-admin/subs/:version', {
+
+    // .when('/admin/assessment-admin/subs/:version', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin',
         //     controller:  'rgiAssessmentAdminSubsCtrl',
         //     resolve: routeRoleChecks.supervisor

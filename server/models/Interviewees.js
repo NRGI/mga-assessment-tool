@@ -15,16 +15,11 @@ var intervieweeSchema = mongoose.Schema({
     email:  String,
     phone: String,
     role:  {type: String, required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
-    answers: [{
-        answer_ID: String,
-        country: String, // Text name of country
-        year: String // Year of assessment
-    }],
+    answers: Array,
     assessments: Array,
     createdBy:  ObjectId,
     creationDate:  {type:  Date, default: Date.now},
     modified:  [modificationSchema]
-
 });
 
 var Interviewee = mongoose.model('Interviewee', intervieweeSchema);

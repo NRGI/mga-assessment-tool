@@ -29,14 +29,21 @@
                     text  {{answer.answer_score.option_text}}
                 div(ng-if="!answer.answer_score") No answer selected
         // INTERVIEW ANSWER DISPLAY
-        .row(ng-if="answer.question_mode==='interview'")
-            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
-                .row(ng-repeat="score in answer.interview_score")
-                    text {{score}}
-                    //div
-                    //    label.col-med-2 Selected Score:
-                    //    text {{score.option_text}}
-
+        div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.interview_score.length > 0")
+            legend Interview scores
+            .row
+                .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
+                    .row(ng-repeat="score in interview_scores")
+                        .row
+                            b Interviewee:
+                            text  {{score.interviewee.firstName}} {{score.interviewee.lastName}} ({{score.interview_date | date:'MM/dd/yyyy'}})
+                        .row
+                            b Score:
+                            text  {{score.option_text}} - {{score.value}}
+                        .row
+                            b Transcript:
+                            text  {{score.interview_text}}
+                        br
         // FLAGS
         .row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
             div(id="flags_div").bottom-padding-med
@@ -100,30 +107,34 @@
                                 input(
                                 type="radio"
                                 ng-value="option"
-                                ng-model="new_interview_answer.score")
+                                ng-model="new_interview_answer.score"
+                                required)
                                 text.left-padding-med {{option.option_text}}
                         .col-md-5.pull-left.top-padding-med
                             .row
                                 ng-form(name="interviewee_selection_form")
-                                    select.form-group.form-control(ng-model="new_interview_answer.interviewee_ID")
+                                    select.form-group.form-control(ng-model="new_interview_answer.interviewee_ID" required)
                                         option(value="" selected disabled) Select interviewee
                                         option(ng-repeat="interviewee in interviewees" value="{{interviewee._id}}") {{interviewee.firstName}} {{interviewee.lastName}} - {{interviewee.role}}
                             .row
-                                //TODO add new interviewee function
                                 button.form-group.form-control.btn.center-block.btn-primary(ng-click="intervieweeAdd()") Add new interviewee
-                            //.row {{interviewees}}
+
                     div(id="answer_text_div").bottom-padding-med
-                        legend(ng-if="answer.question_data_type==='text'") Please provide a text based answer (required):
                         ng-form(name="interview_answer_text_form")
                             .form-group.top-padding-med
                                 .row.left-padding-lg
-                                    .col-md-11
+                                    .col-md-10
                                         textarea.form-control(
                                         name="answer_text"
                                         type="text"
                                         ng-model="new_interview_answer.interview_text"
                                         placeholder="Please provide interview transcription... (required)"
                                         required)
+                                    .col-md-1
+                                        button.btn.btn-success(
+                                        ng-click="answerSubmit()"
+                                        ) Submit interview
+
 
 
         // COMMENTING
@@ -159,7 +170,7 @@
                                     ng-click="commentSubmit(current_user)"
                                     ng-disabled="new_comment_form.$invalid"
                                     ) Submit comment
-        // TODO reset ref_selection
+        // TODO reset ref_selection and popups for each ref type
         // REFERENCE ADD
         .row.left-padding-lg.right-padding-lg
             div(id="biblio_div").bottom-padding-med

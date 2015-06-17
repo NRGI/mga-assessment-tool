@@ -21,21 +21,15 @@ exports.getIntervieweesByID = function (req, res, next) {
         res.send(interviewee);
     });
 };
-
+//noinspection JSUnusedLocalSymbols
 exports.createInterviewee = function (req, res, next) {
     var interviewee_data = req.body;
 
-    //user_data.username = user_data.username.toLowerCase();
-    //user_data.salt = encrypt.createSalt();
-    //user_data.hashed_pwd = encrypt.hashPwd(user_data.salt, user_data.password);
-    //user_data.createdBy = req.interviewee._id;
+    interviewee_data.createdBy = req.user._id;
 
     //noinspection JSUnusedLocalSymbols
     Interviewee.create(interviewee_data, function (err, interviewee) {
         if (err) {
-            //if (err.toString().indexOf('E11000') > -1) {
-            //    err = new Error('Duplicate Username');
-            //}
             res.status(400);
             return res.send({reason: err.toString()});
         }
@@ -44,37 +38,31 @@ exports.createInterviewee = function (req, res, next) {
 };
 
 exports.updateInterviewee = function (req, res) {
-    var intrerviewee_updates = req.body,
+    var interviewee_updates = req.body,
         query = Interviewee.findOne({_id: req.body._id});
+    console.log(req.body);
 
-    //if (req.user._id != intrerviewee_updates._id && !req.user.hasRole('supervisor')) {
-    //    res.status(404);
-    //    return res.end();
-    //}
+    query.exec(function (err, interviewee) {
+        if (err) {
+            res.status(400);
+            return res.send({reason: err.toString()});
+        }
+        interviewee.firstName = interviewee_updates.firstName;
+        interviewee.lastName = interviewee_updates.lastName;
+        interviewee.email = interviewee_updates.email;
+        interviewee.phone = interviewee_updates.phone;
+        interviewee.role = interviewee_updates.role;
+        interviewee.assessments = interviewee_updates.assessments;
+        interviewee.answers = interviewee_updates.answers;
+        interviewee.modified.push({modifiedBy: req.user._id});
+        console.log(interviewee);
 
-    //query.exec(function (err, interviewee) {
-    //    if (err) {
-    //        res.status(400);
-    //        return res.send({ reason: err.toString() });
-    //    }
-    //    interviewee.firstName = intrerviewee_updates.firstName;
-    //    interviewee.lastName = intrerviewee_updates.lastName;
-    //    interviewee.email = intrerviewee_updates.email;
-    //    interviewee.salt = intrerviewee_updates.salt;
-    //    interviewee.hashed_pwd = intrerviewee_updates.hashed_pwd;
-    //    interviewee.language = intrerviewee_updates.language;
-    //    interviewee.assessments = intrerviewee_updates.assessments;
-    //    if (interviewee.modified) {
-    //        interviewee.modified.push({modifiedBy: req.interviewee._id});
-    //    } else {
-    //        interviewee.modified = {modifiedBy: req.interviewee._id};
-    //    }
-    //    interviewee.save(function (err) {
-    //        if (err) {
-    //            return res.send({ reason: err.toString() });
-    //        }
-    //    });
-    //});
+        interviewee.save(function (err) {
+            if (err) {
+                return res.send({reason: err.toString()});
+            }
+        });
+    });
     res.send();
 };
 

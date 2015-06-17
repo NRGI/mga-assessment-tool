@@ -3,6 +3,49 @@ div.top-padding-med
       legend New Interviewee creation
       .row.left-padding-lg(id="new_interviewee_form")
          .form-horizontal
+            fieldset
+               .row
+                  .form-group
+                     .pull-left.col-lg-5
+                        input.form-control(
+                        type="text"
+                        placeholder="First name (required)..."
+                        ng-model="new_interviewee.firstName"
+                        required)
+                     .pull-left.col-lg-6
+                        input.form-control(
+                        type="text"
+                        placeholder="Last name (required)..."
+                        ng-model="new_interviewee.lastName"
+                        required)
+               .row
+                  .form-group
+                     .pull-left.col-lg-5
+                        input.form-control(
+                        type="text"
+                        placeholder="Phone number..."
+                        ng-model="new_interviewee.phone"
+                        required)
+                     .pull-left.col-lg-6
+                        input.form-control(
+                        type="text"
+                        placeholder="Email..."
+                        ng-model="new_interviewee.email"
+                        required)
+               .row.left-padding-med.right-padding-med
+                  select.form-group.form-control(ng-model="new_interviewee.role")
+                     option(value="" selected disabled) Select interviewee role
+                     option(ng-repeat="role in roles" value="{{role}}") {{role | ucfirst}}
+               .row
+                  .col-md-pull-2
+                     button.btn.btn-success(ng-click="createInterviewee()") Add interviewee
+                     | &nbsp;
+                     button.btn.btn-danger(ng-click="closeDialog()") Cancel
+
+
+
+
+//   role:  {type: String, required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
             //// NEW DOC
             //fieldset
             //   div(ng-if="new_document.status!=='submitted'")

@@ -5,10 +5,9 @@
 angular.module('app').factory('mgaIntervieweeMethodSrvc', function ($http, $q, mgaIntervieweeSrvc) {
     return {
         createInterviewee: function (new_interviewee_data) {
-            var new_user = new mgaIntervieweeSrvc(new_interviewee_data),
+            var new_interviewee = new mgaIntervieweeSrvc(new_interviewee_data),
                 dfd = $q.defer();
-
-            new_user.$save().then(function () {
+            new_interviewee.$save().then(function () {
                 dfd.resolve();
             }, function (response) {
                 dfd.reject(response.data.reason);

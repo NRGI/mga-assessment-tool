@@ -2,35 +2,47 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaNewIntervieweeDialogCtrl', function ($scope, ngDialog) {
+angular.module('app').controller('mgaNewIntervieweeDialogCtrl', function ($scope, $route, $location, ngDialog, mgaNotifier, mgaIntervieweeMethodSrvc) {
+    $scope.roles = ['government', 'cso', 'industry', 'expert', 'other'];
+    $scope.new_interviewee = {};
 
-    //function zeroFill(number, width) {
-    //    width -= number.toString().length;
-    //    if (width > 0) {
-    //        return new Array( width + (/\./.test(number) ? 2 : 1) ).join('0') + number;
-    //    }
-    //    return number + ""; // always return a string
-    //}
-    //
-    //$scope.new_assessment = {
-    //    year: "",
-    //    assessment_country: {}
-    //};
-    //$scope.countries = mgaCountrySrvc.query();
-    //
-    //var cur_year = new Date().getFullYear(),
-    //    years = [],
-    //    i;
-    //
-    //for (i = 0; i < 6; i += 1) {
-    //    years.push(cur_year + i);
-    //}
-    //
-    //$scope.years = years;
-    //
     $scope.closeDialog = function () {
         ngDialog.close();
     };
+
+
+    $scope.createInterviewee = function () {
+        var new_interviewee_data = $scope.new_interviewee;
+        if (!new_interviewee_data.firstName || !new_interviewee_data.lastName) {
+            mgaNotifier.error('You must provide a first and last name for interviewee!');
+        } else if (!new_interviewee_data.role) {
+            mgaNotifier.error('You must proved an interviewee role!');
+        } else {
+            new_interviewee_data.assessments = [$scope.$parent.assessment.assessment_ID];
+            mgaIntervieweeMethodSrvc.createInterviewee(new_interviewee_data).then(function () {
+                mgaNotifier.notify('Interviewee created!');
+                ngDialog.close();
+                $route.reload();
+            }, function (reason) {
+                mgaNotifier.error(reason);
+            });
+        }
+    };
+
+    //            firstName:  {type: String, required: '{PATH} is required!'},
+//   lastName:  {type: String, required: '{PATH} is required!'},
+//   email:  String,
+//   phone: String,
+//   role:  {type: String, required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
+//   answers: [{
+//answer_ID: String,
+//country: String, // Text name of country
+//year: String // Year of assessment
+//}],
+//assessments: Array,
+//createdBy:  ObjectId,
+//creationDate:  {type:  Date, default: Date.now},
+//   modified:  [modificationSchema]
     //$scope.assessmentDeploy = function () {
     //    var new_assessment_data = [],
     //        new_answer_data = [],
