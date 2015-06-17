@@ -20,8 +20,7 @@
                     th
             tbody
                 tr(ng-repeat="doc in documents | filter:searchText | orderBy:sortOrder")
-                    td
-                        a(href="/admin/documents-admin/{{doc._id}}") {{doc.title}}
+                    td {{doc.title}}
                     td
                         .row(ng-repeat="author in doc.authors") {{author.first_name}} {{author.last_name}}
                     td {{doc.type}}

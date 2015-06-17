@@ -183,7 +183,6 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
                     });
 
                     new_interviewee_data.answers.push($routeParams.answer_ID);
-                    console.log(new_interviewee_data);
                     mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
                         .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                         .then(mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data))

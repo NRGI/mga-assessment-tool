@@ -23,7 +23,6 @@ div.top-padding-med
                             required)
                                 option(value="" selected disabled) Select type (required)...
                                 option(ng-repeat="type in new_doc_type" value="{{type.value}}") {{type.text}}
-
                         // AUTHOR
                         div(ng-repeat="author in new_document.authors")
                             .row
