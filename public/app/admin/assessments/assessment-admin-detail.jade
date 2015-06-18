@@ -9,7 +9,7 @@
                 .form-group.margin-left-med
                     select.form-control(ng-model="sortOrder" ng-options="item.value as item.text for item in sort_options")
             br
-            .row.left-padding-lg.right-padding-lg(ng-if="assessment.questions_complete===question_set_length")
+            .row.left-padding-lg.right-padding-lg(ng-if="assessment.questions_complete===assessment.question_set_length")
                 button.btn.btn-success.right-padding-med.pull-right(ng-click="submitAssessment()") Submit assessment
 
 
@@ -30,14 +30,20 @@
                     em(ng-show="$last")  {{mod.modified_date | date}}
             .row questions_flagged: {{assessment.questions_flagged}}
             .row questions_complete: {{assessment.questions_complete}}
-            .row question_set_length: {{question_set_length}}
+            .row question_set_length: {{assessment.question_set_length}}
             .row.top-padding-med
                 a.btn.center-block.btn-primary.pull-left.col-md-9(href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Go to secondary sources
+            // TODO add view all and edit previous functinoality
             .row.top-padding-med
                 a.btn.center-block.btn-default.pull-left.col-md-9(
                 href=""
-                ng-if="answer.question_mode!=='desk_research'"
+                ng-if="assessment.status!=='desk_research'"
                 disabled) Edit previous section
+            //.row.top-padding-med
+            //    a.btn.center-block.btn-default.pull-left.col-md-9(
+            //    href=""
+            //    ng-if="assessment.status!=='desk_research'"
+            //    disabled) Edit previous section
 
 
 

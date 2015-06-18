@@ -64,6 +64,7 @@ var humanSchema = new mongoose.Schema({
 var scoreHistorySchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     order: Number,
+    secondary_data_score: Number,
     score: {
         option_order: Number,
         option_text: String,
@@ -93,6 +94,7 @@ var answerSchema = mongoose.Schema({
     country: {type: String, required: '{PATH} is required', index: true},
     year: String,
     question_order: {type: Number, required: '{PATH} is required'}, // generated from the order_ID of Question Model
+    question_flow_order: {type: Number, required: '{PATH} is required'},
     question_text: String,
     question_mode: {type: String, required: '{PATH} is required'},
     question_data_type: {type: String, required: '{PATH} is required'},

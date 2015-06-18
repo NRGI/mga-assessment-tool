@@ -36,7 +36,6 @@
                th.col-md-1 Input
                th.col-md-1 Value
                th.col-md-1.text-center
-               th.col-md-1.text-center(ng-if="answer.question_mode!=='desk_research'")
          tbody
             tr(ng-repeat="answer in answer_list | filter: searchText | orderBy:sortOrder")
                td.col-md-1.text-center {{answer.question_order}}
@@ -48,15 +47,13 @@
                   .text-success(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
                   .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
                td.col-md-1
-                  input.form-control(type="number" step="any" ng-if="answer.question_data_type==='percentage'" ng-model="answer.score")
-                  input.form-control(type="number" ng-if="answer.question_data_type==='integer'" ng-model="answer.score")
-                  input.form-control(type="number" step="any" ng-if="answer.question_data_type==='float'" ng-model="answer.score")
+                  input.form-control(type="number" step="any" ng-if="answer.question_data_type==='percentage'" ng-model="answer.value")
+                  input.form-control(type="number" ng-if="answer.question_data_type==='integer'" ng-model="answer.value")
+                  input.form-control(type="number" step="any" ng-if="answer.question_data_type==='float'" ng-model="answer.value")
                td.col-md-1
-                  .text(ng-if="answer.question_data_type==='percentage'") percentage value placeholder
-                  .text(ng-if="answer.question_data_type==='integer'") integer value placeholder
-                  .text(ng-if="answer.question_data_type==='float'") float value placeholder
-               //// TODO add save and submit functionality
+                  .col-md-1(ng-if="answer.question_data_type==='percentage'")
+                     text(ng-if="answer.answer_score.value") {{answer.answer_score.value}}%
+                  .col-md-1(ng-if="answer.question_data_type!=='percentage'")
+                     text(ng-if="answer.answer_score.value") {{answer.answer_score.value}}
                td.col-md-1
-                  button.btn.btn-primary(disabled) Save
-               td.col-md-1
-                  button.btn.btn-success(disabled) Submit
+                  button.btn.btn-primary(ng-click="answerSave(answer, new_score)") Save

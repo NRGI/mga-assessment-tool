@@ -1,5 +1,5 @@
-'use strict'
-angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope, $routeParams, mgaAnswerSrvc, mgaAssessmentSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
+'use strict';
+angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope, $route, $routeParams, mgaNotifier, mgaAnswerSrvc, mgaAssessmentSrvc, mgaAnswerMethodSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by Question Number"},
@@ -8,6 +8,7 @@ angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope
     $scope.sortOrder = $scope.sort_options[0].value;
 
     $scope.identity = mgaIdentitySrvc;
+    $scope.new_score = {};
 
     //$scope.assessment = mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID});
     //
@@ -35,5 +36,31 @@ angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope
             $scope.assessment = data;
         });
     });
+
+    $scope.answerSave = function (answer) {
+        console.log(answer.value);
+
+        if (typeof answer.value !== 'number') {
+            mgaNotifier.error('You must enter a number!');
+        } else {
+            if (answer.status === 'created') {
+                answer.status = 'submitted';
+            }
+            answer.answer_score = {
+                value: answer.value
+            };
+            delete answer.value;
+            mgaAnswerMethodSrvc.updateAnswer(answer).then(function () {
+                mgaNotifier.notify('Answer saved');
+                //$route.reload();
+            }, function (reason) {
+                mgaNotifier.notify(reason);
+            });
+        }
+    };
+
+    $scope.answerSubmit = function (answer) {
+        console.log(answer);
+    };
 
 });

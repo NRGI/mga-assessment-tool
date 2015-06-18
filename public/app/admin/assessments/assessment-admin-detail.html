@@ -1,1 +1,106 @@
-<div class="container"><div class="well left-padding-lg right-padding-lg"><img src="assets/mapsicon/all/{{assessment.assessment_ID | lowercase | limitTo: 2}}/vector.svg" class="mapsicon"/><legend class="h3">{{assessment.country}} {{assessment.year}} {{assessment.version}} assessment</legend><div class="pull-right"><form class="form-inline left-padding-lg right-padding-lg"><div class="form-group"><input ng-model="searchText" placeholder="Filter" class="form-control"/></div><div class="form-group margin-left-med"><select ng-model="sortOrder" ng-options="item.value as item.text for item in sort_options" class="form-control"></select></div></form><br/><div ng-if="assessment.questions_complete===question_set_length" class="row left-padding-lg right-padding-lg"><button ng-click="submitAssessment()" class="btn btn-success right-padding-med pull-right">Submit assessment</button></div></div><div class="pull-left left-padding-lg bottom-padding-lg"><div class="row"><text>Users:</text></div><div ng-repeat="user in user_list" class="row left-padding-lg"><text ng-if="assessment.users.length===0">No users</text><a href="mailto:{{user.email}}" ng-if="assessment.users.length!==0"> {{user.firstName}}  {{user.lastName}}</a><text> - {{user.role}}</text></div><div class="row"><text>Status: {{assessment.status| addSpaces | ucfirst}}</text></div><div class="row"><text>Last edited by</text><a href="mailto:{{edited_by.email}}"> {{edited_by.firstName}}  {{edited_by.lastName}}</a><text> on</text><span ng-repeat="mod in assessment.modified"><em ng-show="$last"> {{mod.modified_date | date}}</em></span></div><div class="row">questions_flagged: {{assessment.questions_flagged}}</div><div class="row">questions_complete: {{assessment.questions_complete}}</div><div class="row">question_set_length: {{question_set_length}}</div><div class="row top-padding-med"><a href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}" class="btn center-block btn-primary pull-left col-md-9">Go to secondary sources</a></div><div class="row top-padding-med"><a href="" ng-if="answer.question_mode!=='desk_research'" disabled="disabled" class="btn center-block btn-default pull-left col-md-9">Edit previous section</a></div><!--.row(ng-if="assessment.questions_complete===0")--><!--	text(ng) Number of questions complete: {{assessment.questions_complete}} (0%)--><!--.row(ng-if="assessment.questions_complete!==0")--><!--	text Number of questions complete: {{assessment.questions_complete}} (--><!--	text {{((assessment.questions_complete/assessment.question_list.length)*100 | number :2)}}--><!--	text % complete)--></div><table class="table table-hover table-striped table-condensed"><thead><tr><th class="col-md-1 text-center">Question number</th><th class="col-md-2">Question mode</th><th class="col-md-5 text-center">Question</th><th class="col-md-1">Status</th><th class="col-md-1">Data type</th><th class="col-md-1">Score</th><th class="col-md-1 text-center"></th><th ng-if="answer.question_mode!=='desk_research'" class="col-md-1 text-center"></th></tr></thead><tbody><tr ng-repeat="answer in answer_list | filter: searchText | orderBy:sortOrder"><td class="col-md-1 text-center">{{answer.question_order}}</td><td class="col-md-2">{{answer.question_mode | addSpaces | ucfirst}}</td><td class="col-md-5">{{answer.question_text}}</td><td class="col-md-1"><div ng-if="answer.status==='created'" class="text-danger">{{answer.status | ucfirst}}</div><div ng-if="answer.status==='saved'" class="text-info">{{answer.status | ucfirst}}</div><div ng-if="answer.status==='submitted'" class="text-success">{{answer.status | ucfirst}}</div><div ng-if="answer.status==='flagged'" class="text-warning">{{answer.status | ucfirst}}</div></td><!--td.col-md-1 {{answer.question_data_type | addSpaces | ucfirst}}--><td class="col-md-1"><div ng-if="answer.question_data_type==='text'" class="glyphicon glyphicon-pencil"> {{answer.question_data_type | addSpaces | ucfirst}}</div><div ng-if="answer.question_data_type==='score'" class="glyphicon glyphicon-check"> {{answer.question_data_type | addSpaces | ucfirst}}</div></td><td ng-if="answer.answer_score===undefined &amp;&amp; answer.question_data_type!=='text'" class="col-md-1">None</td><td ng-if="answer.question_data_type==='score' &amp;&amp; answer.answer_score!==undefined" class="col-md-1">{{answer.answer_score.option_text}} - {{answer.answer_score.value}}</td><td ng-if="answer.question_data_type==='text'" class="col-md-1"></td><td><a href="/admin/assessments-admin/answer/{{answer.answer_ID}}" class="btn center-block btn-default">Go to answer page</a></td></tr></tbody></table></div></div>
+<div class="container">
+    <div class="well left-padding-lg right-padding-lg"><img
+            src="assets/mapsicon/all/{{assessment.assessment_ID | lowercase | limitTo: 2}}/vector.svg"
+            class="mapsicon"/>
+        <legend class="h3">{{assessment.country}} {{assessment.year}} {{assessment.version}} assessment</legend>
+        <div class="pull-right">
+            <form class="form-inline left-padding-lg right-padding-lg">
+                <div class="form-group"><input ng-model="searchText" placeholder="Filter" class="form-control"/></div>
+                <div class="form-group margin-left-med"><select ng-model="sortOrder"
+                                                                ng-options="item.value as item.text for item in sort_options"
+                                                                class="form-control"></select></div>
+            </form>
+            <br/>
+
+            <div ng-if="assessment.questions_complete===assessment.question_set_length"
+                 class="row left-padding-lg right-padding-lg">
+                <button ng-click="submitAssessment()" class="btn btn-success right-padding-med pull-right">Submit
+                    assessment
+                </button>
+            </div>
+        </div>
+        <div class="pull-left left-padding-lg bottom-padding-lg">
+            <div class="row">
+                <text>Users:</text>
+            </div>
+            <div ng-repeat="user in user_list" class="row left-padding-lg">
+                <text ng-if="assessment.users.length===0">No users</text>
+                <a href="mailto:{{user.email}}" ng-if="assessment.users.length!==0"> {{user.firstName}}
+                    {{user.lastName}}</a>
+                <text> - {{user.role}}</text>
+            </div>
+            <div class="row">
+                <text>Status: {{assessment.status| addSpaces | ucfirst}}</text>
+            </div>
+            <div class="row">
+                <text>Last edited by</text>
+                <a href="mailto:{{edited_by.email}}"> {{edited_by.firstName}} {{edited_by.lastName}}</a>
+                <text> on</text>
+                <span ng-repeat="mod in assessment.modified"><em ng-show="$last"> {{mod.modified_date |
+                    date}}</em></span></div>
+            <div class="row">questions_flagged: {{assessment.questions_flagged}}</div>
+            <div class="row">questions_complete: {{assessment.questions_complete}}</div>
+            <div class="row">question_set_length: {{assessment.question_set_length}}</div>
+            <div class="row top-padding-med"><a
+                    href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}"
+                    class="btn center-block btn-primary pull-left col-md-9">Go to secondary sources</a></div>
+            <!-- TODO add view all and edit previous functinoality-->
+            <div class="row top-padding-med"><a href="" ng-if="assessment.status!=='desk_research'" disabled="disabled"
+                                                class="btn center-block btn-default pull-left col-md-9">Edit previous
+                section</a></div>
+            <!--.row.top-padding-med--><!--    a.btn.center-block.btn-default.pull-left.col-md-9(--><!--    href=""-->
+            <!--    ng-if="assessment.status!=='desk_research'"--><!--    disabled) Edit previous section-->
+
+            <!--.row(ng-if="assessment.questions_complete===0")-->
+            <!--	text(ng) Number of questions complete: {{assessment.questions_complete}} (0%)-->
+            <!--.row(ng-if="assessment.questions_complete!==0")-->
+            <!--	text Number of questions complete: {{assessment.questions_complete}} (-->
+            <!--	text {{((assessment.questions_complete/assessment.question_list.length)*100 | number :2)}}-->
+            <!--	text % complete)--></div>
+        <table class="table table-hover table-striped table-condensed">
+            <thead>
+            <tr>
+                <th class="col-md-1 text-center">Question number</th>
+                <th class="col-md-2">Question mode</th>
+                <th class="col-md-5 text-center">Question</th>
+                <th class="col-md-1">Status</th>
+                <th class="col-md-1">Data type</th>
+                <th class="col-md-1">Score</th>
+                <th class="col-md-1 text-center"></th>
+                <th ng-if="answer.question_mode!=='desk_research'" class="col-md-1 text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="answer in answer_list | filter: searchText | orderBy:sortOrder">
+                <td class="col-md-1 text-center">{{answer.question_order}}</td>
+                <td class="col-md-2">{{answer.question_mode | addSpaces | ucfirst}}</td>
+                <td class="col-md-5">{{answer.question_text}}</td>
+                <td class="col-md-1">
+                    <div ng-if="answer.status==='created'" class="text-danger">{{answer.status | ucfirst}}</div>
+                    <div ng-if="answer.status==='saved'" class="text-info">{{answer.status | ucfirst}}</div>
+                    <div ng-if="answer.status==='submitted'" class="text-success">{{answer.status | ucfirst}}</div>
+                    <div ng-if="answer.status==='flagged'" class="text-warning">{{answer.status | ucfirst}}</div>
+                </td>
+                <!--td.col-md-1 {{answer.question_data_type | addSpaces | ucfirst}}-->
+                <td class="col-md-1">
+                    <div ng-if="answer.question_data_type==='text'" class="glyphicon glyphicon-pencil">
+                        {{answer.question_data_type | addSpaces | ucfirst}}
+                    </div>
+                    <div ng-if="answer.question_data_type==='score'" class="glyphicon glyphicon-check">
+                        {{answer.question_data_type | addSpaces | ucfirst}}
+                    </div>
+                </td>
+                <td ng-if="answer.answer_score===undefined &amp;&amp; answer.question_data_type!=='text'"
+                    class="col-md-1">None
+                </td>
+                <td ng-if="answer.question_data_type==='score' &amp;&amp; answer.answer_score!==undefined"
+                    class="col-md-1">{{answer.answer_score.option_text}} - {{answer.answer_score.value}}
+                </td>
+                <td ng-if="answer.question_data_type==='text'" class="col-md-1"></td>
+                <td><a href="/admin/assessments-admin/answer/{{answer.answer_ID}}" class="btn center-block btn-default">Go
+                    to answer page</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -79,7 +79,6 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
 
     $scope.assessmentStart = function (assessment_ID) {
         var timestamp = new Date().toISOString();
-
         mgaAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
             new_assessment_data.start_date = {started_by: $scope.identity.currentUser._id, date: timestamp};
             new_assessment_data.status = 'desk_research';

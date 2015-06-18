@@ -24,6 +24,7 @@ var commentSchema = new mongoose.Schema({
 var questionSchema = mongoose.Schema({
     assessment_ID: {type: String, required: '{PATH} is required'},
     question_order: {type: Number, required: '{PATH} is required'},
+    question_flow_order: {type: Number, required: '{PATH} is required'},
     question_mode: {type: String, required: '{PATH} is required'},
     question_mode_text: {type: String, required: '{PATH} is required'},
     question_text: {type: String, required: '{PATH} is required'},

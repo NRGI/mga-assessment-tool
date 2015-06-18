@@ -84,6 +84,7 @@ exports.updateAnswer = function (req, res) {
             answer.refereces = answer_update.refereces;
             answer.flags = answer_update.flags;
             answer.questions_flagged = answer_update.questions_flagged;
+            answer.question_set_length = answer_update.question_set_length;
             answer.references = answer_update.references;
             answer.interview_score = answer_update.interview_score;
 
@@ -98,8 +99,14 @@ exports.updateAnswer = function (req, res) {
             }
 
             if (answer_update.hasOwnProperty('answer_score')) {
-                answer.answer_score = answer_update.answer_score;
-                answer_history_update.score = answer_update.answer_score;
+
+                if (answer.question_mode === 'secondary_data') {
+                    answer.secondary_data_score = answer_update.secondary_data_score;
+                    answer_history_update.secondary_data_score = answer_update.answer_score;
+                } else {
+                    answer.answer_score = answer_update.answer_score;
+                    answer_history_update.score = answer_update.answer_score;
+                }
             }
 
             if (answer_update.hasOwnProperty('answer_text')) {

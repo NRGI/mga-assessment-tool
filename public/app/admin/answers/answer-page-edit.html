@@ -16,8 +16,11 @@
                 <button ng-click="answerFlag(current_user)" class="btn btn-warning">Flag answer</button>
                 &nbsp;
                 <button ng-click="answerClear()" class="btn btn-danger">Clear answer</button>
-                &nbsp;<a href="/admin/assessments-admin/{{answer.assessment_ID}}" class="btn btn-default">Return to
-                menu</a></div>
+                &nbsp;<a
+                    href="/admin/assessments-admin/answer/{{answer.assessment_ID}}-{{answer.question_flow_order + 1 | numberFixedLen: 3}}"
+                    ng-if="answer.question_mode === 'interview'" class="btn btn-default">Next Question</a>&nbsp;<a
+                    href="/admin/assessments-admin/{{answer.assessment_ID}}" class="btn btn-default">Return to menu</a><!---->
+            </div>
         </div>
         <!-- DESK RESEARCH ANSWER DISPLAY-->
         <div ng-if="answer.question_mode==='desk_research'" class="row">

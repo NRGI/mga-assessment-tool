@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, $routeParams, $location, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
+angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by Question Number"},
@@ -17,7 +17,6 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
             assessment_ID: $routeParams.assessment_ID,
             question_mode: data.status
         }, function (answers) {
-            $scope.question_set_length = answers.length;
 
             $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
             $scope.user_list = [];
@@ -35,12 +34,19 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
 
         new_assessment_data.status = 'interview';
         new_assessment_data.questions_complete = 0;
+        mgaAnswerSrvc.query({
+            assessment_ID: $routeParams.assessment_ID,
+            question_mode: 'interview'
+        }, function (answers) {
+            new_assessment_data.question_set_length = answers.length;
+            mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
+                mgaNotifier.notify('Assessment submited');
+                $route.reload();
+                //$location.path('/admin/assessment-admin');
+            }, function (reason) {
+                mgaNotifier.notify(reason);
+            });
 
-        mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
-            mgaNotifier.notify('Assessment submited');
-            $location.path('/admin/assessments-admin');
-        }, function (reason) {
-            mgaNotifier.notify(reason);
         });
 
 

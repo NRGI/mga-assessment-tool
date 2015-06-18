@@ -20,7 +20,13 @@
                 | &nbsp;
                 button.btn.btn-danger(ng-click="answerClear()") Clear answer
                 | &nbsp;
+                a.btn.btn-default(
+                href="/admin/assessments-admin/answer/{{answer.assessment_ID}}-{{answer.question_flow_order + 1 | numberFixedLen: 3}}"
+                ng-if="answer.question_mode === 'interview'"
+                ) Next Question
+                | &nbsp;
                 a.btn.btn-default(href="/admin/assessments-admin/{{answer.assessment_ID}}") Return to menu
+                //
 
         // DESK RESEARCH ANSWER DISPLAY
         .row(ng-if="answer.question_mode==='desk_research'")
