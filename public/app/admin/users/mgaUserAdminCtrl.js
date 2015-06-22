@@ -4,7 +4,7 @@
 angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc) {
 // angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
     // filtering options
-    $scope.sortOptions = [
+    $scope.sort_options = [
         {value: "firstName", text: "Sort by First Name"},
         {value: "lastName", text: "Sort by Last Name"},
         {value: "username", text: "Sort by Username"},
@@ -12,7 +12,7 @@ angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSr
         {value: "approved", text: "Sort by Approved"},
         {value: "submitted", text: "Sort by Submitted"}
     ];
-    $scope.sortOrder = $scope.sortOptions[1].value;
+    $scope.sort_order = $scope.sort_options[1].value;
 
 
     mgaUserSrvc.query({}, function (data) {

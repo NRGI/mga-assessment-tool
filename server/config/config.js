@@ -6,7 +6,7 @@ module.exports = {
     local: {
         db: 'mongodb://localhost/mga_local',
         rootPath: rootPath,
-        port: process.env.PORT || 3030
+        port: process.env.PORT || 3031
     },
     development: {
         db: '@candidate.32.mongolayer.com:10582/mga_dev',

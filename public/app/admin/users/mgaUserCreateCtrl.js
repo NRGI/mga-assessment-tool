@@ -11,22 +11,26 @@ angular.module('app').controller('mgaCreateUserCtrl', function ($scope, $locatio
 
   // fix submit button functionality
     $scope.userCreate = function () {
-        var new_user_data = {
-            firstName: $scope.fname,
-            lastName: $scope.lname,
-            username: $scope.username,
-            email: $scope.email,
-            password: $scope.password,
-            // ADD ROLE IN CREATION EVENT
-            role: $scope.roleSelect
-        };
+        if ($scope.password !== $scope.password_repeat) {
+            mgaNotifier.error('Passwords must match!')
+        } else {
+            var new_user_data = {
+                firstName: $scope.first_name,
+                lastName: $scope.last_name,
+                username: $scope.username,
+                email: $scope.email,
+                password: $scope.password,
+                // ADD ROLE IN CREATION EVENT
+                role: $scope.roleSelect
+            };
 
-        mgaUserMethodSrvc.createUser(new_user_data).then(function () {
-            // mgaMailer.send($scope.email);
-            mgaNotifier.notify('User account created!' + $scope.email);
-            $location.path('/admin/user-admin');
-        }, function (reason) {
-            mgaNotifier.error(reason);
-        });
+            mgaUserMethodSrvc.createUser(new_user_data).then(function () {
+                // mgaMailer.send($scope.email);
+                mgaNotifier.notify('User account created!' + $scope.email);
+                $location.path('/admin/user-admin');
+            }, function (reason) {
+                mgaNotifier.error(reason);
+            });
+        }
     };
 });
