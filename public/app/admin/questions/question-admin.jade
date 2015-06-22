@@ -10,9 +10,9 @@
 		.pull-right
 			form.form-inline
 				.form-group
-					input.form-control(ng-model="searchText", placeholder="Filter")
+					input.form-control(ng-model="search_text", placeholder="Filter")
 				.form-group.margin-left-med
-					select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
+					select.form-control(ng-model="sort_order", ng-options="item.value as item.text for item in sort_options")
 		div.top-padding-lg
 			table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg
 				thead
@@ -23,7 +23,7 @@
 						th.col-md-1 Data type
 						th
 					tbody
-						tr(ng-repeat="question in questions | filter:searchText | orderBy:sortOrder")
+						tr(ng-repeat="question in questions | filter:search_text | orderBy:sort_order")
 							td {{question.question_order}}
 							td {{question.question_text}}
 							td {{question.question_mode | addSpaces | ucfirst}}

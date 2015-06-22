@@ -6,7 +6,7 @@ angular.module('app').controller('mgaDeleteQuestionDialogCtrl', function ($scope
     $scope.questionDelete = function () {
         var question_deletion = $scope.$parent.question._id;
 
-        mgaQuestionMethodSrvc.deleteUser(question_deletion).then(function () {
+        mgaQuestionMethodSrvc.deleteQuestion(question_deletion).then(function () {
             $scope.closeThisDialog();
             $location.path('/admin/question-admin');
             mgaNotifier.notify('Question has been deleted');

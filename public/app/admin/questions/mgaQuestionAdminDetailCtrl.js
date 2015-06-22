@@ -21,7 +21,7 @@ angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope,
     $scope.questionClear = function () {
         $scope.question = angular.copy($scope.question_start);
     };
-
+    //TODO fix reording questions
     $scope.questionUpdate = function () {
         var new_question_data = $scope.question;
 

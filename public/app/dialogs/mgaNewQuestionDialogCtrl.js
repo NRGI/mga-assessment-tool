@@ -18,6 +18,7 @@ angular.module('app').controller('mgaNewQuestionDialogCtrl', function ($scope, $
     $scope.closeDialog = function () {
         ngDialog.close();
     };
+    //TODO ADD new question functionality
 });
 
 // angular.module('app').controller('questionDialogCtrl', function ($scope, ngDialog) {
