@@ -29,6 +29,7 @@ angular.module('app').controller('mgaEditDocumentDialogCtrl', function ($scope, 
     ];
 
     $scope.documentSave = function (new_doc_data) {
+        // TODO fix save notification
         mgaDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
             mgaNotifier.notify('Document has been updated');
             ngDialog.close();
