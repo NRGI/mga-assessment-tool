@@ -10,6 +10,22 @@ angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, $
         $scope.new_document.editors = [{first_name: "", last_name: ""}];
     }
 
+    $scope.authorPush = function () {
+        $scope.new_document.authors.push({first_name: "", last_name: ""});
+    };
+
+    $scope.editorPush = function () {
+        $scope.new_document.editors.push({first_name: "", last_name: ""});
+    };
+
+    $scope.authorPop = function (index) {
+        $scope.new_document.authors.splice(index, 1);
+    };
+
+    $scope.editorPop = function (index) {
+        $scope.new_document.editors.splice(index, 1);
+    };
+
     $scope.documentRefSubmit = function (new_document) {
         if ($scope.new_document.authors[0].first_name === "" || $scope.new_document.authors[0].last_name === "" || !$scope.new_document.title || !$scope.new_document.type) {
             mgaNotifier.error('You must provide at least a title, author and publication type!')

@@ -30,6 +30,14 @@
                                                                            ng-model="author.last_name"
                                                                            autocomplete="off" required="required"
                                                                            class="form-control"/></div>
+                                    <div ng-if="$last" class="pull-left col-lg-1 right-padding-med">
+                                        <glyphicon ng-click="authorPush()"
+                                                   class="text-success glyphicon glyphicon-plus-sign"></glyphicon>
+                                    </div>
+                                    <div ng-if="!$last" class="pull-left col-lg-1">
+                                        <glyphicon ng-click="authorPop($index)"
+                                                   class="text-danger glyphicon glyphicon-minus-sign"></glyphicon>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -46,6 +54,14 @@
                                                                            placeholder="Editor last name..."
                                                                            ng-model="editor.last_name"
                                                                            autocomplete="off" class="form-control"/>
+                                    </div>
+                                    <div ng-if="$last" class="pull-left col-lg-1 right-padding-med">
+                                        <glyphicon ng-click="editorPush()"
+                                                   class="text-success glyphicon glyphicon-plus-sign"></glyphicon>
+                                    </div>
+                                    <div ng-if="!$last" class="pull-left col-lg-1">
+                                        <glyphicon ng-click="editorPop($index)"
+                                                   class="text-danger glyphicon glyphicon-minus-sign"></glyphicon>
                                     </div>
                                 </div>
                             </div>
