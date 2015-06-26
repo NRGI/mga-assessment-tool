@@ -13,6 +13,12 @@ function zeroFill(number, width) {
 angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, mgaNotifier, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
     $scope.identity = mgaIdentitySrvc;
     $scope.new_interview_answer = {};
+    $scope.moveForward = function () {
+        $location.path('/assessments/assessment-edit/' + $scope.assessment.assessment_ID + "-" + String(zeroFill($scope.answer.question_order + 1, 3)));
+    };
+    $scope.moveBackward = function () {
+        $location.path('/assessments/assessment-edit/' + $scope.assessment.assessment_ID + "-" + String(zeroFill($scope.answer.question_order - 1, 3)));
+    };
 
     mgaAnswerSrvc.get({
         answer_ID: $routeParams.answer_ID,
