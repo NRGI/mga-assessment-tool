@@ -161,7 +161,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
                     .then(function () {
                         console.log(new_assessment_data.questions_complete);
                         console.log(new_assessment_data);
-                        if (new_assessment_data.questions_completg e === new_assessment_data.question_set_length) {
+                        if (new_assessment_data.questions_complete === new_assessment_data.question_set_length) {
                             $location.path('/admin/assessments-admin/' + new_answer_data.assessment_ID);
                         } else {
                             $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_flow_order + 1), 3)));
