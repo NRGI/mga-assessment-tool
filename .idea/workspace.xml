@@ -6,10 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b6ea34b-b8c9-4c90-88f6-6a9d3b0405ee" name="Default" comment="added multiple author and editor support for ducument metadata">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/tests/public/controllers/account/mgaNavBarLoginCtrl.js" afterPath="$PROJECT_DIR$/test/tests/controllers/account/mgaNavBarLoginCtrl.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/tests/public/services/mgaUserSrvcSpec.js" afterPath="$PROJECT_DIR$/test/tests/services/mgaUserSrvcSpec.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/admin/answers/mgaAnswerCtrl.js" afterPath="$PROJECT_DIR$/public/app/admin/answers/mgaAnswerCtrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/test-app.js" afterPath="$PROJECT_DIR$/test/test-app.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/tests/controllers/account/mgaProfileCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.shippable.yml" afterPath="$PROJECT_DIR$/.shippable.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mga-assessment-tool.iws" />
@@ -41,11 +39,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mgaNavBarLoginCtrl.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mgaNavBarLoginCtrl.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/tests/controllers/account/mgaNavBarLoginCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6605505">
-              <caret line="48" column="23" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mgaProfileCtrl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/tests/controllers/account/mgaProfileCtrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".shippable.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.shippable.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.44036698">
+              <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -153,8 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/server/models/Interviewees.js" />
-        <option value="$PROJECT_DIR$/server/controllers/interviewees.js" />
         <option value="$PROJECT_DIR$/public/app/app.js" />
         <option value="$PROJECT_DIR$/public/app/admin/documents/mgaDocumentAdminCtrl.js" />
         <option value="$PROJECT_DIR$/server/includes/scripts.jade" />
@@ -204,6 +220,8 @@
         <option value="$PROJECT_DIR$/public/app/admin/answers/mgaAnswerCtrl.js" />
         <option value="$PROJECT_DIR$/test/test-app.js" />
         <option value="$PROJECT_DIR$/test/tests/controllers/account/mgaNavBarLoginCtrl.js" />
+        <option value="$PROJECT_DIR$/test/tests/controllers/account/mgaProfileCtrl.js" />
+        <option value="$PROJECT_DIR$/.shippable.yml" />
       </list>
     </option>
   </component>
@@ -762,13 +780,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/app/dialogs/delete-profile-confirmation-dialog.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/admin/users/mgaUserAdminDetailCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6111111">
@@ -1119,8 +1130,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/tests/controllers/account/mgaNavBarLoginCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6605505">
-          <caret line="48" column="23" selection-start-line="48" selection-start-column="23" selection-end-line="48" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/tests/controllers/account/mgaProfileCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.shippable.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44036698">
+          <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
           <folding />
         </state>
       </provider>
