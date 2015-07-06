@@ -26,8 +26,8 @@ before_script:
   - echo "aws_secret_access_key = $AWSSecretKey" >> ~/.aws/config
   - npm install phantomjs --save
 
-script:
-  - npm test
+# script:
+#   - npm test
 
 after_success:
   - eb init && eb deploy mgaAssessmentTool-env
