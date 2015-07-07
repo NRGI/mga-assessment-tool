@@ -11,10 +11,11 @@ RUN		yum install -y git
 # Build src
 ADD     package.json /tmp/package.json
 RUN     cd /tmp && npm install
-# RUN     mkdir -p /src && cp -a /tmp/node_modules /src
-# COPY	. /src
+RUN     mkdir -p /src && cp -a /tmp/node_modules /src
+RUN		rm -R /tmp/node_modules
+COPY	. /src
 # RUN		cd /src && bower install --allow-root
 
-# EXPOSE  80
+EXPOSE  80
 
-# CMD		["node", "/src/server.js"]
+CMD		["node", "/src/server.js"]
