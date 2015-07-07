@@ -1,0 +1,63 @@
+.navbar-right(ng-controller="mgaNavBarLoginCtrl")
+    //- LOGIN NAVBAR
+    form.navbar-form.right-padding-lg(ng-hide="identity.isAuthenticated()")
+        .form-group
+            input.form-control(
+                placeholder="Username"
+                ng-model="username")
+        .form-group
+            input.form-control(
+                type="password"
+                placeholder="Password"
+                ng-model="password")
+        button.btn.btn-primary(ng-click="signin(username, password)")
+            span.glyphicon.glyphicon-log-in(title="Login")  Login
+        //- TODO add forgot password functionality
+        button.btn.btn-warning(ng-click="" disabled) Forgot Password
+
+
+    //- AUTHENTICATED NAVBAR
+    ul.nav.navbar-nav.navbar-right.right-padding-lg(ng-show="identity.isAuthenticated()")
+        //- ASSESSMENT ADMIN
+        ul.nav.navbar-nav.dropdown
+            li.dropdown
+                a.dropdown-toggle(data-toggle="dropdown") Assessment Admin
+                    b.caret
+                ul.dropdown-menu
+                    li
+                        a(href="/admin/assessment-admin") All assessments
+                    li(ng-repeat="assessment_link in assessment_links")
+                        a(href="/admin/assessments-admin/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
+
+        //- ADMIN DROPDOWN
+        ul.nav.navbar-nav.dropdown
+            li.dropdown(ng-show="identity.currentUser.isSupervisor()")
+                a.dropdown-toggle(
+                    href=""
+                    data-toggle="dropdown") Admin
+                    b.caret
+                ul.dropdown-menu
+                    li
+                        a(href="/admin/user-create") Create User
+                    li
+                        a(href="/admin/user-admin") User Admin
+                    li
+                        a(href="/admin/question-admin") Questions Admin
+                    li
+                        a(href="/admin/documents-admin") Document Admin
+                    li
+                        a(href="/admin/interviewees-admin") Interviewee Admin
+      
+        //- PROFILE
+        ul.nav.navbar-nav
+            li
+                a(href="/profile"
+                    title="Profile") {{identity.currentUser.firstName + " " + identity.currentUser.lastName}}
+
+        //- LOGOUT
+        ul.nav.navbar-nav
+            li
+                a.glyphicon.glyphicon-log-out(
+                    href=""
+                    ng-click="signout()"
+                    title="Logout")
