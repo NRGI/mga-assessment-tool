@@ -1,0 +1,405 @@
+.container.top-padding-med
+    .well.left-padding-lg.right-padding-lg
+        legend {{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}
+            //a.text-info.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
+            //href="assessments/assessment-edit/{{assessment.assessment_ID}}-{{assessment.question_length | zpad:3}}"
+            //ng-if="assessment.question_length!==answer.question_order")
+            //glyphicon.text-muted.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
+            //ng-if="assessment.question_length===answer.question_order"
+            //disabled)
+            //
+            //glyphicon.text-info.glyphicon.glyphicon-forward.pull-right.left-padding-med(
+            //ng-click="moveForward()"
+            //ng-if="answer.question_order!==assessment.question_length")
+            //glyphicon.text-muted.glyphicon.glyphicon-forward.pull-right.left-padding-med(
+            //ng-if="answer.question_order===assessment.question_length"
+            //disabled)
+            //
+            //glyphicon.text-success.glyphicon.glyphicon-ok-sign.pull-right.right-padding-lg(ng-if="answer.status==='submitted'")
+            //glyphicon.text-danger.glyphicon.glyphicon-flag.pull-right.right-padding-lg(ng-if="answer.status==='flagged'")
+            //glyphicon.text-info.glyphicon.glyphicon-floppy-saved.pull-right(ng-if="answer.status==='saved'")
+            //text.pull-right.right-padding-lg(ng-if="answer.status!=='saved' && answer.status!=='submitted' && answer.status!=='flagged'") none
+            //text.pull-right.right-padding-lg Status:
+            //
+            //glyphicon.text-info.glyphicon.glyphicon-backward.pull-right.right-padding-med(
+            //ng-click="moveBackward()"
+            //ng-if="answer.question_order!==1")
+            //glyphicon.text-muted.glyphicon.glyphicon-backward.pull-right.right-padding-med(ng-if="answer.question_order===1")
+            //
+            //a.text-info.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
+            //href="assessments/assessment-edit/{{assessment.assessment_ID}}-001"
+            //ng-if="answer.question_order!==1")
+            //glyphicon.text-muted.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
+            //ng-if="answer.question_order===1"
+            //disabled)
+        .row.left-padding-lg.bottom-padding-med
+            h3
+                em Question {{answer.question_order}}. {{answer.question_text}}
+
+        //- ACTIVE BUTTONS
+        .row.left-padding-lg.bottom-padding-lg
+            .col-md-pull-2
+                button.btn.btn-primary(ng-click="answerSave()") Save answer
+                | &nbsp;
+                button.btn.btn-success(
+                ng-click="answerSubmit()"
+                ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' && !answer.answer_score)"
+                ng-if="answer.question_mode !== 'interview'"
+                ) Submit answer
+                | &nbsp;
+                button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
+                | &nbsp;
+                button.btn.btn-danger(ng-click="answerClear()") Clear answer
+                | &nbsp;
+                a.btn.btn-default(
+                href="/admin/assessments-admin/answer/{{answer.assessment_ID}}-{{answer.question_flow_order + 1 | numberFixedLen: 3}}"
+                ng-if="answer.question_mode === 'interview'"
+                ) Next Question
+                | &nbsp;
+                a.btn.btn-default(href="/admin/assessments-admin/{{answer.assessment_ID}}") Return to menu
+                //
+
+        // DESK RESEARCH ANSWER DISPLAY
+        .row(ng-if="answer.question_mode==='desk_research'")
+            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='score'")
+                div(ng-if="answer.answer_score")
+                    label.col-med-2 Selected Score:
+                    text  {{answer.answer_score.option_text}}
+                div(ng-if="!answer.answer_score") No answer selected
+        // INTERVIEW ANSWER DISPLAY
+        div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.interview_score.length > 0")
+            legend Interview scores
+            .row
+                .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
+                    .row(ng-repeat="score in interview_scores")
+                        .row
+                            b Interviewee:
+                            text  {{score.interviewee.firstName}} {{score.interviewee.lastName}} ({{score.interview_date | date:'MM/dd/yyyy'}})
+                        .row
+                            b Score:
+                            text  {{score.option_text}} - {{score.value}}
+                        .row
+                            b Transcript:
+                            text  {{score.interview_text}}
+                        br
+        // FLAGS
+        .row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
+            div(id="flags_div").bottom-padding-med
+                legend Flags:
+                div(id="prev_flags_div")
+                    .row.left-padding-lg.bottom-padding-med(ng-repeat="flag in answer.flags")
+                        .row
+                            b {{flag.author_name}} (
+                            b {{flag.role}}
+                            b )
+                        .row
+                            em {{flag.date | date:'MM/dd/yyyy'}}
+                        .row
+                            div
+                                text Addressed?
+                                input(type="checkbox" ng-model="flag.addressed")
+
+                        div(ng-if="flag.addressed!==true")
+                            .row.col-md-11
+                                text.text-danger {{flag.content}}
+                            .row.col-md-offset-9.col-md-3
+                                date
+                                    small
+                                        em {{flag.date | date:'MM/dd/yyyy @ h:mma' : timezone}}
+
+
+
+        //// DESK RESEARCH ANSWER FORM
+        .row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='desk_research'")
+            .form-horizontal(name="desk_research_answer_form")
+                fieldset(ng-if="answer.question_mode==='desk_research'")
+                    div(id="answer_choice_div").bottom-padding-med
+                        legend(ng-if="answer.question_data_type==='score'") Choose one of the following answers (required):
+                        ng-form(name="answer_choice_form")
+                            .form-group.left-padding-lg(ng-repeat="option in answer.answer_options" required)
+                                input(
+                                type="radio"
+                                ng-value="option"
+                                ng-model="answer.answer_score")
+                                text.left-padding-med {{option.option_text}}
+
+                    div(id="answer_justification_div").bottom-padding-med
+                        legend(ng-if="answer.question_data_type==='text'") Please provide a text based response (required):
+                        ng-form(name="answer_justification_form")
+                            .form-group.top-padding-med
+                                .row.left-padding-lg
+                                    .col-md-11
+                                        textarea.form-control(
+                                        name="answer_text"
+                                        type="text"
+                                        ng-model="answer.answer_text"
+                                        placeholder="Please provide interview transcription... (required)"
+                                        autocomplete="off")
+
+        // INTERVIEW ANSWER FORM
+        .row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='interview'")
+            .form-horizontal(name="interview_answer_form")
+                fieldset
+                    div(id="answer_choice_div").bottom-padding-med
+                        legend(ng-if="answer.question_data_type==='score'") Choose one of the following answers (required):
+                        ng-form.col-md-6(name="answer_choice_form")
+                            .form-group.left-padding-lg(ng-repeat="option in answer.answer_options")
+                                input(
+                                type="radio"
+                                ng-value="option"
+                                ng-model="new_interview_answer.score"
+                                required)
+                                text.left-padding-med {{option.option_text}}
+                        .col-md-5.pull-left.top-padding-med
+                            .row
+                                ng-form(name="interviewee_selection_form")
+                                    select.form-group.form-control(ng-model="new_interview_answer.interviewee_ID" required)
+                                        option(value="" selected disabled) Select interviewee
+                                        option(ng-repeat="interviewee in interviewees" value="{{interviewee._id}}") {{interviewee.firstName}} {{interviewee.lastName}} - {{interviewee.role}}
+                            .row
+                                button.form-group.form-control.btn.center-block.btn-primary(ng-click="intervieweeAdd()") Add new interviewee
+
+                    div(id="answer_text_div").bottom-padding-med
+                        ng-form(name="interview_answer_text_form")
+                            .form-group.top-padding-med
+                                .row.left-padding-lg
+                                    .col-md-10
+                                        textarea.form-control(
+                                        name="answer_text"
+                                        type="text"
+                                        ng-model="new_interview_answer.interview_text"
+                                        placeholder="Please provide interview transcription... (required)"
+                                        autocomplete="off"
+                                        required)
+                                    .col-md-1
+                                        button.btn.btn-success(
+                                        ng-click="answerSubmit()"
+                                        ng-disabled="!new_interview_answer.score|| !new_interview_answer.interview_text || !new_interview_answer.interviewee_ID"
+                                        ) Submit interview
+
+
+
+        // COMMENTING
+        .row.left-padding-lg.right-padding-lg
+            div(id="comments_div").bottom-padding-med
+                legend Comments:
+
+                div(id="prev_comments_div" ng-if="answer.comments.length!==0")
+                    .row.left-padding-lg.bottom-padding-med(ng-repeat="comment in answer.comments")
+                        .row
+                            b {{comment.author_name}} (
+                            b {{comment.role}}
+                            b ):
+                        .row.col-md-11 {{comment.content}}
+                        .row.col-md-offset-9.col-md-3
+                            date
+                                small
+                                    em {{comment.date | date:'MM/dd/yyyy @ h:mma' : timezone}}
+                br
+                div(id="new_comment_div").bottom-padding-med
+                    ng-form(name="new_comment_form")
+                        .form-group.top-padding-med
+                            .row.left-padding-lg
+                                .col-md-10
+                                    textarea.form-control(
+                                    name="comment"
+                                    type="text"
+                                    ng-model="answer.new_comment"
+                                    placeholder="New comment..."
+                                    autocomplete="off"
+                                    required)
+                                .col-md-1
+                                    button.btn.btn-success(
+                                    ng-click="commentSubmit(current_user)"
+                                    ng-disabled="new_comment_form.$invalid"
+                                    ) Submit comment
+        // TODO reset ref_selection and popups for each ref type
+        // REFERENCE ADD
+        .row.left-padding-lg.right-padding-lg
+            div(id="biblio_div").bottom-padding-med
+                legend References:
+                //.row(ng-if="uploader.queue.length<1") //TODO figure out how to handle changing state depending on where in upload process
+                .row
+                    .col-md-5.pull-left.top-padding-med
+                        select.form-group.form-control.pull-left(ng-model="ref_selection")
+                            option(value="" selected disabled) Select action
+                            option(ng-repeat="ref in ref_type" value="{{ref.value}}") {{ref.text}}
+                    // TODO add dropdown with existing documents
+                    //.col-md-5.pull-left.top-padding-med(ng-if="ref_selection==='document'")
+                    //    select.form-group.form-control.pull-left
+                    //        select.form-group.form-control.pull-left(ng-model="new_doc_selection")
+                    //        option(value="" selected disabled) Select document
+                    //        option(ng-repeat="doc_selection in document_selectors" value="{{doc_selection._id}}") {{doc_selection.title}}
+
+                    .col-md-1.pull-left(ng-if="ref_selection==='document'")
+                        div.fileUpload.btn.btn-default
+                            span Upload File
+                            input.upload(type="file" nv-file-select uploader="uploader")
+                .row {{new_doc_selection}}
+
+                //- DOCUMENT UPLOAD
+                .row.left-padding-lg.right-padding-lg(ng-if="uploader.queue.length>0")
+                    h3 Upload queue
+                    p Queue length: {{ uploader.queue.length }}
+                    table.table
+                        thead
+                            tr
+                                th(width="50%") Name
+                                th(ng-show="uploader.isHTML5") Size
+                                th(ng-show="uploader.isHTML5") Progress
+                                th Status
+                                th Actions
+                        tbody
+                            tr(ng-repeat="item in uploader.queue")
+                                td
+                                    strong(ng-if="!new_document") {{ item.file.name }}
+                                    strong
+                                        a(ng-if="new_document" href="{{new_document.s3_url}}" target="_blank") {{ item.file.name }}
+                                td(ng-show="uploader.isHTML5" nowrap) {{ item.file.size/1024/1024|number:2 }} MB
+                                td(ng-show="uploader.isHTML5")
+                                    div.progress(style="margin-bottom: 0;")
+                                        div.progress-bar(role="progressbar" ng-style="{ 'width': item.progress + '%' }")
+                                td.text-center
+                                    span(ng-show="item.isSuccess")
+                                        i.glyphicon.glyphicon-ok
+                                    span(ng-show="item.isCancel")
+                                        i.glyphicon.glyphicon-ban-circle
+                                    span(ng-show="item.isError")
+                                        i.glyphicon.glyphicon-remove
+                                td(nowrap)
+                                    button.btn.btn-success.btn-xs(type="button" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess")
+                                        span.glyphicon.glyphicon-upload Upload
+                                    | &nbsp;
+                                    button.btn.btn-warning.btn-xs(ng-click="item.cancel()" ng-disabled="!item.isUploading")
+                                        span.glyphicon.glyphicon-ban-circle Cancel
+                                    | &nbsp;
+                                    button.btn.btn-danger.btn-xs(ng-click="item.remove()")
+                                        span.glyphicon.glyphicon-trash Remove
+
+                //- ADD WEBSITE
+                .row.bottom-padding-med(ng-if="ref_selection==='web'" id="new_web_form")
+                    ng-form.form-horizontal(name="new_web_form")
+                        fieldset
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                input.form-control(
+                                name="title"
+                                type="text"
+                                placeholder="Website title (required)..."
+                                ng-model="answer.web_ref_title"
+                                autocomplete="off"
+                                required)
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                input.form-control(
+                                name="url"
+                                type="text"
+                                placeholder="Website URL (required)..."
+                                ng-model="answer.web_ref_url"
+                                autocomplete="off"
+                                required)
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                textarea.form-control(
+                                name="comment"
+                                type="text"
+                                placeholder="Comments..."
+                                autocomplete="off"
+                                ng-model="answer.web_ref_comment")
+                    .col-md-1.pull-left.top-padding-med.left-padding-lg(ng-if="ref_selection==='web'")
+                        button.btn.btn-success(
+                        ng-click="webRefSubmit(current_user)"
+                        ng-disabled="new_web_form.$invalid"
+                        ) Create reference
+
+                //- ADD HUMAN
+                .row.bottom-padding-med(ng-if="ref_selection==='human'" id="new_human_form")
+                    ng-form.form-horizontal(name="new_human_form")
+                        fieldset
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                input.form-control(
+                                name="first_name"
+                                type="text"
+                                placeholder="First name (required)..."
+                                ng-model="answer.human_ref_first_name"
+                                autocomplete="off"
+                                required)
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                input.form-control(
+                                name="last_name"
+                                type="text"
+                                placeholder="Last name (required)..."
+                                ng-model="answer.human_ref_last_name"
+                                autocomplete="off"
+                                required)
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                input.form-control(
+                                name="email"
+                                type="text"
+                                placeholder="Email address..."
+                                ng-model="answer.human_ref_email"
+                                autocomplete="off")
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                input.form-control(
+                                name="phone"
+                                type="text"
+                                placeholder="Phone number..."
+                                ng-model="answer.human_ref_phone"
+                                autocomplete="off")
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                input.form-control(
+                                name="date"
+                                type="text"
+                                placeholder="Date contacted..."
+                                ng-model="answer.human_ref_contact_date"
+                                autocomplete="off")
+                            .row.form-group.left-padding-lg.right-padding-lg
+                                textarea.form-control(
+                                name="comment"
+                                type="text"
+                                placeholder="Comments..."
+                                ng-model="answer.human_ref_comment"
+                                autocomplete="off")
+
+                    .col-md-1.pull-left.top-padding-med.left-padding-lg(ng-if="ref_selection==='human'")
+                        button.btn.btn-success(
+                        ng-click="humanRefSubmit(current_user)"
+                        ng-disabled="new_human_form.$invalid"
+                        ) Create reference
+                br
+                br
+
+
+                //- ADD PERSON
+                //- BILBLIO LIST
+                div(id="prev_bib")
+                    .row.left-padding-lg
+                        label Citations
+                        .row.left-padding-lg(ng-repeat="ref in citations")
+                            //.row(ng-if="ref.author.length > 0") Author: {{ref.author}}
+                            .row Author: {{ref.authors[0].first_name}} {{ref.authors[0].last_name}}
+                            //- .row(ng-if="ref.author.length === 0") Author: N/A
+                            .row Title: {{ref.title}} (
+                                a(href="{{ref.s3_url}}" target="_blank") View here
+                                text )
+                            .row(ng-if="ref.year") Published: {{ref.year}}
+                            .row(ng-if="!ref.year") Published: NA
+                            .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date: 'MM/dd/yyyy'}}
+                            .row(ng-if="ref.comment.content") Comments: {{ref.comment.content}}
+                            .row(ng-if="!ref.comment.content") Comments: N/A
+                            br
+
+                    .row.left-padding-lg
+                        label Websites
+                        .row.left-padding-lg(ng-repeat="ref in answer.references.web")
+                            .row Website: {{ref.title}} (
+                                a(href="{{ref.URL}}" target="_blank") View here
+                                text )
+                            .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}
+                            .row Comments: {{ref.comment.content}}
+                            br
+                    .row.left-padding-lg
+                        label Humans
+                        .row.left-padding-lg(ng-repeat="ref in answer.references.human")
+                            .row Contact: {{ref.first_name}} {{ref.last_name}}
+                            .row Contacted: {{ref.contact_date | date:'MM/dd/yyyy'}}
+                            .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}
+                            .row Comments: {{ref.comment.content}}
+                            br
