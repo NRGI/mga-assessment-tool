@@ -14,13 +14,13 @@ if (env === 'development' || env === 'local') {
     var pass = process.env.USER_PROD_KEY;
 }
 
-// require('./server/config/express')(app, config);
+require('./server/config/express')(app, config);
 
-// require('./server/config/mongoose')(config, user, pass, env);
+require('./server/config/mongoose')(config, user, pass, env);
 
-// require('./server/config/passport')();
+require('./server/config/passport')();
 
-// require('./server/config/routes')(app);
+require('./server/config/routes')(app);
 
 app.listen(config.port);
 console.log('Listening on port ' + config.port + '...');
