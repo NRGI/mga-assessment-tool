@@ -14,7 +14,7 @@ RUN     cd /tmp && npm install
 RUN     mkdir -p /src && cp -a /tmp/node_modules /src
 RUN		rm -R /tmp/node_modules
 COPY	. /src
-# RUN		cd /src && bower install --allow-root
+RUN		cd /src && bower install --allow-root
 
 EXPOSE  80
 

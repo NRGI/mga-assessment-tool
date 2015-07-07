@@ -5,7 +5,7 @@
   "authors": [
     "Chris Perry <byndcivilization@gmail.com>"
   ],
-  "description": "Assessment tool for the yearly Resource Governance Index",
+  "description": "Assessment tool for the NRGI Mining Governance Index",
   "license": "MIT",
   "private": true,
   "dependencies": {

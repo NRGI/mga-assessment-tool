@@ -51,68 +51,68 @@ var User = mongoose.model('User', userSchema);
 
 function createDefaultUsers() {
     User.find({}).exec(function (err, collection) {
-        console.log(collection);
-        // if (collection.length === 0) {
-        //     var salt, hash;
-        //     salt = encrypt.createSalt();
-        //     hash = encrypt.hashPwd(salt, 'jcust');
-        //     User.create({
-        //         firstName: 'Jim',
-        //         lastName: 'Cust',
-        //         username: 'jcust',
-        //         email: 'jcust@resourcegovernance.org',
-        //         salt:  salt,
-        //         hashed_pwd:  hash,
-        //         role: 'supervisor',
-        //         language:  'English'
-        //     });
+        // console.log(collection);
+        if (collection.length === 0) {
+            var salt, hash;
+            salt = encrypt.createSalt();
+            hash = encrypt.hashPwd(salt, 'jcust');
+            User.create({
+                firstName: 'Jim',
+                lastName: 'Cust',
+                username: 'jcust',
+                email: 'jcust@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash,
+                role: 'supervisor',
+                language:  'English'
+            });
 
-        //     salt = encrypt.createSalt();
-        //     hash = encrypt.hashPwd(salt, 'cperry');
-        //     User.create({firstName: 'Chris',
-        //         lastName: 'Perry',
-        //         username: 'cperry',
-        //         email: 'cperry@resourcegovernance.org',
-        //         salt:  salt,
-        //         hashed_pwd:  hash, role: 'researcher',
-        //         language:  'English',
-        //         assessments: []
-        //     });
+            salt = encrypt.createSalt();
+            hash = encrypt.hashPwd(salt, 'cperry');
+            User.create({firstName: 'Chris',
+                lastName: 'Perry',
+                username: 'cperry',
+                email: 'cperry@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash, role: 'researcher',
+                language:  'English',
+                assessments: []
+            });
 
-        //     salt = encrypt.createSalt();
-        //     hash = encrypt.hashPwd(salt, 'apederson');
-        //     User.create({firstName: 'Anders',
-        //         lastName: 'Pederson',
-        //         username: 'apederson',
-        //         email: 'apederson@resourcegovernance.org',
-        //         salt:  salt,
-        //         hashed_pwd:  hash, role: 'reviewer',
-        //         language:  'English',
-        //         assessments: []
-        //     });
-        //     salt = encrypt.createSalt();
-        //     hash = encrypt.hashPwd(salt, 'ahasermann');
-        //     User.create({firstName: 'Anna',
-        //         lastName: 'Hasermann',
-        //         username: 'ahasermann',
-        //         email: 'ahasermann@resourcegovernance.org',
-        //         salt:  salt,
-        //         hashed_pwd:  hash, role: 'researcher',
-        //         language:  'English',
-        //         assessments: []
-        //     });
-        //     salt = encrypt.createSalt();
-        //     hash = encrypt.hashPwd(salt, 'dmihalyi');
-        //     User.create({firstName: 'David',
-        //         lastName: 'Mihalyi',
-        //         username: 'dmihalyi',
-        //         email: 'dmihalyi@resourcegovernance.org',
-        //         salt: salt,
-        //         hashed_pwd:  hash, role: 'reviewer',
-        //         language:  'English',
-        //         assessments: []
-        //     });
-        // }
+            salt = encrypt.createSalt();
+            hash = encrypt.hashPwd(salt, 'apederson');
+            User.create({firstName: 'Anders',
+                lastName: 'Pederson',
+                username: 'apederson',
+                email: 'apederson@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash, role: 'reviewer',
+                language:  'English',
+                assessments: []
+            });
+            salt = encrypt.createSalt();
+            hash = encrypt.hashPwd(salt, 'ahasermann');
+            User.create({firstName: 'Anna',
+                lastName: 'Hasermann',
+                username: 'ahasermann',
+                email: 'ahasermann@resourcegovernance.org',
+                salt:  salt,
+                hashed_pwd:  hash, role: 'researcher',
+                language:  'English',
+                assessments: []
+            });
+            salt = encrypt.createSalt();
+            hash = encrypt.hashPwd(salt, 'dmihalyi');
+            User.create({firstName: 'David',
+                lastName: 'Mihalyi',
+                username: 'dmihalyi',
+                email: 'dmihalyi@resourcegovernance.org',
+                salt: salt,
+                hashed_pwd:  hash, role: 'reviewer',
+                language:  'English',
+                assessments: []
+            });
+        }
     });
 }
 

@@ -28,6 +28,6 @@ module.exports = function (config, user, pass, env) {
     // import data
     userModel.createDefaultUsers();
     intervieweeModel.createDefaultInterviewees();
-    // countryModel.createDefaultCountries();
+    countryModel.createDefaultCountries();
     //assessmentModel.createDefaultAssessments();
 };
