@@ -13,6 +13,9 @@ if (env === 'development' || env === 'local') {
     var user = process.env.USER_PROD_ID;
     var pass = process.env.USER_PROD_KEY;
 }
+console.log(config);
+console.log(user);
+console.log(pass);
 
 require('./server/config/express')(app, config);
 
