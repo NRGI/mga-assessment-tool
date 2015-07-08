@@ -27,7 +27,8 @@ module.exports = function (config, user, pass, env) {
 
     // import data
     userModel.createDefaultUsers();
-    intervieweeModel.createDefaultInterviewees();
     countryModel.createDefaultCountries();
-    //assessmentModel.createDefaultAssessments();
+    if (process.env.NODE_ENV !== 'production') {
+        intervieweeModel.createDefaultInterviewees();
+    }
 };
