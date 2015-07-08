@@ -31,6 +31,8 @@ before_script:
 script:
   - npm test
 
+after_success:
+  - eb deploy mgaAssessmentTool-env
+  - eb setenv USER_DEV_ID=$USER_DEV_ID USER_DEV_KEY=$USER_DEV_KEY
 
-
-commit_container: byndcivilization/mga-assessment-tool
+commit_container: byndcivilization/mga-assessment-tool:latest
