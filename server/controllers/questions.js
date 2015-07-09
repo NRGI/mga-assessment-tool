@@ -93,6 +93,11 @@ exports.updateQuestion = function (req, res) {
         question.question_mode = question_update.question_mode;
         question.question_mode_text = question_update.question_mode_text;
         question.question_data_type = question_update.question_data_type;
+        question.question_indicator = question_update.question_indicator;
+        question.question_indicator_ID = question_update.question_indicator_ID;
+        question.question_theme_ID = question_update.question_theme_ID;
+        question.question_value_chain_ID = question_update.question_value_chain_ID;
+        question.question_tags = question_update.question_tags;
 
         question.comments = question_update.comments;
 

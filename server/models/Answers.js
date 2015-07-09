@@ -98,6 +98,10 @@ var answerSchema = mongoose.Schema({
     question_text: String,
     question_mode: {type: String, required: '{PATH} is required'},
     question_data_type: {type: String, required: '{PATH} is required'},
+    question_indicator: String,
+    question_indicator_ID: String,
+    question_theme_ID: String,
+    question_value_chain_ID: String,
     root_question_ID: {type: ObjectId, required: '{PATH} is required', index: true}, // generated from _id value of Question Model
     status: {type: String, default: 'created'}, // created, saved, submitted, flagged, reviewed, approved
     flags: [commentSchema],

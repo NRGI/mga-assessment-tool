@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, mgaNotifier, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, mgaNotifier, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
     mgaAssessmentSrvc.query({}, function (assessments) {
         mgaIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
             $scope.interviewee = interviewee;
@@ -19,6 +19,17 @@ angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($sco
         });
 
     });
+
+    $scope.editIntervieweeDialog = function () {
+        $scope.value = true;
+        ngDialog.open({
+            template: 'partials/dialogs/edit-interviewee-dialog',
+            controller: 'mgaEditIntervieweeDialogCtrl',
+            className: 'ngdialog-theme-plain',
+            scope: $scope
+        });
+    };
+
     $scope.addAssessment = function () {
         if ($scope.add_assessment === undefined) {
             mgaNotifier.error('You must select an assessment from the dropdown!');

@@ -14,7 +14,7 @@ angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope
     //
     //$scope.answer_list = mgaAnswerSrvc.query({
     //    assessment_ID: $routeParams.assessment_ID,
-    //    question_mode: 'secondary_sources'
+    //    question_mode: 'secondary_source'
     //});
 
     // pull assessment data and add
@@ -22,7 +22,7 @@ angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope
         $scope.answer_list = [];
         mgaAnswerSrvc.query({
             assessment_ID: $routeParams.assessment_ID,
-            question_mode: 'secondary_sources'
+            question_mode: 'secondary_source'
         }, function (answers) {
             $scope.question_set_length = answers.length;
 

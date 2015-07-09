@@ -29,6 +29,11 @@ var questionSchema = mongoose.Schema({
     question_mode_text: {type: String, required: '{PATH} is required'},
     question_text: {type: String, required: '{PATH} is required'},
     question_data_type: {type: String, required: '{PATH} is required'},
+    question_indicator: String,
+    question_indicator_ID: String,
+    question_theme_ID: String,
+    question_value_chain_ID: String,
+    question_tags: Array,
     comments: [commentSchema],
     modified: [modificationSchema]
 });

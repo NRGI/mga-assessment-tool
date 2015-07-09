@@ -10,12 +10,16 @@ angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope,
     $scope.modeOptions = [
         {value: 'interview', text: 'Interview'},
         {value: 'desk_research', text: 'Desk Research'},
-        {value: 'secondary_sources', text: 'Secondary Sources'}
+        {value: 'secondary_source', text: 'Secondary Source'}
     ];
 
     $scope.typeOptions = [
         {value: 'text', text: 'Text'},
-        {value: 'score', text: 'Score'}
+        {value: 'multi', text: 'Score'},
+        {value: 'float', text: 'Float'},
+        {value: 'bool', text: 'Yes/No/Partial'},
+        {value: 'perc', text: 'Percentage'},
+        {value: 'int', text: 'Integer'}
     ];
 
     $scope.questionClear = function () {
