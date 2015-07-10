@@ -9,13 +9,13 @@ var config          = require('./server/config/config')[env];
 var user = process.env.DB_ID;
 var pass = process.env.DB_KEY;
 
-/*if (env === 'development' || env === 'local') {
-    var user = process.env.USER_DEV_ID;
-    var pass = process.env.USER_DEV_KEY;
-} else if (env === 'production') {
-    var user = process.env.USER_PROD_ID;
-    var pass = process.env.USER_PROD_KEY;
-}*/
+//if (env === 'development' || env === 'local') {
+//    var user = process.env.USER_DEV_ID;
+//    var pass = process.env.USER_DEV_KEY;
+//} else if (env === 'production') {
+//    var user = process.env.USER_PROD_ID;
+//    var pass = process.env.USER_PROD_KEY;
+//}
 
 require('./server/config/express')(app, config);
 

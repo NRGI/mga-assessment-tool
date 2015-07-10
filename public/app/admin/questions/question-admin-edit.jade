@@ -1,6 +1,7 @@
 .container.top-padding-med
 	.well.left-padding-lg
 		div.left-padding-lg.right-padding-lg.top-padding-med
+			.row {{question}}
 			legend.h3 Question {{question.question_order}}. {{question.question_text}}
 			.row.left-padding-lg.right-padding-lg
 				.form-horizontal(name="question_content_form")
@@ -15,24 +16,44 @@
 								ng-model="question.question_text")
 
 						div(id="question_details_div")
-							label.col-md-2.control-label(form="order") Question Order
-							.col-md-1
-								input.form-group.form-control(
-								name="order"
-								type="number"
-								ng-model="question.question_order")
+							.row
+								label.col-md-2.control-label(form="order") Question Order
+								.col-md-1
+									input.form-group.form-control(
+									name="order"
+									type="number"
+									ng-model="question.question_order")
 
-							label.col-md-2.control-label(form="mode") Question Mode
-							.col-md-2
-								select.form-group.form-control(
-								ng-model="question.question_mode"
-								ng-options="item.value as item.text for item in modeOptions")
+								label.col-md-2.control-label(form="mode") Question Mode
+								.col-md-2
+									select.form-group.form-control(
+									ng-model="question.question_mode"
+									ng-options="item.value as item.text for item in mode_options")
 
-							label.col-md-2.control-label(form="type") Data Type
-							.col-md-2
-								select.form-group.form-control(
-								ng-model="question.question_data_type"
-								ng-options="item.value as item.text for item in typeOptions")
+								label.col-md-2.control-label(form="type") Data Type
+								.col-md-2
+									select.form-group.form-control(
+									ng-model="question.question_data_type"
+									ng-options="item.value as item.text for item in type_options")
+							.row
+								label.col-md-1.control-label(form="order") Theme
+								.col-md-3
+									select.form-group.form-control(
+									ng-model="question.question_theme_ID"
+									ng-options="item.value as (item.value + ': ' + item.text) for item in theme_options")
+
+								label.col-md-1.control-label(form="mode") Value Chain
+								.col-md-3
+									select.form-group.form-control(
+									ng-model="question.question_value_chain_ID"
+									ng-options="item.value as (item.value + ': ' + item.text) for item in value_chain_options")
+
+								label.col-md-1.control-label(form="type") Indicator
+								.col-md-3
+									select.form-group.form-control(
+									ng-model="question.question_indicator_ID"
+									ng-options="item.value as (item.value + ': ' + item.text) for item in indicator_options")
+
 						.row
 						.row.top-padding-med
 							.form-group(name="control_buttons").top-padding-med.left-padding-lg.right-padding-lg

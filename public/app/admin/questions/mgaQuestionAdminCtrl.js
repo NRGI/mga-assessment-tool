@@ -5,10 +5,15 @@
 angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQuestionSrvc, ngDialog) {
     // filtering options
     $scope.sort_options = [
+        {value: "question_flow_order", text: "Sort by Question Flow Order"},
         {value: "question_order", text: "Sort by Question Order"},
         {value: "question_mode", text: "Sort by Question Mode"},
-        {value: "question_data_type", text: "Sort by Data Type"}
+        {value: "question_data_type", text: "Sort by Data Type"},
+        {value: "question_theme_ID", text: "Sort by Theme"},
+        {value: "question_value_chain_ID", text: "Sort by Value Chain"},
+        {value: "question_indicator_ID", text: "Sort by Indicator"}
     ];
+
     $scope.sort_order = $scope.sort_options[0].value;
 
     mgaQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
