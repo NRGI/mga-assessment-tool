@@ -19,16 +19,24 @@
 					table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg
 						thead
 							tr
+								th.col-md-1 Question Flow
 								th.col-md-1 Question Number
-								th Question Text
-								th.col-md-2 Question mode
+								th.col-md-4 Question Text
+								th.col-md-1 Question mode
 								th.col-md-1 Data type
+								th.col-md-1 Theme
+								th.col-md-1 Value chain
+								th.col-md-2 Indicator
 								th
 							tbody
 								tr(ng-repeat="question in questions | filter:search_text | orderBy:sort_order")
+									td {{question.question_flow_order}}
 									td {{question.question_order}}
 									td {{question.question_text}}
 									td {{question.question_mode | addSpaces | ucfirst}}
 									td {{question.question_data_type}}
+									td {{question.question_theme_ID}}
+									td {{question.question_value_chain_ID}}
+									td {{question.question_indicator_ID}} - {{question.question_indicator}}
 									td
 										a.btn.center-block.btn-default(href="/admin/question-admin-edit/{{question._id}}") Edit
