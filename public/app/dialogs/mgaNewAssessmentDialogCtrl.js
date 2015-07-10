@@ -52,6 +52,7 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                     question_data_type: el.question_data_type,
                     question_order: el.question_order,
                     question_flow_order: el.question_flow_order,
+                    question_flow_order: el.question_flow_order,
                     answer_text: "",
                     answer_options: [],
                     modified: [{
