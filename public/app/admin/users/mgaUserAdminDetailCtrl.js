@@ -26,6 +26,7 @@ angular.module('app').controller('mgaUserAdminDetailCtrl', function ($scope, $ro
                     new_user_data.password = $scope.password;
                     mgaUserMethodSrvc.updateUser(new_user_data).then(function () {
                         mgaNotifier.notify('User account has been updated');
+                        $location.path('/admin/user-admin');
                     }, function (reason) {
                         mgaNotifier.error(reason);
                     });
@@ -35,6 +36,7 @@ angular.module('app').controller('mgaUserAdminDetailCtrl', function ($scope, $ro
             } else {
                 mgaUserMethodSrvc.updateUser(new_user_data).then(function () {
                     mgaNotifier.notify('User account has been updated');
+                    $location.path('/admin/user-admin');
                 }, function (reason) {
                     mgaNotifier.error(reason);
                 });

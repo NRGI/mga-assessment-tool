@@ -1,62 +1,69 @@
 .container.top-padding-med
-	.well.left-padding-lg.right-padding-lg
-		form.form-horizontal(name='profileForm')
-			fieldset.left-padding-lg.right-padding-lg
-				legend.h3 {{user.firstName}} {{user.lastName}}'s Profile
-				.form-group
-					label.col-md-2.control-label(form="") First Name *
-					.col-md-10
-						input.form-control(name="firstName"
-							type="text"
-							ng-model="user.firstName"
-							required)
-				.form-group
-					label.col-md-2.control-label(form="lastName") Last Name *
-					.col-md-10
-						input.form-control(name="lname"
-							type="text"
-							ng-model="user.lastName"
-							required)
-				.form-group
-					label.col-md-2.control-label(form="username") Username
-					.col-md-10
-						input.form-control(name="username"
-							type="text"
-							ng-model="user.username"
-							readonly)
-				.form-group
-					label.col-md-2.control-label(form="email") Email *
-					.col-md-10
-						input.form-control(name="email"
-							type="email"
-							ng-model="user.email"
-							required)
-				.form-group
-					label.col-md-2.control-label(form="role") Role *
-					.col-md-10
-						select.form-control(name="role"
-							ng-model="user.role"
-						ng-options="item.value as item.text for item in role_options"
-							required)
-				.form-group
-					label.col-md-2.control-label(form="password") Password
-					.col-md-10
-						input.form-control(name="password"
-							placeholder="New password"
-							type="password"
-							ng-model="password")
-				.form-group
-					label.col-md-2.control-label(form="password") Repeat Password
-					.col-md-10
-						input.form-control(name="password"
-							placeholder="Repeat password"
-							type="password"
-							ng-model="password_rep")
-				.form-group
-					.col-md-10.col-md-offset-2
-						.pull-right
-							button.btn.btn-primary(ng-click="userUpdate()" ng-disabled="") Save user
-							| &nbsp;
-							button.btn.btn-danger(ng-click="deleteConfirmDialog()" ng-disabled="") Delete user
-							| &nbsp;
-							a.btn.btn-default(href="/admin/user-admin-view/{{user._id}}") Cancel
+	.well.left-padding-lg
+		div.left-padding-lg.right-padding-lg.top-padding-med
+			form.form-horizontal(name='profileForm')
+				fieldset.left-padding-med.right-padding-lg
+					//- Profile page
+					legend.h3 {{user.firstName}} {{user.lastName}}'s Profile
+					.row.right-padding-lg.top-padding-med
+						.form-group
+							label.col-md-2.control-label(form="first_name") First Name
+							.col-md-4
+								input.form-control(
+								name="first_name"
+								type="text"
+								placeholder="First Name"
+								ng-model="user.firstName"
+								required)
+							label.col-md-2.control-label(form="last_name") Last Name
+							.col-md-4
+								input.form-control(
+								name="last_name"
+								type="text"
+								placeholder="Last Name"
+								ng-model="user.lastName"
+								required)
+					.row.right-padding-lg
+						.form-group
+							label.col-md-2.control-label(form="username") Username
+							.col-md-4
+								input.form-control(
+								name="username"
+								type="text"
+								placeholder="Username"
+								ng-model="user.username"
+								readonly)
+							label.col-md-2.control-label(form="email") Email
+							.col-md-4
+								input.form-control(
+								name="email"
+								type="email"
+								placeholder="Email"
+								ng-model="user.email"
+								required)
+					.row.right-padding-lg
+						.form-group
+							label.col-md-2.control-label(form="password") Password
+							.col-md-4
+								input.form-control(
+								name="password"
+								type="password"
+								placeholder="New password"
+								ng-model="password")
+							label.col-md-2.control-label(form="password") Repeat Password
+							.col-md-4
+								input.form-control(
+								name="password"
+								type="password"
+								placeholder="Repeat password"
+								ng-model="password_rep")
+
+
+					.form-group
+						.col-md-10.col-md-offset-2
+							.pull-right.right-padding-lg
+								button.btn.btn-primary(ng-click="userUpdate()" ng-disabled="") Save user
+								| &nbsp;
+								button.btn.btn-danger(ng-click="deleteConfirmDialog()" ng-disabled="") Delete user
+								| &nbsp;
+								a.btn.btn-default(href="/admin/user-admin") Cancel

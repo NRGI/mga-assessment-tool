@@ -20,15 +20,27 @@ angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQu
 
         var question;
         $scope.questions = data;
-        $scope.getArray = [];
+        $scope.getArray = [{
+            question_flow_order: 'question_flow_order',
+            question_order: 'question_order',
+            question_text: 'question_text',
+            question_mode: 'question_mode',
+            question_data_type: 'question_data_type',
+            question_theme_ID: 'question_theme_ID',
+            question_value_chain_ID: 'question_value_chain_ID',
+            question_indicator_ID: 'question_indicator_ID'
+        }];
 
         data.forEach(function (el) {
             question = {
+                question_flow_order: el.question_flow_order,
                 question_order: el.question_order,
-                question_mode: el.question_mode,
-                question_mode_text: el.question_mode_text,
                 question_text: el.question_text,
-                question_data_type: el.question_data_type
+                question_mode: el.question_mode,
+                question_data_type: el.question_data_type,
+                question_theme_ID: el.question_theme_ID,
+                question_value_chain_ID: el.question_value_chain_ID,
+                question_indicator_ID: el.question_indicator_ID
             };
             $scope.getArray.push(question);
         });

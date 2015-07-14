@@ -14,43 +14,25 @@
 					th Username
 					th Role
 					th Assessments
-					th Assigned
 					th Started
-					th Submitted
-					th Reviewed
 					th Approved
-					th 
 					th 
 			tbody
 				tr(ng-repeat="user in users | filter:search_text | orderBy:sort_order")
 					td
 						a(href="mailto:{{user.email}}") {{user.firstName}} {{user.lastName}}
 					td {{user.username}}
-					td {{user.role}}
+					td {{user.role | ucfirst}}
 					td
 						p(ng-repeat="assessment in user.assessments")
 							text {{assessment.country_name}} {{assessment.details.year}} {{assessment.details.version}}
-					td
-						p(ng-repeat="assessment in user.assessments")
-							em(ng-if="assessment.details.assignment") {{assessment.details.assignment.assigned_date | date}}
 					td
 						p(ng-repeat="assessment in user.assessments")
 							em(ng-if="assessment.details.start_date") {{assessment.details.start_date.started_date | date}}
 
 					td
 						p(ng-repeat="assessment in user.assessments")
-							em(ng-if="assessment.details.submit_date") {{assessment.details.submit_date.submitted_date | date}}
-
-					td
-						p(ng-repeat="assessment in user.assessments")
-							em(ng-if="assessment.details.review_date") {{assessment.details.review_date.reviewed_date | date}}
-
-					td
-						p(ng-repeat="assessment in user.assessments")
 							em(ng-if="assessment.details.approval") {{assessment.details.approval.approved_date | date}}
-
-					td
-						a.btn.center-block.btn-default(href="/admin/user-admin-view/{{user._id}}") View
 
 					td
 						a.btn.center-block.btn-default(href="/admin/user-admin-edit/{{user._id}}") Edit

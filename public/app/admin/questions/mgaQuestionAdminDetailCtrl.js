@@ -100,12 +100,13 @@ angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope,
         {text:"Significance of mining revenues",value:"M-4-1"},
         {text:"Budget and subnational impact of mining revenues",value:"M-4-0"},
         {text:"Economic impact of mining",value:"M-5-0"}
->>>>>>> staging
     ];
-
-    $scope.questionClear = function () {
-        $scope.question = angular.copy($scope.question_start);
-    };
+    //TODO fix question reset
+    //$scope.question_start = angular.copy($scope.question);
+    //
+    //$scope.questionClear = function () {
+    //    $scope.question = angular.copy($scope.question_start);
+    //};
     //TODO fix reording questions---update happens in question controller
     $scope.questionUpdate = function () {
         var new_question_data = $scope.question;
@@ -120,7 +121,7 @@ angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope,
     $scope.deleteConfirmDialog = function () {
         $scope.value = true;
         ngDialog.open({
-            template: 'partials/dialogs/delete-question-delete-confirmation-dialog',
+            template: 'partials/dialogs/delete-question-confirmation-dialog',
             controller: 'mgaDeleteQuestionDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope
