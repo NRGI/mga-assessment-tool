@@ -28,6 +28,7 @@ var questionSchema = mongoose.Schema({
     question_mode: {type: String, required: '{PATH} is required'},
     question_mode_text: {type: String, required: '{PATH} is required'},
     question_text: {type: String, required: '{PATH} is required'},
+    question_secondary_source: String,
     question_data_type: {type: String, required: '{PATH} is required'},
     question_indicator: String,
     question_indicator_ID: String,

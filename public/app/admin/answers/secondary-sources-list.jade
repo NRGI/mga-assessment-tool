@@ -5,9 +5,9 @@
       .pull-right
          form.form-inline.left-padding-lg.right-padding-lg
             .form-group
-               input.form-control(ng-model="searchText" placeholder="Filter")
+                input.form-control(ng-model="search_text" placeholder="Filter")
             .form-group.margin-left-med
-               select.form-control(ng-model="sortOrder" ng-options="item.value as item.text for item in sort_options")
+                select.form-control(ng-model="sort_order" ng-options="item.value as item.text for item in sort_options")
       .pull-left.left-padding-lg.bottom-padding-lg
          .row
             text Users:
@@ -25,25 +25,34 @@
                em(ng-show="$last")  {{mod.modified_date | date}}
          .row.top-padding-med
             a.btn.center-block.btn-primary(href="/admin/assessments-admin/{{assessment.assessment_ID}}") Go to main page
+          .row.top-padding-med
+              a.btn.center-block.btn-default(href="/admin/assessments-admin/interviews/{{assessment.assessment_ID}}") Go to desk research
+          .row.top-padding-med
+              a.btn.center-block.btn-default(href="/admin/assessments-admin/desk_research/{{assessment.assessment_ID}}") Go to interviews
 
       table.table.table-hover.table-striped.table-condensed
          thead
             tr
                th.col-md-1.text-center Question number
-               th.col-md-3 Indicator name
-               th.col-md-1 Indicator data type
+                   th.col-md-1.text-center Question order
+                   th.col-md-1 Indicator
+                   th.col-md-3 Question text
+                   th.col-md-1 Source
+                   th.col-md-1 Data type
                th.col-md-1 Status
                th.col-md-1 Input
                th.col-md-1 Value
                th.col-md-1.text-center
          tbody
-            tr(ng-repeat="answer in answer_list | filter: searchText | orderBy:sortOrder")
+             tr(ng-repeat="answer in answer_list | filter: search_text | orderBy:sort_order")
                td.col-md-1.text-center {{answer.question_order}}
+                   td.col-md-1.text-center {{answer.question_flow_order}}
+                   td.col-md-1 {{answer.question_indicator_ID}}
                td.col-md-3 {{answer.question_text}}
+                   td.col-md-1 {{answer.question_secondary_source}}
                td.col-md-1 {{answer.question_data_type}}
                td.col-md-1
                   .text-danger(ng-if="answer.status==='created'") {{answer.status | ucfirst}}
-                  .text-info(ng-if="answer.status==='saved'") {{answer.status | ucfirst}}
                   .text-success(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
                   .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
                td.col-md-1

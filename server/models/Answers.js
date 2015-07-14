@@ -99,6 +99,7 @@ var answerSchema = mongoose.Schema({
     question_order: {type: Number, required: '{PATH} is required'}, // generated from the order_ID of Question Model
     question_flow_order: {type: Number, required: '{PATH} is required'},
     question_text: String,
+    question_secondary_source: String,
     question_mode: {type: String, required: '{PATH} is required'},
     question_data_type: {type: String, required: '{PATH} is required'},
     question_indicator: String,

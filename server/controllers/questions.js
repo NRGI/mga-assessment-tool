@@ -90,6 +90,7 @@ exports.updateQuestion = function (req, res) {
         }
 
         question.question_text = question_update.question_text;
+        question.question_secondary_source = question_update.question_secondary_source;
         question.question_mode = question_update.question_mode;
         question.question_mode_text = question_update.question_mode_text;
         question.question_data_type = question_update.question_data_type;

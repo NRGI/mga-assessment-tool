@@ -70,13 +70,21 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             controller:  'mgaAssessmentAdminDetailCtrl'
         })
         // ANSWERS
-        .when('/admin/assessments-admin/answer/:answer_ID', {
-            templateUrl: '/partials/admin/answers/answer-page-edit',
-            controller:  'mgaAnswerCtrl'
+        .when('/admin/assessments-admin/interviews/:assessment_ID', {
+            templateUrl: '/partials/admin/answers/interviews-list',
+            controller: 'mgaInterviewsListCtrl'
+        })
+        .when('/admin/assessments-admin/desk_research/:assessment_ID', {
+            templateUrl: '/partials/admin/answers/assessment-admin-detail',
+            controller: 'mgaAssessmentAdminDetailCtrl'
         })
         .when('/admin/assessments-admin/secondary-sources/:assessment_ID', {
             templateUrl: '/partials/admin/answers/secondary-sources-list',
-            controller:  'mgaSecondarySourcesListCtrl'
+            controller: 'mgaSecondarySourcesListCtrl'
+        })
+        .when('/admin/assessments-admin/answer/:answer_ID', {
+            templateUrl: '/partials/admin/answers/answer-page-edit',
+            controller:  'mgaAnswerCtrl'
         })
         // DOCUMENTS
         .when('/admin/documents-admin', {

@@ -2,7 +2,7 @@
 	.well.left-padding-lg.right-padding-lg
 		div.left-padding-lg.right-padding-lg.top-padding-med
 			legend.h3 Assessment Status Dashboard
-			div.left-padding-lg.right-padding-lg.top-padding-med
+			div.top-padding-med
 				.row.pull-left.left-padding-lg.right-padding-lg
 					.btn.btn-success(ng-click="newAssessmentDialog()" ng-show="identity.currentUser.isSupervisor()") Deploy Assessment
 				.pull-right
@@ -43,6 +43,15 @@
 							td.col-med-1(ng-show="identity.currentUser.isSupervisor()")
 								button.btn.btn-col.btn-default(ng-click="assignAssessmentDialog(assessment.assessment_ID)") Assign
 							td.col-med-1(ng-if="assessment.status!=='created'")
-								a.btn.btn-col.btn-primary(href="admin/assessments-admin/{{assessment.assessment_ID}}") Continue
+								a.btn.btn-col.btn-primary(href="admin/assessments-admin/desk_research/{{assessment.assessment_ID}}") Desk research
+							td.col-med-1(ng-if="assessment.status!=='created'")
+								a.btn.btn-col.btn-primary(href="admin/assessments-admin/interviews/{{assessment.assessment_ID}}") Interviews
+							td.col-med-1(ng-if="assessment.status!=='created'")
+								a.btn.btn-col.btn-primary(href="admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Secondary sources
+							td.col-med-1(ng-if="assessment.status!=='created'")
+								button.btn.btn-col.btn-default(ng-click="" disabled) Export
+							td.col-med-1(ng-if="assessment.status==='created'")
+							td.col-med-1(ng-if="assessment.status==='created'")
 							td.col-med-1(ng-if="assessment.status==='created'")
 								button.btn.btn-col.btn-success(ng-click="assessmentStart(assessment.assessment_ID)") Start
+							td.col-med-1(ng-if="assessment.status==='created'")

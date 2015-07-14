@@ -2,10 +2,14 @@
 angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope, $route, $routeParams, mgaNotifier, mgaAnswerSrvc, mgaAssessmentSrvc, mgaAnswerMethodSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
     // filtering options
     $scope.sort_options = [
-        {value: "question_order", text: "Sort by Question Number"},
-        {value: "status", text: "Sort by Status"}
+        {value: "question_order", text: "Sort by question number"},
+        {value: "question_flow_order", text: "Sort by question order"},
+        {value: "question_indicator_ID", text: "Sort by indicator"},
+        {value: "question_secondary_source", text: "Sort by source"},
+        {value: "question_data_type", text: "Sort by data type"},
+        {value: "status", text: "Sort by status"}
     ];
-    $scope.sortOrder = $scope.sort_options[0].value;
+    $scope.sort_order = $scope.sort_options[0].value;
 
     $scope.identity = mgaIdentitySrvc;
     $scope.new_score = {};

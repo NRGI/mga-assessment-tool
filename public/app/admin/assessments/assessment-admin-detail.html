@@ -5,8 +5,8 @@
         <legend class="h3">{{assessment.country}} {{assessment.year}} {{assessment.version}} assessment</legend>
         <div class="pull-right">
             <form class="form-inline left-padding-lg right-padding-lg">
-                <div class="form-group"><input ng-model="searchText" placeholder="Filter" class="form-control"/></div>
-                <div class="form-group margin-left-med"><select ng-model="sortOrder"
+                <div class="form-group"><input ng-model="search_text" placeholder="Filter" class="form-control"/></div>
+                <div class="form-group margin-left-med"><select ng-model="sort_order"
                                                                 ng-options="item.value as item.text for item in sort_options"
                                                                 class="form-control"></select></div>
             </form>
@@ -42,12 +42,21 @@
             <div class="row">questions_complete: {{assessment.questions_complete}}</div>
             <div class="row">question_set_length: {{assessment.question_set_length}}</div>
             <div class="row top-padding-med"><a
+                    href="/admin/assessments-admin/desk-research/{{assessment.assessment_ID}}"
+                    class="btn center-block btn-primary pull-left col-md-9">Go to desk research</a></div>
+            <div class="row top-padding-med"><a href="/admin/assessments-admin/interviews/{{assessment.assessment_ID}}"
+                                                class="btn center-block btn-primary pull-left col-md-9">Go to interview
+                questions</a></div>
+            <div class="row top-padding-med"><a
                     href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}"
                     class="btn center-block btn-primary pull-left col-md-9">Go to secondary sources</a></div>
-            <!-- TODO add view all and edit previous functinoality-->
-            <div class="row top-padding-med"><a href="" ng-if="assessment.status!=='desk_research'" disabled="disabled"
-                                                class="btn center-block btn-default pull-left col-md-9">Edit previous
-                section</a></div>
+            <div class="row top-padding-med">
+                <button ng-click="" disabled="disabled" class="btn center-block btn-default pull-left col-md-9">Export
+                </button>
+            </div>
+            <!--// TODO add view all and edit previous functinoality--><!--.row.top-padding-med-->
+            <!--    a.btn.center-block.btn-default.pull-left.col-md-9(--><!--    href=""-->
+            <!--    ng-if="assessment.status!=='desk_research'"--><!--    disabled) Edit previous section-->
             <!--.row.top-padding-med--><!--    a.btn.center-block.btn-default.pull-left.col-md-9(--><!--    href=""-->
             <!--    ng-if="assessment.status!=='desk_research'"--><!--    disabled) Edit previous section-->
 
@@ -64,14 +73,11 @@
                 <th class="col-md-2">Question mode</th>
                 <th class="col-md-5 text-center">Question</th>
                 <th class="col-md-1">Status</th>
-                <th class="col-md-1">Data type</th>
                 <th class="col-md-1">Score</th>
-                <th class="col-md-1 text-center"></th>
-                <th ng-if="answer.question_mode!=='desk_research'" class="col-md-1 text-center"></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="answer in answer_list | filter: searchText | orderBy:sortOrder">
+            <tr ng-repeat="answer in answer_list | filter: search_text | orderBy:sort_order">
                 <td class="col-md-1 text-center">{{answer.question_order}}</td>
                 <td class="col-md-2">{{answer.question_mode | addSpaces | ucfirst}}</td>
                 <td class="col-md-5">{{answer.question_text}}</td>
@@ -81,24 +87,10 @@
                     <div ng-if="answer.status==='submitted'" class="text-success">{{answer.status | ucfirst}}</div>
                     <div ng-if="answer.status==='flagged'" class="text-warning">{{answer.status | ucfirst}}</div>
                 </td>
-                <!--td.col-md-1 {{answer.question_data_type | addSpaces | ucfirst}}-->
-                <td class="col-md-1">
-                    <div ng-if="answer.question_data_type==='text'" class="glyphicon glyphicon-pencil">
-                        {{answer.question_data_type | addSpaces | ucfirst}}
-                    </div>
-                    <div ng-if="answer.question_data_type==='score'" class="glyphicon glyphicon-check">
-                        {{answer.question_data_type | addSpaces | ucfirst}}
-                    </div>
-                </td>
-                <td ng-if="answer.answer_score===undefined &amp;&amp; answer.question_data_type!=='text'"
-                    class="col-md-1">None
-                </td>
-                <td ng-if="answer.question_data_type==='score' &amp;&amp; answer.answer_score!==undefined"
-                    class="col-md-1">{{answer.answer_score.option_text}} - {{answer.answer_score.value}}
-                </td>
-                <td ng-if="answer.question_data_type==='text'" class="col-md-1"></td>
-                <td><a href="/admin/assessments-admin/answer/{{answer.answer_ID}}" class="btn center-block btn-default">Go
-                    to answer page</a></td>
+                <!--TODO fix handling of non submitted scores-->
+                <td class="col-md-1">{{answer.answer_score}}</td>
+                <!--td.col-md-1(ng-if="answer.answer_score===undefined && answer.question_data_type!=='text'") None-->
+                <!--td.col-md-1(ng-if="(answer.question_data_type==='bool' || answer.question_data_type==='multi') && answer.answer_score!==undefined") {{answer.answer_score.option_text}} - {{answer.answer_score.value}}-->
             </tr>
             </tbody>
         </table>

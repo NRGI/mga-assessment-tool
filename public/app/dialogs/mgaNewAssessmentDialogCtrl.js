@@ -45,7 +45,8 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
             var new_assessment_data = [],
                 new_answer_data = [],
                 timestamp = new Date().toISOString(),
-                question_set_length = 0;
+                desk_research_set_length = 0,
+                interview_set_length = 0;
 
             mgaQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
 
@@ -58,6 +59,7 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                         country: $scope.new_assessment.assessment_country.country,
                         status: 'created',
                         question_text: el.question_text,
+                        question_secondary_source: el.question_secondary_source,
                         question_mode: el.question_mode,
                         question_data_type: el.question_data_type,
                         question_order: el.question_order,
@@ -75,7 +77,10 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                     });
 
                     if (el.question_mode === 'desk_research') {
-                        question_set_length += 1;
+                        desk_research_set_length += 1;
+                    }
+                    if (el.question_mode === 'interview') {
+                        interview_set_length += 1;
                     }
                     switch (el.question_data_type) {
                         case "bool":
@@ -138,7 +143,8 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                     questions_flagged: 0,
                     questions_unfinalized: data.length,
                     question_length: data.length,
-                    question_set_length: question_set_length,
+                    desk_research_set_length: desk_research_set_length,
+                    interview_set_length: interview_set_length,
                     modified: [{
                         modified_by: $scope.$parent.identity.currentUser._id,
                         modified_date: timestamp
