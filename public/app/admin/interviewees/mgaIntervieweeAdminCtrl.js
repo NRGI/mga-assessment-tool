@@ -6,8 +6,9 @@ angular.module('app').controller('mgaIntervieweeAdminCtrl', function ($scope, mg
     // filtering options
     $scope.sortOptions = [
         {value: 'lastName', text: 'Sort by last name'},
-        {value: 'firstName', text: 'Sort by first name'}
-        //{value: 'assessments', text: 'Sort by attached assessments'}
+        {value: 'firstName', text: 'Sort by first name'},
+        {value: 'role', text: 'Sort by interviewee role'},
+        {value: 'assessments', text: 'Sort by attached assessments'}
     ];
     $scope.sortOrder = $scope.sortOptions[0].value;
 

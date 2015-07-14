@@ -5,10 +5,16 @@
         .pull-right
             form.form-inline
                 .form-group
-                    input.form-control(ng-model="searchText", placeholder="Filter")
+                    input.form-control(
+                    ng-model="searchText"
+                    ng-disabled="documents.length < 1"
+                    placeholder="Filter")
                 .form-group.margin-left-med
-                    select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
-        table.table
+                    select.form-control(
+                    ng-model="sortOrder"
+                    ng-disabled="documents.length < 1"
+                    ng-options="item.value as item.text for item in sortOptions")
+        table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg(ng-if="documents.length > 0")
             thead
                 tr
                     th Title
@@ -33,3 +39,6 @@
                         a(href="{{doc.s3_url}}" target="_blank").btn.btn-primary View
                     td
                         a(href="/admin/documents-admin/{{doc._id}}").btn.btn-warning Edit
+
+        h1.text-danger(ng-if="documents.length < 1") No documents uploaded
+

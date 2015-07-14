@@ -15,13 +15,15 @@
                         .form-group
                             input.form-control(
                             ng-model="search_text"
+                            ng-disabled="questions.length < 1"
                             placeholder="Filter")
                         .form-group.margin-left-med
                             select.form-control(
                             ng-model="sort_order"
+                            ng-disabled="questions.length < 1"
                             ng-options="item.value as item.text for item in sort_options")
                 div.top-padding-lg
-                    table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg
+                    table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg(ng-if="questions.length > 0")
                         thead
                             tr
                                 th.col-md-1 Question Flow
@@ -45,3 +47,5 @@
                                     td {{question.question_indicator_ID}}: {{question.question_indicator}}
                                     td
                                         a.btn.center-block.btn-default(href="/admin/question-admin-edit/{{question._id}}") Edit
+
+                    h1.text-danger(ng-if="questions.length < 1") No documents uploaded
