@@ -70,13 +70,16 @@ var scoreHistorySchema = new mongoose.Schema({
         option_text: String,
         value: Number
     },
-    text: String
+    answer_text: String,
+    answer_num: Number
 });
 
 var interviewScoreSchema = new mongoose.Schema({
     interviewee_ID: ObjectId,
     option_order: Number,
     option_text: String,
+    answer_text: String,
+    answer_num: Number,
     value: Number,
     interview_text: String,
     interview_date: {type: Date, default: Date.now}
@@ -105,15 +108,16 @@ var answerSchema = mongoose.Schema({
     root_question_ID: {type: ObjectId, required: '{PATH} is required', index: true}, // generated from _id value of Question Model
     status: {type: String, default: 'created'}, // created, saved, submitted, flagged, reviewed, approved
     flags: [commentSchema],
+    answer_options: [answerOptionSchema],
+    answer_text: String,
+    answer_num: Number,
+    interview_score: [interviewScoreSchema],
     answer_score: {
         option_order: Number,
         option_text: String,
         value: Number,
         _id: ObjectId
     },
-    interview_score: [interviewScoreSchema],
-    answer_text: String,
-    answer_options:[answerOptionSchema],
     score_history: [scoreHistorySchema],
     comments: [commentSchema],
     references: {

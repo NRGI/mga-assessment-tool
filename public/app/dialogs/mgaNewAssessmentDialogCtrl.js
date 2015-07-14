@@ -77,27 +77,56 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                     if (el.question_mode === 'desk_research') {
                         question_set_length += 1;
                     }
-                    if (el.question_data_type === "score") {
-                        new_answer_data[new_answer_data.length - 1]['answer_options'].push({
-                            option_order: 1,
-                            option_text: 'Yes',
-                            value: 4
-                        });
-                        new_answer_data[new_answer_data.length - 1]['answer_options'].push({
-                            option_order: 2,
-                            option_text: 'Partial',
-                            value: 2.5
-                        });
-                        new_answer_data[new_answer_data.length - 1]['answer_options'].push({
-                            option_order: 3,
-                            option_text: 'No',
-                            value: 1
-                        });
-                        new_answer_data[new_answer_data.length - 1]['answer_options'].push({
-                            option_order: 4,
-                            option_text: 'N/A',
-                            value: 0
-                        });
+                    switch (el.question_data_type) {
+                        case "bool":
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 1,
+                                option_text: 'Yes',
+                                value: 4
+                            });
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 2,
+                                option_text: 'Partial',
+                                value: 2.5
+                            });
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 3,
+                                option_text: 'No',
+                                value: 1
+                            });
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 4,
+                                option_text: 'N/A',
+                                value: 0
+                            });
+                            break;
+                        case "multi":
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 1,
+                                option_text: 'high',
+                                value: 4
+                            });
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 2,
+                                option_text: 'above average',
+                                value: 3
+                            });
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 3,
+                                option_text: 'below average',
+                                value: 2
+                            });
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 4,
+                                option_text: 'low',
+                                value: 1
+                            });
+                            new_answer_data[new_answer_data.length - 1]['answer_options'].push({
+                                option_order: 5,
+                                option_text: 'N/A',
+                                value: 0
+                            });
+                            break;
                     }
                 });
                 new_assessment_data.push({
@@ -119,7 +148,6 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                         date: timestamp
                     }
                 });
-                console.log(question_set_length);
                 //send to mongo
                 mgaAssessmentMethodSrvc.createAssessment(new_assessment_data)
                     .then(mgaAnswerMethodSrvc.insertAnswerSet(new_answer_data))
