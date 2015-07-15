@@ -25,6 +25,7 @@ var crypto                 = require('crypto'),
 
 //noinspection JSUnusedLocalSymbols
 exports.fileCheck = function (req, res, next) {
+    console.log(upload_bucket);
     // get temp path of file upload
     var file_path = req.files.file.path,
         // read_stream = fs.createReadStream(file_path),
@@ -78,7 +79,7 @@ exports.fileCheck = function (req, res, next) {
                     });
 
                     new_document.file_hash = file_hash;
-                    new_document.s3_url = 'https://s3.amazonaws.com/mga-uploads/' + file_hash + '.pdf';
+                    new_document.s3_url = 'https://s3.amazonaws.com/' + upload_bucket + '/' + file_hash + '.pdf';
                     new_document.modified = [{
                         modifiedBy: req.user._id,
                         modifiedDate: timestamp

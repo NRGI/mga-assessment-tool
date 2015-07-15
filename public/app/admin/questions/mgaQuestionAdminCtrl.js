@@ -44,8 +44,6 @@ angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQu
             };
             $scope.getArray.push(question);
         });
-
-        $scope.header = ['Question Order', 'Question Mode', 'Question Mode Text', 'Question Text', 'Question Data Type'];
     });
 
     // $scope.questions = mgaQuestionSrvc.query();

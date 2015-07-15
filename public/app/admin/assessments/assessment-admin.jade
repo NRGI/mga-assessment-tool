@@ -50,7 +50,10 @@
 							td.col-med-1(ng-if="assessment.status!=='created'")
 								a.btn.btn-col.btn-primary(href="admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Secondary sources
 							td.col-med-1(ng-if="assessment.status!=='created'")
-								button.btn.btn-col.btn-default(ng-click="" disabled) Export
+								button.btn.btn-col.btn-default(
+								ng-csv="getArray"
+								download="answers.csv"
+								disabled) Export
 							td.col-med-1(ng-if="assessment.status==='created'")
 							td.col-med-1(ng-if="assessment.status==='created'")
 							td.col-med-1(ng-if="assessment.status==='created'")
