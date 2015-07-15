@@ -38,7 +38,9 @@
             .row.top-padding-med
                 a.btn.center-block.btn-primary.pull-left.col-md-9(href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Secondary sources
             .row.top-padding-med
-                button.btn.center-block.btn-default.pull-left.col-md-9(ng-click="" disabled) Export answers
+                button.btn.center-block.btn-default.pull-left.col-md-9(
+                ng-csv="getArray"
+                download="answers.csv") Export
 
             //// TODO add view all and edit previous functinoality
             //.row.top-padding-med
@@ -92,7 +94,7 @@
                         .text-success(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
                         .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
                     //TODO fix handling of non submitted scores
-                    td.col-md-1 {{answer.answer_score}}
-                    //td.col-md-1(ng-if="answer.answer_score===undefined && answer.question_data_type!=='text'") None
-                    //td.col-md-1(ng-if="(answer.question_data_type==='bool' || answer.question_data_type==='multi') && answer.answer_score!==undefined") {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
+                    td.col-md-1 {{answer.summary_score}}
+                    //td.col-md-1(ng-if="answer.summary_score===undefined && answer.question_data_type!=='text'") None
+                    //td.col-md-1(ng-if="(answer.question_data_type==='bool' || answer.question_data_type==='multi') && answer.summary_score!==undefined") {{answer.summary_score.option_text}} - {{answer.answer_score.value}}
 

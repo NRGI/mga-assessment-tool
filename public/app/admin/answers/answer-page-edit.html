@@ -10,7 +10,7 @@
                 &nbsp;
                 <button ng-click="answerSubmit()"
                         ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' &amp;&amp; !answer.answer_score)"
-                        class="btn btn-success">Submit answer
+                        ng-if="answer.question_mode!=='interview'" class="btn btn-success">Submit answer
                 </button>
                 &nbsp;
                 <button ng-click="answerFlag(current_user)" class="btn btn-warning">Flag answer</button>

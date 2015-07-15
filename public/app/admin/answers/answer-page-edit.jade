@@ -13,6 +13,7 @@
                 button.btn.btn-success(
                 ng-click="answerSubmit()"
                 ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' && !answer.answer_score)"
+                ng-if="answer.question_mode!=='interview'"
                 ) Submit answer
                 | &nbsp;
                 button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
