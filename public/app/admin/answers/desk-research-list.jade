@@ -70,10 +70,13 @@
                         .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
 
                     //TODO fix missing data hadling
+                    //td.col-md-1.text-center(ng-if="answer.answer_score.value===undefined && answer.question_data_type!=='text'") None
+                    //td.col-md-1.text-center(ng-if="answer.question_data_type==='text' && answer.answer_text===undefined") None
+                    //td.col-md-1.text-center(ng-if="answer.question_data_type==='text' && answer.answer_text!==undefined") Text
+                    //td.col-md-1.text-center(ng-if="answer.answer_score.value!==undefined && (answer.question_data_type!=='int' || answer.question_data_type!=='perc')") {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
+                    //td.col-md-1.text-center(ng-if="answer.answer_score.value!==undefined && answer.question_data_type==='int'") {{answer.answer_score.value}}
+                    //td.col-md-1.text-center(ng-if="answer.answer_score.value!==undefined && answer.question_data_type==='perc'") {{answer.answer_score.value}}%
                     td.col-md-1.text-center {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
-                    //td.col-md-1(ng-if="answer.answer_score===undefined && answer.question_data_type!=='text'") None
-                    //td.col-md-1(ng-if="answer.question_data_type==='score' && answer.answer_score!==undefined") {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
-                    //td.col-md-1(ng-if="answer.question_data_type==='text'")
                     td
                         a.btn.center-block.btn-default(href="/admin/assessments-admin/answer/{{answer.answer_ID}}") Go to answer page
 

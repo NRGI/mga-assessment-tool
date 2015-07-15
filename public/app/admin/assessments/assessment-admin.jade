@@ -44,7 +44,7 @@
 							td.col-med-1(ng-show="identity.currentUser.isSupervisor()")
 								button.btn.btn-col.btn-default(ng-click="assignAssessmentDialog(assessment.assessment_ID)") Assign
 							td.col-med-1(ng-if="assessment.status!=='created'")
-								a.btn.btn-col.btn-primary(href="admin/assessments-admin/desk_research/{{assessment.assessment_ID}}") Desk research
+								a.btn.btn-col.btn-primary(href="admin/assessments-admin/desk-research/{{assessment.assessment_ID}}") Desk research
 							td.col-med-1(ng-if="assessment.status!=='created'")
 								a.btn.btn-col.btn-primary(href="admin/assessments-admin/interviews/{{assessment.assessment_ID}}") Interviews
 							td.col-med-1(ng-if="assessment.status!=='created'")

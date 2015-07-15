@@ -1,37 +1,6 @@
 .container.top-padding-med
     .well.left-padding-lg.right-padding-lg
         legend {{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}
-            //a.text-info.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
-            //href="assessments/assessment-edit/{{assessment.assessment_ID}}-{{assessment.question_length | zpad:3}}"
-            //ng-if="assessment.question_length!==answer.question_order")
-            //glyphicon.text-muted.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
-            //ng-if="assessment.question_length===answer.question_order"
-            //disabled)
-            //
-            //glyphicon.text-info.glyphicon.glyphicon-forward.pull-right.left-padding-med(
-            //ng-click="moveForward()"
-            //ng-if="answer.question_order!==assessment.question_length")
-            //glyphicon.text-muted.glyphicon.glyphicon-forward.pull-right.left-padding-med(
-            //ng-if="answer.question_order===assessment.question_length"
-            //disabled)
-            //
-            //glyphicon.text-success.glyphicon.glyphicon-ok-sign.pull-right.right-padding-lg(ng-if="answer.status==='submitted'")
-            //glyphicon.text-danger.glyphicon.glyphicon-flag.pull-right.right-padding-lg(ng-if="answer.status==='flagged'")
-            //glyphicon.text-info.glyphicon.glyphicon-floppy-saved.pull-right(ng-if="answer.status==='saved'")
-            //text.pull-right.right-padding-lg(ng-if="answer.status!=='saved' && answer.status!=='submitted' && answer.status!=='flagged'") none
-            //text.pull-right.right-padding-lg Status:
-            //
-            //glyphicon.text-info.glyphicon.glyphicon-backward.pull-right.right-padding-med(
-            //ng-click="moveBackward()"
-            //ng-if="answer.question_order!==1")
-            //glyphicon.text-muted.glyphicon.glyphicon-backward.pull-right.right-padding-med(ng-if="answer.question_order===1")
-            //
-            //a.text-info.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
-            //href="assessments/assessment-edit/{{assessment.assessment_ID}}-001"
-            //ng-if="answer.question_order!==1")
-            //glyphicon.text-muted.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
-            //ng-if="answer.question_order===1"
-            //disabled)
         .row.left-padding-lg.bottom-padding-med
             h3
                 em Question {{answer.question_order}}. {{answer.question_text}}
@@ -44,28 +13,41 @@
                 button.btn.btn-success(
                 ng-click="answerSubmit()"
                 ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' && !answer.answer_score)"
-                ng-if="answer.question_mode !== 'interview'"
                 ) Submit answer
                 | &nbsp;
                 button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
                 | &nbsp;
                 button.btn.btn-danger(ng-click="answerClear()") Clear answer
                 | &nbsp;
+                //a.btn.btn-default(
+                //href="/admin/assessments-admin/answer/{{answer.assessment_ID}}-{{answer.question_flow_order + 1 | numberFixedLen: 3}}"
+                //) Next Question
+                //| &nbsp;
                 a.btn.btn-default(
-                href="/admin/assessments-admin/answer/{{answer.assessment_ID}}-{{answer.question_flow_order + 1 | numberFixedLen: 3}}"
-                ng-if="answer.question_mode === 'interview'"
-                ) Next Question
-                | &nbsp;
-                a.btn.btn-default(href="/admin/assessments-admin/{{answer.assessment_ID}}") Return to menu
+                href="/admin/assessments-admin/interviews/{{answer.assessment_ID}}"
+                ng-if="answer.question_mode==='interview'") Return to menu
+                a.btn.btn-default(
+                href="/admin/assessments-admin/desk-research/{{answer.assessment_ID}}"
+                ng-if="answer.question_mode==='desk_research'") Return to menu
                 //
 
         // DESK RESEARCH ANSWER DISPLAY
         .row(ng-if="answer.question_mode==='desk_research'")
-            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='score'")
+            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'")
                 div(ng-if="answer.answer_score")
                     label.col-med-2 Selected Score:
-                    text  {{answer.answer_score.option_text}}
+                    text  {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
                 div(ng-if="!answer.answer_score") No answer selected
+            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='int'")
+                div(ng-if="answer.answer_score")
+                    label.col-med-2 Inputed Score:
+                    text  {{answer.answer_score.value}}
+                div(ng-if="!answer.answer_score") No answer inputed
+            .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='perc'")
+                div(ng-if="answer.answer_score")
+                    label.col-med-2 Inputed Score:
+                    text  {{answer.answer_score.value}}
+                div(ng-if="!answer.answer_score") No answer inputed
         // INTERVIEW ANSWER DISPLAY
         div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.interview_score.length > 0")
             legend Interview scores
@@ -114,14 +96,22 @@
             .form-horizontal(name="desk_research_answer_form")
                 fieldset(ng-if="answer.question_mode==='desk_research'")
                     div(id="answer_choice_div").bottom-padding-med
-                        legend(ng-if="answer.question_data_type==='score'") Choose one of the following answers (required):
+                        legend(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'") Choose one of the following answers (required):
                         ng-form(name="answer_choice_form")
                             .form-group.left-padding-lg(ng-repeat="option in answer.answer_options" required)
                                 input(
                                 type="radio"
                                 ng-value="option"
                                 ng-model="answer.answer_score")
-                                text.left-padding-med {{option.option_text}}
+                                text.left-padding-med {{option.option_text | ucfirst}}
+
+                    div(id="answer_value_div").bottom-padding-med
+                        legend(ng-if="answer.question_data_type==='perc' || answer.question_data_type==='int' ") Please provide a value (required):
+                        .form-group.left-padding-lg.col-md-2(required)
+                            label(ng-if="answer.question_data_type==='int'") Whole number
+                            label(ng-if="answer.question_data_type==='perc'") Percentage as decimal
+                            input.form-control(type="number" ng-if="answer.question_data_type==='int'" ng-model="answer.answer_score.value")
+                            input.form-control(type="number" step="any" ng-if="answer.question_data_type==='perc'" ng-model="answer.answer_score.value")
 
                     div(id="answer_justification_div").bottom-padding-med
                         legend(ng-if="answer.question_data_type==='text'") Please provide a text based response (required):
@@ -141,7 +131,7 @@
             .form-horizontal(name="interview_answer_form")
                 fieldset
                     div(id="answer_choice_div").bottom-padding-med
-                        legend(ng-if="answer.question_data_type==='score'") Choose one of the following answers (required):
+                        legend(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'") Choose one of the following answers (required):
                         ng-form.col-md-6(name="answer_choice_form")
                             .form-group.left-padding-lg(ng-repeat="option in answer.answer_options")
                                 input(

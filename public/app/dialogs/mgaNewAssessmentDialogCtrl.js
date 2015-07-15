@@ -70,6 +70,7 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                         question_value_chain_ID: el.question_value_chain_ID,
                         answer_text: "",
                         answer_options: [],
+                        answer_score: {},
                         modified: [{
                             modifiedBy: $scope.$parent.identity.currentUser._id,
                             modifiedDate: timestamp

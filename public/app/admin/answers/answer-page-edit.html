@@ -1,1 +1,448 @@
-<div class="container top-padding-med"><div class="well left-padding-lg right-padding-lg"><legend>{{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}<!--a.text-info.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(--><!--href="assessments/assessment-edit/{{assessment.assessment_ID}}-{{assessment.question_length | zpad:3}}"--><!--ng-if="assessment.question_length!==answer.question_order")--><!--glyphicon.text-muted.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(--><!--ng-if="assessment.question_length===answer.question_order"--><!--disabled)--><!----><!--glyphicon.text-info.glyphicon.glyphicon-forward.pull-right.left-padding-med(--><!--ng-click="moveForward()"--><!--ng-if="answer.question_order!==assessment.question_length")--><!--glyphicon.text-muted.glyphicon.glyphicon-forward.pull-right.left-padding-med(--><!--ng-if="answer.question_order===assessment.question_length"--><!--disabled)--><!----><!--glyphicon.text-success.glyphicon.glyphicon-ok-sign.pull-right.right-padding-lg(ng-if="answer.status==='submitted'")--><!--glyphicon.text-danger.glyphicon.glyphicon-flag.pull-right.right-padding-lg(ng-if="answer.status==='flagged'")--><!--glyphicon.text-info.glyphicon.glyphicon-floppy-saved.pull-right(ng-if="answer.status==='saved'")--><!--text.pull-right.right-padding-lg(ng-if="answer.status!=='saved' && answer.status!=='submitted' && answer.status!=='flagged'") none--><!--text.pull-right.right-padding-lg Status:--><!----><!--glyphicon.text-info.glyphicon.glyphicon-backward.pull-right.right-padding-med(--><!--ng-click="moveBackward()"--><!--ng-if="answer.question_order!==1")--><!--glyphicon.text-muted.glyphicon.glyphicon-backward.pull-right.right-padding-med(ng-if="answer.question_order===1")--><!----><!--a.text-info.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(--><!--href="assessments/assessment-edit/{{assessment.assessment_ID}}-001"--><!--ng-if="answer.question_order!==1")--><!--glyphicon.text-muted.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(--><!--ng-if="answer.question_order===1"--><!--disabled)--></legend><div class="row left-padding-lg bottom-padding-med"><h3><em>Question {{answer.question_order}}. {{answer.question_text}}</em></h3></div><div class="row left-padding-lg bottom-padding-lg"><div class="col-md-pull-2"><button ng-click="answerSave()" class="btn btn-primary">Save answer</button>&nbsp;<button ng-click="answerSubmit()" ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' &amp;&amp; !answer.answer_score)" ng-if="answer.question_mode !== 'interview'" class="btn btn-success">Submit answer</button>&nbsp;<button ng-click="answerFlag(current_user)" class="btn btn-warning">Flag answer</button>&nbsp;<button ng-click="answerClear()" class="btn btn-danger">Clear answer</button>&nbsp;<a href="/admin/assessments-admin/answer/{{answer.assessment_ID}}-{{answer.question_flow_order + 1 | numberFixedLen: 3}}" ng-if="answer.question_mode === 'interview'" class="btn btn-default">Next Question</a>&nbsp;<a href="/admin/assessments-admin/{{answer.assessment_ID}}" class="btn btn-default">Return to menu</a><!----></div></div><!-- DESK RESEARCH ANSWER DISPLAY--><div ng-if="answer.question_mode==='desk_research'" class="row"><div ng-if="answer.question_data_type==='score'" class="left-padding-lg right-padding-lg bottom-padding-med"><div ng-if="answer.answer_score"><label class="col-med-2">Selected Score:</label><text> {{answer.answer_score.option_text}}</text></div><div ng-if="!answer.answer_score">No answer selected</div></div></div><!-- INTERVIEW ANSWER DISPLAY--><div ng-if="answer.question_mode==='interview' &amp;&amp; answer.interview_score.length &gt; 0" class="left-padding-lg"><legend>Interview scores</legend><div class="row"><div ng-if="answer.interview_score.length &gt; 0" class="left-padding-lg right-padding-lg bottom-padding-med"><div ng-repeat="score in interview_scores" class="row"><div class="row"><b>Interviewee:</b><text> {{score.interviewee.firstName}} {{score.interviewee.lastName}} ({{score.interview_date | date:'MM/dd/yyyy'}})</text></div><div class="row"><b>Score:</b><text> {{score.option_text}} - {{score.value}}</text></div><div class="row"><b>Transcript:</b><text> {{score.interview_text}}</text></div><br/></div></div></div></div><!-- FLAGS--><div ng-if="answer.flags.length!==0" class="row left-padding-lg bottom-padding-lg"><div id="flags_div" class="bottom-padding-med"><legend>Flags:</legend><div id="prev_flags_div"><div ng-repeat="flag in answer.flags" class="row left-padding-lg bottom-padding-med"><div class="row"><b>{{flag.author_name}} (</b><b>{{flag.role}}</b><b>)</b></div><div class="row"><em>{{flag.date | date:'MM/dd/yyyy'}}</em></div><div class="row"><div><text>Addressed?</text><input type="checkbox" ng-model="flag.addressed"/></div></div><div ng-if="flag.addressed!==true"><div class="row col-md-11"><text class="text-danger">{{flag.content}}</text></div><div class="row col-md-offset-9 col-md-3"><date><small><em>{{flag.date | date:'MM/dd/yyyy @ h:mma' : timezone}}</em></small></date></div></div></div></div></div></div><!--// DESK RESEARCH ANSWER FORM--><div ng-if="answer.question_mode==='desk_research'" class="row left-padding-lg right-padding-lg"><div name="desk_research_answer_form" class="form-horizontal"><fieldset ng-if="answer.question_mode==='desk_research'"><div id="answer_choice_div" class="bottom-padding-med"><legend ng-if="answer.question_data_type==='score'">Choose one of the following answers (required):</legend><ng-form name="answer_choice_form"><div ng-repeat="option in answer.answer_options" required="required" class="form-group left-padding-lg"><input type="radio" ng-value="option" ng-model="answer.answer_score"/><text class="left-padding-med">{{option.option_text}}</text></div></ng-form></div><div id="answer_justification_div" class="bottom-padding-med"><legend ng-if="answer.question_data_type==='text'">Please provide a text based response (required):</legend><ng-form name="answer_justification_form"><div class="form-group top-padding-med"><div class="row left-padding-lg"><div class="col-md-11"><textarea name="answer_text" type="text" ng-model="answer.answer_text" placeholder="Please provide interview transcription... (required)" autocomplete="off" class="form-control"></textarea></div></div></div></ng-form></div></fieldset></div></div><!-- INTERVIEW ANSWER FORM--><div ng-if="answer.question_mode==='interview'" class="row left-padding-lg right-padding-lg"><div name="interview_answer_form" class="form-horizontal"><fieldset><div id="answer_choice_div" class="bottom-padding-med"><legend ng-if="answer.question_data_type==='score'">Choose one of the following answers (required):</legend><ng-form name="answer_choice_form" class="col-md-6"><div ng-repeat="option in answer.answer_options" class="form-group left-padding-lg"><input type="radio" ng-value="option" ng-model="new_interview_answer.score" required="required"/><text class="left-padding-med">{{option.option_text}}</text></div></ng-form><div class="col-md-5 pull-left top-padding-med"><div class="row"><ng-form name="interviewee_selection_form"><select ng-model="new_interview_answer.interviewee_ID" required="required" class="form-group form-control"><option value="" selected="selected" disabled="disabled">Select interviewee</option><option ng-repeat="interviewee in interviewees" value="{{interviewee._id}}">{{interviewee.firstName}} {{interviewee.lastName}} - {{interviewee.role}}</option></select></ng-form></div><div class="row"><button ng-click="intervieweeAdd()" class="form-group form-control btn center-block btn-primary">Add new interviewee</button></div></div></div><div id="answer_text_div" class="bottom-padding-med"><ng-form name="interview_answer_text_form"><div class="form-group top-padding-med"><div class="row left-padding-lg"><div class="col-md-10"><textarea name="answer_text" type="text" ng-model="new_interview_answer.interview_text" placeholder="Please provide interview transcription... (required)" autocomplete="off" required="required" class="form-control"></textarea></div><div class="col-md-1"><button ng-click="answerSubmit()" ng-disabled="!new_interview_answer.score|| !new_interview_answer.interview_text || !new_interview_answer.interviewee_ID" class="btn btn-success">Submit interview</button></div></div></div></ng-form></div></fieldset></div></div><!-- COMMENTING--><div class="row left-padding-lg right-padding-lg"><div id="comments_div" class="bottom-padding-med"><legend>Comments:</legend><div id="prev_comments_div" ng-if="answer.comments.length!==0"><div ng-repeat="comment in answer.comments" class="row left-padding-lg bottom-padding-med"><div class="row"><b>{{comment.author_name}} (</b><b>{{comment.role}}</b><b>):</b></div><div class="row col-md-11">{{comment.content}}</div><div class="row col-md-offset-9 col-md-3"><date><small><em>{{comment.date | date:'MM/dd/yyyy @ h:mma' : timezone}}</em></small></date></div></div></div><br/><div id="new_comment_div" class="bottom-padding-med"><ng-form name="new_comment_form"><div class="form-group top-padding-med"><div class="row left-padding-lg"><div class="col-md-10"><textarea name="comment" type="text" ng-model="answer.new_comment" placeholder="New comment..." autocomplete="off" required="required" class="form-control"></textarea></div><div class="col-md-1"><button ng-click="commentSubmit(current_user)" ng-disabled="new_comment_form.$invalid" class="btn btn-success">Submit comment</button></div></div></div></ng-form></div></div></div><!-- TODO reset ref_selection and popups for each ref type--><!-- REFERENCE ADD--><div class="row left-padding-lg right-padding-lg"><div id="biblio_div" class="bottom-padding-med"><legend>References:</legend><!--.row(ng-if="uploader.queue.length<1") //TODO figure out how to handle changing state depending on where in upload process--><div class="row"><div class="col-md-5 pull-left top-padding-med"><select ng-model="ref_selection" class="form-group form-control pull-left"><option value="" selected="selected" disabled="disabled">Select action</option><option ng-repeat="ref in ref_type" value="{{ref.value}}">{{ref.text}}</option></select></div><!-- TODO add dropdown with existing documents--><!--.col-md-5.pull-left.top-padding-med(ng-if="ref_selection==='document'")--><!--    select.form-group.form-control.pull-left--><!--        select.form-group.form-control.pull-left(ng-model="new_doc_selection")--><!--        option(value="" selected disabled) Select document--><!--        option(ng-repeat="doc_selection in document_selectors" value="{{doc_selection._id}}") {{doc_selection.title}}--><div ng-if="ref_selection==='document'" class="col-md-1 pull-left"><div class="fileUpload btn btn-default"><span>Upload File</span><input type="file" nv-file-select="nv-file-select" uploader="uploader" class="upload"/></div></div></div><div class="row">{{new_doc_selection}}</div><div ng-if="uploader.queue.length&gt;0" class="row left-padding-lg right-padding-lg"><h3>Upload queue</h3><p>Queue length: {{ uploader.queue.length }}</p><table class="table"><thead><tr><th width="50%">Name</th><th ng-show="uploader.isHTML5">Size</th><th ng-show="uploader.isHTML5">Progress</th><th>Status</th><th>Actions</th></tr></thead><tbody><tr ng-repeat="item in uploader.queue"><td><strong ng-if="!new_document">{{ item.file.name }}</strong><strong><a ng-if="new_document" href="{{new_document.s3_url}}" target="_blank">{{ item.file.name }}</a></strong></td><td ng-show="uploader.isHTML5" nowrap="nowrap">{{ item.file.size/1024/1024|number:2 }} MB</td><td ng-show="uploader.isHTML5"><div style="margin-bottom: 0;" class="progress"><div role="progressbar" ng-style="{ 'width': item.progress + '%' }" class="progress-bar"></div></div></td><td class="text-center"><span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span><span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span><span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span></td><td nowrap="nowrap"><button type="button" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-upload">Upload</span></button>&nbsp;<button ng-click="item.cancel()" ng-disabled="!item.isUploading" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-ban-circle">Cancel</span></button>&nbsp;<button ng-click="item.remove()" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash">Remove</span></button></td></tr></tbody></table></div><div ng-if="ref_selection==='web'" id="new_web_form" class="row bottom-padding-med"><ng-form name="new_web_form" class="form-horizontal"><fieldset><div class="row form-group left-padding-lg right-padding-lg"><input name="title" type="text" placeholder="Website title (required)..." ng-model="answer.web_ref_title" autocomplete="off" required="required" class="form-control"/></div><div class="row form-group left-padding-lg right-padding-lg"><input name="url" type="text" placeholder="Website URL (required)..." ng-model="answer.web_ref_url" autocomplete="off" required="required" class="form-control"/></div><div class="row form-group left-padding-lg right-padding-lg"><textarea name="comment" type="text" placeholder="Comments..." autocomplete="off" ng-model="answer.web_ref_comment" class="form-control"></textarea></div></fieldset></ng-form><div ng-if="ref_selection==='web'" class="col-md-1 pull-left top-padding-med left-padding-lg"><button ng-click="webRefSubmit(current_user)" ng-disabled="new_web_form.$invalid" class="btn btn-success">Create reference</button></div></div><div ng-if="ref_selection==='human'" id="new_human_form" class="row bottom-padding-med"><ng-form name="new_human_form" class="form-horizontal"><fieldset><div class="row form-group left-padding-lg right-padding-lg"><input name="first_name" type="text" placeholder="First name (required)..." ng-model="answer.human_ref_first_name" autocomplete="off" required="required" class="form-control"/></div><div class="row form-group left-padding-lg right-padding-lg"><input name="last_name" type="text" placeholder="Last name (required)..." ng-model="answer.human_ref_last_name" autocomplete="off" required="required" class="form-control"/></div><div class="row form-group left-padding-lg right-padding-lg"><input name="email" type="text" placeholder="Email address..." ng-model="answer.human_ref_email" autocomplete="off" class="form-control"/></div><div class="row form-group left-padding-lg right-padding-lg"><input name="phone" type="text" placeholder="Phone number..." ng-model="answer.human_ref_phone" autocomplete="off" class="form-control"/></div><div class="row form-group left-padding-lg right-padding-lg"><input name="date" type="text" placeholder="Date contacted..." ng-model="answer.human_ref_contact_date" autocomplete="off" class="form-control"/></div><div class="row form-group left-padding-lg right-padding-lg"><textarea name="comment" type="text" placeholder="Comments..." ng-model="answer.human_ref_comment" autocomplete="off" class="form-control"></textarea></div></fieldset></ng-form><div ng-if="ref_selection==='human'" class="col-md-1 pull-left top-padding-med left-padding-lg"><button ng-click="humanRefSubmit(current_user)" ng-disabled="new_human_form.$invalid" class="btn btn-success">Create reference</button></div></div><br/><br/><div id="prev_bib"><div class="row left-padding-lg"><label>Citations</label><div ng-repeat="ref in citations" class="row left-padding-lg"><!--.row(ng-if="ref.author.length > 0") Author: {{ref.author}}--><div class="row">Author: {{ref.authors[0].first_name}} {{ref.authors[0].last_name}}</div><div class="row">Title: {{ref.title}} (<a href="{{ref.s3_url}}" target="_blank">View here</a><text>)</text></div><div ng-if="ref.year" class="row">Published: {{ref.year}}</div><div ng-if="!ref.year" class="row">Published: NA</div><div class="row">Cited by {{ref.comment.author_name}} on {{ref.comment.date | date: 'MM/dd/yyyy'}}</div><div ng-if="ref.comment.content" class="row">Comments: {{ref.comment.content}}</div><div ng-if="!ref.comment.content" class="row">Comments: N/A</div><br/></div></div><div class="row left-padding-lg"><label>Websites</label><div ng-repeat="ref in answer.references.web" class="row left-padding-lg"><div class="row">Website: {{ref.title}} (<a href="{{ref.URL}}" target="_blank">View here</a><text>)</text></div><div class="row">Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}</div><div class="row">Comments: {{ref.comment.content}}</div><br/></div></div><div class="row left-padding-lg"><label>Humans</label><div ng-repeat="ref in answer.references.human" class="row left-padding-lg"><div class="row">Contact: {{ref.first_name}} {{ref.last_name}}</div><div class="row">Contacted: {{ref.contact_date | date:'MM/dd/yyyy'}}</div><div class="row">Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}</div><div class="row">Comments: {{ref.comment.content}}</div><br/></div></div></div></div></div></div></div>
+<div class="container top-padding-med">
+    <div class="well left-padding-lg right-padding-lg">
+        <legend>{{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}
+        </legend>
+        <div class="row left-padding-lg bottom-padding-med"><h3><em>Question {{answer.question_order}}.
+            {{answer.question_text}}</em></h3></div>
+        <div class="row left-padding-lg bottom-padding-lg">
+            <div class="col-md-pull-2">
+                <button ng-click="answerSave()" class="btn btn-primary">Save answer</button>
+                &nbsp;
+                <button ng-click="answerSubmit()"
+                        ng-disabled="flagCheck(answer.flags) || !answer.answer_text || (answer.question_data_type==='score' &amp;&amp; !answer.answer_score)"
+                        class="btn btn-success">Submit answer
+                </button>
+                &nbsp;
+                <button ng-click="answerFlag(current_user)" class="btn btn-warning">Flag answer</button>
+                &nbsp;
+                <button ng-click="answerClear()" class="btn btn-danger">Clear answer</button>
+                &nbsp;<!--a.btn.btn-default(-->
+                <!--href="/admin/assessments-admin/answer/{{answer.assessment_ID}}-{{answer.question_flow_order + 1 | numberFixedLen: 3}}"-->
+                <!--) Next Question--><!--| &nbsp;--><a
+                    href="/admin/assessments-admin/interviews/{{answer.assessment_ID}}"
+                    ng-if="answer.question_mode==='interview'" class="btn btn-default">Return to menu</a><a
+                    href="/admin/assessments-admin/desk-research/{{answer.assessment_ID}}"
+                    ng-if="answer.question_mode==='desk_research'" class="btn btn-default">Return to menu</a><!---->
+            </div>
+        </div>
+        <!-- DESK RESEARCH ANSWER DISPLAY-->
+        <div ng-if="answer.question_mode==='desk_research'" class="row">
+            <div ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'"
+                 class="left-padding-lg right-padding-lg bottom-padding-med">
+                <div ng-if="answer.answer_score"><label class="col-med-2">Selected Score:</label>
+                    <text> {{answer.answer_score.option_text}} - {{answer.answer_score.value}}</text>
+                </div>
+                <div ng-if="!answer.answer_score">No answer selected</div>
+            </div>
+            <div ng-if="answer.question_data_type==='int'" class="left-padding-lg right-padding-lg bottom-padding-med">
+                <div ng-if="answer.answer_score"><label class="col-med-2">Inputed Score:</label>
+                    <text> {{answer.answer_score.value}}</text>
+                </div>
+                <div ng-if="!answer.answer_score">No answer inputed</div>
+            </div>
+            <div ng-if="answer.question_data_type==='perc'" class="left-padding-lg right-padding-lg bottom-padding-med">
+                <div ng-if="answer.answer_score"><label class="col-med-2">Inputed Score:</label>
+                    <text> {{answer.answer_score.value}}</text>
+                </div>
+                <div ng-if="!answer.answer_score">No answer inputed</div>
+            </div>
+        </div>
+        <!-- INTERVIEW ANSWER DISPLAY-->
+        <div ng-if="answer.question_mode==='interview' &amp;&amp; answer.interview_score.length &gt; 0"
+             class="left-padding-lg">
+            <legend>Interview scores</legend>
+            <div class="row">
+                <div ng-if="answer.interview_score.length &gt; 0"
+                     class="left-padding-lg right-padding-lg bottom-padding-med">
+                    <div ng-repeat="score in interview_scores" class="row">
+                        <div class="row"><b>Interviewee:</b>
+                            <text> {{score.interviewee.firstName}} {{score.interviewee.lastName}}
+                                ({{score.interview_date | date:'MM/dd/yyyy'}})
+                            </text>
+                        </div>
+                        <div class="row"><b>Score:</b>
+                            <text> {{score.option_text}} - {{score.value}}</text>
+                        </div>
+                        <div class="row"><b>Transcript:</b>
+                            <text> {{score.interview_text}}</text>
+                        </div>
+                        <br/></div>
+                </div>
+            </div>
+        </div>
+        <!-- FLAGS-->
+        <div ng-if="answer.flags.length!==0" class="row left-padding-lg bottom-padding-lg">
+            <div id="flags_div" class="bottom-padding-med">
+                <legend>Flags:</legend>
+                <div id="prev_flags_div">
+                    <div ng-repeat="flag in answer.flags" class="row left-padding-lg bottom-padding-med">
+                        <div class="row"><b>{{flag.author_name}} (</b><b>{{flag.role}}</b><b>)</b></div>
+                        <div class="row"><em>{{flag.date | date:'MM/dd/yyyy'}}</em></div>
+                        <div class="row">
+                            <div>
+                                <text>Addressed?</text>
+                                <input type="checkbox" ng-model="flag.addressed"/></div>
+                        </div>
+                        <div ng-if="flag.addressed!==true">
+                            <div class="row col-md-11">
+                                <text class="text-danger">{{flag.content}}</text>
+                            </div>
+                            <div class="row col-md-offset-9 col-md-3">
+                                <date>
+                                    <small><em>{{flag.date | date:'MM/dd/yyyy @ h:mma' : timezone}}</em></small>
+                                </date>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// DESK RESEARCH ANSWER FORM-->
+        <div ng-if="answer.question_mode==='desk_research'" class="row left-padding-lg right-padding-lg">
+            <div name="desk_research_answer_form" class="form-horizontal">
+                <fieldset ng-if="answer.question_mode==='desk_research'">
+                    <div id="answer_choice_div" class="bottom-padding-med">
+                        <legend ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'">Choose
+                            one of the following answers (required):
+                        </legend>
+                        <ng-form name="answer_choice_form">
+                            <div ng-repeat="option in answer.answer_options" required="required"
+                                 class="form-group left-padding-lg"><input type="radio" ng-value="option"
+                                                                           ng-model="answer.answer_score"/>
+                                <text class="left-padding-med">{{option.option_text | ucfirst}}</text>
+                            </div>
+                        </ng-form>
+                    </div>
+                    <div id="answer_value_div" class="bottom-padding-med">
+                        <legend ng-if="answer.question_data_type==='perc' || answer.question_data_type==='int' ">Please
+                            provide a value (required):
+                        </legend>
+                        <div required="required" class="form-group left-padding-lg col-md-2"><label
+                                ng-if="answer.question_data_type==='int'">Whole number</label><label
+                                ng-if="answer.question_data_type==='perc'">Percentage as decimal</label><input
+                                type="number" ng-if="answer.question_data_type==='int'"
+                                ng-model="answer.answer_score.value" class="form-control"/><input type="number"
+                                                                                                  step="any"
+                                                                                                  ng-if="answer.question_data_type==='perc'"
+                                                                                                  ng-model="answer.answer_score.value"
+                                                                                                  class="form-control"/>
+                        </div>
+                    </div>
+                    <div id="answer_justification_div" class="bottom-padding-med">
+                        <legend ng-if="answer.question_data_type==='text'">Please provide a text based response
+                            (required):
+                        </legend>
+                        <ng-form name="answer_justification_form">
+                            <div class="form-group top-padding-med">
+                                <div class="row left-padding-lg">
+                                    <div class="col-md-11"><textarea name="answer_text" type="text"
+                                                                     ng-model="answer.answer_text"
+                                                                     placeholder="Please provide interview transcription... (required)"
+                                                                     autocomplete="off" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <!-- INTERVIEW ANSWER FORM-->
+        <div ng-if="answer.question_mode==='interview'" class="row left-padding-lg right-padding-lg">
+            <div name="interview_answer_form" class="form-horizontal">
+                <fieldset>
+                    <div id="answer_choice_div" class="bottom-padding-med">
+                        <legend ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'">Choose
+                            one of the following answers (required):
+                        </legend>
+                        <ng-form name="answer_choice_form" class="col-md-6">
+                            <div ng-repeat="option in answer.answer_options" class="form-group left-padding-lg"><input
+                                    type="radio" ng-value="option" ng-model="new_interview_answer.score"
+                                    required="required"/>
+                                <text class="left-padding-med">{{option.option_text}}</text>
+                            </div>
+                        </ng-form>
+                        <div class="col-md-5 pull-left top-padding-med">
+                            <div class="row">
+                                <ng-form name="interviewee_selection_form"><select
+                                        ng-model="new_interview_answer.interviewee_ID" required="required"
+                                        class="form-group form-control">
+                                    <option value="" selected="selected" disabled="disabled">Select interviewee</option>
+                                    <option ng-repeat="interviewee in interviewees" value="{{interviewee._id}}">
+                                        {{interviewee.firstName}} {{interviewee.lastName}} - {{interviewee.role}}
+                                    </option>
+                                </select></ng-form>
+                            </div>
+                            <div class="row">
+                                <button ng-click="intervieweeAdd()"
+                                        class="form-group form-control btn center-block btn-primary">Add new interviewee
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="answer_text_div" class="bottom-padding-med">
+                        <ng-form name="interview_answer_text_form">
+                            <div class="form-group top-padding-med">
+                                <div class="row left-padding-lg">
+                                    <div class="col-md-10"><textarea name="answer_text" type="text"
+                                                                     ng-model="new_interview_answer.interview_text"
+                                                                     placeholder="Please provide interview transcription... (required)"
+                                                                     autocomplete="off" required="required"
+                                                                     class="form-control"></textarea></div>
+                                    <div class="col-md-1">
+                                        <button ng-click="answerSubmit()"
+                                                ng-disabled="!new_interview_answer.score|| !new_interview_answer.interview_text || !new_interview_answer.interviewee_ID"
+                                                class="btn btn-success">Submit interview
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <!-- COMMENTING-->
+        <div class="row left-padding-lg right-padding-lg">
+            <div id="comments_div" class="bottom-padding-med">
+                <legend>Comments:</legend>
+                <div id="prev_comments_div" ng-if="answer.comments.length!==0">
+                    <div ng-repeat="comment in answer.comments" class="row left-padding-lg bottom-padding-med">
+                        <div class="row"><b>{{comment.author_name}} (</b><b>{{comment.role}}</b><b>):</b></div>
+                        <div class="row col-md-11">{{comment.content}}</div>
+                        <div class="row col-md-offset-9 col-md-3">
+                            <date>
+                                <small><em>{{comment.date | date:'MM/dd/yyyy @ h:mma' : timezone}}</em></small>
+                            </date>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div id="new_comment_div" class="bottom-padding-med">
+                    <ng-form name="new_comment_form">
+                        <div class="form-group top-padding-med">
+                            <div class="row left-padding-lg">
+                                <div class="col-md-10"><textarea name="comment" type="text"
+                                                                 ng-model="answer.new_comment"
+                                                                 placeholder="New comment..." autocomplete="off"
+                                                                 required="required" class="form-control"></textarea>
+                                </div>
+                                <div class="col-md-1">
+                                    <button ng-click="commentSubmit(current_user)"
+                                            ng-disabled="new_comment_form.$invalid" class="btn btn-success">Submit
+                                        comment
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                </div>
+            </div>
+        </div>
+        <!-- TODO reset ref_selection and popups for each ref type--><!-- REFERENCE ADD-->
+        <div class="row left-padding-lg right-padding-lg">
+            <div id="biblio_div" class="bottom-padding-med">
+                <legend>References:</legend>
+                <!--.row(ng-if="uploader.queue.length<1") //TODO figure out how to handle changing state depending on where in upload process-->
+                <div class="row">
+                    <div class="col-md-5 pull-left top-padding-med"><select ng-model="ref_selection"
+                                                                            class="form-group form-control pull-left">
+                        <option value="" selected="selected" disabled="disabled">Select action</option>
+                        <option ng-repeat="ref in ref_type" value="{{ref.value}}">{{ref.text}}</option>
+                    </select></div>
+                    <!-- TODO add dropdown with existing documents-->
+                    <!--.col-md-5.pull-left.top-padding-med(ng-if="ref_selection==='document'")-->
+                    <!--    select.form-group.form-control.pull-left-->
+                    <!--        select.form-group.form-control.pull-left(ng-model="new_doc_selection")-->
+                    <!--        option(value="" selected disabled) Select document-->
+                    <!--        option(ng-repeat="doc_selection in document_selectors" value="{{doc_selection._id}}") {{doc_selection.title}}-->
+                    <div ng-if="ref_selection==='document'" class="col-md-1 pull-left">
+                        <div class="fileUpload btn btn-default"><span>Upload File</span><input type="file"
+                                                                                               nv-file-select="nv-file-select"
+                                                                                               uploader="uploader"
+                                                                                               class="upload"/></div>
+                    </div>
+                </div>
+                <div class="row">{{new_doc_selection}}</div>
+                <div ng-if="uploader.queue.length&gt;0" class="row left-padding-lg right-padding-lg"><h3>Upload
+                    queue</h3>
+
+                    <p>Queue length: {{ uploader.queue.length }}</p>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th width="50%">Name</th>
+                            <th ng-show="uploader.isHTML5">Size</th>
+                            <th ng-show="uploader.isHTML5">Progress</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in uploader.queue">
+                            <td><strong ng-if="!new_document">{{ item.file.name }}</strong><strong><a
+                                    ng-if="new_document" href="{{new_document.s3_url}}" target="_blank">{{
+                                item.file.name }}</a></strong></td>
+                            <td ng-show="uploader.isHTML5" nowrap="nowrap">{{ item.file.size/1024/1024|number:2 }} MB
+                            </td>
+                            <td ng-show="uploader.isHTML5">
+                                <div style="margin-bottom: 0;" class="progress">
+                                    <div role="progressbar" ng-style="{ 'width': item.progress + '%' }"
+                                         class="progress-bar"></div>
+                                </div>
+                            </td>
+                            <td class="text-center"><span ng-show="item.isSuccess"><i
+                                    class="glyphicon glyphicon-ok"></i></span><span ng-show="item.isCancel"><i
+                                    class="glyphicon glyphicon-ban-circle"></i></span><span ng-show="item.isError"><i
+                                    class="glyphicon glyphicon-remove"></i></span></td>
+                            <td nowrap="nowrap">
+                                <button type="button" ng-click="item.upload()"
+                                        ng-disabled="item.isReady || item.isUploading || item.isSuccess"
+                                        class="btn btn-success btn-xs"><span
+                                        class="glyphicon glyphicon-upload">Upload</span></button>
+                                &nbsp;
+                                <button ng-click="item.cancel()" ng-disabled="!item.isUploading"
+                                        class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-ban-circle">Cancel</span>
+                                </button>
+                                &nbsp;
+                                <button ng-click="item.remove()" class="btn btn-danger btn-xs"><span
+                                        class="glyphicon glyphicon-trash">Remove</span></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-if="ref_selection==='web'" id="new_web_form" class="row bottom-padding-med">
+                    <ng-form name="new_web_form" class="form-horizontal">
+                        <fieldset>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="title" type="text"
+                                                                                                placeholder="Website title (required)..."
+                                                                                                ng-model="answer.web_ref_title"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="url" type="text"
+                                                                                                placeholder="Website URL (required)..."
+                                                                                                ng-model="answer.web_ref_url"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><textarea name="comment"
+                                                                                                   type="text"
+                                                                                                   placeholder="Comments..."
+                                                                                                   autocomplete="off"
+                                                                                                   ng-model="answer.web_ref_comment"
+                                                                                                   class="form-control"></textarea>
+                            </div>
+                        </fieldset>
+                    </ng-form>
+                    <div ng-if="ref_selection==='web'" class="col-md-1 pull-left top-padding-med left-padding-lg">
+                        <button ng-click="webRefSubmit(current_user)" ng-disabled="new_web_form.$invalid"
+                                class="btn btn-success">Create reference
+                        </button>
+                    </div>
+                </div>
+                <div ng-if="ref_selection==='human'" id="new_human_form" class="row bottom-padding-med">
+                    <ng-form name="new_human_form" class="form-horizontal">
+                        <fieldset>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="first_name"
+                                                                                                type="text"
+                                                                                                placeholder="First name (required)..."
+                                                                                                ng-model="answer.human_ref_first_name"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="last_name"
+                                                                                                type="text"
+                                                                                                placeholder="Last name (required)..."
+                                                                                                ng-model="answer.human_ref_last_name"
+                                                                                                autocomplete="off"
+                                                                                                required="required"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="email" type="text"
+                                                                                                placeholder="Email address..."
+                                                                                                ng-model="answer.human_ref_email"
+                                                                                                autocomplete="off"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="phone" type="text"
+                                                                                                placeholder="Phone number..."
+                                                                                                ng-model="answer.human_ref_phone"
+                                                                                                autocomplete="off"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><input name="date" type="text"
+                                                                                                placeholder="Date contacted..."
+                                                                                                ng-model="answer.human_ref_contact_date"
+                                                                                                autocomplete="off"
+                                                                                                class="form-control"/>
+                            </div>
+                            <div class="row form-group left-padding-lg right-padding-lg"><textarea name="comment"
+                                                                                                   type="text"
+                                                                                                   placeholder="Comments..."
+                                                                                                   ng-model="answer.human_ref_comment"
+                                                                                                   autocomplete="off"
+                                                                                                   class="form-control"></textarea>
+                            </div>
+                        </fieldset>
+                    </ng-form>
+                    <div ng-if="ref_selection==='human'" class="col-md-1 pull-left top-padding-med left-padding-lg">
+                        <button ng-click="humanRefSubmit(current_user)" ng-disabled="new_human_form.$invalid"
+                                class="btn btn-success">Create reference
+                        </button>
+                    </div>
+                </div>
+                <br/><br/>
+
+                <div id="prev_bib">
+                    <div class="row left-padding-lg"><label>Citations</label>
+
+                        <div ng-repeat="ref in citations" class="row left-padding-lg">
+                            <!--.row(ng-if="ref.author.length > 0") Author: {{ref.author}}-->
+                            <div class="row">Author: {{ref.authors[0].first_name}} {{ref.authors[0].last_name}}</div>
+                            <div class="row">Title: {{ref.title}} (<a href="{{ref.s3_url}}" target="_blank">View
+                                here</a>
+                                <text>)</text>
+                            </div>
+                            <div ng-if="ref.year" class="row">Published: {{ref.year}}</div>
+                            <div ng-if="!ref.year" class="row">Published: NA</div>
+                            <div class="row">Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:
+                                'MM/dd/yyyy'}}
+                            </div>
+                            <div ng-if="ref.comment.content" class="row">Comments: {{ref.comment.content}}</div>
+                            <div ng-if="!ref.comment.content" class="row">Comments: N/A</div>
+                            <br/></div>
+                    </div>
+                    <div class="row left-padding-lg"><label>Websites</label>
+
+                        <div ng-repeat="ref in answer.references.web" class="row left-padding-lg">
+                            <div class="row">Website: {{ref.title}} (<a href="{{ref.URL}}" target="_blank">View here</a>
+                                <text>)</text>
+                            </div>
+                            <div class="row">Cited by {{ref.comment.author_name}} on {{ref.comment.date |
+                                date:'MM/dd/yyyy'}}
+                            </div>
+                            <div class="row">Comments: {{ref.comment.content}}</div>
+                            <br/></div>
+                    </div>
+                    <div class="row left-padding-lg"><label>Humans</label>
+
+                        <div ng-repeat="ref in answer.references.human" class="row left-padding-lg">
+                            <div class="row">Contact: {{ref.first_name}} {{ref.last_name}}</div>
+                            <div class="row">Contacted: {{ref.contact_date | date:'MM/dd/yyyy'}}</div>
+                            <div class="row">Cited by {{ref.comment.author_name}} on {{ref.comment.date |
+                                date:'MM/dd/yyyy'}}
+                            </div>
+                            <div class="row">Comments: {{ref.comment.content}}</div>
+                            <br/></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
