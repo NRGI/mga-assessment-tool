@@ -25,7 +25,8 @@
 							th.col-med-1
 					tbody
 						tr(ng-repeat="assessment in assessments | filter: searchText | orderBy:sortOrder")
-							td.col-med-2 {{assessment.country | ucfirst}}
+							td.col-med-2
+								a(href="/admin/assessments-admin/{{assessment.assessment_ID}}") {{assessment.country | ucfirst}}
 							td.col-med-1 {{assessment.year}}
 							td.col-med-3
 								.row(ng-repeat="user in assessment.users")

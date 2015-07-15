@@ -2,25 +2,24 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
-    // filtering options
+angular.module('app').controller('mgaDeskResearchListCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
+    //filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
         {value: "question_flow_order", text: "Sort by question order"},
         {value: "question_indicator_ID", text: "Sort by indicator"},
-        {value: "question_mode", text: "Sorty by question mode"},
         {value: "question_data_type", text: "Sort by data type"},
-        //{value: "status", text: "Sort by status"},
         {value: "status", text: "Sort by status"}
     ];
     $scope.sort_order = $scope.sort_options[0].value;
 
-    $scope.current_user = mgaIdentitySrvc.currentUser;
-
     // pull assessment data and add
     mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
         $scope.answer_list = [];
-        mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
+        mgaAnswerSrvc.query({
+            assessment_ID: $routeParams.assessment_ID,
+            question_mode: 'desk_research'
+        }, function (answers) {
 
             $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
             $scope.user_list = [];
@@ -28,20 +27,12 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
                 var u = mgaUserListSrvc.get({_id: el});
                 $scope.user_list.push(u);
             });
-            answers.forEach(function (el) {
-                $scope.answer_list.push(el);
-                if (el.question_data_type === 'text') {
-                    $scope.answer_list[$scope.answer_list.length - 1].answer_score = 'Text';
-                } else if (el.answer_score === undefined) {
-                    $scope.answer_list[$scope.answer_list.length - 1].answer_score = 'None';
-                } else {
-                    $scope.answer_list[$scope.answer_list.length - 1].answer_score = el.answer_score.value;
-                }
-            });
+            $scope.answer_list = answers;
             $scope.assessment = data;
         });
     });
     $scope.submitAssessment = function () {
+        console.log($scope);
         var new_assessment_data = $scope.assessment;
 
         new_assessment_data.status = 'interview';

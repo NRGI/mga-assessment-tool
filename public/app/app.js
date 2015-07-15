@@ -74,9 +74,9 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             templateUrl: '/partials/admin/answers/interviews-list',
             controller: 'mgaInterviewsListCtrl'
         })
-        .when('/admin/assessments-admin/desk_research/:assessment_ID', {
-            templateUrl: '/partials/admin/answers/assessment-admin-detail',
-            controller: 'mgaAssessmentAdminDetailCtrl'
+        .when('/admin/assessments-admin/desk-research/:assessment_ID', {
+            templateUrl: '/partials/admin/answers/desk-research-list',
+            controller: 'mgaDeskResearchListCtrl'
         })
         .when('/admin/assessments-admin/secondary-sources/:assessment_ID', {
             templateUrl: '/partials/admin/answers/secondary-sources-list',

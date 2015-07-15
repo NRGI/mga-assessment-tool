@@ -1,7 +1,7 @@
 .container
     .well.left-padding-lg.right-padding-lg
         img.mapsicon(src="assets/mapsicon/all/{{assessment.assessment_ID | lowercase | limitTo: 2}}/vector.svg")
-        legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} interviews
+        legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} desk research
         .pull-right
             form.form-inline.left-padding-lg.right-padding-lg
                 .form-group
@@ -29,7 +29,7 @@
             .row.top-padding-med
                 a.btn.center-block.btn-primary(href="/admin/assessments-admin/{{assessment.assessment_ID}}") Go to main page
             .row.top-padding-med
-                a.btn.center-block.btn-primary(href="/admin/assessments-admin/desk-research/{{assessment.assessment_ID}}") Go to desk research
+                a.btn.center-block.btn-primary(href="/admin/assessments-admin/interviews/{{assessment.assessment_ID}}") Go to interviews
             .row.top-padding-med
                 a.btn.center-block.btn-primary(href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Go to Secondary sources
 

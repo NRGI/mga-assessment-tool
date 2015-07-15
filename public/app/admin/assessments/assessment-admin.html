@@ -32,7 +32,8 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="assessment in assessments | filter: searchText | orderBy:sortOrder">
-                        <td class="col-med-2">{{assessment.country | ucfirst}}</td>
+                        <td class="col-med-2"><a href="/admin/assessments-admin/{{assessment.assessment_ID}}">{{assessment.country
+                            | ucfirst}}</a></td>
                         <td class="col-med-1">{{assessment.year}}</td>
                         <td class="col-med-3">
                             <div ng-repeat="user in assessment.users" class="row"><a href="mailto:{{user.email}}">{{user.firstName}}

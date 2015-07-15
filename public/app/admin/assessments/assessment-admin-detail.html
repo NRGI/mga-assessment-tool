@@ -10,14 +10,9 @@
                                                                 ng-options="item.value as item.text for item in sort_options"
                                                                 class="form-control"></select></div>
             </form>
-            <br/>
-
-            <div ng-if="assessment.questions_complete===assessment.question_set_length"
-                 class="row left-padding-lg right-padding-lg">
-                <button ng-click="submitAssessment()" class="btn btn-success right-padding-med pull-right">Submit
-                    assessment
-                </button>
-            </div>
+            <!--br-->
+            <!--.row.left-padding-lg.right-padding-lg(ng-if="assessment.questions_complete===assessment.question_set_length")-->
+            <!--    button.btn.btn-success.right-padding-med.pull-right(ng-click="submitAssessment()") Submit assessment-->
         </div>
         <div class="pull-left left-padding-lg bottom-padding-lg">
             <div class="row">
@@ -33,25 +28,27 @@
                 <text>Status: {{assessment.status| addSpaces | ucfirst}}</text>
             </div>
             <div class="row">
-                <text>Last edited by</text>
+                <text>Last edit by</text>
                 <a href="mailto:{{edited_by.email}}"> {{edited_by.firstName}} {{edited_by.lastName}}</a>
                 <text> on</text>
                 <span ng-repeat="mod in assessment.modified"><em ng-show="$last"> {{mod.modified_date |
                     date}}</em></span></div>
-            <div class="row">questions_flagged: {{assessment.questions_flagged}}</div>
-            <div class="row">questions_complete: {{assessment.questions_complete}}</div>
-            <div class="row">question_set_length: {{assessment.question_set_length}}</div>
+            <div class="row">Questions flagged: {{assessment.questions_flagged}}</div>
+            <div class="row">Questions complete: {{assessment.questions_complete}}</div>
+            <div class="row">Desk research questions: {{assessment.desk_research_set_length}}</div>
+            <div class="row">Interview questions: {{assessment.interview_set_length}}</div>
             <div class="row top-padding-med"><a
                     href="/admin/assessments-admin/desk-research/{{assessment.assessment_ID}}"
-                    class="btn center-block btn-primary pull-left col-md-9">Go to desk research</a></div>
+                    class="btn center-block btn-primary pull-left col-md-9">Desk research</a></div>
             <div class="row top-padding-med"><a href="/admin/assessments-admin/interviews/{{assessment.assessment_ID}}"
-                                                class="btn center-block btn-primary pull-left col-md-9">Go to interview
-                questions</a></div>
+                                                class="btn center-block btn-primary pull-left col-md-9">Interviews</a>
+            </div>
             <div class="row top-padding-med"><a
                     href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}"
-                    class="btn center-block btn-primary pull-left col-md-9">Go to secondary sources</a></div>
+                    class="btn center-block btn-primary pull-left col-md-9">Secondary sources</a></div>
             <div class="row top-padding-med">
                 <button ng-click="" disabled="disabled" class="btn center-block btn-default pull-left col-md-9">Export
+                    answers
                 </button>
             </div>
             <!--// TODO add view all and edit previous functinoality--><!--.row.top-padding-med-->
@@ -70,15 +67,20 @@
             <thead>
             <tr>
                 <th class="col-md-1 text-center">Question number</th>
+                <!--th.col-md-1.text-center Question order-->
+                <th class="col-md-1">Indicator</th>
                 <th class="col-md-2">Question mode</th>
                 <th class="col-md-5 text-center">Question</th>
                 <th class="col-md-1">Status</th>
                 <th class="col-md-1">Score</th>
-            </tr>
+                <!--th.col-md-3 Question--><!--th.col-md-1 Data type--><!--th.col-md-1 Status-->
+                <!--th.col-md-1.text-center Score--><!--th.col-md-1.text-center--></tr>
             </thead>
             <tbody>
             <tr ng-repeat="answer in answer_list | filter: search_text | orderBy:sort_order">
                 <td class="col-md-1 text-center">{{answer.question_order}}</td>
+                <!--td.col-md-1.text-center {{answer.question_flow_order}}-->
+                <td class="col-md-1">{{answer.question_indicator_ID}}</td>
                 <td class="col-md-2">{{answer.question_mode | addSpaces | ucfirst}}</td>
                 <td class="col-md-5">{{answer.question_text}}</td>
                 <td class="col-md-1">
