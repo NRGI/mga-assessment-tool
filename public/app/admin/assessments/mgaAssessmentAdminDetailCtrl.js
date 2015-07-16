@@ -96,14 +96,14 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
                                         answer_row.answer_text = interview.interview_text
                                     }
                                     if (el.comments.length > 0) {
-                                        var c;
+                                        var c = '';
                                         el.comments.forEach(function (element) {
                                             c = c + element.content + ' - ' + element.author_name + ' | '
                                         });
                                         answer_row.comments = c;
                                     }
                                     if (el.flags.length > 0) {
-                                        var f;
+                                        var f = '';
                                         el.flags.forEach(function (element) {
                                             f = f + element.content + ' - ' + element.author_name + ' - addressed: ' + element.addressed + ' | '
                                         });
