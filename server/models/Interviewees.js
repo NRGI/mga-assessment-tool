@@ -15,6 +15,8 @@ var intervieweeSchema = mongoose.Schema({
     email:  String,
     phone: String,
     role:  {type: String, required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
+    title: String,
+    organization: String,
     answers: Array,
     assessments: Array,
     createdBy:  ObjectId,

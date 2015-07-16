@@ -61,59 +61,61 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
                     $scope.answer_list[$scope.answer_list.length - 1].summary_score = el.answer_score.value;
                 }
 
+                //TODO extract this into a function that is only called on export load or cache
                 switch (el.question_mode) {
                     case 'interview':
                         if (el.interview_score.length > 0) {
                             el.interview_score.forEach(function (interview) {
-                                console.log(interview);
-                                answer_row = {
-                                    question_order: el.question_order,
-                                    question_text: el.question_text,
-                                    question_data_type: el.question_data_type,
-                                    question_mode: el.question_mode,
-                                    question_indicator_ID: el.question_indicator_ID,
-                                    question_indicator: el.question_indicator,
-                                    question_theme_ID: el.question_theme_ID,
-                                    question_value_chain_ID: el.question_value_chain_ID,
-                                    status: el.status,
-                                    score_value: '',
-                                    score_text: '',
-                                    answer_text: '',
-                                    comments: '',
-                                    flags: '',
-                                    interviewee_name: '',
-                                    interviewee_email: '',
-                                    interviewee_phone: '',
-                                    interviewee_role: ''
-                                };
-                                if (interview.answer_score !== undefined) {
-                                    answer_row.score_value = interview.value;
-                                    answer_row.score_text = interview.option_text;
-                                }
-                                if (interview.interview_text !== undefined) {
-                                    answer_row.answer_text = interview.interview_text
-                                }
-                                if (el.comments.length > 0) {
-                                    var c;
-                                    el.comments.forEach(function (element) {
-                                        c = c + element.content + ' - ' + element.author_name + ' | '
-                                    });
-                                    answer_row.comments = c;
-                                }
-                                if (el.flags.length > 0) {
-                                    var f;
-                                    el.flags.forEach(function (element) {
-                                        f = f + element.content + ' - ' + element.author_name + ' - addressed: ' + element.addressed + ' | '
-                                    });
-                                    answer_row.flags = f;
-                                }
                                 mgaIntervieweeSrvc.get({_id: interview.interviewee_ID}, function (interviewee) {
+
+                                    answer_row = {
+                                        question_order: el.question_order,
+                                        question_text: el.question_text,
+                                        question_data_type: el.question_data_type,
+                                        question_mode: el.question_mode,
+                                        question_indicator_ID: el.question_indicator_ID,
+                                        question_indicator: el.question_indicator,
+                                        question_theme_ID: el.question_theme_ID,
+                                        question_value_chain_ID: el.question_value_chain_ID,
+                                        status: el.status,
+                                        score_value: '',
+                                        score_text: '',
+                                        answer_text: '',
+                                        comments: '',
+                                        flags: '',
+                                        interviewee_name: '',
+                                        interviewee_email: '',
+                                        interviewee_phone: '',
+                                        interviewee_role: ''
+                                    };
+                                    if (interview.answer_score !== undefined) {
+                                        answer_row.score_value = interview.value;
+                                        answer_row.score_text = interview.option_text;
+                                    }
+                                    if (interview.interview_text !== undefined) {
+                                        answer_row.answer_text = interview.interview_text
+                                    }
+                                    if (el.comments.length > 0) {
+                                        var c;
+                                        el.comments.forEach(function (element) {
+                                            c = c + element.content + ' - ' + element.author_name + ' | '
+                                        });
+                                        answer_row.comments = c;
+                                    }
+                                    if (el.flags.length > 0) {
+                                        var f;
+                                        el.flags.forEach(function (element) {
+                                            f = f + element.content + ' - ' + element.author_name + ' - addressed: ' + element.addressed + ' | '
+                                        });
+                                        answer_row.flags = f;
+                                    }
+
                                     answer_row.interviewee_name = interviewee.firstName + ' ' + interviewee.lastName;
                                     answer_row.interviewee_email = interviewee.email;
                                     answer_row.interviewee_phone = interviewee.phone;
                                     answer_row.interviewee_role = interviewee.role;
+                                    $scope.getArray.push(answer_row);
                                 });
-                                $scope.getArray.push(answer_row);
                             });
 
 
@@ -240,6 +242,11 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
             $scope.assessment = data;
         });
     });
+    //$scope.createArray = function () {
+    //    mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
+    //
+    //    });
+    //};
     $scope.submitAssessment = function () {
         var new_assessment_data = $scope.assessment;
 

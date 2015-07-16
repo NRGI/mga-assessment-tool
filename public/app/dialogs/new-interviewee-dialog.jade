@@ -24,14 +24,26 @@ div.top-padding-med
                         input.form-control(
                         type="text"
                         placeholder="Phone number..."
-                        ng-model="new_interviewee.phone"
-                        required)
+                        ng-model="new_interviewee.phone")
                      .pull-left.col-lg-6
                         input.form-control(
                         type="text"
                         placeholder="Email..."
-                        ng-model="new_interviewee.email"
+                        ng-model="new_interviewee.email")
+               .row
+                  .form-group
+                     .pull-left.col-lg-5
+                        input.form-control(
+                        type="text"
+                        placeholder="Title..."
+                        ng-model="new_interviewee.title"
                         required)
+                     .pull-left.col-lg-6
+                        input.form-control(
+                        type="text"
+                        placeholder="Organization..."
+                        ng-model="new_interviewee.organization")
+
                .row.left-padding-med.right-padding-med
                   select.form-group.form-control(ng-model="new_interviewee.role")
                      option(value="" selected disabled) Select interviewee role
