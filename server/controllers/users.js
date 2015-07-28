@@ -103,7 +103,7 @@ exports.updateUser = function (req, res) {
     }
     if (user_updates.password && user_updates.password.length > 0) {
         user_updates.salt = encrypt.createSalt();
-        user_updates.hashed_pwd = encrypt.hashPwd(req.user.salt, user_updates.password);
+        user_updates.hashed_pwd = encrypt.hashPwd(user_updates.salt, user_updates.password);
     }
 
     query.exec(function (err, user) {
