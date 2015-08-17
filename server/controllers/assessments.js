@@ -36,6 +36,9 @@ exports.createAssessment = function (req, res) {
         //noinspection JSUnusedLocalSymbols
         Assessment.create(new_assessments[i], function (err, assessment) {
             if (err) {
+                if (err.toString().indexOf('E11000') > -1) {
+                    err = new Error('Duplicate assessment');
+                }
                 res.status(400);
                 return res.send({reason: err.toString()});
             }
