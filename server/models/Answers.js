@@ -6,11 +6,15 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var modificationSchema = new mongoose.Schema({
     modifiedBy: ObjectId,
-    modifiedDate: {type: Date, default: Date.now}
+    modifiedDate: {
+        type: Date,
+        default: Date.now}
 });
 
 var commentSchema = new mongoose.Schema({
-    date: {type: Date, default: Date.now},
+    date: {
+        type: Date,
+        default: Date.now},
     content: String,
     author: ObjectId, // Pull from current user _id value
     author_name: String,
@@ -23,7 +27,9 @@ var citationSchema = new mongoose.Schema({
     mendeley_ID: String,
     file_hash: String,
     comment: {
-        date: {type: Date, default: Date.now},
+        date: {
+            type: Date,
+            default: Date.now},
         content: String,
         author: ObjectId, // Pull from current user _id value
         author_name: String,
@@ -36,7 +42,9 @@ var webSchema = new mongoose.Schema({
     title: String,
     URL: String, // generated from upload path in S3
     comment: {
-        date: {type: Date, default: Date.now},
+        date: {
+            type: Date,
+            default: Date.now},
         content: String,
         author: ObjectId, // Pull from current user _id value
         author_name: String,
@@ -50,7 +58,9 @@ var humanSchema = new mongoose.Schema({
     last_name: String, // generated from upload path in S3
     phone: String,
     email: String,
-    contact_date: {type: Date, default: Date.now},
+    contact_date: {
+        type: Date,
+        default: Date.now},
     comment: {
         date: {type: Date, default: Date.now},
         content: String,
@@ -62,7 +72,9 @@ var humanSchema = new mongoose.Schema({
 });
 
 var scoreHistorySchema = new mongoose.Schema({
-    date: {type: Date, default: Date.now},
+    date: {
+        type: Date,
+        default: Date.now},
     order: Number,
     secondary_data_score: Number,
     score: {
@@ -82,7 +94,9 @@ var interviewScoreSchema = new mongoose.Schema({
     answer_num: Number,
     value: Number,
     interview_text: String,
-    interview_date: {type: Date, default: Date.now}
+    interview_date: {
+        type: Date,
+        default: Date.now}
 });
 
 var answerOptionSchema = new mongoose.Schema({
@@ -92,22 +106,45 @@ var answerOptionSchema = new mongoose.Schema({
 });
 
 var answerSchema = mongoose.Schema({
-    answer_ID: {type: String, required: '{PATH} is required', index: true}, // combination assessment_ID + question_order in Question Model with 2 leading 0's
-    assessment_ID: {type: String, required: '{PATH} is required', index: true},
-    country: {type: String, required: '{PATH} is required', index: true},
+    answer_ID: {
+        type: String,
+        required: '{PATH} is required',
+        index: true,
+        unique: true}, // combination assessment_ID + question_order in Question Model with 2 leading 0's
+    assessment_ID: {
+        type: String,
+        required: '{PATH} is required',
+        index: true},
+    country: {
+        type: String,
+        required: '{PATH} is required',
+        index: true},
     year: String,
-    question_order: {type: Number, required: '{PATH} is required'}, // generated from the order_ID of Question Model
-    question_flow_order: {type: Number, required: '{PATH} is required'},
+    question_order: {
+        type: Number,
+        required: '{PATH} is required'}, // generated from the order_ID of Question Model
+    question_flow_order: {
+        type: Number,
+        required: '{PATH} is required'},
     question_text: String,
     question_secondary_source: String,
-    question_mode: {type: String, required: '{PATH} is required'},
-    question_data_type: {type: String, required: '{PATH} is required'},
+    question_mode: {
+        type: String,
+        required: '{PATH} is required'},
+    question_data_type: {
+        type: String,
+        required: '{PATH} is required'},
     question_indicator: String,
     question_indicator_ID: String,
     question_theme_ID: String,
     question_value_chain_ID: String,
-    root_question_ID: {type: ObjectId, required: '{PATH} is required', index: true}, // generated from _id value of Question Model
-    status: {type: String, default: 'created'}, // created, saved, submitted, flagged, reviewed, approved
+    root_question_ID: {
+        type: ObjectId,
+        required: '{PATH} is required',
+        index: true}, // generated from _id value of Question Model
+    status: {
+        type: String,
+        default: 'created'}, // created, saved, submitted, flagged, reviewed, approved
     flags: [commentSchema],
     answer_options: [answerOptionSchema],
     answer_text: String,
@@ -117,15 +154,13 @@ var answerSchema = mongoose.Schema({
         option_order: Number,
         option_text: String,
         value: Number,
-        _id: ObjectId
-    },
+        _id: ObjectId},
     score_history: [scoreHistorySchema],
     comments: [commentSchema],
     references: {
         citation: [citationSchema],
         web: [webSchema],
-        human: [humanSchema]
-    },
+        human: [humanSchema]},
     modified: [modificationSchema]
 });
 

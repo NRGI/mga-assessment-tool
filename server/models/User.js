@@ -12,18 +12,30 @@ var modificationSchema = new mongoose.Schema({
 });
 
 var userSchema = mongoose.Schema({
-    firstName:  {type: String, required: '{PATH} is required!'},
-    lastName:  {type: String, required: '{PATH} is required!'},
-    username:  {
+    firstName: {
+        type: String,
+        required: '{PATH} is required!'},
+    lastName: {
+        type: String,
+        required: '{PATH} is required!'},
+    username: {
         type: String,
         required:  '{PATH} is required!',
-        unique: true
-    },
-    email:  {type:  String, required: '{PATH} is required'},
-    salt:  {type: String, required: '{PATH} is required!'},
-    hashed_pwd:  {type: String, required: '{PATH} is required!'},
+        unique: true},
+    email: {
+        type:  String,
+        required: '{PATH} is required'},
+    salt: {
+        type: String,
+        required: '{PATH} is required!'},
+    hashed_pwd: {
+        type: String,
+        required: '{PATH} is required!'},
     /////// Do we need to deal with multiple roles here ///////////////////
-    role:  {type: String, required: '{PATH} is required!',  default: 'None'},
+    role:  {
+        type: String,
+        required: '{PATH} is required!',
+        default: 'None'},
     assessments: [{
         assessment_ID:  String,
         country:  String, // Text name of country

@@ -59,6 +59,9 @@ exports.createAnswers = function (req, res, next) {
         //noinspection JSUnusedLocalSymbols
         Answer.create(new_answers[i], function (err, answer) {
             if (err) {
+                if (err.toString().indexOf('E11000') > -1) {
+                    err = new Error('Duplicate answer');
+                }
                 res.status(400);
                 return res.send({reason: err.toString()});
             }

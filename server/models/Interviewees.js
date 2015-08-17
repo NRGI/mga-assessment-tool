@@ -10,18 +10,26 @@ var modificationSchema = new mongoose.Schema({
 });
 
 var intervieweeSchema = mongoose.Schema({
-    firstName:  {type: String, required: '{PATH} is required!'},
-    lastName:  {type: String, required: '{PATH} is required!'},
-    email:  String,
+    firstName: {
+        type: String,
+        required: '{PATH} is required!'},
+    lastName: {
+        type: String,
+        required: '{PATH} is required!'},
+    email: String,
     phone: String,
-    role:  {type: String, required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
+    role: {
+        type: String,
+        required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
     title: String,
     organization: String,
     answers: Array,
     assessments: Array,
-    createdBy:  ObjectId,
-    creationDate:  {type:  Date, default: Date.now},
-    modified:  [modificationSchema]
+    createdBy: ObjectId,
+    creationDate: {
+        type: Date,
+        default: Date.now},
+    modified: [modificationSchema]
 });
 
 var Interviewee = mongoose.model('Interviewee', intervieweeSchema);
