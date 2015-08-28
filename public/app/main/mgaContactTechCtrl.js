@@ -48,7 +48,7 @@ angular.module('app').controller('mgaContactTechCtrl', function ($scope, $locati
 
         mgaContactMethodSrvc.contact(contactInfo).then(function () {
             mgaNotifier.notify('Request sent.');
-            //$location.path('/');
+            $location.path('/');
         }, function (reason) {
             mgaNotifier.error(reason);
         });
