@@ -12,6 +12,7 @@ var auth = require('./auth'),
     interviewees = require('../controllers/interviewees'),
     countries = require('../controllers/countries'),
     documents = require('../controllers/documents'),
+    contact = require('../utilities/contact'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart();
 
@@ -121,6 +122,9 @@ module.exports = function (app) {
     app.get('/partials/*', function (req, res) {
         res.render('../../public/app/' + req.params[0]);
     });
+
+    // Send tech contact
+    app.post('/contact_tech', contact.techSend);
 
     // app.post('/login', auth.authenticate, mendeley.tokenExist, mendeley.validateToken, authMendeley.getToken, mendeley.createToken,
     //     authMendeley.getToken, mendeley.updateToken, auth.passUser);

@@ -25,6 +25,10 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
             templateUrl: '/partials/main/main',
             controller: 'mgaMainCtrl'
         })
+        .when('/contact', {
+            templateUrl: '/partials/main/contact',
+            controller: 'mgaContactTechCtrl'
+        })
         // User Account Routes
         .when('/profile', {
             templateUrl: '/partials/account/profile',
