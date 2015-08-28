@@ -5,8 +5,8 @@ angular.module('app').controller('mgaCreateUserCtrl', function ($scope, $locatio
     $scope.roleOptions = [
         // {value: 'admin', text: 'Administrator'},
         {value: 'supervisor', text: 'Supervisor'},
-        {value: 'researcher', text: 'Researcher'},
-        {value: 'reviewer', text: 'Reviewer'}
+        {value: 'researcher', text: 'Researcher'}
+        //{value: 'reviewer', text: 'Reviewer'}
     ];
 
   // fix submit button functionality
