@@ -3,8 +3,16 @@ extend ../includes/layout
 block main-content
 	.navbar.navbar-inverse.navbar-fixed-top
 		.container
-			.navbar-header
-				a.navbar-brand(href="/") MGA Assessment Tool
+			ul.nav.navbar-nav
+				ul.nav.navbar-nav.dropdown
+					li.dropdown
+						a.dropdown-toggle(data-toggle="dropdown") MGA Assessment Tool
+							b.caret
+						ul.dropdown-menu
+							li
+								a(href="/") Home
+							li
+								a(href="/contact") Technical assistance
 			.navbar-collapse.collapse
 				div(ng-include="'/partials/account/navbar-login'")
 
@@ -15,4 +23,3 @@ block main-content
 
 	footer.container.text-center
 		p &copy; 2014 NRGI
-

@@ -12,6 +12,7 @@ var auth = require('./auth'),
     interviewees = require('../controllers/interviewees'),
     countries = require('../controllers/countries'),
     documents = require('../controllers/documents'),
+    contact = require('../utilities/contact'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart();
 
@@ -101,10 +102,10 @@ module.exports = function (app) {
     /////////////////////////
     // GET
     app.get('/api/interviewees', auth.requiresApiLogin, interviewees.getInterviewees);
-    app.get('/api/interviewees/:id', auth.requiresRole('supervisor'), interviewees.getIntervieweesByID);
+    app.get('/api/interviewees/:id', auth.requiresApiLogin, interviewees.getIntervieweesByID);
 
     // POST
-    app.post('/api/interviewees', auth.requiresRole('supervisor'), interviewees.createInterviewee);
+    app.post('/api/interviewees', auth.requiresApiLogin, interviewees.createInterviewee);
 
     // PUT
     app.put('/api/interviewees', auth.requiresApiLogin, interviewees.updateInterviewee);
@@ -121,6 +122,9 @@ module.exports = function (app) {
     app.get('/partials/*', function (req, res) {
         res.render('../../public/app/' + req.params[0]);
     });
+
+    // Send tech contact
+    app.post('/contact_tech', contact.techSend);
 
     // app.post('/login', auth.authenticate, mendeley.tokenExist, mendeley.validateToken, authMendeley.getToken, mendeley.createToken,
     //     authMendeley.getToken, mendeley.updateToken, auth.passUser);
