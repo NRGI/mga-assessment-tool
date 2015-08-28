@@ -101,10 +101,10 @@ module.exports = function (app) {
     /////////////////////////
     // GET
     app.get('/api/interviewees', auth.requiresApiLogin, interviewees.getInterviewees);
-    app.get('/api/interviewees/:id', auth.requiresRole('supervisor'), interviewees.getIntervieweesByID);
+    app.get('/api/interviewees/:id', auth.requiresApiLogin, interviewees.getIntervieweesByID);
 
     // POST
-    app.post('/api/interviewees', auth.requiresRole('supervisor'), interviewees.createInterviewee);
+    app.post('/api/interviewees', auth.requiresApiLogin, interviewees.createInterviewee);
 
     // PUT
     app.put('/api/interviewees', auth.requiresApiLogin, interviewees.updateInterviewee);
