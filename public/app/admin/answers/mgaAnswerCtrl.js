@@ -130,6 +130,18 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
             scope: $scope
         });
     };
+    $scope.flagEdit = function (flag, index) {
+        $scope.value = true;
+        var scope = $scope;
+        scope.index = index;
+        scope.flag = flag;
+        ngDialog.open({
+            template: 'partials/dialogs/flag-question-dialog',
+            controller: 'mgaFlagEditDialogCtrl',
+            className: 'ngdialog-theme-default',
+            scope: scope
+        });
+    };
 
     $scope.answerClear = function () {
         $scope.answer = angular.copy($scope.answer_start);g
@@ -308,6 +320,23 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
             mgaNotifier.notify(reason);
         });
     };
+
+    $scope.commentEdit = function (comment, index) {
+        $scope.value = true;
+        var scope = $scope;
+        scope.index = index;
+        scope.comment = comment;
+
+        ngDialog.open({
+            template: 'partials/dialogs/comment-edit-dialog',
+            controller: 'mgaCommentEditDialogCtrl',
+            className: 'ngdialog-theme-default',
+            scope: scope
+        });
+
+
+    };
+
     //TODO Generate Dialog based on change and handle upload process via dialogs
     $scope.select_ref_dialog = function(value) {
         var template = 'partials/dialogs/new-ref-' + $scope.ref_selection + '-dialog',
@@ -326,111 +355,6 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
         });
     };
 
-    $scope.humanRefSubmit = function (current_user) {
-        var new_answer_data = $scope.answer,
 
-            new_ref_data = {
-                first_name: $scope.answer.human_ref_first_name,
-                last_name: $scope.answer.human_ref_last_name,
-                phone: $scope.answer.human_ref_phone,
-                email: $scope.answer.human_ref_email,
-                contact_date: new Date().toISOString(),
-                comment: {
-                    date: new Date().toISOString(),
-                    author: current_user._id,
-                    author_name: current_user.firstName + ' ' + current_user.lastName,
-                    role: current_user.role
-                }
-            };
-        if ($scope.answer.human_ref_comment !== undefined) {
-            new_ref_data.comment.content = $scope.answer.human_ref_comment;
-        }
-        new_answer_data.references.human.push(new_ref_data);
-
-
-        mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
-            mgaNotifier.notify('reference added');
-            $scope.answer.human_ref_first_name = "";
-            $scope.answer.human_ref_last_name = "";
-            $scope.answer.human_ref_phone = "";
-            $scope.answer.human_ref_email = "";
-            $scope.answer.human_ref_contact_date = "";
-            $scope.answer.human_ref_comment = "";
-            $scope.ref_selection = "";
-        }, function (reason) {
-            mgaNotifier.notify(reason);
-        });
-    };
-
-    $scope.webRefSubmit = function (current_user) {
-        var new_answer_data = $scope.answer,
-            new_ref_data,
-            new_url;
-        if ($scope.answer.web_ref_url.indexOf('http://') > -1 || $scope.answer.web_ref_url.indexOf('https://') > -1) {
-            new_url = $scope.answer.web_ref_url;
-        } else {
-            new_url = 'https://' + $scope.answer.web_ref_url;
-        }
-
-        new_ref_data = {
-            title: $scope.answer.web_ref_title,
-            URL: new_url,
-            comment: {
-                date: new Date().toISOString(),
-                author: current_user._id,
-                author_name: current_user.firstName + ' ' + current_user.lastName,
-                role: current_user.role
-            }
-        };
-
-        if ($scope.answer.web_ref_comment !== undefined) {
-            new_ref_data.comment.content = $scope.answer.web_ref_comment;
-        }
-        new_answer_data.references.web.push(new_ref_data);
-
-        mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
-            mgaNotifier.notify('reference added');
-            $scope.ref_selection = "";
-            $scope.answer.web_ref_title = "";
-            $scope.answer.web_ref_url = "";
-            $scope.answer.web_ref_comment = "";
-            $scope.answer.web_ref_comment = "";
-        }, function (reason) {
-            mgaNotifier.notify(reason);
-        });
-    };
-
-    var uploader = $scope.uploader = new FileUploader({
-        isHTML5: true,
-        withCredentials: true,
-        url: 'file-upload'
-    });
-    //noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols
-    uploader.filters.push({
-        name: 'customFilter',
-        fn: function (item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length < 1;
-        }
-    });
-    //noinspection JSUnusedLocalSymbols
-    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-        if (status === 400) {
-            $scope.uploader.queue = [];
-            mgaNotifier.error(response.reason);
-        } else {// TODO add cancel upload after initial document pass
-            $scope.new_document = response;
-
-            $scope.uploader.queue = [];
-
-            $scope.value = true;
-            ngDialog.open({
-                template: 'partials/dialogs/new-document-dialog',
-                controller: 'mgaNewDocumentDialogCtrl',
-                className: 'ngdialog-theme-default',
-                scope: $scope
-            });
-        }
-
-    };
 
 });
