@@ -2,6 +2,9 @@
     .well.left-padding-lg
         div.left-padding-lg.right-padding-lg.top-padding-med
             legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}
+                .text-success.pull-right(ng-if="answer.status==='approved'")  (approved)
+                .text-danger.pull-right(ng-if="answer.status==='flagged'")  (flagged)
+                .text-info.pull-right(ng-if="answer.status==='saved'")  (saved)
 
                 //TODO dyanamical go to end of section
                 //    answer[current_user.role + '_score']
@@ -53,10 +56,7 @@
                 .col-md-pull-2
                     button.btn.btn-primary(ng-click="answerSave()") Save answer
                     | &nbsp;
-                    button.btn.btn-success(
-                    ng-click="answerApprove()"
-                    ng-disabled="!answer.answer_text && !answer.answer_score"
-                    ) Approve answer
+                    button.btn.btn-success(ng-click="answerApprove()") Approve answer
                     | &nbsp;
                     button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
                     | &nbsp;
@@ -103,12 +103,11 @@
                                 text  {{score.interview_text}}
                             br
             //FLAG ACCORDION
-            .row.left-padding-lg.bottom-padding-lg
+            .row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
                 div(id="flags_div").bottom-padding-med
                     legend Flags:
                     div.panel-group(
                     id="prev_flags_div"
-                    ng-if="answer.flags.length!==0"
                     role="tablist"
                     aria-multiselectable="true")
                         div.panel(ng-repeat="flag in answer.flags")
@@ -336,193 +335,3 @@
                             .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}
                             .row Comments: {{ref.comment.content}}
                             br
-            //.row.left-padding-lg.right-padding-lg
-            //    div(id="biblio_div").bottom-padding-med
-            //        legend References:
-            //        //.row(ng-if="uploader.queue.length<1") //TODO figure out how to handle changing state depending on where in upload process
-            //        .row
-            //            .col-md-5.pull-left.top-padding-med
-            //                select.form-group.form-control.pull-left(ng-model="ref_selection")
-            //                    option(value="" selected disabled) Select action
-            //                    option(ng-repeat="ref in ref_type" value="{{ref.value}}") {{ref.text}}
-            //            // TODO add dropdown with existing documents
-            //            //.col-md-5.pull-left.top-padding-med(ng-if="ref_selection==='document'")
-            //            //    select.form-group.form-control.pull-left
-            //            //        select.form-group.form-control.pull-left(ng-model="new_doc_selection")
-            //            //        option(value="" selected disabled) Select document
-            //            //        option(ng-repeat="doc_selection in document_selectors" value="{{doc_selection._id}}") {{doc_selection.title}}
-            //
-            //            .col-md-1.pull-left(ng-if="ref_selection==='document'")
-            //                div.fileUpload.btn.btn-default
-            //                    span Upload File
-            //                    input.upload(type="file" nv-file-select uploader="uploader")
-            //        .row {{new_doc_selection}}
-            //
-            //        //- DOCUMENT UPLOAD
-            //        .row.left-padding-lg.right-padding-lg(ng-if="uploader.queue.length>0")
-            //            h3 Upload queue
-            //            p Queue length: {{ uploader.queue.length }}
-            //            table.table
-            //                thead
-            //                    tr
-            //                        th(width="50%") Name
-            //                        th(ng-show="uploader.isHTML5") Size
-            //                        th(ng-show="uploader.isHTML5") Progress
-            //                        th Status
-            //                        th Actions
-            //                tbody
-            //                    tr(ng-repeat="item in uploader.queue")
-            //                        td
-            //                            strong(ng-if="!new_document") {{ item.file.name }}
-            //                            strong
-            //                                a(ng-if="new_document" href="{{new_document.s3_url}}" target="_blank") {{ item.file.name }}
-            //                        td(ng-show="uploader.isHTML5" nowrap) {{ item.file.size/1024/1024|number:2 }} MB
-            //                        td(ng-show="uploader.isHTML5")
-            //                            div.progress(style="margin-bottom: 0;")
-            //                                div.progress-bar(role="progressbar" ng-style="{ 'width': item.progress + '%' }")
-            //                        td.text-center
-            //                            span(ng-show="item.isSuccess")
-            //                                i.glyphicon.glyphicon-ok
-            //                            span(ng-show="item.isCancel")
-            //                                i.glyphicon.glyphicon-ban-circle
-            //                            span(ng-show="item.isError")
-            //                                i.glyphicon.glyphicon-remove
-            //                        td(nowrap)
-            //                            button.btn.btn-success.btn-xs(type="button" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess")
-            //                                span.glyphicon.glyphicon-upload Upload
-            //                            | &nbsp;
-            //                            button.btn.btn-warning.btn-xs(ng-click="item.cancel()" ng-disabled="!item.isUploading")
-            //                                span.glyphicon.glyphicon-ban-circle Cancel
-            //                            | &nbsp;
-            //                            button.btn.btn-danger.btn-xs(ng-click="item.remove()")
-            //                                span.glyphicon.glyphicon-trash Remove
-            //
-            //        //- ADD WEBSITE
-            //        .row.bottom-padding-med(ng-if="ref_selection==='web'" id="new_web_form")
-            //            ng-form.form-horizontal(name="new_web_form")
-            //                fieldset
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        input.form-control(
-            //                        name="title"
-            //                        type="text"
-            //                        placeholder="Website title (required)..."
-            //                        ng-model="answer.web_ref_title"
-            //                        autocomplete="off"
-            //                        required)
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        input.form-control(
-            //                        name="url"
-            //                        type="text"
-            //                        placeholder="Website URL (required)..."
-            //                        ng-model="answer.web_ref_url"
-            //                        autocomplete="off"
-            //                        required)
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        textarea.form-control(
-            //                        name="comment"
-            //                        type="text"
-            //                        placeholder="Comments..."
-            //                        autocomplete="off"
-            //                        ng-model="answer.web_ref_comment")
-            //            .col-md-1.pull-left.top-padding-med.left-padding-lg(ng-if="ref_selection==='web'")
-            //                button.btn.btn-success(
-            //                ng-click="webRefSubmit(current_user)"
-            //                ng-disabled="new_web_form.$invalid"
-            //                ) Create reference
-            //
-            //        //- ADD HUMAN
-            //        .row.bottom-padding-med(ng-if="ref_selection==='human'" id="new_human_form")
-            //            ng-form.form-horizontal(name="new_human_form")
-            //                fieldset
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        input.form-control(
-            //                        name="first_name"
-            //                        type="text"
-            //                        placeholder="First name (required)..."
-            //                        ng-model="answer.human_ref_first_name"
-            //                        autocomplete="off"
-            //                        required)
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        input.form-control(
-            //                        name="last_name"
-            //                        type="text"
-            //                        placeholder="Last name (required)..."
-            //                        ng-model="answer.human_ref_last_name"
-            //                        autocomplete="off"
-            //                        required)
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        input.form-control(
-            //                        name="email"
-            //                        type="text"
-            //                        placeholder="Email address..."
-            //                        ng-model="answer.human_ref_email"
-            //                        autocomplete="off")
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        input.form-control(
-            //                        name="phone"
-            //                        type="text"
-            //                        placeholder="Phone number..."
-            //                        ng-model="answer.human_ref_phone"
-            //                        autocomplete="off")
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        input.form-control(
-            //                        name="date"
-            //                        type="text"
-            //                        placeholder="Date contacted..."
-            //                        ng-model="answer.human_ref_contact_date"
-            //                        autocomplete="off")
-            //                    .row.form-group.left-padding-lg.right-padding-lg
-            //                        textarea.form-control(
-            //                        name="comment"
-            //                        type="text"
-            //                        placeholder="Comments..."
-            //                        ng-model="answer.human_ref_comment"
-            //                        autocomplete="off")
-            //
-            //            .col-md-1.pull-left.top-padding-med.left-padding-lg(ng-if="ref_selection==='human'")
-            //                button.btn.btn-success(
-            //                ng-click="humanRefSubmit(current_user)"
-            //                ng-disabled="new_human_form.$invalid"
-            //                ) Create reference
-            //        br
-            //        br
-            //
-            //
-            //        //- ADD PERSON
-            //        //- BILBLIO LIST
-            //        div(id="prev_bib")
-            //            .row.left-padding-lg
-            //                label Citations
-            //                .row.left-padding-lg(ng-repeat="ref in citations")
-            //                    //.row(ng-if="ref.author.length > 0") Author: {{ref.author}}
-            //                    .row Author: {{ref.authors[0].first_name}} {{ref.authors[0].last_name}}
-            //                    //- .row(ng-if="ref.author.length === 0") Author: N/A
-            //                    .row Title: {{ref.title}} (
-            //                        a(href="{{ref.s3_url}}" target="_blank") View here
-            //                        text )
-            //                    .row(ng-if="ref.year") Published: {{ref.year}}
-            //                    .row(ng-if="!ref.year") Published: NA
-            //                    .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date: 'MM/dd/yyyy'}}
-            //                    .row(ng-if="ref.comment.content") Comments: {{ref.comment.content}}
-            //                    .row(ng-if="!ref.comment.content") Comments: N/A
-            //                    br
-            //
-            //            .row.left-padding-lg
-            //                label Websites
-            //                .row.left-padding-lg(ng-repeat="ref in answer.references.web")
-            //                    .row Website: {{ref.title}} (
-            //                        a(href="{{ref.URL}}" target="_blank") View here
-            //                        text )
-            //                    .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}
-            //                    .row Comments: {{ref.comment.content}}
-            //                    br
-            //            .row.left-padding-lg
-            //                label Humans
-            //                .row.left-padding-lg(ng-repeat="ref in answer.references.human")
-            //                    .row Contact: {{ref.first_name}} {{ref.last_name}}
-            //                    .row Contacted: {{ref.contact_date | date:'MM/dd/yyyy'}}
-            //                    .row Cited by {{ref.comment.author_name}} on {{ref.comment.date | date:'MM/dd/yyyy'}}
-            //                    .row Comments: {{ref.comment.content}}
-            //                    br
-
-

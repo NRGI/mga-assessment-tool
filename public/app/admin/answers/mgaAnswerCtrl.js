@@ -132,7 +132,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
     };
 
     $scope.answerClear = function () {
-        $scope.answer = angular.copy($scope.answer_start);
+        $scope.answer = angular.copy($scope.answer_start);g
     };
 
     $scope.answerSave = function () {
@@ -140,23 +140,26 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
             new_assessment_data = $scope.assessment,
             flag_check = flagCheck(new_answer_data.flags);
 
-        if (new_answer_data.status === 'assigned') {
+        if (new_answer_data.status === 'created') {
             new_answer_data.status = 'saved';
         }
 
         if (flag_check == true) {
             if (new_answer_data.status !== 'flagged') {
+                if(new_answer_data.status === 'approved') {
+                    new_assessment_data.questions_complete -= 1;
+                }
                 new_answer_data.status = 'flagged';
                 new_assessment_data.questions_flagged += 1;
             }
         }
 
-        rgiAnswerMethodSrvc.updateAnswer(new_answer_data)
-            .then(rgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+        mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+            .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
-                rgiNotifier.notify('Answer saved');
+                mgaNotifier.notify('Answer saved');
             }, function (reason) {
-                rgiNotifier.notify(reason);
+                mgaNotifier.notify(reason);
             });
     };
 
@@ -172,36 +175,49 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
                 mgaNotifier.error('You must provde justification text to be able to submit this answer! Please save until you are ready.');
             } else if (new_answer_data.question_data_type === 'score' && !new_answer_data.answer_score) {
                 mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
+            } else {
+                if (new_answer_data.status === 'saved' || new_answer_data.status === 'created') {
+                    new_answer_data.status = 'approved';
+                    new_assessment_data.questions_complete += 1;
+                } else if (new_answer_data.status === 'flagged') {
+                    new_answer_data.status = 'approved';
+                    new_assessment_data.questions_flagged -= 1;
+                    new_assessment_data.questions_complete += 1;
+                } else if (new_answer_data.status === 'approved' && flag_check === true) {
+                    new_answer_data.status = 'flagged';
+                    new_assessment_data.questions_flagged += 1;
+                    new_assessment_data.questions_complete -= 1;
+                }
+                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                    .then(function () {
+                        if (new_assessment_data.questions_complete === new_assessment_data.question_set_length) {
+                            $location.path('/admin/assessments-admin/' + new_answer_data.assessment_ID);
+                        } else {
+                            $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_flow_order + 1), 3)));
+                        }
+                        mgaNotifier.notify('Answer approved');
+                    }, function (reason) {
+                        mgaNotifier.notify(reason);
+                    });
             }
 
-            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-                .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-                .then(function () {
-                    if (new_assessment_data.questions_complete === new_assessment_data.question_set_length) {
-                        $location.path('/admin/assessments-admin/' + new_answer_data.assessment_ID);
-                    } else {
-                        $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_flow_order + 1), 3)));
-                    }
-                    mgaNotifier.notify('Answer approved');
-                }, function (reason) {
-                    mgaNotifier.notify(reason);
-                });
         } else if (new_answer_data.question_mode === 'interview') {
-    //        //if (new_answer_data.interview_score.length)
-    //        //if (new_answer_data.status === 'saved') {
-    //        //    new_answer_data.status = 'approved';
-    //        //    new_assessment_data.questions_complete += 1;
-    //        //    //} else if (new_answer_data.status === 'flagged' || new_answer_data.status === 'resubmitted') {
-    //        //} else if (new_answer_data.status === 'flagged') {
-    //        //    new_answer_data.status = 'approved';
-    //        //    new_assessment_data.questions_flagged -= 1;
-    //        //} else if (new_answer_data.status === 'approved' && flag_check === true) {
-    //        //    new_answer_data.status = 'flagged';
-    //        //    new_assessment_data.questions_flagged += 1;
-    //        ////} else if (new_answer_data.status === 'resubmitted') {
-    //        ////    new_answer_data.status = 'approved';
-    //        ////    new_assessment_data.questions_flagged -= 1;
-    //        //}
+            //if (new_answer_data.interview_score.length)
+            //if (new_answer_data.status === 'saved') {
+            //    new_answer_data.status = 'approved';
+            //    new_assessment_data.questions_complete += 1;
+            //    //} else if (new_answer_data.status === 'flagged' || new_answer_data.status === 'resubmitted') {
+            //} else if (new_answer_data.status === 'flagged') {
+            //    new_answer_data.status = 'approved';
+            //    new_assessment_data.questions_flagged -= 1;
+            //} else if (new_answer_data.status === 'approved' && flag_check === true) {
+            //    new_answer_data.status = 'flagged';
+            //    new_assessment_data.questions_flagged += 1;
+            ////} else if (new_answer_data.status === 'resubmitted') {
+            ////    new_answer_data.status = 'approved';
+            ////    new_assessment_data.questions_flagged -= 1;
+            //}
     //
     //
     //        //mgaAnswerMethodSrvc.updateAnswer(new_answer_data)

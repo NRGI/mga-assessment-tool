@@ -64,10 +64,10 @@
                     //    .glyphicon.glyphicon-pencil(ng-if="answer.question_data_type==='text'")  {{answer.question_data_type | addSpaces | ucfirst}}
                     //    .glyphicon.glyphicon-check(ng-if="answer.question_data_type==='score'")  {{answer.question_data_type | addSpaces | ucfirst}}
                     td.col-md-1
-                        .text-danger(ng-if="answer.status==='created'") {{answer.status | ucfirst}}
+                        .text-warning(ng-if="answer.status==='created'") {{answer.status | ucfirst}}
                         .text-info(ng-if="answer.status==='saved'") {{answer.status | ucfirst}}
-                        .text-success(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
-                        .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
+                        .text-success(ng-if="answer.status==='approved'") {{answer.status | ucfirst}}
+                        .text-danger(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
 
                     //TODO fix missing data hadling
                     td.col-md-1.text-center {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
