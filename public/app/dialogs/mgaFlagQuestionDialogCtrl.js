@@ -20,7 +20,7 @@ angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, 
 
         new_answer_data.flags.push(new_flag_data);
 
-        if (new_answer_data.status==='submitted') {
+        if (new_answer_data.status==='approved') {
             new_answer_data.status = 'flagged';
             new_assessment_data.questions_complete -= 1;
             new_assessment_data.questions_flagged += 1;
