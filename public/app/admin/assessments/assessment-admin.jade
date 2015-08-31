@@ -29,9 +29,12 @@
 								a(href="/admin/assessments-admin/{{assessment.assessment_ID}}") {{assessment.country | ucfirst}}
 							td.col-med-1 {{assessment.year}}
 							td.col-med-3
-								.row(ng-repeat="user in assessment.users")
-									a(href="mailto:{{user.email}}") {{user.firstName}} {{user.lastName}}
-									text - {{user.role}}
+								.row
+									table.table(style="margin-top: -9px; margin-bottom: -9px")
+										tbody
+											tr(ng-repeat="user in assessment.users")
+												td
+													a(href="mailto:{{user.email}}") {{user.firstName}} {{user.lastName}}
 							td.col-med-1 {{assessment.status | addSpaces | ucfirst}}
 							td.col-med-1 {{assessment.start_date.date | date}}
 							td.col-med-2(ng-if="assessment.edited_by")

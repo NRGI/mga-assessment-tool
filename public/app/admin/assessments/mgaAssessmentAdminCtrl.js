@@ -96,7 +96,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
         ngDialog.open({
             template: 'partials/dialogs/new-assessment-dialog',
             controller: 'mgaNewAssessmentDialogCtrl',
-            className: 'ngdialog-theme-plain',
+            className: 'ngdialog-theme-default',
             scope: $scope
         });
     };
@@ -107,7 +107,7 @@ angular.module('app').controller('mgaAssessmentAdminCtrl', function ($location, 
         ngDialog.open({
             template: 'partials/dialogs/assign-assessment-dialog',
             controller: 'mgaAssignAssessmentDialogCtrl',
-            className: 'ngdialog-theme-plain',
+            className: 'ngdialog-theme-default',
             scope: $scope
         });
     };

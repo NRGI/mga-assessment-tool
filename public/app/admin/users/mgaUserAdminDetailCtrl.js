@@ -8,8 +8,8 @@ angular.module('app').controller('mgaUserAdminDetailCtrl', function ($scope, $ro
     $scope.role_options = [
         // {value: 'admin', text: 'Administrator'},
         {value: 'supervisor', text: 'Supervisor'},
-        {value: 'researcher', text: 'Researcher'},
-        {value: 'reviewer', text: 'Reviewer'}
+        {value: 'researcher', text: 'Researcher'}
+        //{value: 'reviewer', text: 'Reviewer'}
     ];
 
     $scope.userUpdate = function () {

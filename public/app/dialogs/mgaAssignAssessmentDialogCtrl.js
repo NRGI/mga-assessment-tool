@@ -37,7 +37,6 @@ angular.module('app').controller('mgaAssignAssessmentDialogCtrl', function ($sco
                 country: $scope.assessment.country,
                 year: $scope.assessment.year
             });
-
             mgaUserMethodSrvc.updateUser(new_user_data)
                 .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                 .then(function () {
