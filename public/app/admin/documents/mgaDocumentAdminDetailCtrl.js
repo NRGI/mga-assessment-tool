@@ -19,7 +19,7 @@ angular.module('app').controller('mgaDocumentAdminDetailCtrl', function ($scope,
         ngDialog.open({
             template: 'partials/dialogs/edit-document-dialog',
             controller: 'mgaEditDocumentDialogCtrl',
-            className: 'ngdialog-theme-plain',
+            className: 'ngdialog-theme-default',
             scope: $scope
         });
     }
