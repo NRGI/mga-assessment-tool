@@ -1,7 +1,7 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc) {
+angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
 // angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
     // filtering options
     $scope.sort_options = [
@@ -15,15 +15,14 @@ angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSr
     $scope.sort_order = $scope.sort_options[1].value;
 
 
-    mgaUserSrvc.query({}, function (data) {
+    mgaUserSrvc.query({}, function (users) {
         $scope.users = [];
-        var i;
-        // var i, j;
-        for (i = data.length - 1; i >= 0; i -= 1) {
-            // for (j = data[i].assessments.length - 1; j >= 0; j -= 1) {
-            //     data[i].assessments[j].details = mgaAssessmentSrvc.get({assessment_ID: data[i].assessments[j].assessment_id});
-            // }
-            $scope.users.push(data[i]);
+        var u, a;
+        for (u = users.length - 1; u >= 0; u -= 1) {
+             for (a = users[u].assessments.length - 1; a >= 0; a -= 1) {
+                 users[u].assessments[a].details = mgaAssessmentSrvc.get({assessment_ID: users[u].assessments[a].assessment_ID});
+             }
+            $scope.users.push(users[u]);
         }
     });
 });
