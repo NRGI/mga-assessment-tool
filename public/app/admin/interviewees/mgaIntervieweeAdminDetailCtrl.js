@@ -25,7 +25,7 @@ angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($sco
         ngDialog.open({
             template: 'partials/dialogs/edit-interviewee-dialog',
             controller: 'mgaEditIntervieweeDialogCtrl',
-            className: 'ngdialog-theme-plain',
+            className: 'ngdialog-theme-default',
             scope: $scope
         });
     };
