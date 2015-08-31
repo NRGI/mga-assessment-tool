@@ -203,112 +203,84 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
             }
 
         } else if (new_answer_data.question_mode === 'interview') {
-            //if (new_answer_data.interview_score.length)
-            //if (new_answer_data.status === 'saved') {
-            //    new_answer_data.status = 'approved';
-            //    new_assessment_data.questions_complete += 1;
-            //    //} else if (new_answer_data.status === 'flagged' || new_answer_data.status === 'resubmitted') {
-            //} else if (new_answer_data.status === 'flagged') {
-            //    new_answer_data.status = 'approved';
-            //    new_assessment_data.questions_flagged -= 1;
-            //} else if (new_answer_data.status === 'approved' && flag_check === true) {
-            //    new_answer_data.status = 'flagged';
-            //    new_assessment_data.questions_flagged += 1;
-            ////} else if (new_answer_data.status === 'resubmitted') {
-            ////    new_answer_data.status = 'approved';
-            ////    new_assessment_data.questions_flagged -= 1;
-            //}
-    //
-    //
-    //        //mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-    //        //    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-    //        //    .then(function () {
-    //        //        if (new_answer_data.question_order !== new_assessment_data.question_length && new_assessment_data.status !== 'resubmitted') {
-    //        //            $location.path('/admin/assessments-admin/answer/' + $scope.assessment.assessment_ID + "-" + String(zeroFill($scope.answer.question_order + 1, 3)));
-    //        //        } else {
-    //        //            $location.path('/admin/assessments-admin/' + $scope.answer.question_mode + '/' + new_answer_data.assessment_ID);
-    //        //            $route.reload();
-    //        //        }
-    //        //        mgaNotifier.notify('Answer approved');
-    //        //    }, function (reason) {
-    //        //        mgaNotifier.notify(reason);
-    //        //    });
+            if (new_answer_data.interview_score.length < 1) {
+                mgaNotifier.error('You must submite at least one supporting interview to approve!');
+            } else {
+                if (new_answer_data.status === 'saved' || new_answer_data.status === 'created') {
+                    new_answer_data.status = 'approved';
+                    new_assessment_data.questions_complete += 1;
+                } else if (new_answer_data.status === 'flagged') {
+                    new_answer_data.status = 'approved';
+                    new_assessment_data.questions_flagged -= 1;
+                    new_assessment_data.questions_complete += 1;
+                } else if (new_answer_data.status === 'approved' && flag_check === true) {
+                    new_answer_data.status = 'flagged';
+                    new_assessment_data.questions_flagged += 1;
+                    new_assessment_data.questions_complete -= 1;
+                }
+                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                    .then(function () {
+                        if (new_assessment_data.questions_complete === new_assessment_data.question_set_length) {
+                            $location.path('/admin/assessments-admin/' + new_answer_data.assessment_ID);
+                        } else {
+                            $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_flow_order + 1), 3)));
+                        }
+                        mgaNotifier.notify('Answer approved');
+                    }, function (reason) {
+                        mgaNotifier.notify(reason);
+                    });
+            }
         }
     };
 
 
-    //$scope.answerSubmit = function () {
-    //    var new_answer_data = $scope.answer,
-    //        new_assessment_data = $scope.assessment;
-    //
-    //    if (new_answer_data.status !== 'flagged' || new_answer_data.status !== 'approved') {
-    //        new_answer_data.status = 'saved';
-    //    }
-    //
-    //    if (new_answer_data.question_mode === 'desk_research') {
-    //        if (new_answer_data.answer_text === '') {
-    //            mgaNotifier.error('You must provde justification text to be able to submit this answer! Please save until you are ready.');
-    //        } else if (new_answer_data.question_data_type === 'score' && !new_answer_data.answer_score) {
-    //            mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.')
-    //        } else {
-    //            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-    //                .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-    //                .then(function () {
-    //                    console.log(new_assessment_data.questions_complete);
-    //                    console.log(new_assessment_data);
-    //                    if (new_assessment_data.questions_complete === new_assessment_data.question_set_length) {
-    //                        $location.path('/admin/assessments-admin/' + new_answer_data.assessment_ID);
-    //                    } else {
-    //                        $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_flow_order + 1), 3)));
-    //                    }
-    //                    mgaNotifier.notify('Answer submitted');
-    //                }, function (reason) {
-    //                    mgaNotifier.notify(reason);
-    //                });
-    //        }
-    //    } else if (new_answer_data.question_mode === 'interview') {
-    //
-    //        if (!$scope.new_interview_answer.interviewee_ID) {
-    //            mgaNotifier.error('You must select and interview subject from the dropdown or add a new subject!');
-    //        } else if (!$scope.new_interview_answer.interview_text) {
-    //            mgaNotifier.error('You must provide a text transcript of the interview answer! Please save until you are ready.');
-    //        } else if (!$scope.new_interview_answer.score) {
-    //            mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
-    //
-    //        } else {
-    //            //mgaIntervieweeSrvc.get({_id: $scope.new_interview_answer.interviewee_ID}, function (new_interviewee_data) {
-    //            //    new_answer_data.interview_score.push({
-    //            //        interviewee_ID: $scope.new_interview_answer.interviewee_ID,
-    //            //        option_order: $scope.new_interview_answer.score.option_order,
-    //            //        option_text: $scope.new_interview_answer.score.option_text,
-    //            //        value: $scope.new_interview_answer.score.value,
-    //            //        interview_text: $scope.new_interview_answer.interview_text
-    //            //    });
-    //            //
-    //            //    new_interviewee_data.answers.push($routeParams.answer_ID);
-    //            //    console.log(new_interviewee_data);
-    //            //    mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-    //            //        .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-    //            //        .then(mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data))
-    //            //        .then(function () {
-    //            //            mgaNotifier.notify('Interview submitted');
-    //            //            $route.reload();
-    //            //        }, function (reason) {
-    //            //            mgaNotifier.notify(reason);
-    //            //        });
-    //            //
-    //            //});
-    //
-    //        }
-    //    }
-    //};
+    $scope.answerSubmit = function () {
+        var new_answer_data = $scope.answer,
+            new_assessment_data = $scope.assessment;
+
+        if (!$scope.new_interview_answer.interviewee_ID) {
+            mgaNotifier.error('You must select and interview subject from the dropdown or add a new subject!');
+        } else if (!$scope.new_interview_answer.interview_text) {
+            mgaNotifier.error('You must provide a text transcript of the interview answer! Please save until you are ready.');
+        } else if (!$scope.new_interview_answer.score) {
+            mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
+
+        } else {
+            if (new_answer_data.status !== 'flagged' || new_answer_data.status !== 'approved') {
+                new_answer_data.status = 'saved';
+            }
+
+            mgaIntervieweeSrvc.get({_id: $scope.new_interview_answer.interviewee_ID}, function (new_interviewee_data) {
+                new_answer_data.interview_score.push({
+                    interviewee_ID: $scope.new_interview_answer.interviewee_ID,
+                    option_order: $scope.new_interview_answer.score.option_order,
+                    option_text: $scope.new_interview_answer.score.option_text,
+                    value: $scope.new_interview_answer.score.value,
+                    interview_text: $scope.new_interview_answer.interview_text
+                });
+
+                new_interviewee_data.answers.push($routeParams.answer_ID);
+                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                    .then(mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data))
+                    .then(function () {
+                        mgaNotifier.notify('Interview submitted');
+                        $route.reload();
+                    }, function (reason) {
+                        mgaNotifier.notify(reason);
+                    });
+
+            });
+        }
+    };
 
     $scope.intervieweeAdd = function () {
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/new-interviewee-dialog',
             controller: 'mgaNewIntervieweeDialogCtrl',
-            className: 'ngdialog-theme-plain',
+            className: 'ngdialog-theme-default',
             scope: $scope
         });
     };
@@ -454,7 +426,7 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
             ngDialog.open({
                 template: 'partials/dialogs/new-document-dialog',
                 controller: 'mgaNewDocumentDialogCtrl',
-                className: 'ngdialog-theme-plain',
+                className: 'ngdialog-theme-default',
                 scope: $scope
             });
         }
