@@ -15,7 +15,6 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
     $scope.assessments = [];
     $scope.$parent.assessments.forEach(function (el) {
         $scope.assessments.push(el.assessment_ID);
-
     });
 
 

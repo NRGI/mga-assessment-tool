@@ -1,25 +1,39 @@
-div.top-padding-med
-	.well
-		legend Form for new assessment deployment
-		.row.left-padding-lg
-			.form-horizontal
-				form.form-horizontal(name="deployAssessment")
-					fieldset
-						.row
-							label.col-md-4  Year
-							.form-group.col-md-7
-								select.form-group.form-control.right-padding-med(name="year" ng-model="new_assessment.year" required)
-									option(value="" selected disabled) Select year
-									option(ng-repeat="year in years" value="{{year}}") {{year}}
-						.row
-							label.col-md-4  Country:
-							.form-group.col-md-7
-								select.form-group.form-control.right-padding-med(name="country_selector"
-									ng-model="new_assessment.assessment_country"
-									ng-options="c.country for c in countries"
-									required)
-									option(value="" selected disabled) Select country
-						.row.right-padding-lg.pull-right
-							button.btn.btn-success(ng-click="assessmentDeploy()" ng-disabled="deployAssessment.$invalid") Deploy new assessment
-							| &nbsp;
-							button.btn.btn-danger(ng-click="closeDialog()") Cancel
+div.left-padding-lg.right-padding-lg
+    h3 New assessment deployment
+        .row.form-horizontal.left-padding-lg.top-padding-lg
+            form.form-horizontal(name="deployAssessment")
+                fieldset
+                    .row
+                        h4.col-md-4  Year
+                        .form-group.col-md-5
+                            select.form-group.form-control.right-padding-med(
+                            name="year"
+                            ng-model="new_assessment.year"
+                            required)
+                                option(
+                                value=""
+                                selected
+                                disabled) Select year
+                                option(
+                                ng-repeat="year in years"
+                                value="{{year}}") {{year}}
+
+                    .row
+                        h4.col-md-4  Country
+                        .form-group.col-md-5
+                            select.form-group.form-control.right-padding-med(
+                            name="country_selector"
+                            ng-model="new_assessment.assessment_country"
+                            ng-options="c.country for c in countries"
+                            required)
+                                option(
+                                value=""
+                                selected
+                                disabled) Select country
+
+                    .row.right-padding-lg.pull-right
+                        button.btn.btn-success(
+                        ng-click="assessmentDeploy()"
+                        ng-disabled="deployAssessment.$invalid") Deploy new assessment
+                        | &nbsp;
+                        button.btn.btn-danger(ng-click="closeDialog()") Cancel
