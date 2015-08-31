@@ -48,7 +48,7 @@ angular.module('app').controller('mgaUserAdminDetailCtrl', function ($scope, $ro
         ngDialog.open({
             template: 'partials/dialogs/delete-profile-confirmation-dialog',
             controller: 'mgaDeleteProfileDialogCtrl',
-            className: 'ngdialog-theme-plain',
+            className: 'ngdialog-theme-default',
             scope: $scope
         });
     };

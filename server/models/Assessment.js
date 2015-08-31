@@ -37,6 +37,9 @@ var assessmentSchema = mongoose.Schema({
     start_date: {
         started_by: ObjectId,
         date: Date},
+    approve_date: {
+        approved_by: ObjectId,
+        date: Date},
     modified: [modificationSchema],
     questions_flagged: {
         type: Number,
