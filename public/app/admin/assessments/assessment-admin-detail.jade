@@ -93,6 +93,7 @@
                         .text-danger(ng-if="answer.status==='created'") {{answer.status | ucfirst}}
                         .text-info(ng-if="answer.status==='saved'") {{answer.status | ucfirst}}
                         .text-success(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
+                        .text-success(ng-if="answer.status==='approved'") {{answer.status | ucfirst}}
                         .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
                     //TODO fix handling of non submitted scores
                     td.col-md-1 {{answer.summary_score}}

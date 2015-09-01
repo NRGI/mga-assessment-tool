@@ -199,6 +199,8 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
                     new_answer_data.status = 'flagged';
                     new_assessment_data.questions_flagged += 1;
                     new_assessment_data.questions_complete -= 1;
+                } else if (new_answer_data.status === 'submitted') {
+                    new_answer_data.status === 'approved';
                 }
                 mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
                     .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
