@@ -8,8 +8,7 @@ angular.module('app').controller('mgaFlagEditDialogCtrl', function ($scope, $loc
     $scope.saveFlag = function () {
         var new_answer_data = $scope.$parent.answer,
             new_flag_data = $scope.$parent.flag,
-            index = $scope.$parent.index,
-            answer_ID = $scope.$parent.answer.answer_ID;
+            index = $scope.$parent.index;
         if (new_flag_data.content === $scope.flag_content) {
             mgaNotifier.error('Do you have edits to submit?')
         } else {
@@ -19,7 +18,7 @@ angular.module('app').controller('mgaFlagEditDialogCtrl', function ($scope, $loc
                 .then(function () {
                     mgaNotifier.notify('Flag edited');
                     $scope.closeThisDialog();
-                    $location.path('/admin/assessments-admin/answer/' + answer_ID);
+                    $route.reload();
                 }, function (reason) {
                     mgaNotifier.notify(reason);
                 });

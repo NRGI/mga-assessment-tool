@@ -4,7 +4,7 @@
 
 angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAnswerMethodSrvc, mgaAssessmentMethodSrvc) {
 
-    $scope.flagAnswer = function () {
+    $scope.saveFlag = function () {
         var new_answer_data = $scope.$parent.answer,
             current_user = $scope.$parent.identity.currentUser,
             new_assessment_data = $scope.$parent.assessment,

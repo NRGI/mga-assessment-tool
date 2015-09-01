@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaCommentEditDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaCommentEditDialogCtrl', function ($scope, $route, ngDialog, mgaNotifier, mgaAnswerMethodSrvc) {
     console.log($scope.$parent.comment);
     $scope.comment_content = $scope.$parent.comment.content;
     $scope.saveComment = function () {
@@ -19,7 +19,7 @@ angular.module('app').controller('mgaCommentEditDialogCtrl', function ($scope, $
                 .then(function () {
                     mgaNotifier.notify('Comment edited');
                     $scope.closeThisDialog();
-                    $location.path('/admin/assessments-admin/answer/' + answer_ID);
+                    $route.reload();
                 }, function (reason) {
                     mgaNotifier.notify(reason);
                 });
