@@ -51,7 +51,7 @@ public/vendor
 .idea
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+build/Releaseg go
 
 #CI stuff
 #shippable.yml
