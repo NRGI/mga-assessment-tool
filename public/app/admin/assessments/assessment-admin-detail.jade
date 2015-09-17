@@ -39,7 +39,7 @@
                 a.btn.center-block.btn-primary.pull-left.col-md-9(href="/admin/assessments-admin/secondary-sources/{{assessment.assessment_ID}}") Secondary sources
             .row.top-padding-med
                 button.btn.center-block.btn-default.pull-left.col-md-9(
-                ng-csv="getArray"
+                ng-csv="downloadCSV()"
                 lazy-load="true"
                 download="answers.csv") Export
 

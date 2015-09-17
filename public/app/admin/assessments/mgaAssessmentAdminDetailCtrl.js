@@ -2,251 +2,192 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaIntervieweeSrvc, mgaAnswerSrvc) {
+angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaIntervieweeSrvc, mgaAnswerSrvc, $q) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
         {value: "question_flow_order", text: "Sort by question order"},
         {value: "question_indicator_ID", text: "Sort by indicator"},
-        {value: "question_mode", text: "Sorty by question mode"},
+        {value: "question_mode", text: "Sort by question mode"},
         {value: "question_data_type", text: "Sort by data type"},
         //{value: "status", text: "Sort by status"},
         {value: "status", text: "Sort by status"}
     ];
+
+    $scope.csvHeaders = {
+        question_order: 'question_order',
+        question_text: 'question_text',
+        question_data_type: 'question_data_type',
+        question_mode: 'question_mode',
+        question_indicator_ID: 'question_indicator_ID',
+        question_indicator: 'question_indicator',
+        question_theme_ID: 'question_theme_ID',
+        question_value_chain_ID: 'question_value_chain_ID',
+        status: 'status',
+        score_value: 'score_value',
+        score_text: 'score_text',
+        answer_text: 'answer_text',
+        comments: 'comments',
+        flags: 'flags',
+        interviewee_name: 'interviewee_name',
+        interviewee_email: 'interviewee_email',
+        interviewee_phone: 'interviewee_phone',
+        interviewee_role: 'interviewee_role'
+    };
+
     $scope.sort_order = $scope.sort_options[0].value;
 
+    $scope.getDefaultCSVAnswerRow = function (answer) {
+        return {
+            question_order: answer.question_order,
+            question_text: answer.question_text,
+            question_data_type: answer.question_data_type,
+            question_mode: answer.question_mode,
+            question_indicator_ID: answer.question_indicator_ID,
+            question_indicator: answer.question_indicator,
+            question_theme_ID: answer.question_theme_ID,
+            question_value_chain_ID: answer.question_value_chain_ID,
+            status: answer.status,
+            score_value: '',
+            score_text: '',
+            answer_text: '',
+            comments: '',
+            flags: '',
+            interviewee_name: '',
+            interviewee_email: '',
+            interviewee_phone: '',
+            interviewee_role: ''
+        }
+    };
+
+    $scope.addCommentsIntoAnswerRow = function (answer, row) {
+        row.comments = answer.comments.reduce(function (comments, element) {
+            return comments + element.content + ' - ' + element.author_name + ' | '
+        }, '');
+    };
+
+    $scope.addFlagsIntoAnswerRow = function (answer, row) {
+        row.flags = answer.flags.reduce(function (flags, element) {
+            return flags + element.content + ' - ' + element.author_name + ' - addressed: ' + element.addressed + ' | '
+        }, '');
+    };
+
+    $scope.generateAnswerRowForInterview = function (answer) {
+        var defer = $q.defer();
+        var answerRow = $scope.getDefaultCSVAnswerRow(answer);
+        var result = [];
+        if (answer.interview_score.length > 0) {
+            $q.all(answer.interview_score.map(function (interview) {
+                return mgaIntervieweeSrvc.get({_id: interview.interviewee_ID}, function (interviewee) {
+                    var row = angular.copy(answerRow);
+                    if (interview.answer_score !== undefined) {
+                        row.score_value = interview.value;
+                        row.score_text = interview.option_text;
+                    }
+                    if (interview.interview_text !== undefined) {
+                        row.answer_text = interview.interview_text
+                    }
+                    $scope.addCommentsIntoAnswerRow(answer, row);
+                    $scope.addFlagsIntoAnswerRow(answer, row);
+                    row.interviewee_name = interviewee.firstName + ' ' + interviewee.lastName;
+                    row.interviewee_email = interviewee.email;
+                    row.interviewee_phone = interviewee.phone;
+                    row.interviewee_role = interviewee.role;
+                    result.push(row);
+                }).$promise;
+            })).then(function () {
+                defer.resolve(result);
+            });
+        }
+        else {
+            result.push(answerRow);
+            defer.resolve(result);
+        }
+        return defer.promise;
+    };
+
+    $scope.generateAnswerRowForDiskResearch = function (answer) {
+        var defer = $q.defer();
+        var answerRow = $scope.getDefaultCSVAnswerRow(answer);
+        if (answer.answer_score !== undefined) {
+            answerRow.score_value = answer.answer_score.value;
+            answerRow.score_text = answer.answer_score.option_text;
+        }
+        if (answer.answer_text !== undefined) {
+            answerRow.answer_text = answer.answer_text
+        }
+        $scope.addCommentsIntoAnswerRow(answer, answerRow);
+        $scope.addFlagsIntoAnswerRow(answer, answerRow);
+        defer.resolve([answerRow]);
+        return defer.promise;
+    };
+
+    $scope.generateAnswerRowForSecondarySource = function (answer) {
+        var defer = $q.defer();
+        var answerRow = $scope.getDefaultCSVAnswerRow(answer);
+        if (answer.answer_score !== undefined) {
+            answerRow.score_value = answer.answer_score.value;
+        }
+        defer.resolve([answerRow]);
+        return defer.promise;
+    };
+
+
+    $scope.downloadCSV = function () {
+        var defer = $q.defer();
+        $q.all($scope.answer_list.map(function (el) {
+            switch (el.question_mode) {
+                case 'interview':
+                    return $scope.generateAnswerRowForInterview(el);
+                    break;
+                case 'desk_research':
+                    return $scope.generateAnswerRowForDiskResearch(el);
+                    break;
+                case 'secondary_source':
+                    return $scope.generateAnswerRowForSecondarySource(el);
+                    break;
+                default:
+                    return $q.when([$scope.getDefaultCSVAnswerRow(el)]);
+            }
+        })).then(function (data) {
+            var result = data.reduce(function (prev, next) {
+                return prev.concat(next);
+            }, [$scope.csvHeaders]);
+            defer.resolve(result);
+        });
+        return defer.promise;
+    };
 
     $scope.current_user = mgaIdentitySrvc.currentUser;
 
-    // pull assessment data and add
-    mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
+    $q.all([
+        mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}).$promise,
+        mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}).$promise
+    ]).then(function (allData) {
+        var data = allData[0];
+        var answers = allData[1];
         $scope.answer_list = [];
-        mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
 
-            $scope.getArray = [{
-                question_order: 'question_order',
-                question_text: 'question_text',
-                question_data_type: 'question_data_type',
-                question_mode: 'question_mode',
-                question_indicator_ID: 'question_indicator_ID',
-                question_indicator: 'question_indicator',
-                question_theme_ID: 'question_theme_ID',
-                question_value_chain_ID: 'question_value_chain_ID',
-                status: 'status',
-                score_value: 'score_value',
-                score_text: 'score_text',
-                answer_text: 'answer_text',
-                comments: 'comments',
-                flags: 'flags',
-                interviewee_name: 'interviewee_name',
-                interviewee_email: 'interviewee_email',
-                interviewee_phone: 'interviewee_phone',
-                interviewee_role: 'interviewee_role'
-            }];
-
-            $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
-            $scope.user_list = [];
-            data.users.forEach(function (el) {
-                var u = mgaUserListSrvc.get({_id: el});
-                $scope.user_list.push(u);
-            });
-            answers.forEach(function (el) {
-                var answer_row;
-                $scope.answer_list.push(el);
-                if (el.question_data_type === 'text') {
-                    $scope.answer_list[$scope.answer_list.length - 1].summary_score = 'Text';
-                } else if (el.answer_score === undefined) {
-                    $scope.answer_list[$scope.answer_list.length - 1].summary_score = 'None';
-                } else {
-                    $scope.answer_list[$scope.answer_list.length - 1].summary_score = el.answer_score.value;
-                }
-
-                //TODO extract this into a function that is only called on export load or cache
-                switch (el.question_mode) {
-                    case 'interview':
-                        if (el.interview_score.length > 0) {
-                            el.interview_score.forEach(function (interview) {
-                                mgaIntervieweeSrvc.get({_id: interview.interviewee_ID}, function (interviewee) {
-
-                                    answer_row = {
-                                        question_order: el.question_order,
-                                        question_text: el.question_text,
-                                        question_data_type: el.question_data_type,
-                                        question_mode: el.question_mode,
-                                        question_indicator_ID: el.question_indicator_ID,
-                                        question_indicator: el.question_indicator,
-                                        question_theme_ID: el.question_theme_ID,
-                                        question_value_chain_ID: el.question_value_chain_ID,
-                                        status: el.status,
-                                        score_value: '',
-                                        score_text: '',
-                                        answer_text: '',
-                                        comments: '',
-                                        flags: '',
-                                        interviewee_name: '',
-                                        interviewee_email: '',
-                                        interviewee_phone: '',
-                                        interviewee_role: ''
-                                    };
-                                    if (interview.answer_score !== undefined) {
-                                        answer_row.score_value = interview.value;
-                                        answer_row.score_text = interview.option_text;
-                                    }
-                                    if (interview.interview_text !== undefined) {
-                                        answer_row.answer_text = interview.interview_text
-                                    }
-                                    if (el.comments.length > 0) {
-                                        var c = '';
-                                        el.comments.forEach(function (element) {
-                                            c = c + element.content + ' - ' + element.author_name + ' | '
-                                        });
-                                        answer_row.comments = c;
-                                    }
-                                    if (el.flags.length > 0) {
-                                        var f = '';
-                                        el.flags.forEach(function (element) {
-                                            f = f + element.content + ' - ' + element.author_name + ' - addressed: ' + element.addressed + ' | '
-                                        });
-                                        answer_row.flags = f;
-                                    }
-
-                                    answer_row.interviewee_name = interviewee.firstName + ' ' + interviewee.lastName;
-                                    answer_row.interviewee_email = interviewee.email;
-                                    answer_row.interviewee_phone = interviewee.phone;
-                                    answer_row.interviewee_role = interviewee.role;
-                                    $scope.getArray.push(answer_row);
-                                });
-                            });
-
-
-                        } else {
-                            answer_row = {
-                                question_order: el.question_order,
-                                question_text: el.question_text,
-                                question_data_type: el.question_data_type,
-                                question_mode: el.question_mode,
-                                question_indicator_ID: el.question_indicator_ID,
-                                question_indicator: el.question_indicator,
-                                question_theme_ID: el.question_theme_ID,
-                                question_value_chain_ID: el.question_value_chain_ID,
-                                status: el.status,
-                                score_value: '',
-                                score_text: '',
-                                answer_text: '',
-                                comments: '',
-                                flags: '',
-                                interviewee_name: '',
-                                interviewee_email: '',
-                                interviewee_phone: '',
-                                interviewee_role: ''
-                            };
-                            $scope.getArray.push(answer_row);
-                        }
-
-                        break;
-                    case 'desk_research':
-                        answer_row = {
-                            question_order: el.question_order,
-                            question_text: el.question_text,
-                            question_data_type: el.question_data_type,
-                            question_mode: el.question_mode,
-                            question_indicator_ID: el.question_indicator_ID,
-                            question_indicator: el.question_indicator,
-                            question_theme_ID: el.question_theme_ID,
-                            question_value_chain_ID: el.question_value_chain_ID,
-                            status: el.status,
-                            score_value: '',
-                            score_text: '',
-                            answer_text: '',
-                            comments: '',
-                            flags: '',
-                            interviewee_name: '',
-                            interviewee_email: '',
-                            interviewee_phone: '',
-                            interviewee_role: ''
-                        };
-                        if (el.answer_score !== undefined) {
-                            answer_row.score_value = el.answer_score.value;
-                            answer_row.score_text = el.answer_score.option_text;
-                        }
-                        if (el.answer_text !== undefined) {
-                            answer_row.answer_text = el.answer_text
-                        }
-                        if (el.comments.length > 0) {
-                            var c = '';
-                            el.comments.forEach(function (element) {
-                                c = c + element.content + ' - ' + element.author_name + ' | '
-                            });
-                            answer_row.comments = c;
-                        }
-                        if (el.flags.length > 0) {
-                            var f = '';
-                            el.flags.forEach(function (element) {
-                                f = f + element.content + ' - ' + element.author_name + ' - addressed: ' + element.addressed + ' | '
-                            });
-                            answer_row.flags = f;
-                        }
-                        $scope.getArray.push(answer_row);
-                        break;
-                    case 'secondary_source':
-                        answer_row = {
-                            question_order: el.question_order,
-                            question_text: el.question_text,
-                            question_data_type: el.question_data_type,
-                            question_mode: el.question_mode,
-                            question_indicator_ID: el.question_indicator_ID,
-                            question_indicator: el.question_indicator,
-                            question_theme_ID: el.question_theme_ID,
-                            question_value_chain_ID: el.question_value_chain_ID,
-                            status: el.status,
-                            score_value: '',
-                            score_text: '',
-                            answer_text: '',
-                            comments: '',
-                            flags: '',
-                            interviewee_name: '',
-                            interviewee_email: '',
-                            interviewee_phone: '',
-                            interviewee_role: ''
-                        };
-                        if (el.answer_score !== undefined) {
-                            answer_row.score_value = el.answer_score.value;
-                        }
-                        $scope.getArray.push(answer_row);
-                        break;
-                    default:
-                        answer_row = {
-                            question_order: el.question_order,
-                            question_text: el.question_text,
-                            question_data_type: el.question_data_type,
-                            question_mode: el.question_mode,
-                            question_indicator_ID: el.question_indicator_ID,
-                            question_indicator: el.question_indicator,
-                            question_theme_ID: el.question_theme_ID,
-                            question_value_chain_ID: el.question_value_chain_ID,
-                            status: el.status,
-                            score_value: '',
-                            score_text: '',
-                            answer_text: '',
-                            comments: '',
-                            flags: '',
-                            interviewee_name: '',
-                            interviewee_email: '',
-                            interviewee_phone: '',
-                            interviewee_role: ''
-                        };
-                        $scope.getArray.push(answer_row);
-                }
-
-            });
-            $scope.assessment = data;
+        $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
+        $scope.user_list = [];
+        data.users.forEach(function (el) {
+            var u = mgaUserListSrvc.get({_id: el});
+            $scope.user_list.push(u);
+        });
+        $scope.assessment = data;
+        answers.forEach(function (el) {
+            if (el.question_data_type === 'text') {
+                el.summary_score = 'Text';
+            } else if (el.answer_score === undefined) {
+                el.summary_score = 'None';
+            } else {
+                el.summary_score = el.answer_score.value;
+            }
+            $scope.answer_list.push(el);
         });
     });
-    //$scope.createArray = function () {
-    //    mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
-    //
-    //    });
-    //};
+
+
     $scope.submitAssessment = function () {
         var new_assessment_data = $scope.assessment;
 
@@ -258,15 +199,12 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
         }, function (answers) {
             new_assessment_data.question_set_length = answers.length;
             mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
-                mgaNotifier.notify('Assessment submited');
+                mgaNotifier.notify('Assessment submitted');
                 $route.reload();
                 //$location.path('/admin/assessment-admin');
             }, function (reason) {
                 mgaNotifier.notify(reason);
             });
-
         });
-
-
     }
 });
