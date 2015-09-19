@@ -14,39 +14,39 @@ angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQu
         {value: "question_indicator_ID", text: "Sort by Indicator"}
     ];
 
+    $scope.csvHeaders = {
+        question_flow_order: 'Question flow order',
+        question_order: 'Question order',
+        question_text: 'Question text',
+        question_mode: 'Question mode',
+        question_data_type: 'Question data type',
+        question_theme_ID: 'Question theme ID',
+        question_value_chain_ID: 'Question value chain ID',
+        question_indicator_ID: 'Question indicator ID'
+    };
+
     $scope.sort_order = $scope.sort_options[0].value;
+    $scope.questionsCSVData = [];
 
-    mgaQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
-
-        var question;
-        $scope.questions = data;
-        $scope.getArray = [{
-            question_flow_order: 'question_flow_order',
-            question_order: 'question_order',
-            question_text: 'question_text',
-            question_mode: 'question_mode',
-            question_data_type: 'question_data_type',
-            question_theme_ID: 'question_theme_ID',
-            question_value_chain_ID: 'question_value_chain_ID',
-            question_indicator_ID: 'question_indicator_ID'
-        }];
-
-        data.forEach(function (el) {
-            question = {
-                question_flow_order: el.question_flow_order,
-                question_order: el.question_order,
-                question_text: el.question_text,
-                question_mode: el.question_mode,
-                question_data_type: el.question_data_type,
-                question_theme_ID: el.question_theme_ID,
-                question_value_chain_ID: el.question_value_chain_ID,
-                question_indicator_ID: el.question_indicator_ID
-            };
-            $scope.getArray.push(question);
+    $scope.loadQuestions = function () {
+        mgaQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
+            $scope.questions = data;
+            $scope.questionsCSVData = data.map(function (el) {
+                return {
+                    question_flow_order: el.question_flow_order,
+                    question_order: el.question_order,
+                    question_text: el.question_text,
+                    question_mode: el.question_mode,
+                    question_data_type: el.question_data_type,
+                    question_theme_ID: el.question_theme_ID,
+                    question_value_chain_ID: el.question_value_chain_ID,
+                    question_indicator_ID: el.question_indicator_ID
+                };
+            });
         });
-    });
+    };
 
-    // $scope.questions = mgaQuestionSrvc.query();
+    $scope.loadQuestions();
 
     $scope.newQuestionDialog = function () {
         $scope.value = true;

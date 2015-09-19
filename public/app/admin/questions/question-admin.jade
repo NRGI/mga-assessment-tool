@@ -8,8 +8,12 @@
                     //button.btn.btn-success(ng-click="newQuestionDialog()") New Question
                     | &nbsp;
                     button.btn.btn-default(
-                    ng-csv="getArray"
-                    download="question_set.csv") Export as CSV
+                    ng-disabled='!(questionsCSVData.length > 0)'
+                    ng-csv="questionsCSVData"
+                    lazy-load="true"
+                    csv-header='csvHeaders'
+                    filename="question_set.csv") Export as CSV
+
                 .pull-right
                     form.form-inline
                         .form-group
@@ -23,6 +27,8 @@
                             ng-disabled="questions.length < 1"
                             ng-options="item.value as item.text for item in sort_options")
                 div.top-padding-lg
+                    p.lead.text-center(ng-if='!questions') Loading questions...
+                    p.lead.text-center(ng-if='questions.length === 0') There is no questions yet
                     table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg(ng-if="questions.length > 0")
                         thead
                             tr
