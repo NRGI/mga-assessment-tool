@@ -15,24 +15,24 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
     ];
 
     $scope.csvHeaders = {
-        question_order: 'question_order',
-        question_text: 'question_text',
-        question_data_type: 'question_data_type',
-        question_mode: 'question_mode',
-        question_indicator_ID: 'question_indicator_ID',
-        question_indicator: 'question_indicator',
-        question_theme_ID: 'question_theme_ID',
-        question_value_chain_ID: 'question_value_chain_ID',
-        status: 'status',
-        score_value: 'score_value',
-        score_text: 'score_text',
-        answer_text: 'answer_text',
-        comments: 'comments',
-        flags: 'flags',
-        interviewee_name: 'interviewee_name',
-        interviewee_email: 'interviewee_email',
-        interviewee_phone: 'interviewee_phone',
-        interviewee_role: 'interviewee_role'
+        question_order: 'Question order',
+        question_text: 'Question text',
+        question_data_type: 'Question data type',
+        question_mode: 'Question mode',
+        question_indicator_ID: 'Question indicator ID',
+        question_indicator: 'Question indicator',
+        question_theme_ID: 'Question theme ID',
+        question_value_chain_ID: 'Question value chain ID',
+        status: 'Status',
+        score_value: 'Score value',
+        score_text: 'Score text',
+        answer_text: 'Answer text',
+        comments: 'Comments',
+        flags: 'Flags',
+        interviewee_name: 'Interviewee name',
+        interviewee_email: 'Interviewee email',
+        interviewee_phone: 'Interviewee phone',
+        interviewee_role: 'Interviewee role'
     };
 
     $scope.sort_order = $scope.sort_options[0].value;
