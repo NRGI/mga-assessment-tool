@@ -133,8 +133,9 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
     };
 
 
-    $scope.downloadCSV = function () {
+    $scope.downloadCSV = function (btnState) {
         var defer = $q.defer();
+        btnState.pending = true;
         $q.all($scope.answer_list.map(function (el) {
             switch (el.question_mode) {
                 case 'interview':
@@ -152,8 +153,10 @@ angular.module('app').controller('mgaAssessmentAdminDetailCtrl', function ($scop
         })).then(function (data) {
             var result = data.reduce(function (prev, next) {
                 return prev.concat(next);
-            }, [$scope.csvHeaders]);
+            });
             defer.resolve(result);
+        }).finally(function () {
+            btnState.pending = false;
         });
         return defer.promise;
     };
