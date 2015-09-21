@@ -273,8 +273,19 @@ angular.module('app').controller('mgaAnswerCtrl', function ($scope, $route, $rou
                     value: $scope.new_interview_answer.score.value,
                     interview_text: $scope.new_interview_answer.interview_text
                 });
+                if(new_interviewee_data.answers.indexOf(new_answer_data.answer_ID) < 0) {
+                    new_interviewee_data.answers.push(new_answer_data.answer_ID);
+                }
+                if(new_interviewee_data.assessments.indexOf(new_answer_data.assessment_ID) < 0) {
+                    new_interviewee_data.assessments.push(new_answer_data.assessment_ID);
+                }
+                if(new_interviewee_data.questions.indexOf(new_answer_data.root_question_ID) < 0) {
+                    new_interviewee_data.questions.push(new_answer_data.root_question_ID);
+                }
+                if(new_interviewee_data.users.indexOf($scope.current_user._id) < 0) {
+                    new_interviewee_data.users.push($scope.current_user._id);
+                }
 
-                new_interviewee_data.answers.push($routeParams.answer_ID);
                 mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
                     .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                     .then(mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data))

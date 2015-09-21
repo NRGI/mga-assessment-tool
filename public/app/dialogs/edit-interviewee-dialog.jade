@@ -11,7 +11,7 @@ div.left-padding-lg.right-padding-lg
                                 .pull-left.col-lg-3
                                     label
                                         small Title:
-                                    select.form-group.form-control(ng-model="new_interviewee.title" ng-options="title for title in titles")
+                                    select.form-group.form-control(ng-model="new_interviewee_data.title" ng-options="title for title in titles")
                                 // FIRST NAME
                                 .pull-left.col-lg-4
                                     label
@@ -20,7 +20,7 @@ div.left-padding-lg.right-padding-lg
                                     name="first_name"
                                     type="text"
                                     placeholder="First name..."
-                                    ng-model="new_interviewee.firstName"
+                                    ng-model="new_interviewee_data.firstName"
                                     autocomplete="off")
                                 // LAST NAME
                                 .pull-left.col-lg-5
@@ -30,7 +30,7 @@ div.left-padding-lg.right-padding-lg
                                     name="last_name"
                                     type="text"
                                     placeholder="Last name..."
-                                    ng-model="new_interviewee.lastName"
+                                    ng-model="new_interviewee_data.lastName"
                                     autocomplete="off")
                     div
                         .row
@@ -45,8 +45,21 @@ div.left-padding-lg.right-padding-lg
                                     placeholder="Phone number..."
                                     ng-model="new_interviewee_data.phone"
                                     autocomplete="off")
-                                // EMAIL
+                                // ALT PHONE NUMBER
                                 .pull-left.col-lg-6
+                                    label
+                                        small Phone number (alt):
+                                    input.form-control(
+                                    name="alt_phone_number"
+                                    type="text"
+                                    placeholder="Phone number..."
+                                    ng-model="new_interviewee_data.alt_phone"
+                                    autocomplete="off")
+                    div
+                        .row
+                            .form-group
+                                // PHONE NUMBER
+                                .pull-left.col-lg-5
                                     label
                                         small Email:
                                     input.form-control(
@@ -55,13 +68,36 @@ div.left-padding-lg.right-padding-lg
                                     placeholder="Email..."
                                     ng-model="new_interviewee_data.email"
                                     autocomplete="off")
+                                // EMAIL
+                                .pull-left.col-lg-6
+                                    label
+                                        small Email (alt):
+                                    input.form-control(
+                                    name="alt_email"
+                                    type="text"
+                                    placeholder="Email..."
+                                    ng-model="new_interviewee_data.alt_email"
+                                    autocomplete="off")
+                    div
+                        .row
+                            .form-group
+                                // MAILING ADDRESS
+                                .pull-left.col-lg-11
+                                    label
+                                        small Mailing address:
+                                    input.form-control(
+                                    name="mailing_address"
+                                    type="text"
+                                    placeholder="Mailiing address..."
+                                    ng-model="new_interviewee_data.mailing_address"
+                                    autocomplete="off")
                     div
                         .row
                             .form-group
                                 // JOB TITLE
                                 .pull-left.col-lg-5
                                     label
-                                        small Job Title:
+                                        small Title:
                                     input.form-control(
                                     name="job_title"
                                     type="text"

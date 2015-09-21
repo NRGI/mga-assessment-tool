@@ -17,6 +17,7 @@
         table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg(ng-if="interviewees.length > 0")
             thead
                 tr
+                    th.col-md-1 Title
                     th.col-md-1 First name
                     th.col-md-1 Last name
                     th.col-md-1
@@ -27,12 +28,13 @@
                     th.col-md-1
             tbody
                 tr(ng-repeat="i in interviewees | filter:searchText | orderBy:sortOrder")
-                    td.col-md-1 {{i.firstName}}
-                    td.col-md-1 {{i.lastName}}
+                    td.col-md-1 {{i.title}}
+                    td.col-md-1 {{i.firstName | ucfirst}}
+                    td.col-md-1 {{i.lastName | ucfirst}}
                     td.col-md-1
                         a(href="mailto:i.lastName" ng-disabled="i.email===undefined").btn.btn-default Email
                     td.col-md-1 {{i.role}}
-                    td.col-md-1 {{i.title}}
+                    td.col-md-1 {{i.job_title}}
                     td.col-md-1 {{i.organization}}
                     td.col-md-1
                         .row(ng-repeat="assessment in i.assessments")

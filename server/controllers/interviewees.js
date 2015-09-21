@@ -58,9 +58,11 @@ exports.updateInterviewee = function (req, res) {
         interviewee.role = interviewee_updates.role;
         interviewee.job_title = interviewee_updates.job_title;
         interviewee.organization = interviewee_updates.organization;
-        interviewee.assessments = interviewee_updates.assessments;
         interviewee.attribution = interviewee_updates.attribution;
+        interviewee.assessments = interviewee_updates.assessments;
         interviewee.answers = interviewee_updates.answers;
+        interviewee.questions = interviewee_updates.questions;
+        interviewee.users = interviewee_updates.users;
         interviewee.modified.push({modifiedBy: req.user._id});
 
         interviewee.save(function (err) {

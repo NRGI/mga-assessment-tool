@@ -27,8 +27,11 @@ var intervieweeSchema = mongoose.Schema({
         required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
     job_title: String,
     organization: String,
-    answers: Array,
-    assessments: Array,
+    //TOOL MAPPING
+    assessments: [String],
+    questions: [ObjectId],
+    answers: [String],
+    users: [ObjectId],
     attribution: {
         type: Boolean,
         default: false},

@@ -2,10 +2,27 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, mgaNotifier, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, mgaNotifier, mgaUserListSrvc, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
+    //mgaAssessmentSrvc.query({}, function (assessments) {
+    //    mgaIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
+    //        $scope.interviewee = interviewee;
+    //        $scope.assessments = [];
+    //        assessments.forEach(function (el) {
+    //            if (interviewee.assessments.indexOf(el.assessment_ID) < 0) {
+    //                $scope.assessments.push({
+    //                    assessment_ID: el.assessment_ID,
+    //                    text: el.country + ' - ' + el.year
+    //                });
+    //            }
+    //        });
+    //
+    //    });
+    //
+    //});
     mgaAssessmentSrvc.query({}, function (assessments) {
         mgaIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
             $scope.interviewee = interviewee;
+            $scope.user_list = [];
             $scope.assessments = [];
             assessments.forEach(function (el) {
                 if (interviewee.assessments.indexOf(el.assessment_ID) < 0) {
@@ -15,7 +32,11 @@ angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($sco
                     });
                 }
             });
-
+            interviewee.users.forEach(function (el) {
+                mgaUserListSrvc.get({_id: el}, function (user) {
+                    $scope.user_list.push(user);
+                });
+            });
         });
 
     });

@@ -5,22 +5,7 @@
 angular.module('app').controller('mgaEditIntervieweeDialogCtrl', function ($scope, $route, ngDialog, mgaNotifier, mgaIntervieweeMethodSrvc) {
     $scope.new_interviewee_data = $scope.$parent.interviewee;
     $scope.roles = ['government', 'cso', 'industry', 'expert', 'other'];
-
-    //$scope.authorPush = function () {
-    //    $scope.new_doc_data.authors.push({first_name: "", last_name: ""});
-    //};
-    //
-    //$scope.editorPush = function () {
-    //    $scope.new_doc_data.editors.push({first_name: "", last_name: ""});
-    //};
-    //
-    //$scope.authorPop = function (index) {
-    //    $scope.new_doc_data.authors.splice(index, 1);
-    //};
-    //
-    //$scope.editorPop = function (index) {
-    //    $scope.new_doc_data.editors.splice(index, 1);
-    //};
+    $scope.titles = ['Mr.', 'Ms.', 'Mrs.'];
 
     $scope.intervieweeSave = function (new_interviewee_data) {
         // TODO fix save notification
