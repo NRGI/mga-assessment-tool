@@ -6,7 +6,6 @@ angular.module('app').controller('mgaNewIntervieweeDialogCtrl', function ($scope
     $scope.roles = ['government', 'cso', 'industry', 'expert', 'other'];
     $scope.titles = ['Mr.', 'Ms.', 'Mrs.']
     $scope.new_interviewee = {};
-    $scope.location = '';
 
     $scope.closeDialog = function () {
         ngDialog.close();

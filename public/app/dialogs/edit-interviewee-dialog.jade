@@ -4,13 +4,14 @@ div.left-padding-lg.right-padding-lg
             .form-horizontal
                 //INTERVIWEE EDIT
                 fieldset
-                    //alt_email
-                    //mailing_address
-                    //title
-                    //attribution
-                    div
+                    div.top-padding-med.right-padding-lg
                         .row
                             .form-group
+                                // FIRST NAME
+                                .pull-left.col-lg-3
+                                    label
+                                        small Title:
+                                    select.form-group.form-control(ng-model="new_interviewee.title" ng-options="title for title in titles")
                                 // FIRST NAME
                                 .pull-left.col-lg-4
                                     label
@@ -19,7 +20,7 @@ div.left-padding-lg.right-padding-lg
                                     name="first_name"
                                     type="text"
                                     placeholder="First name..."
-                                    ng-model="new_interviewee_data.firstName"
+                                    ng-model="new_interviewee.firstName"
                                     autocomplete="off")
                                 // LAST NAME
                                 .pull-left.col-lg-5
@@ -29,7 +30,7 @@ div.left-padding-lg.right-padding-lg
                                     name="last_name"
                                     type="text"
                                     placeholder="Last name..."
-                                    ng-model="new_interviewee_data.lastName"
+                                    ng-model="new_interviewee.lastName"
                                     autocomplete="off")
                     div
                         .row
