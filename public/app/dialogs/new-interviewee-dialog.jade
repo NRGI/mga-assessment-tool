@@ -1,14 +1,21 @@
 div.left-padding-lg.right-padding-lg
-    h3 Document edit form
+    h3 New interviewee
         .row.left-padding-lg(id="interviewee_form")
             .form-horizontal
                 //INTERVIWEE EDIT
                 fieldset
-                    div
+                    //mailing_address
+                    //attribution
+                    div.top-padding-med.right-padding-lg
                         .row
                             .form-group
                                 // FIRST NAME
-                                .pull-left.col-lg-5
+                                .pull-left.col-lg-3
+                                    label
+                                        small Title:
+                                    select.form-group.form-control(ng-model="new_interviewee.title" ng-options="title for title in titles")
+                                // FIRST NAME
+                                .pull-left.col-lg-4
                                     label
                                         small First name:
                                     input.form-control(
@@ -18,7 +25,7 @@ div.left-padding-lg.right-padding-lg
                                     ng-model="new_interviewee.firstName"
                                     autocomplete="off")
                                 // LAST NAME
-                                .pull-left.col-lg-6
+                                .pull-left.col-lg-5
                                     label
                                         small Last name:
                                     input.form-control(
@@ -40,8 +47,21 @@ div.left-padding-lg.right-padding-lg
                                     placeholder="Phone number..."
                                     ng-model="new_interviewee.phone"
                                     autocomplete="off")
-                                // EMAIL
+                                // ALT PHONE NUMBER
                                 .pull-left.col-lg-6
+                                    label
+                                        small Phone number (alt):
+                                    input.form-control(
+                                    name="alt_phone_number"
+                                    type="text"
+                                    placeholder="Phone number..."
+                                    ng-model="new_interviewee.alt_phone"
+                                    autocomplete="off")
+                    div
+                        .row
+                            .form-group
+                                // PHONE NUMBER
+                                .pull-left.col-lg-5
                                     label
                                         small Email:
                                     input.form-control(
@@ -50,18 +70,41 @@ div.left-padding-lg.right-padding-lg
                                     placeholder="Email..."
                                     ng-model="new_interviewee.email"
                                     autocomplete="off")
+                                // EMAIL
+                                .pull-left.col-lg-6
+                                    label
+                                        small Email (alt):
+                                    input.form-control(
+                                    name="alt_email"
+                                    type="text"
+                                    placeholder="Email..."
+                                    ng-model="new_interviewee.alt_email"
+                                    autocomplete="off")
                     div
                         .row
                             .form-group
-                                // TITLE
+                                // JOB TITLE
+                                .pull-left.col-lg-11
+                                    label
+                                        small Mailing address:
+                                    input.form-control(
+                                    name="mailing_address"
+                                    type="text"
+                                    placeholder="Mailiing address..."
+                                    ng-model="new_interviewee.mailing_address"
+                                    autocomplete="off")
+                    div
+                        .row
+                            .form-group
+                                // JOB TITLE
                                 .pull-left.col-lg-5
                                     label
                                         small Title:
                                     input.form-control(
-                                    name="title"
+                                    name="job_title"
                                     type="text"
-                                    placeholder="Title..."
-                                    ng-model="new_interviewee.title"
+                                    placeholder="Job title..."
+                                    ng-model="new_interviewee.job_title"
                                     autocomplete="off")
                                 // ORG
                                 .pull-left.col-lg-6
@@ -74,10 +117,23 @@ div.left-padding-lg.right-padding-lg
                                     ng-model="new_interviewee.organization"
                                     autocomplete="off")
 
-                    .row.left-padding-med.right-padding-med
-                        label
-                            small Role:
-                        select.form-group.form-control(ng-model="new_interviewee.role" ng-options="role as (role | ucfirst) for role in roles")
+                    div.right-padding-lg
+                        .row
+                            .form-group
+                                // JOB TITLE
+                                .pull-left.col-lg-8
+                                    label
+                                        small Role:
+                                    select.form-group.form-control(ng-model="new_interviewee.role" ng-options="role as (role | ucfirst) for role in roles")
+                                .pull-left.col-lg-4
+                                    label
+                                        small Attribution:
+                                    .row
+                                        text.text-danger.pull-left(ng-if="new_interviewee.attribution===false") No
+                                        text.text-success.pull-left(ng-if="new_interviewee.attribution===true") Yes
+                                        input.pull-right(
+                                        type="checkbox"
+                                        ng-model="new_interviewee.attribution")
 
                     //- BUTTON CONTROL
                     div.top-padding-med.bottom-padding-lg

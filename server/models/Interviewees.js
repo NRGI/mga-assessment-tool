@@ -16,15 +16,22 @@ var intervieweeSchema = mongoose.Schema({
     lastName: {
         type: String,
         required: '{PATH} is required!'},
+    title: String,
     email: String,
+    alt_email: String,
     phone: String,
+    alt_phone: String,
+    mailing_address: String,
     role: {
         type: String,
         required: '{PATH} is required!'}, // gov, industry, CSO, expert or other
-    title: String,
+    job_title: String,
     organization: String,
     answers: Array,
     assessments: Array,
+    attribution: {
+        type: Boolean,
+        default: false},
     createdBy: ObjectId,
     creationDate: {
         type: Date,

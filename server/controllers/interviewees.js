@@ -49,15 +49,19 @@ exports.updateInterviewee = function (req, res) {
         }
         interviewee.firstName = interviewee_updates.firstName;
         interviewee.lastName = interviewee_updates.lastName;
+        interviewee.title = interviewee_updates.title;
         interviewee.email = interviewee_updates.email;
         interviewee.phone = interviewee_updates.phone;
+        interviewee.alt_phone = interviewee_updates.alt_phone;
+        interviewee.alt_email = interviewee_updates.alt_email;
+        interviewee.mailing_address = interviewee_updates.mailing_address;
         interviewee.role = interviewee_updates.role;
-        interviewee.title = interviewee_updates.title;
+        interviewee.job_title = interviewee_updates.job_title;
         interviewee.organization = interviewee_updates.organization;
         interviewee.assessments = interviewee_updates.assessments;
+        interviewee.attribution = interviewee_updates.attribution;
         interviewee.answers = interviewee_updates.answers;
         interviewee.modified.push({modifiedBy: req.user._id});
-        console.log(interviewee);
 
         interviewee.save(function (err) {
             if (err) {

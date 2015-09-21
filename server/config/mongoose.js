@@ -30,5 +30,6 @@ module.exports = function (config, user, pass, env) {
     countryModel.createDefaultCountries();
     if (process.env.NODE_ENV !== 'production') {
         intervieweeModel.createDefaultInterviewees();
+        questionModel.createDefaultQuestions();
     }
 };

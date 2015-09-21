@@ -4,11 +4,15 @@ div.left-padding-lg.right-padding-lg
             .form-horizontal
                 //INTERVIWEE EDIT
                 fieldset
+                    //alt_email
+                    //mailing_address
+                    //title
+                    //attribution
                     div
                         .row
                             .form-group
                                 // FIRST NAME
-                                .pull-left.col-lg-5
+                                .pull-left.col-lg-4
                                     label
                                         small First name:
                                     input.form-control(
@@ -18,7 +22,7 @@ div.left-padding-lg.right-padding-lg
                                     ng-model="new_interviewee_data.firstName"
                                     autocomplete="off")
                                 // LAST NAME
-                                .pull-left.col-lg-6
+                                .pull-left.col-lg-5
                                     label
                                         small Last name:
                                     input.form-control(
@@ -53,15 +57,15 @@ div.left-padding-lg.right-padding-lg
                     div
                         .row
                             .form-group
-                                // TITLE
+                                // JOB TITLE
                                 .pull-left.col-lg-5
                                     label
-                                        small Title:
+                                        small Job Title:
                                     input.form-control(
-                                    name="title"
+                                    name="job_title"
                                     type="text"
-                                    placeholder="Title..."
-                                    ng-model="new_interviewee_data.title"
+                                    placeholder="Job title..."
+                                    ng-model="new_interviewee_data.job_title"
                                     autocomplete="off")
                                 // ORG
                                 .pull-left.col-lg-6
