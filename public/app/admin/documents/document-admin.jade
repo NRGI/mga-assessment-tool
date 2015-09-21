@@ -1,44 +1,37 @@
-//- document page
 .container.top-padding-med
-    .well.left-padding-lg.right-padding-lg
-        legend.h3 Document Admin Dashboard
-        .pull-right
-            form.form-inline
-                .form-group
-                    input.form-control(
-                    ng-model="searchText"
-                    ng-disabled="documents.length < 1"
-                    placeholder="Filter")
-                .form-group.margin-left-med
-                    select.form-control(
-                    ng-model="sortOrder"
-                    ng-disabled="documents.length < 1"
-                    ng-options="item.value as item.text for item in sortOptions")
-        table.table.table-hover.table-striped.table-condensed.left-padding-lg.right-padding-lg(ng-if="documents.length > 0")
-            thead
-                tr
-                    th Title
-                    th Authors
-                    th Type
-                    th Cited by
-                    th Assessments
-                    th
-                    th
-            tbody
-                tr(ng-repeat="doc in documents | filter:searchText | orderBy:sortOrder")
-                    td {{doc.title}}
-                    td
-                        .row(ng-repeat="author in doc.authors") {{author.first_name}} {{author.last_name}}
-                    td {{doc.type}}
-                    td
-                        .row(ng-repeat="user in doc.user_list")
-                            a(href="mailto:{{user.email}}") {{user.firstName}} {{user.lastName}}
-                    td
-                        a(href="/admin/assessments-admin/{{assessment}}" ng-repeat="assessment in doc.assessments") {{assessment}}
-                    td
-                        a(href="{{doc.s3_url}}" target="_blank").btn.btn-primary View
-                    td
-                        a(href="/admin/documents-admin/{{doc._id}}").btn.btn-warning Edit
-
-        h1.text-danger(ng-if="documents.length < 1") No documents uploaded
-
+    .well.left-padding-lg
+        div.left-padding-lg.right-padding-lg.top-padding-med
+            legend.h3 Document Admin Dashboard
+            div.left-padding-lg.right-padding-lg.top-padding-med
+                .pull-right
+                    form.form-inline
+                        .form-group
+                            input.form-control(ng-model="search_text", placeholder="Filter")
+                        .form-group.margin-left-med
+                            select.form-control(ng-model="sort_order", ng-options="item.value as item.text for item in sort_options")
+                div.top-padding-lg
+                    table.table.table-hover.table-striped.table-condensed
+                        thead
+                            tr
+                                th Title
+                                th Authors
+                                th Type
+                                th Cited by
+                                th Assessments
+                                th
+                                th
+                        tbody
+                            tr(ng-repeat="doc in documents | filter:search_text | orderBy:sort_order")
+                                td {{doc.title}}
+                                td
+                                    .row(ng-repeat="author in doc.authors") {{author.first_name}} {{author.last_name}}
+                                td {{doc.type}}
+                                td
+                                    .row(ng-repeat="user in doc.user_list")
+                                        a(href="mailto:{{user.email}}") {{user.firstName}} {{user.lastName}}
+                                td
+                                    a(href="/admin/assessments-admin/{{assessment}}" ng-repeat="assessment in doc.assessments") {{assessment}}
+                                td
+                                    a(href="/admin/documents-admin/{{doc._id}}").btn-block.btn.btn-warning Metadata
+                                td
+                                    a(href="{{doc.s3_url}}" target="_blank").btn-block.btn.btn-default Link to document
