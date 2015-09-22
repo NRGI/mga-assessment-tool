@@ -1,0 +1,92 @@
+{
+  "_id": "55fa2be88b8244549b124d59",
+  "assessment_ID": "AF-2017",
+  "ISO3": "AFG",
+  "country": "Afghanistan",
+  "year": "2017",
+  "questions_unfinalized": 10,
+  "desk_research_set_length": 10,
+  "interview_set_length": 0,
+  "__v": 12,
+  "users": [
+    "55f977b9ebe2f23f8bed79ee"
+  ],
+  "questions_complete": 10,
+  "questions_flagged": 0,
+  "modified": [
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ed",
+      "modified_date": "2015-09-17T02:56:40.876Z",
+      "_id": "55fa2be88b8244549b124d5a"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ed",
+      "modified_date": "2015-09-17T02:56:47.045Z",
+      "_id": "55fa2bef8b8244549b124d98"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:57:01.990Z",
+      "_id": "55fa2bfd8b8244549b124d99"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:57:27.484Z",
+      "_id": "55fa2c178b8244549b124da1"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:57:38.616Z",
+      "_id": "55fa2c228b8244549b124da9"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:57:54.957Z",
+      "_id": "55fa2c328b8244549b124db0"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:58:06.723Z",
+      "_id": "55fa2c3e8b8244549b124db7"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:58:27.678Z",
+      "_id": "55fa2c538b8244549b124dbe"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:58:45.870Z",
+      "_id": "55fa2c658b8244549b124dc9"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:58:52.711Z",
+      "_id": "55fa2c6c8b8244549b124dce"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:59:01.221Z",
+      "_id": "55fa2c758b8244549b124dd1"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:59:07.093Z",
+      "_id": "55fa2c7b8b8244549b124dd4"
+    },
+    {
+      "modified_by": "55f977b9ebe2f23f8bed79ee",
+      "modified_date": "2015-09-17T02:59:11.646Z",
+      "_id": "55fa2c7f8b8244549b124dd7"
+    }
+  ],
+  "start_date": {
+    "started_by": "55f977b9ebe2f23f8bed79ee",
+    "date": "2015-09-17T02:57:01.971Z"
+  },
+  "create_date": {
+    "created_by": "55f977b9ebe2f23f8bed79ed",
+    "date": "2015-09-17T02:56:40.876Z"
+  },
+  "status": "started"
+}

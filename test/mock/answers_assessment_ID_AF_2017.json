@@ -1,0 +1,1042 @@
+[
+  {
+    "_id": "55fa2be88b8244549b124d5b",
+    "root_question_ID": "55fa29614d5797c39ab02bd7",
+    "answer_ID": "AF-2017-001",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "Are procedures for the allocation of exploration rights laid out in law and regulations?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 1,
+    "question_flow_order": 1,
+    "question_indicator": "Clear and competitive rules of licence allocation",
+    "question_indicator_ID": "A-1-1",
+    "question_theme_ID": "A",
+    "question_value_chain_ID": "1",
+    "answer_text": "Required",
+    "__v": 3,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d5c",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c0a8b8244549b124d9b",
+        "modifiedDate": "2015-09-17T02:57:14.755Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c0e8b8244549b124d9f",
+        "modifiedDate": "2015-09-17T02:57:17.995Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c178b8244549b124da4",
+        "modifiedDate": "2015-09-17T02:57:27.482Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [
+      {
+        "content": "a1",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c178b8244549b124da3",
+        "date": "2015-09-17T02:57:14.730Z"
+      },
+      {
+        "content": "b2",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c178b8244549b124da2",
+        "date": "2015-09-17T02:57:17.985Z"
+      }
+    ],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c0a8b8244549b124d9c",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:57:14.755Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c0e8b8244549b124da0",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:57:17.995Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c178b8244549b124da5",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:57:27.482Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 1,
+      "option_text": "Yes",
+      "value": 4,
+      "_id": "55fa2be88b8244549b124d60"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d60"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d5f"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d5e"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d5d"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 4
+  },
+  {
+    "_id": "55fa2be88b8244549b124d61",
+    "root_question_ID": "55fa29614d5797c39ab02bd9",
+    "answer_ID": "AF-2017-003",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "Does the legislation impose clear limits to the discretionary powers of the authority in charge of awarding exploration licences?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 5,
+    "question_flow_order": 3,
+    "question_indicator": "Clear and competitive rules of licence allocation",
+    "question_indicator_ID": "A-1-1",
+    "question_theme_ID": "A",
+    "question_value_chain_ID": "1",
+    "answer_text": "123",
+    "__v": 2,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d62",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c2f8b8244549b124dae",
+        "modifiedDate": "2015-09-17T02:57:51.058Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c328b8244549b124db2",
+        "modifiedDate": "2015-09-17T02:57:54.955Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [
+      {
+        "content": "asd",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c328b8244549b124db1",
+        "date": "2015-09-17T02:57:51.023Z"
+      }
+    ],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c2f8b8244549b124daf",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:57:51.058Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c328b8244549b124db3",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:57:54.955Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 1,
+      "option_text": "Yes",
+      "value": 4,
+      "_id": "55fa2be88b8244549b124d66"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d66"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d65"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d64"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d63"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 4
+  },
+  {
+    "_id": "55fa2be88b8244549b124d67",
+    "root_question_ID": "55fa29614d5797c39ab02bd8",
+    "answer_ID": "AF-2017-002",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "Are procedures for the application and allocation of mining rights laid out in law and/or government regulations?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 3,
+    "question_flow_order": 2,
+    "question_indicator": "Clear and competitive rules of licence allocation",
+    "question_indicator_ID": "A-1-1",
+    "question_theme_ID": "A",
+    "question_value_chain_ID": "1",
+    "answer_text": "asd",
+    "__v": 2,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d68",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c1f8b8244549b124da7",
+        "modifiedDate": "2015-09-17T02:57:35.197Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c228b8244549b124dab",
+        "modifiedDate": "2015-09-17T02:57:38.614Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [
+      {
+        "content": "123",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c228b8244549b124daa",
+        "date": "2015-09-17T02:57:35.171Z"
+      }
+    ],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c1f8b8244549b124da8",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:57:35.197Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c228b8244549b124dac",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:57:38.614Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 1,
+      "option_text": "Yes",
+      "value": 4,
+      "_id": "55fa2be88b8244549b124d6c"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d6c"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d6b"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d6a"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d69"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 4
+  },
+  {
+    "_id": "55fa2be88b8244549b124d6d",
+    "root_question_ID": "55fa29614d5797c39ab02bda",
+    "answer_ID": "AF-2017-004",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "In the law, are there clear limits to the discretionary powers of the authority in charge of awarding mining licences?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 7,
+    "question_flow_order": 4,
+    "question_indicator": "Clear and competitive rules of licence allocation",
+    "question_indicator_ID": "A-1-1",
+    "question_theme_ID": "A",
+    "question_value_chain_ID": "1",
+    "answer_text": "123",
+    "__v": 2,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d6e",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c398b8244549b124db5",
+        "modifiedDate": "2015-09-17T02:58:01.735Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c3e8b8244549b124db9",
+        "modifiedDate": "2015-09-17T02:58:06.719Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [
+      {
+        "content": "123",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c3e8b8244549b124db8",
+        "date": "2015-09-17T02:58:01.704Z"
+      }
+    ],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c398b8244549b124db6",
+        "score": {
+          "option_order": 2,
+          "option_text": "Partial",
+          "value": 2.5
+        },
+        "date": "2015-09-17T02:58:01.735Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c3e8b8244549b124dba",
+        "score": {
+          "option_order": 2,
+          "option_text": "Partial",
+          "value": 2.5
+        },
+        "date": "2015-09-17T02:58:06.719Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 2,
+      "option_text": "Partial",
+      "value": 2.5,
+      "_id": "55fa2be88b8244549b124d71"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d72"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d71"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d70"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d6f"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 2.5
+  },
+  {
+    "_id": "55fa2be88b8244549b124d73",
+    "root_question_ID": "55fa29614d5797c39ab02bdb",
+    "answer_ID": "AF-2017-005",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "Is the authority in charge of awarding licences for exploration and mining independent from the mining ministry?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 9,
+    "question_flow_order": 5,
+    "question_indicator": "Clear and competitive rules of licence allocation",
+    "question_indicator_ID": "A-1-1",
+    "question_theme_ID": "A",
+    "question_value_chain_ID": "1",
+    "answer_text": "sadasd",
+    "__v": 2,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d74",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c518b8244549b124dbc",
+        "modifiedDate": "2015-09-17T02:58:25.450Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c538b8244549b124dc0",
+        "modifiedDate": "2015-09-17T02:58:27.676Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [
+      {
+        "content": "12312",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c538b8244549b124dbf",
+        "date": "2015-09-17T02:58:25.426Z"
+      }
+    ],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c518b8244549b124dbd",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:58:25.450Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c538b8244549b124dc1",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:58:27.676Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 1,
+      "option_text": "Yes",
+      "value": 4,
+      "_id": "55fa2be88b8244549b124d78"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d78"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d77"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d76"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d75"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 4
+  },
+  {
+    "_id": "55fa2be88b8244549b124d7f",
+    "root_question_ID": "55fa29614d5797c39ab02bdd",
+    "answer_ID": "AF-2017-007",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "Is the law, is the process of allocation of mineral rights either “First-come-first-served” (FCFS) or based on tenders and auctions?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 12,
+    "question_flow_order": 7,
+    "question_indicator": "Clear and competitive rules of licence allocation",
+    "question_indicator_ID": "A-1-1",
+    "question_theme_ID": "A",
+    "question_value_chain_ID": "1",
+    "answer_text": "asdasd",
+    "__v": 1,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d80",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c6c8b8244549b124dcf",
+        "modifiedDate": "2015-09-17T02:58:52.708Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c6c8b8244549b124dd0",
+        "score": {
+          "option_order": 2,
+          "option_text": "Partial",
+          "value": 2.5
+        },
+        "date": "2015-09-17T02:58:52.708Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 2,
+      "option_text": "Partial",
+      "value": 2.5,
+      "_id": "55fa2be88b8244549b124d83"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d84"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d83"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d82"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d81"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 2.5
+  },
+  {
+    "_id": "55fa2be88b8244549b124d85",
+    "root_question_ID": "55fa29614d5797c39ab02be0",
+    "answer_ID": "AF-2017-010",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "Is there a transparent process for licence cancellations?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 16,
+    "question_flow_order": 10,
+    "question_indicator": "Openness and transparency of licensing process",
+    "question_indicator_ID": "B-1-1",
+    "question_theme_ID": "B",
+    "question_value_chain_ID": "1",
+    "answer_text": "123123",
+    "__v": 1,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d86",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c7f8b8244549b124dd8",
+        "modifiedDate": "2015-09-17T02:59:11.645Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c7f8b8244549b124dd9",
+        "score": {
+          "option_order": 2,
+          "option_text": "Partial",
+          "value": 2.5
+        },
+        "date": "2015-09-17T02:59:11.645Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 2,
+      "option_text": "Partial",
+      "value": 2.5,
+      "_id": "55fa2be88b8244549b124d89"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d8a"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d89"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d88"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d87"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 2.5
+  },
+  {
+    "_id": "55fa2be88b8244549b124d8b",
+    "root_question_ID": "55fa29614d5797c39ab02bde",
+    "answer_ID": "AF-2017-008",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "Is the information required for licence applications easily accessible?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 14,
+    "question_flow_order": 8,
+    "question_indicator": "Openness and transparency of licensing process",
+    "question_indicator_ID": "B-1-1",
+    "question_theme_ID": "B",
+    "question_value_chain_ID": "1",
+    "answer_text": "123123",
+    "__v": 1,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d8c",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c758b8244549b124dd2",
+        "modifiedDate": "2015-09-17T02:59:01.218Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c758b8244549b124dd3",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:59:01.218Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 1,
+      "option_text": "Yes",
+      "value": 4,
+      "_id": "55fa2be88b8244549b124d90"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d90"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d8f"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d8e"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d8d"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 4
+  },
+  {
+    "_id": "55fa2be88b8244549b124d91",
+    "root_question_ID": "55fa29614d5797c39ab02bdf",
+    "answer_ID": "AF-2017-009",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "When licence applications are denied, are the reasons communicated to the applicant?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 15,
+    "question_flow_order": 9,
+    "question_indicator": "Openness and transparency of licensing process",
+    "question_indicator_ID": "B-1-1",
+    "question_theme_ID": "B",
+    "question_value_chain_ID": "1",
+    "answer_text": "123123",
+    "__v": 1,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d92",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c7b8b8244549b124dd5",
+        "modifiedDate": "2015-09-17T02:59:07.091Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c7b8b8244549b124dd6",
+        "score": {
+          "option_order": 2,
+          "option_text": "Partial",
+          "value": 2.5
+        },
+        "date": "2015-09-17T02:59:07.091Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 2,
+      "option_text": "Partial",
+      "value": 2.5,
+      "_id": "55fa2be88b8244549b124d95"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d96"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d95"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d94"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d93"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 2.5
+  },
+  {
+    "_id": "55fa2be88b8244549b124d79",
+    "root_question_ID": "55fa29614d5797c39ab02bdc",
+    "answer_ID": "AF-2017-006",
+    "year": "2017",
+    "assessment_ID": "AF-2017",
+    "country": "Afghanistan",
+    "question_text": "In the law, is there a preference expressed for local companies or producers in the allocation of exploration or mining licenses?",
+    "question_mode": "desk_research",
+    "question_data_type": "bool",
+    "question_order": 10,
+    "question_flow_order": 6,
+    "question_indicator": "Clear and competitive rules of licence allocation",
+    "question_indicator_ID": "A-1-1",
+    "question_theme_ID": "A",
+    "question_value_chain_ID": "1",
+    "answer_text": "sadasd",
+    "__v": 3,
+    "modified": [
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ed",
+        "_id": "55fa2be88b8244549b124d7a",
+        "modifiedDate": "2015-09-17T02:56:40.876Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c618b8244549b124dc3",
+        "modifiedDate": "2015-09-17T02:58:41.914Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c638b8244549b124dc7",
+        "modifiedDate": "2015-09-17T02:58:43.647Z"
+      },
+      {
+        "modifiedBy": "55f977b9ebe2f23f8bed79ee",
+        "_id": "55fa2c658b8244549b124dcc",
+        "modifiedDate": "2015-09-17T02:58:45.866Z"
+      }
+    ],
+    "references": {
+      "human": [],
+      "web": [],
+      "citation": []
+    },
+    "comments": [
+      {
+        "content": "asdas",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c658b8244549b124dcb",
+        "date": "2015-09-17T02:58:41.887Z"
+      },
+      {
+        "content": "asdasd",
+        "author_name": "Chris Perry",
+        "author": "55f977b9ebe2f23f8bed79ee",
+        "role": "researcher",
+        "_id": "55fa2c658b8244549b124dca",
+        "date": "2015-09-17T02:58:43.640Z"
+      }
+    ],
+    "score_history": [
+      {
+        "order": 1,
+        "_id": "55fa2c618b8244549b124dc4",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:58:41.914Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c638b8244549b124dc8",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:58:43.647Z"
+      },
+      {
+        "order": 1,
+        "_id": "55fa2c658b8244549b124dcd",
+        "score": {
+          "option_order": 1,
+          "option_text": "Yes",
+          "value": 4
+        },
+        "date": "2015-09-17T02:58:45.866Z"
+      }
+    ],
+    "answer_score": {
+      "option_order": 1,
+      "option_text": "Yes",
+      "value": 4,
+      "_id": "55fa2be88b8244549b124d7e"
+    },
+    "interview_score": [],
+    "answer_options": [
+      {
+        "option_order": 1,
+        "option_text": "Yes",
+        "value": 4,
+        "_id": "55fa2be88b8244549b124d7e"
+      },
+      {
+        "option_order": 2,
+        "option_text": "Partial",
+        "value": 2.5,
+        "_id": "55fa2be88b8244549b124d7d"
+      },
+      {
+        "option_order": 3,
+        "option_text": "No",
+        "value": 1,
+        "_id": "55fa2be88b8244549b124d7c"
+      },
+      {
+        "option_order": 4,
+        "option_text": "N/A",
+        "value": 0,
+        "_id": "55fa2be88b8244549b124d7b"
+      }
+    ],
+    "flags": [],
+    "status": "approved",
+    "summary_score": 4
+  }
+]

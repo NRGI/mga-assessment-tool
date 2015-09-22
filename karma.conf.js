@@ -16,6 +16,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
+            'node_modules/karma-read-json/karma-read-json.js',
             'public/vendor/angular/angular.js',
             'public/vendor/angular-resource/angular-resource.js',
             'public/vendor/angular-route/angular-route.js',
@@ -23,7 +24,9 @@ module.exports = function (config) {
             'public/vendor/lodash/lodash.js',
             'test/test-app.js',
             'public/app/**/*.js',
-            'test/tests/**/*.js'
+            'test/tests/**/*.js',
+            // fixtures
+            {pattern: 'test/mock/*.json', watched: true, served: true, included: false}
         ],
 
 

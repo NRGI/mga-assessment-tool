@@ -1,0 +1,14 @@
+{
+  "interview_text": "interview_text",
+  "answer_score": {
+    "value": 11,
+    "option_text": "text"
+  },
+  "value": 11,
+  "option_text": "opt text",
+  "firstName": "firstName",
+  "lastName": "lastName",
+  "email": "email",
+  "phone": "phone",
+  "role": "role"
+}
