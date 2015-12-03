@@ -12,6 +12,7 @@ RUN		yum install -y git
 ADD     package.json /tmp/package.json
 RUN     cd /tmp && npm install --production
 RUN     mkdir -p /src && cp -a /tmp/node_modules /src
+
 RUN		rm -R /tmp/node_modules
 COPY	. /src
 RUN		cd /src && bower install --allow-root
