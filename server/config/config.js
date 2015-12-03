@@ -8,6 +8,11 @@ module.exports = {
         rootPath: rootPath,
         port: process.env.PORT || 3030
     },
+    //local: {
+    //    db: '@candidate.32.mongolayer.com:10582/mga_production',
+    //    rootPath: rootPath,
+    //    port: process.env.PORT || 3030
+    //},
     development: {
         // db: '@candidate.32.mongolayer.com:10726/mga_dev',
         db: '@c726.candidate.19.mongolayer.com:10726/mga_dev',
@@ -15,7 +20,7 @@ module.exports = {
         port: process.env.PORT || 80
     },
     production: {
-        db: '@c726.candidate.19.mongolayer.com:10726/mga_production',
+        db: '@candidate.32.mongolayer.com:10582/mga_production',
         rootPath: rootPath,
         port: process.env.PORT || 80
     }
