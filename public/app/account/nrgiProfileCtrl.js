@@ -1,7 +1,7 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('mgaProfileCtrl', function ($scope, $route, mgaIdentitySrvc, mgaUserMethodSrvc, mgaNotifier) {
+angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, mgaIdentitySrvc, mgaUserMethodSrvc, mgaNotifier) {
     // set page resources to be those of the current identity
     $scope.fullName = mgaIdentitySrvc.currentUser.firstName + " " + mgaIdentitySrvc.currentUser.lastName;
     $scope.first_name = mgaIdentitySrvc.currentUser.firstName;

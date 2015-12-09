@@ -2,8 +2,8 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('mgaDeskResearchListCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
-    //filtering options
+angular.module('app').controller('nrgiInterviewsListCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, mgaNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
+    // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
         {value: "question_flow_order", text: "Sort by question order"},
@@ -18,7 +18,7 @@ angular.module('app').controller('mgaDeskResearchListCtrl', function ($scope, $r
         $scope.answer_list = [];
         mgaAnswerSrvc.query({
             assessment_ID: $routeParams.assessment_ID,
-            question_mode: 'desk_research'
+            question_mode: 'interview'
         }, function (answers) {
 
             $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});

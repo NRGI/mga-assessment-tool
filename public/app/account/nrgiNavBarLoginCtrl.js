@@ -2,7 +2,7 @@
 //var angular;
 /*jslint newcap: true unparam: true*/
 
-angular.module('app').controller('mgaNavBarLoginCtrl', function ($scope, $location, mgaNotifier, mgaIdentitySrvc, mgaAuthSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $location, mgaNotifier, mgaIdentitySrvc, mgaAuthSrvc, mgaAssessmentSrvc) {
     var url_array;
     // assign the identity resource with the current identity using identity service
     $scope.identity = mgaIdentitySrvc;

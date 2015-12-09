@@ -1,5 +1,5 @@
 'use strict';
-angular.module('app').controller('mgaSecondarySourcesListCtrl', function ($scope, $route, $routeParams, mgaNotifier, mgaAnswerSrvc, mgaAssessmentSrvc, mgaAnswerMethodSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scope, $route, $routeParams, mgaNotifier, mgaAnswerSrvc, mgaAssessmentSrvc, mgaAnswerMethodSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},

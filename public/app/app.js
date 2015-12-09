@@ -32,7 +32,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // User Account Routes
         .when('/profile', {
             templateUrl: '/partials/account/profile',
-            controller:  'mgaProfileCtrl',
+            controller:  'nrgiProfileCtrl',
             resolve: routeRoleChecks.user
         })
 
@@ -67,28 +67,28 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // ASSESSMENTS
         .when('/admin/assessment-admin', {
             templateUrl: '/partials/admin/assessments/assessment-admin',
-            controller:  'mgaAssessmentAdminCtrl'
+            controller:  'nrgiAssessmentAdminCtrl'
         })
         .when('/admin/assessments-admin/:assessment_ID', {
             templateUrl: '/partials/admin/assessments/assessment-admin-detail',
-            controller:  'mgaAssessmentAdminDetailCtrl'
+            controller:  'nrgiAssessmentAdminDetailCtrl'
         })
         // ANSWERS
         .when('/admin/assessments-admin/interviews/:assessment_ID', {
             templateUrl: '/partials/admin/answers/interviews-list',
-            controller: 'mgaInterviewsListCtrl'
+            controller: 'nrgiInterviewsListCtrl'
         })
         .when('/admin/assessments-admin/desk-research/:assessment_ID', {
             templateUrl: '/partials/admin/answers/desk-research-list',
-            controller: 'mgaDeskResearchListCtrl'
+            controller: 'nrgiDeskResearchListCtrl'
         })
         .when('/admin/assessments-admin/secondary-sources/:assessment_ID', {
             templateUrl: '/partials/admin/answers/secondary-sources-list',
-            controller: 'mgaSecondarySourcesListCtrl'
+            controller: 'nrgiSecondarySourcesListCtrl'
         })
         .when('/admin/assessments-admin/answer/:answer_ID', {
             templateUrl: '/partials/admin/answers/answer-page-edit',
-            controller:  'mgaAnswerCtrl'
+            controller:  'nrgiAnswerCtrl'
         })
         // DOCUMENTS
         .when('/admin/documents-admin', {
