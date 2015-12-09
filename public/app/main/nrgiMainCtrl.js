@@ -1,7 +1,7 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('mgaMainCtrl', function ($scope, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiMainCtrl', function ($scope, mgaIdentitySrvc) {
     // bring in current user data to customize front page
     if (mgaIdentitySrvc === '') {
         $scope.fullName = mgaIdentitySrvc.currentUser.firstName + " " + mgaIdentitySrvc.currentUser.lastName;

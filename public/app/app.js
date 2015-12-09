@@ -23,11 +23,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
             templateUrl: '/partials/main/main',
-            controller: 'mgaMainCtrl'
+            controller: 'nrgiMainCtrl'
         })
         .when('/contact', {
             templateUrl: '/partials/main/contact',
-            controller: 'mgaContactTechCtrl'
+            controller: 'nrgiContactTechCtrl'
         })
         // User Account Routes
         .when('/profile', {
