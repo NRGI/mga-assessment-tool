@@ -32,7 +32,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // User Account Routes
         .when('/profile', {
             templateUrl: '/partials/account/profile',
-            controller:  'nrgiProfileCtrl',
+            controller: 'nrgiProfileCtrl',
             resolve: routeRoleChecks.user
         })
 
@@ -40,38 +40,38 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // USERS
         .when('/admin/user-create', {
             templateUrl: '/partials/admin/users/user-create',
-            controller:  'mgaCreateUserCtrl',
+            controller: 'nrgiCreateUserCtrl',
             resolve: routeRoleChecks.supervisor
         })
         .when('/admin/user-admin', {
             templateUrl: '/partials/admin/users/user-admin',
-            controller:  'mgaUserAdminCtrl',
+            controller: 'nrgiUserAdminCtrl',
             resolve: routeRoleChecks.supervisor
         })
         .when('/admin/user-admin-edit/:id', {
             templateUrl: '/partials/admin/users/user-admin-edit',
-            controller:  'mgaUserAdminDetailCtrl',
+            controller: 'nrgiUserAdminDetailCtrl',
             resolve: routeRoleChecks.supervisor
         })
         // QUESTIONS
         .when('/admin/question-admin', {
             templateUrl: '/partials/admin/questions/question-admin',
-            controller:  'nrgiQuestionAdminCtrl',
+            controller: 'nrgiQuestionAdminCtrl',
             resolve: routeRoleChecks.supervisor
         })
         .when('/admin/question-admin-edit/:id', {
             templateUrl: '/partials/admin/questions/question-admin-edit',
-            controller:  'nrgiQuestionAdminDetailCtrl',
+            controller: 'nrgiQuestionAdminDetailCtrl',
             resolve: routeRoleChecks.supervisor
         })
         // ASSESSMENTS
         .when('/admin/assessment-admin', {
             templateUrl: '/partials/admin/assessments/assessment-admin',
-            controller:  'nrgiAssessmentAdminCtrl'
+            controller: 'nrgiAssessmentAdminCtrl'
         })
         .when('/admin/assessments-admin/:assessment_ID', {
             templateUrl: '/partials/admin/assessments/assessment-admin-detail',
-            controller:  'nrgiAssessmentAdminDetailCtrl'
+            controller: 'nrgiAssessmentAdminDetailCtrl'
         })
         // ANSWERS
         .when('/admin/assessments-admin/interviews/:assessment_ID', {
@@ -88,7 +88,7 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         })
         .when('/admin/assessments-admin/answer/:answer_ID', {
             templateUrl: '/partials/admin/answers/answer-page-edit',
-            controller:  'nrgiAnswerCtrl'
+            controller: 'nrgiAnswerCtrl'
         })
         // DOCUMENTS
         .when('/admin/documents-admin', {

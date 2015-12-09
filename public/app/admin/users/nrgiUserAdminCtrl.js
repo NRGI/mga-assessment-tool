@@ -1,7 +1,7 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('nrgiUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
 // angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
     // filtering options
     $scope.sort_options = [
