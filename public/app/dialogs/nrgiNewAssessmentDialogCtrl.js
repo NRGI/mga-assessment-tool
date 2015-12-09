@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $route, $location, nrgiNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope, $route, $location, nrgiNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
 
     function zeroFill(number, width) {
         width -= number.toString().length;

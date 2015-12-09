@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaNewQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaQuestionMethodSrvc, nrgiNotifier) {
+angular.module('app').controller('nrgiNewQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaQuestionMethodSrvc, nrgiNotifier) {
     //$scope.questionDelete = function () {
     //    var question_deletion = $scope.$parent.question._id;
     //

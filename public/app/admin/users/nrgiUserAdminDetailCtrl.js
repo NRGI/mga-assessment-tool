@@ -47,7 +47,7 @@ angular.module('app').controller('nrgiUserAdminDetailCtrl', function ($scope, $r
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/delete-profile-confirmation-dialog',
-            controller: 'mgaDeleteProfileDialogCtrl',
+            controller: 'nrgiDeleteProfileDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: $scope
         });

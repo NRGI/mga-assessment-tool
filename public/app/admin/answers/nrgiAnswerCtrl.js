@@ -125,7 +125,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/flag-question-dialog',
-            controller: 'mgaFlagQuestionDialogCtrl',
+            controller: 'nrgiFlagQuestionDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: $scope
         });
@@ -137,7 +137,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
         scope.flag = flag;
         ngDialog.open({
             template: 'partials/dialogs/flag-question-dialog',
-            controller: 'mgaFlagEditDialogCtrl',
+            controller: 'nrgiFlagEditDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: scope
         });
@@ -304,7 +304,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/new-interviewee-dialog',
-            controller: 'mgaNewIntervieweeDialogCtrl',
+            controller: 'nrgiNewIntervieweeDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: $scope
         });
@@ -342,7 +342,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
 
         ngDialog.open({
             template: 'partials/dialogs/comment-edit-dialog',
-            controller: 'mgaCommentEditDialogCtrl',
+            controller: 'nrgiCommentEditDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: scope
         });
@@ -362,7 +362,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
         //console.log(template);
         ngDialog.open({
             template: template,
-            controller: 'mgaNewRefDialogCtrl',
+            controller: 'nrgiNewRefDialogCtrl',
             className: className,
             scope: $scope
         });

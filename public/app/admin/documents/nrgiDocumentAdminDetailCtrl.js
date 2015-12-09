@@ -18,7 +18,7 @@ angular.module('app').controller('nrgiDocumentAdminDetailCtrl', function ($scope
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/edit-document-dialog',
-            controller: 'mgaEditDocumentDialogCtrl',
+            controller: 'nrgiEditDocumentDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: $scope
         });

@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaCommentEditDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiCommentEditDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc) {
     console.log($scope.$parent.comment);
     $scope.comment_content = $scope.$parent.comment.content;
     $scope.saveComment = function () {

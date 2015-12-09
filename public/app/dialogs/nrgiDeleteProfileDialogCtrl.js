@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaDeleteProfileDialogCtrl', function ($scope, $location, ngDialog, mgaUserMethodSrvc, nrgiNotifier) {
+angular.module('app').controller('nrgiDeleteProfileDialogCtrl', function ($scope, $location, ngDialog, mgaUserMethodSrvc, nrgiNotifier) {
     $scope.userDelete = function () {
         var user_deletion = $scope.$parent.user._id;
 

@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaEditIntervieweeDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaIntervieweeMethodSrvc) {
+angular.module('app').controller('nrgiEditIntervieweeDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaIntervieweeMethodSrvc) {
     $scope.new_interviewee_data = $scope.$parent.interviewee;
     $scope.roles = ['government', 'cso', 'industry', 'expert', 'other'];
     $scope.titles = ['Mr.', 'Ms.', 'Mrs.'];

@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaEditDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc) {
+angular.module('app').controller('nrgiEditDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc) {
     $scope.new_doc_data = $scope.$parent.document;
 
     $scope.doc_type = [

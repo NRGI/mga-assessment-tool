@@ -122,7 +122,7 @@ angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/delete-question-confirmation-dialog',
-            controller: 'mgaDeleteQuestionDialogCtrl',
+            controller: 'nrgiDeleteQuestionDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope
         });

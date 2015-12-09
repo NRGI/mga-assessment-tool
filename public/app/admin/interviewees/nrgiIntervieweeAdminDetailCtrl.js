@@ -45,7 +45,7 @@ angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($sc
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/edit-interviewee-dialog',
-            controller: 'mgaEditIntervieweeDialogCtrl',
+            controller: 'nrgiEditIntervieweeDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: $scope
         });

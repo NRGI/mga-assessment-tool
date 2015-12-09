@@ -52,7 +52,7 @@ angular.module('app').controller('nrgiQuestionAdminCtrl', function ($scope, mgaQ
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/new-question-dialog',
-            controller: 'mgaNewQuestionDialogCtrl',
+            controller: 'nrgiNewQuestionDialogCtrl',
             className: 'ngdialog-theme-plain',
             scope: $scope
         });

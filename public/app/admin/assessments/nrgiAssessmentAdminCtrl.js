@@ -95,7 +95,7 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
         $scope.value = true;
         ngDialog.open({
             template: 'partials/dialogs/new-assessment-dialog',
-            controller: 'mgaNewAssessmentDialogCtrl',
+            controller: 'nrgiNewAssessmentDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: $scope
         });
@@ -106,7 +106,7 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
         $scope.assessment_ID = assessment_ID;
         ngDialog.open({
             template: 'partials/dialogs/assign-assessment-dialog',
-            controller: 'mgaAssignAssessmentDialogCtrl',
+            controller: 'nrgiAssignAssessmentDialogCtrl',
             className: 'ngdialog-theme-default',
             scope: $scope
         });

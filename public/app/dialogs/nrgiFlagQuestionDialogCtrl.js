@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc, mgaAssessmentMethodSrvc) {
+angular.module('app').controller('nrgiFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc, mgaAssessmentMethodSrvc) {
 
     $scope.saveFlag = function () {
         var new_answer_data = $scope.$parent.answer,

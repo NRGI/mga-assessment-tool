@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaNewIntervieweeDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, mgaIntervieweeMethodSrvc) {
+angular.module('app').controller('nrgiNewIntervieweeDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, mgaIntervieweeMethodSrvc) {
     $scope.roles = ['government', 'cso', 'industry', 'expert', 'other'];
     $scope.titles = ['Mr.', 'Ms.', 'Mrs.']
     $scope.new_interviewee = {};

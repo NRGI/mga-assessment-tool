@@ -2,7 +2,7 @@
 //var angular;
 
 //angular.module('app').controller('rgiNewRefDialogCtrl', function ($scope, $route, ngDialog, rgiNotifier, rgiDocumentSrvc, rgiDocumentMethodSrvc, rgiAnswerMethodSrvc) {
-angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route, $http, ngDialog, nrgiNotifier, FileUploader, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewRefDialogCtrl', function ($scope, $route, $http, ngDialog, nrgiNotifier, FileUploader, mgaAnswerMethodSrvc) {
     $scope.answer_update = $scope.$parent.answer;
     ////TODO REPLACE WITH EXISITING REFERENCE SET
     //$scope.existing_ref = [
@@ -64,7 +64,7 @@ angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route
             ngDialog.close('ngdialog1');
             ngDialog.open({
                 template: 'partials/dialogs/new-document-dialog',
-                controller: 'mgaNewDocumentDialogCtrl',
+                controller: 'nrgiNewDocumentDialogCtrl',
                 className: 'ngdialog-theme-default',
                 scope: scope
             });

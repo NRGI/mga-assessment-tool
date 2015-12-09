@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
     $scope.new_document = $scope.$parent.new_document;
 
     if ($scope.new_document.status === 'created') {
