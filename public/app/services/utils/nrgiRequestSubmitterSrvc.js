@@ -2,10 +2,7 @@
 
 angular
     .module('app')
-    .factory('nrgiRequestSubmitterSrvc', function (
-        $http,
-        $q
-    ) {
+    .factory('nrgiRequestSubmitterSrvc', function ($http, $q) {
         var submitRequest = function(type, uri, data) {
             var dfd = $q.defer();
 
