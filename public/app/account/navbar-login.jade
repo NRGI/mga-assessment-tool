@@ -13,11 +13,12 @@
         button.btn.btn-primary(ng-click="signin(username, password)")
             span.glyphicon.glyphicon-log-in(title="Login")  Login
         //- TODO add forgot password functionality
-        button.btn.btn-warning(ng-click="" disabled) Forgot Password
+        button.btn.btn-warning(ng-click="recoverPassword()") Forgot Password
 
 
     //- AUTHENTICATED NAVBAR
     ul.nav.navbar-nav.navbar-right.right-padding-lg(ng-show="identity.isAuthenticated()")
+
         //- ASSESSMENT ADMIN
         ul.nav.navbar-nav.dropdown
             li.dropdown

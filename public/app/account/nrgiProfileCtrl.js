@@ -1,41 +1,36 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, nrgiIdentitySrvc, nrgiUserMethodSrvc, nrgiNotifier) {
-    // set page resources to be those of the current identity
-    $scope.fullName = nrgiIdentitySrvc.currentUser.firstName + " " + nrgiIdentitySrvc.currentUser.lastName;
-    $scope.first_name = nrgiIdentitySrvc.currentUser.firstName;
-    $scope.last_name = nrgiIdentitySrvc.currentUser.lastName;
-    $scope.email = nrgiIdentitySrvc.currentUser.email;
-    $scope.username = nrgiIdentitySrvc.currentUser.username;
-    $scope.role = nrgiIdentitySrvc.currentUser.role;
-    $scope.user = nrgiIdentitySrvc.currentUser;
-    // update functionality for update button
-    $scope.update = function () {
-        // pass in update data
-        var new_user_data = $scope.user;
-        if (!$scope.first_name || !$scope.last_name || !$scope.email) {
-            nrgiNotifier.error('You must include a name and email!')
-        } else {
-            new_user_data.firstName = $scope.first_name;
-            new_user_data.lastName = $scope.last_name;
-            new_user_data.email = $scope.email;
+angular.module('app')
+    .controller('nrgiProfileCtrl', function (
+        $scope,
+        $route,
+        nrgiIdentitySrvc,
+        nrgiNotifier,
+        nrgiUserMethodSrvc
+    ) {
+        // set page resources to be those of the current identity
+        $scope.fullName = nrgiIdentitySrvc.currentUser.firstName + " " + nrgiIdentitySrvc.currentUser.lastName;
 
-            if ($scope.password) {
-                if (!$scope.password_rep) {
-                    nrgiNotifier.error('You must confirm your password!');
-                } else if ($scope.password !== $scope.password_rep) {
-                    nrgiNotifier.error('Passwords must match!');
-                } else {
-                    new_user_data.password = $scope.password;
-                    nrgiUserMethodSrvc.updateUser(new_user_data).then(function () {
-                        nrgiNotifier.notify('Your user account has been updated');
-                        $route.reload();
-                    }, function (reason) {
-                        nrgiNotifier.error(reason);
-                    });
-                }
+        $scope.current_user = nrgiIdentitySrvc.currentUser;
+
+        // update functinonality for update button
+        $scope.update = function () {
+            var new_user_data = $scope.current_user;
+            if (!new_user_data.firstName || !new_user_data.lastName) {
+                nrgiNotifier.error('You must supply a first and last name!');
+            } else if (!new_user_data.email) {
+                nrgiNotifier.error('You must supply an email!');
             } else {
+                // check if password update exists and pass it in
+                if ($scope.password && $scope.password.length > 0) {
+                    if ($scope.password !== $scope.password_rep) {
+                        nrgiNotifier.error('Passwords must match!');
+                    } else {
+                        new_user_data.password = $scope.password;
+                    }
+                }
+                // use authorization service to update user data
                 nrgiUserMethodSrvc.updateUser(new_user_data).then(function () {
                     nrgiNotifier.notify('Your user account has been updated');
                     $route.reload();
@@ -43,6 +38,5 @@ angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, nr
                     nrgiNotifier.error(reason);
                 });
             }
-        }
-    };
-});
+        };
+    });

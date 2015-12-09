@@ -1,12 +1,12 @@
 
-// angular.module('app').factory('rgiUtils', function(rgiToastr) {
+// angular.module('app').factory('nrgiUtils', function(nrgiToastr) {
 //   return {
 //     notify: function(msg) {
-//       rgiToastr.success(msg);
+//       nrgiToastr.success(msg);
 //       console.log(msg);
 //     },
 //     error: function(msg) {
-//       rgiToastr.error(msg);
+//       nrgiToastr.error(msg);
 //       console.log(msg);
 //     }
 //   }
