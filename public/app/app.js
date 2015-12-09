@@ -94,11 +94,11 @@ angular.module('app')
             })
             // ASSESSMENTS
             .when('/admin/assessment-admin', {
-                templateUrl: '/partials/admin/assessments/assessment-admin',
+                templateUrl: '/partials/assessments/assessment-admin',
                 controller: 'nrgiAssessmentAdminCtrl'
             })
             .when('/admin/assessments-admin/:assessment_ID', {
-                templateUrl: '/partials/admin/assessments/assessment-admin-detail',
+                templateUrl: '/partials/assessments/assessment-admin-detail',
                 controller: 'nrgiAssessmentAdminDetailCtrl'
             })
             // ANSWERS
