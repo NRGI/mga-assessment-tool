@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true unparam: true*/
 
-angular.module('app').controller('mgaQuestionAdminCtrl', function ($scope, mgaQuestionSrvc, ngDialog) {
+angular.module('app').controller('nrgiQuestionAdminCtrl', function ($scope, mgaQuestionSrvc, ngDialog) {
     // filtering options
     $scope.sort_options = [
         {value: "question_flow_order", text: "Sort by Question Flow Order"},

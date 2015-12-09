@@ -56,12 +56,12 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // QUESTIONS
         .when('/admin/question-admin', {
             templateUrl: '/partials/admin/questions/question-admin',
-            controller:  'mgaQuestionAdminCtrl',
+            controller:  'nrgiQuestionAdminCtrl',
             resolve: routeRoleChecks.supervisor
         })
         .when('/admin/question-admin-edit/:id', {
             templateUrl: '/partials/admin/questions/question-admin-edit',
-            controller:  'mgaQuestionAdminDetailCtrl',
+            controller:  'nrgiQuestionAdminDetailCtrl',
             resolve: routeRoleChecks.supervisor
         })
         // ASSESSMENTS

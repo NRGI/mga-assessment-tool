@@ -2,7 +2,7 @@
 //var angular;
 /*jslint true*/
 
-angular.module('app').controller('mgaQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, mgaNotifier, mgaQuestionMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, mgaNotifier, mgaQuestionMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
 
     $scope.question = mgaQuestionSrvc.get({_id: $routeParams.id});
     $scope.current_user = mgaIdentitySrvc.currentUser;
