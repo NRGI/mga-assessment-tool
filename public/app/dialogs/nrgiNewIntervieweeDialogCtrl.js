@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiNewIntervieweeDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, mgaIntervieweeMethodSrvc) {
+angular.module('app').controller('nrgiNewIntervieweeDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, nrgiIntervieweeMethodSrvc) {
     $scope.roles = ['government', 'cso', 'industry', 'expert', 'other'];
     $scope.titles = ['Mr.', 'Ms.', 'Mrs.']
     $scope.new_interviewee = {};
@@ -20,7 +20,7 @@ angular.module('app').controller('nrgiNewIntervieweeDialogCtrl', function ($scop
             nrgiNotifier.error('You must proved an interviewee role!');
         } else {
             new_interviewee_data.assessments = [$scope.$parent.assessment.assessment_ID];
-            mgaIntervieweeMethodSrvc.createInterviewee(new_interviewee_data).then(function () {
+            nrgiIntervieweeMethodSrvc.createInterviewee(new_interviewee_data).then(function () {
                 nrgiNotifier.notify('Interviewee created!');
                 ngDialog.close();
                 $route.reload();

@@ -2,7 +2,7 @@
 //var angular;
 
 //angular.module('app').controller('rgiNewRefDialogCtrl', function ($scope, $route, ngDialog, rgiNotifier, rgiDocumentSrvc, rgiDocumentMethodSrvc, rgiAnswerMethodSrvc) {
-angular.module('app').controller('nrgiNewRefDialogCtrl', function ($scope, $route, $http, ngDialog, nrgiNotifier, FileUploader, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewRefDialogCtrl', function ($scope, $route, $http, ngDialog, nrgiNotifier, FileUploader, nrgiAnswerMethodSrvc) {
     $scope.answer_update = $scope.$parent.answer;
     ////TODO REPLACE WITH EXISITING REFERENCE SET
     //$scope.existing_ref = [
@@ -112,7 +112,7 @@ angular.module('app').controller('nrgiNewRefDialogCtrl', function ($scope, $rout
                     }
                     new_answer_data.references.web.push(new_ref_data);
 
-                    mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
+                    nrgiAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
                         $scope.closeThisDialog();
                         nrgiNotifier.notify('Reference added!');
                         $route.reload();
@@ -164,7 +164,7 @@ angular.module('app').controller('nrgiNewRefDialogCtrl', function ($scope, $rout
 
                 new_answer_data.references.human.push(new_ref_data);
 
-                mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
+                nrgiAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
                     $scope.closeThisDialog();
                     nrgiNotifier.notify('Reference added!');
                     $route.reload();

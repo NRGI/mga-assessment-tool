@@ -1,7 +1,7 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, nrgiIdentitySrvc, mgaUserMethodSrvc, nrgiNotifier) {
+angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, nrgiIdentitySrvc, nrgiUserMethodSrvc, nrgiNotifier) {
     // set page resources to be those of the current identity
     $scope.fullName = nrgiIdentitySrvc.currentUser.firstName + " " + nrgiIdentitySrvc.currentUser.lastName;
     $scope.first_name = nrgiIdentitySrvc.currentUser.firstName;
@@ -28,7 +28,7 @@ angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, nr
                     nrgiNotifier.error('Passwords must match!');
                 } else {
                     new_user_data.password = $scope.password;
-                    mgaUserMethodSrvc.updateUser(new_user_data).then(function () {
+                    nrgiUserMethodSrvc.updateUser(new_user_data).then(function () {
                         nrgiNotifier.notify('Your user account has been updated');
                         $route.reload();
                     }, function (reason) {
@@ -36,7 +36,7 @@ angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, nr
                     });
                 }
             } else {
-                mgaUserMethodSrvc.updateUser(new_user_data).then(function () {
+                nrgiUserMethodSrvc.updateUser(new_user_data).then(function () {
                     nrgiNotifier.notify('Your user account has been updated');
                     $route.reload();
                 }, function (reason) {

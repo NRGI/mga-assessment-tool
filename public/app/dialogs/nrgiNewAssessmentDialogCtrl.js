@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope, $route, $location, nrgiNotifier, ngDialog, mgaAssessmentMethodSrvc, nrgiQuestionSrvc, nrgiCountrySrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope, $route, $location, nrgiNotifier, ngDialog, nrgiAssessmentMethodSrvc, nrgiQuestionSrvc, nrgiCountrySrvc, nrgiAnswerMethodSrvc) {
 
     function zeroFill(number, width) {
         width -= number.toString().length;
@@ -155,8 +155,8 @@ angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope
                     }
                 });
                 //send to mongo
-                mgaAssessmentMethodSrvc.createAssessment(new_assessment_data)
-                    .then(mgaAnswerMethodSrvc.insertAnswerSet(new_answer_data))
+                nrgiAssessmentMethodSrvc.createAssessment(new_assessment_data)
+                    .then(nrgiAnswerMethodSrvc.insertAnswerSet(new_answer_data))
                     .then(function () {
                         nrgiNotifier.notify('Assessment deployed!');
                         new_assessment_data = undefined;

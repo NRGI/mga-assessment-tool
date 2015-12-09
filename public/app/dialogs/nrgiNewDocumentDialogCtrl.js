@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('nrgiNewDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, nrgiDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, nrgiDocumentSrvc, nrgiDocumentMethodSrvc, nrgiAnswerMethodSrvc) {
     $scope.new_document = $scope.$parent.new_document;
 
     if ($scope.new_document.status === 'created') {
@@ -84,8 +84,8 @@ angular.module('app').controller('nrgiNewDocumentDialogCtrl', function ($scope, 
 
             new_answer_data.references.citation.push(new_ref_data);
 
-            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-                .then(mgaDocumentMethodSrvc.updateDocument(new_doc_data))
+            nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+                .then(nrgiDocumentMethodSrvc.updateDocument(new_doc_data))
                 .then(function () {
                     $scope.closeThisDialog();
                     nrgiNotifier.notify('reference added');

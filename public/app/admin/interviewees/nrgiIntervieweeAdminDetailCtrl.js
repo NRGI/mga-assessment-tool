@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, nrgiNotifier, nrgiUserListSrvc, nrgiIntervieweeSrvc, mgaIntervieweeMethodSrvc, nrgiAssessmentSrvc) {
+angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, nrgiNotifier, nrgiUserListSrvc, nrgiIntervieweeSrvc, nrgiIntervieweeMethodSrvc, nrgiAssessmentSrvc) {
     //nrgiAssessmentSrvc.query({}, function (assessments) {
     //    nrgiIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
     //        $scope.interviewee = interviewee;
@@ -58,7 +58,7 @@ angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($sc
             var new_interviewee_data = $scope.interviewee;
             if (new_interviewee_data.assessments.indexOf($scope.add_assessment) < 0) {
                 new_interviewee_data.assessments.push($scope.add_assessment);
-                mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data).then(function () {
+                nrgiIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data).then(function () {
                     nrgiNotifier.notify('Interviewee updated');
                     $route.reload();
                 }, function (reason) {

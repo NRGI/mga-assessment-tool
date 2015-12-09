@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiCommentEditDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiCommentEditDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, nrgiAnswerMethodSrvc) {
     console.log($scope.$parent.comment);
     $scope.comment_content = $scope.$parent.comment.content;
     $scope.saveComment = function () {
@@ -15,7 +15,7 @@ angular.module('app').controller('nrgiCommentEditDialogCtrl', function ($scope, 
         } else {
             new_answer_data.comments[index].content = $scope.comment_content;
 
-            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+            nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
                 .then(function () {
                     nrgiNotifier.notify('Comment edited');
                     $scope.closeThisDialog();

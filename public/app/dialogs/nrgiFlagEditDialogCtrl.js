@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiFlagEditDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiFlagEditDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, nrgiAnswerMethodSrvc) {
     $scope.flag_content = $scope.$parent.flag.content;
 
     $scope.saveFlag = function () {
@@ -14,7 +14,7 @@ angular.module('app').controller('nrgiFlagEditDialogCtrl', function ($scope, $lo
         } else {
             new_answer_data.flags[index].content = $scope.flag_content;
 
-            mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
+            nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
                 .then(function () {
                     nrgiNotifier.notify('Flag edited');
                     $scope.closeThisDialog();

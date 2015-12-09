@@ -22,7 +22,7 @@ function flagCheck(flags) {
     return disabled;
 };
 
-angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, nrgiNotifier, nrgiIntervieweeSrvc, mgaIntervieweeMethodSrvc, nrgiAnswerSrvc, mgaAnswerMethodSrvc, nrgiAssessmentSrvc, mgaAssessmentMethodSrvc, nrgiDocumentSrvc, mgaDocumentMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
+angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, nrgiNotifier, nrgiIntervieweeSrvc, nrgiIntervieweeMethodSrvc, nrgiAnswerSrvc, nrgiAnswerMethodSrvc, nrgiAssessmentSrvc, nrgiAssessmentMethodSrvc, nrgiDocumentSrvc, nrgiDocumentMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
     $scope.identity = nrgiIdentitySrvc;
     $scope.ref_type = [
         {text: 'Add Document', value: 'document'},
@@ -166,8 +166,8 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
             }
         }
 
-        mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-            .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+        nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+            .then(nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
                 nrgiNotifier.notify('Answer saved');
             }, function (reason) {
@@ -202,8 +202,8 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
                 } else if (new_answer_data.status === 'submitted') {
                     new_answer_data.status === 'approved';
                 }
-                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                     .then(function () {
                         if (new_assessment_data.questions_complete === new_assessment_data.question_set_length) {
                             $location.path('/admin/assessments-admin/' + new_answer_data.assessment_ID);
@@ -232,8 +232,8 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
                     new_assessment_data.questions_flagged += 1;
                     new_assessment_data.questions_complete -= 1;
                 }
-                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                     .then(function () {
                         if (new_assessment_data.questions_complete === new_assessment_data.question_set_length) {
                             $location.path('/admin/assessments-admin/' + new_answer_data.assessment_ID);
@@ -286,9 +286,9 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
                     new_interviewee_data.users.push($scope.current_user._id);
                 }
 
-                mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-                    .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
-                    .then(mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data))
+                nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+                    .then(nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+                    .then(nrgiIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data))
                     .then(function () {
                         nrgiNotifier.notify('Interview submitted');
                         $route.reload();
@@ -326,7 +326,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
             new_answer_data.status = 'saved';
         }
 
-        mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
+        nrgiAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
             nrgiNotifier.notify('Comment added');
             $scope.answer.new_comment = undefined;
         }, function (reason) {

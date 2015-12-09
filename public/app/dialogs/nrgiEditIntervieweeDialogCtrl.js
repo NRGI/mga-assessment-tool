@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('nrgiEditIntervieweeDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaIntervieweeMethodSrvc) {
+angular.module('app').controller('nrgiEditIntervieweeDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, nrgiIntervieweeMethodSrvc) {
     $scope.new_interviewee_data = $scope.$parent.interviewee;
     $scope.roles = ['government', 'cso', 'industry', 'expert', 'other'];
     $scope.titles = ['Mr.', 'Ms.', 'Mrs.'];
@@ -10,7 +10,7 @@ angular.module('app').controller('nrgiEditIntervieweeDialogCtrl', function ($sco
     $scope.intervieweeSave = function (new_interviewee_data) {
         // TODO fix save notification
         // TODO error check
-        mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data).then(function () {
+        nrgiIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data).then(function () {
             nrgiNotifier.notify('Interviewee has been updated');
             ngDialog.close();
         }, function (reason) {
@@ -23,7 +23,7 @@ angular.module('app').controller('nrgiEditIntervieweeDialogCtrl', function ($sco
         //    if (new_doc_data.status === 'created') {
         //        new_doc_data.status = 'submitted';
         //    }
-        //    mgaDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
+        //    nrgiDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
         //        nrgiNotifier.notify('Document has been updated');
         //        ngDialog.close();
         //    }, function (reason) {

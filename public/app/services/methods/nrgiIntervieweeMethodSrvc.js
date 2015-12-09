@@ -2,7 +2,7 @@
 /*jslint nomen: true newcap: true */
 //var angular;
 
-angular.module('app').factory('mgaIntervieweeMethodSrvc', function ($http, $q, nrgiIntervieweeSrvc) {
+angular.module('app').factory('nrgiIntervieweeMethodSrvc', function ($http, $q, nrgiIntervieweeSrvc) {
     return {
         createInterviewee: function (new_interviewee_data) {
             var new_interviewee = new nrgiIntervieweeSrvc(new_interviewee_data),

@@ -1,7 +1,7 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('nrgiCreateUserCtrl', function ($scope, $location, nrgiNotifier, mgaUserMethodSrvc) {
+angular.module('app').controller('nrgiCreateUserCtrl', function ($scope, $location, nrgiNotifier, nrgiUserMethodSrvc) {
     $scope.roleOptions = [
         // {value: 'admin', text: 'Administrator'},
         {value: 'supervisor', text: 'Supervisor'},
@@ -24,8 +24,8 @@ angular.module('app').controller('nrgiCreateUserCtrl', function ($scope, $locati
                 role: $scope.roleSelect
             };
 
-            mgaUserMethodSrvc.createUser(new_user_data).then(function () {
-                // mgaMailer.send($scope.email);
+            nrgiUserMethodSrvc.createUser(new_user_data).then(function () {
+                // nrgiMailer.send($scope.email);
                 nrgiNotifier.notify('User account created!' + $scope.email);
                 $location.path('/admin/user-admin');
             }, function (reason) {

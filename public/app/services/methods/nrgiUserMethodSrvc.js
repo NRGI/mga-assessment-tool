@@ -2,7 +2,7 @@
 /*jslint nomen: true newcap: true */
 //var angular;
 
-angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, nrgiUserSrvc) {
+angular.module('app').factory('nrgiUserMethodSrvc', function ($http, $q, nrgiUserSrvc) {
     return {
         createUser: function (new_user_data) {
             var new_user = new nrgiUserSrvc(new_user_data),

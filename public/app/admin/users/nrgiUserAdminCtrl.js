@@ -2,7 +2,7 @@
 //var angular;
 
 angular.module('app').controller('nrgiUserAdminCtrl', function ($scope, nrgiUserSrvc, nrgiAssessmentSrvc) {
-// angular.module('app').controller('mgaUserAdminCtrl', function ($scope, nrgiUserSrvc, nrgiAssessmentSrvc) {
+// angular.module('app').controller('nrgiUserAdminCtrl', function ($scope, nrgiUserSrvc, nrgiAssessmentSrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "firstName", text: "Sort by first name"},

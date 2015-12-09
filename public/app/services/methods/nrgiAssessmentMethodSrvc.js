@@ -2,7 +2,7 @@
 /*jslint newcap: true */
 //var angular;
 
-angular.module('app').factory('mgaAssessmentMethodSrvc', function ($http, $q, nrgiIdentitySrvc, nrgiAssessmentSrvc) {
+angular.module('app').factory('nrgiAssessmentMethodSrvc', function ($http, $q, nrgiIdentitySrvc, nrgiAssessmentSrvc) {
     return {
         createAssessment: function (new_assessment_data) {
 

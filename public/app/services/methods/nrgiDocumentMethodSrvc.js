@@ -2,7 +2,7 @@
 //var angular;
 /*jslint newcap: true */
 
-angular.module('app').factory('mgaDocumentMethodSrvc', function ($q) {
+angular.module('app').factory('nrgiDocumentMethodSrvc', function ($q) {
     return {
         updateDocument: function (new_doc_data) {
             var dfd = $q.defer();

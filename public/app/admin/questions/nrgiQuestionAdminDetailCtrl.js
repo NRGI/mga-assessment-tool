@@ -2,7 +2,7 @@
 //var angular;
 /*jslint true*/
 
-angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, mgaQuestionMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
+angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, nrgiQuestionMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
 
     $scope.question = nrgiQuestionSrvc.get({_id: $routeParams.id});
     $scope.current_user = nrgiIdentitySrvc.currentUser;
@@ -111,7 +111,7 @@ angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope
     $scope.questionUpdate = function () {
         var new_question_data = $scope.question;
 
-        mgaQuestionMethodSrvc.updateQuestion(new_question_data).then(function () {
+        nrgiQuestionMethodSrvc.updateQuestion(new_question_data).then(function () {
             $location.path('/admin/question-admin');
             nrgiNotifier.notify('Question data has been updated');
         }, function (reason) {
@@ -142,7 +142,7 @@ angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope
 
         new_question_data.comments.push(new_comment_data);
 
-        mgaQuestionMethodSrvc.updateQuestion(new_question_data).then(function () {
+        nrgiQuestionMethodSrvc.updateQuestion(new_question_data).then(function () {
             nrgiNotifier.notify('Comment added');
         }, function (reason) {
             nrgiNotifier.notify(reason);

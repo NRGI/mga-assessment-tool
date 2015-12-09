@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('nrgiEditDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, nrgiDocumentSrvc, mgaDocumentMethodSrvc) {
+angular.module('app').controller('nrgiEditDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, nrgiDocumentSrvc, nrgiDocumentMethodSrvc) {
     $scope.new_doc_data = $scope.$parent.document;
 
     $scope.doc_type = [
@@ -45,7 +45,7 @@ angular.module('app').controller('nrgiEditDocumentDialogCtrl', function ($scope,
 
     $scope.documentSave = function (new_doc_data) {
         // TODO fix save notification
-        mgaDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
+        nrgiDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
             nrgiNotifier.notify('Document has been updated');
             ngDialog.close();
         }, function (reason) {
@@ -58,7 +58,7 @@ angular.module('app').controller('nrgiEditDocumentDialogCtrl', function ($scope,
         //    if (new_doc_data.status === 'created') {
         //        new_doc_data.status = 'submitted';
         //    }
-        //    mgaDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
+        //    nrgiDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
         //        nrgiNotifier.notify('Document has been updated');
         //        ngDialog.close();
         //    }, function (reason) {

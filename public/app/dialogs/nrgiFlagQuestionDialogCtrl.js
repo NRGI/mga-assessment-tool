@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc, mgaAssessmentMethodSrvc) {
+angular.module('app').controller('nrgiFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, nrgiAnswerMethodSrvc, nrgiAssessmentMethodSrvc) {
 
     $scope.saveFlag = function () {
         var new_answer_data = $scope.$parent.answer,
@@ -29,8 +29,8 @@ angular.module('app').controller('nrgiFlagQuestionDialogCtrl', function ($scope,
             new_assessment_data.questions_flagged += 1;
         }
 
-        mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
-            .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+        nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+            .then(nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
                 nrgiNotifier.notify('Answer flagged');
                 new_assessment_data = undefined;

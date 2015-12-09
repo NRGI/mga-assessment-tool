@@ -2,7 +2,7 @@
 //var angular;
 /*jslint newcap: true */
 
-angular.module('app').factory('mgaAnswerMethodSrvc', function ($q, nrgiAnswerSrvc) {
+angular.module('app').factory('nrgiAnswerMethodSrvc', function ($q, nrgiAnswerSrvc) {
     return {
         insertAnswerSet: function (new_answer_set) {
             var dfd = $q.defer(),

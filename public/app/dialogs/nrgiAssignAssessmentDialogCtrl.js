@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiAssignAssessmentDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, nrgiAssessmentSrvc, mgaAssessmentMethodSrvc, nrgiUserSrvc, mgaUserMethodSrvc) {
+angular.module('app').controller('nrgiAssignAssessmentDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, nrgiAssessmentSrvc, nrgiAssessmentMethodSrvc, nrgiUserSrvc, nrgiUserMethodSrvc) {
     nrgiUserSrvc.query({}, function (data) {
         $scope.assessment = nrgiAssessmentSrvc.get({assessment_ID: $scope.$parent.assessment_ID});
         $scope.users = [];
@@ -37,8 +37,8 @@ angular.module('app').controller('nrgiAssignAssessmentDialogCtrl', function ($sc
                 country: $scope.assessment.country,
                 year: $scope.assessment.year
             });
-            mgaUserMethodSrvc.updateUser(new_user_data)
-                .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
+            nrgiUserMethodSrvc.updateUser(new_user_data)
+                .then(nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                 .then(function () {
                     nrgiNotifier.notify('Assessment assigned!');
                     new_assessment_data = undefined;

@@ -2,7 +2,7 @@
 //var angular;
 /*jslint true*/
 
-angular.module('app').controller('nrgiUserAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, nrgiUserSrvc, mgaUserMethodSrvc) {
+angular.module('app').controller('nrgiUserAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, nrgiUserSrvc, nrgiUserMethodSrvc) {
 
     $scope.user = nrgiUserSrvc.get({_id: $routeParams.id});
     $scope.role_options = [
@@ -24,7 +24,7 @@ angular.module('app').controller('nrgiUserAdminDetailCtrl', function ($scope, $r
             if ($scope.password && $scope.password.length > 0) {
                 if ($scope.password === $scope.password_rep) {
                     new_user_data.password = $scope.password;
-                    mgaUserMethodSrvc.updateUser(new_user_data).then(function () {
+                    nrgiUserMethodSrvc.updateUser(new_user_data).then(function () {
                         nrgiNotifier.notify('User account has been updated');
                         $location.path('/admin/user-admin');
                     }, function (reason) {
@@ -34,7 +34,7 @@ angular.module('app').controller('nrgiUserAdminDetailCtrl', function ($scope, $r
                     nrgiNotifier.error('Passwords must match!');
                 }
             } else {
-                mgaUserMethodSrvc.updateUser(new_user_data).then(function () {
+                nrgiUserMethodSrvc.updateUser(new_user_data).then(function () {
                     nrgiNotifier.notify('User account has been updated');
                     $location.path('/admin/user-admin');
                 }, function (reason) {

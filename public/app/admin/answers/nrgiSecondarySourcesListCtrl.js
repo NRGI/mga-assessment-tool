@@ -1,5 +1,5 @@
 'use strict';
-angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scope, $route, $routeParams, nrgiNotifier, nrgiAnswerSrvc, nrgiAssessmentSrvc, mgaAnswerMethodSrvc, nrgiUserListSrvc, nrgiIdentitySrvc) {
+angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scope, $route, $routeParams, nrgiNotifier, nrgiAnswerSrvc, nrgiAssessmentSrvc, nrgiAnswerMethodSrvc, nrgiUserListSrvc, nrgiIdentitySrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
@@ -54,7 +54,7 @@ angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scop
                 value: answer.value
             };
             delete answer.value;
-            mgaAnswerMethodSrvc.updateAnswer(answer).then(function () {
+            nrgiAnswerMethodSrvc.updateAnswer(answer).then(function () {
                 nrgiNotifier.notify('Answer saved');
                 //$route.reload();
             }, function (reason) {

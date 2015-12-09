@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, nrgiIdentitySrvc, nrgiNotifier, nrgiAssessmentSrvc, mgaAssessmentMethodSrvc, nrgiUserListSrvc, nrgiIntervieweeSrvc, nrgiAnswerSrvc) {
+angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, nrgiIdentitySrvc, nrgiNotifier, nrgiAssessmentSrvc, nrgiAssessmentMethodSrvc, nrgiUserListSrvc, nrgiIntervieweeSrvc, nrgiAnswerSrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
@@ -257,7 +257,7 @@ angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($sco
             question_mode: 'interview'
         }, function (answers) {
             new_assessment_data.question_set_length = answers.length;
-            mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
+            nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
                 nrgiNotifier.notify('Assessment submited');
                 $route.reload();
                 //$location.path('/admin/assessment-admin');

@@ -1,7 +1,7 @@
 'use strict';
 var angular;
 
-angular.module('app').controller('nrgiContactTechCtrl', function ($scope, $location, nrgiNotifier, mgaContactMethodSrvc) {
+angular.module('app').controller('nrgiContactTechCtrl', function ($scope, $location, nrgiNotifier, nrgiContactMethodSrvc) {
 
     $scope.request = {tool: 'rgi'}
 
@@ -46,7 +46,7 @@ angular.module('app').controller('nrgiContactTechCtrl', function ($scope, $locat
     $scope.sendRequest = function() {
         var contactInfo = $scope.request;
 
-        mgaContactMethodSrvc.contact(contactInfo).then(function () {
+        nrgiContactMethodSrvc.contact(contactInfo).then(function () {
             nrgiNotifier.notify('Request sent.');
             $location.path('/');
         }, function (reason) {
