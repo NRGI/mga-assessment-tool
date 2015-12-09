@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('mgaDocumentAdminCtrl', function ($scope, mgaDocumentSrvc, mgaUserListSrvc) {
+angular.module('app').controller('nrgiDocumentAdminCtrl', function ($scope, mgaDocumentSrvc, mgaUserListSrvc) {
     // filtering options
     $scope.sortOptions = [
         {value: 'title', text: 'Sort by document title'},

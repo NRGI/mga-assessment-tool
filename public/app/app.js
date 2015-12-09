@@ -93,11 +93,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // DOCUMENTS
         .when('/admin/documents-admin', {
             templateUrl: '/partials/admin/documents/document-admin',
-            controller: 'mgaDocumentAdminCtrl'
+            controller: 'nrgiDocumentAdminCtrl'
         })
         .when('/admin/documents-admin/:document_ID', {
             templateUrl: '/partials/admin/documents/document-admin-detail',
-            controller: 'mgaDocumentAdminDetailCtrl'
+            controller: 'nrgiDocumentAdminDetailCtrl'
         })
         // INTERVIEWEES
         .when('/admin/interviewees-admin', {

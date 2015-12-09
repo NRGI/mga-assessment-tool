@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('mgaDocumentAdminDetailCtrl', function ($scope, $routeParams, ngDialog, mgaDocumentSrvc, mgaUserListSrvc) {
+angular.module('app').controller('nrgiDocumentAdminDetailCtrl', function ($scope, $routeParams, ngDialog, mgaDocumentSrvc, mgaUserListSrvc) {
     mgaDocumentSrvc.get({_id: $routeParams.document_ID}, function (document) {
 
         $scope.user_list = [];
