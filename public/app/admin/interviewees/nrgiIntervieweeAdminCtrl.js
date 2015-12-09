@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('mgaIntervieweeAdminCtrl', function ($scope, mgaIntervieweeSrvc) {
+angular.module('app').controller('nrgiIntervieweeAdminCtrl', function ($scope, mgaIntervieweeSrvc) {
     // filtering options
     $scope.sortOptions = [
         {value: 'lastName', text: 'Sort by last name'},

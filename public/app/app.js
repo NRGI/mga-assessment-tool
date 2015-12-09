@@ -102,11 +102,11 @@ angular.module('app').config(function ($routeProvider, $locationProvider) {
         // INTERVIEWEES
         .when('/admin/interviewees-admin', {
             templateUrl: '/partials/admin/interviewees/interviewee-admin',
-            controller: 'mgaIntervieweeAdminCtrl'
+            controller: 'nrgiIntervieweeAdminCtrl'
         })
         .when('/admin/interviewees-admin/:interviewee_ID', {
             templateUrl: '/partials/admin/interviewees/interviewee-admin-detail',
-            controller: 'mgaIntervieweeAdminDetailCtrl'
+            controller: 'nrgiIntervieweeAdminDetailCtrl'
         });
 
     // .when('/admin/assessment-admin/subs/:version', {

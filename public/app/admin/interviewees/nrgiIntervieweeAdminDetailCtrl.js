@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('mgaIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, mgaNotifier, mgaUserListSrvc, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, mgaNotifier, mgaUserListSrvc, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
     //mgaAssessmentSrvc.query({}, function (assessments) {
     //    mgaIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
     //        $scope.interviewee = interviewee;
