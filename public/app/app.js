@@ -103,19 +103,19 @@ angular.module('app')
             })
             // ANSWERS
             .when('/admin/assessments-admin/interviews/:assessment_ID', {
-                templateUrl: '/partials/admin/answers/interviews-list',
+                templateUrl: '/partials/answers/interviews-list',
                 controller: 'nrgiInterviewsListCtrl'
             })
             .when('/admin/assessments-admin/desk-research/:assessment_ID', {
-                templateUrl: '/partials/admin/answers/desk-research-list',
+                templateUrl: '/partials/answers/desk-research-list',
                 controller: 'nrgiDeskResearchListCtrl'
             })
             .when('/admin/assessments-admin/secondary-sources/:assessment_ID', {
-                templateUrl: '/partials/admin/answers/secondary-sources-list',
+                templateUrl: '/partials/answers/secondary-sources-list',
                 controller: 'nrgiSecondarySourcesListCtrl'
             })
             .when('/admin/assessments-admin/answer/:answer_ID', {
-                templateUrl: '/partials/admin/answers/answer-page-edit',
+                templateUrl: '/partials/answers/answer-page-edit',
                 controller: 'nrgiAnswerCtrl'
             })
             // DOCUMENTS
