@@ -5,21 +5,21 @@ var describe, beforeEach, afterEach, it, inject, expect, sinon;
 describe('mgaNavBarLoginCtrl', function () {
     beforeEach(module('app'));
 
-    var $scope, $location, mgaAuthSrvc, mgaAssessmentSrvc, mgaNotifier;
-    var mgaNotifierNotifyStub, mgaNotifierErrorStub, mgaNotifierNotifySpy, mgaNotifierErrorSpy;
+    var $scope, $location, mgaAuthSrvc, mgaAssessmentSrvc, nrgiNotifier;
+    var nrgiNotifierNotifyStub, nrgiNotifierErrorStub, nrgiNotifierNotifySpy, nrgiNotifierErrorSpy;
 
     beforeEach(inject(
-        function ($rootScope, $controller, _$location_, _mgaAssessmentSrvc_, _mgaAuthSrvc_, _mgaNotifier_) {
+        function ($rootScope, $controller, _$location_, _mgaAssessmentSrvc_, _mgaAuthSrvc_, _nrgiNotifier_) {
             $scope = $rootScope.$new();
             $location = _$location_;
             mgaAssessmentSrvc = _mgaAssessmentSrvc_;
             mgaAuthSrvc = _mgaAuthSrvc_;
-            mgaNotifier = _mgaNotifier_;
+            nrgiNotifier = _nrgiNotifier_;
 
-            mgaNotifierNotifySpy = sinon.spy();
-            mgaNotifierErrorSpy = sinon.spy();
-            mgaNotifierNotifyStub = sinon.stub(mgaNotifier, 'notify', mgaNotifierNotifySpy);
-            mgaNotifierErrorStub = sinon.stub(mgaNotifier, 'error', mgaNotifierErrorSpy);
+            nrgiNotifierNotifySpy = sinon.spy();
+            nrgiNotifierErrorSpy = sinon.spy();
+            nrgiNotifierNotifyStub = sinon.stub(nrgiNotifier, 'notify', nrgiNotifierNotifySpy);
+            nrgiNotifierErrorStub = sinon.stub(nrgiNotifier, 'error', nrgiNotifierErrorSpy);
 
             $controller('mgaNavBarLoginCtrl', {$scope: $scope});
         }
@@ -44,7 +44,7 @@ describe('mgaNavBarLoginCtrl', function () {
         });
 
         it('shows a notification message', function () {
-            mgaNotifierNotifySpy.withArgs('You have successfully signed out!').called.should.be.equal(true);
+            nrgiNotifierNotifySpy.withArgs('You have successfully signed out!').called.should.be.equal(true);
         });
         //TODO Fix test
         it('resets the username & password', function () {
@@ -81,7 +81,7 @@ describe('mgaNavBarLoginCtrl', function () {
             });
 
             it('shows a notification message', function () {
-                mgaNotifierErrorSpy.withArgs('Username/Password combination incorrect').called.should.be.equal(true);
+                nrgiNotifierErrorSpy.withArgs('Username/Password combination incorrect').called.should.be.equal(true);
             });
             //TODO Fix test
             //it('clears the version list', function () {
@@ -104,7 +104,7 @@ describe('mgaNavBarLoginCtrl', function () {
          //    });
          //
          //    it('shows a notification message', function () {
-         //        mgaNotifierNotifySpy.withArgs('You have successfully signed in!').called.should.be.equal(true);
+         //        nrgiNotifierNotifySpy.withArgs('You have successfully signed in!').called.should.be.equal(true);
          //    });
          //
          //    it('fills the version list', function () {
@@ -135,6 +135,6 @@ describe('mgaNavBarLoginCtrl', function () {
     });
 
     afterEach(function () {
-        mgaNotifierNotifyStub.restore();
+        nrgiNotifierNotifyStub.restore();
     });
 });

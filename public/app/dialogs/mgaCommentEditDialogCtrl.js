@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaCommentEditDialogCtrl', function ($scope, $route, ngDialog, mgaNotifier, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaCommentEditDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc) {
     console.log($scope.$parent.comment);
     $scope.comment_content = $scope.$parent.comment.content;
     $scope.saveComment = function () {
@@ -11,17 +11,17 @@ angular.module('app').controller('mgaCommentEditDialogCtrl', function ($scope, $
             index = $scope.$parent.index,
             answer_ID = $scope.$parent.answer.answer_ID;
         if (new_comment_data.content === $scope.comment_content) {
-            mgaNotifier.error('Do you have edits to submit?')
+            nrgiNotifier.error('Do you have edits to submit?')
         } else {
             new_answer_data.comments[index].content = $scope.comment_content;
 
             mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
                 .then(function () {
-                    mgaNotifier.notify('Comment edited');
+                    nrgiNotifier.notify('Comment edited');
                     $scope.closeThisDialog();
                     $route.reload();
                 }, function (reason) {
-                    mgaNotifier.notify(reason);
+                    nrgiNotifier.notify(reason);
                 });
         }
     };

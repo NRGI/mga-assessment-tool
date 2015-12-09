@@ -5,7 +5,7 @@ var describe, beforeEach, afterEach, it, inject, expect, sinon;
 describe('mgaProfileCtrl', function () {
     beforeEach(module('app'));
 
-    var $scope, mgaIdentitySrvc, mgaUserMethodSrvc, mgaNotifier;
+    var $scope, mgaIdentitySrvc, mgaUserMethodSrvc, nrgiNotifier;
     var currentUserBackUp;
     //
     var dummyCurrentUser = {
@@ -17,11 +17,11 @@ describe('mgaProfileCtrl', function () {
     };
 
     beforeEach(inject(
-        function ($rootScope, $controller, _mgaIdentitySrvc_, _mgaUserMethodSrvc_, _mgaNotifier_) {
+        function ($rootScope, $controller, _mgaIdentitySrvc_, _mgaUserMethodSrvc_, _nrgiNotifier_) {
             $scope = $rootScope.$new();
             mgaIdentitySrvc = _mgaIdentitySrvc_;
             mgaUserMethodSrvc = _mgaUserMethodSrvc_;
-            mgaNotifier = _mgaNotifier_;
+            nrgiNotifier = _nrgiNotifier_;
 
             currentUserBackUp = mgaIdentitySrvc.currentUser;
             mgaIdentitySrvc.currentUser = dummyCurrentUser;
@@ -47,7 +47,7 @@ describe('mgaProfileCtrl', function () {
             $scope.last_name = 'UPDATED LAST NAME';
             $scope.email = 'UPDATED EMAIL';
             $scope.password = null;
-            notifierMock = sinon.mock(mgaNotifier);
+            notifierMock = sinon.mock(nrgiNotifier);
         });
 
         describe('POSITIVE CASE', function () {

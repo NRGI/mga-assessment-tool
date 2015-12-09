@@ -1,7 +1,7 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('nrgiCreateUserCtrl', function ($scope, $location, mgaNotifier, mgaUserMethodSrvc) {
+angular.module('app').controller('nrgiCreateUserCtrl', function ($scope, $location, nrgiNotifier, mgaUserMethodSrvc) {
     $scope.roleOptions = [
         // {value: 'admin', text: 'Administrator'},
         {value: 'supervisor', text: 'Supervisor'},
@@ -12,7 +12,7 @@ angular.module('app').controller('nrgiCreateUserCtrl', function ($scope, $locati
   // fix submit button functionality
     $scope.userCreate = function () {
         if ($scope.password !== $scope.password_repeat) {
-            mgaNotifier.error('Passwords must match!')
+            nrgiNotifier.error('Passwords must match!')
         } else {
             var new_user_data = {
                 firstName: $scope.first_name,
@@ -26,10 +26,10 @@ angular.module('app').controller('nrgiCreateUserCtrl', function ($scope, $locati
 
             mgaUserMethodSrvc.createUser(new_user_data).then(function () {
                 // mgaMailer.send($scope.email);
-                mgaNotifier.notify('User account created!' + $scope.email);
+                nrgiNotifier.notify('User account created!' + $scope.email);
                 $location.path('/admin/user-admin');
             }, function (reason) {
-                mgaNotifier.error(reason);
+                nrgiNotifier.error(reason);
             });
         }
     };

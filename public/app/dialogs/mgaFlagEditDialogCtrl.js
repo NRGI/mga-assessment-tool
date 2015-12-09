@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaFlagEditDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaFlagEditDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc) {
     $scope.flag_content = $scope.$parent.flag.content;
 
     $scope.saveFlag = function () {
@@ -10,17 +10,17 @@ angular.module('app').controller('mgaFlagEditDialogCtrl', function ($scope, $loc
             new_flag_data = $scope.$parent.flag,
             index = $scope.$parent.index;
         if (new_flag_data.content === $scope.flag_content) {
-            mgaNotifier.error('Do you have edits to submit?')
+            nrgiNotifier.error('Do you have edits to submit?')
         } else {
             new_answer_data.flags[index].content = $scope.flag_content;
 
             mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
                 .then(function () {
-                    mgaNotifier.notify('Flag edited');
+                    nrgiNotifier.notify('Flag edited');
                     $scope.closeThisDialog();
                     $route.reload();
                 }, function (reason) {
-                    mgaNotifier.notify(reason);
+                    nrgiNotifier.notify(reason);
                 });
         }
     };

@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, mgaNotifier, mgaUserListSrvc, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, nrgiNotifier, mgaUserListSrvc, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
     //mgaAssessmentSrvc.query({}, function (assessments) {
     //    mgaIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
     //        $scope.interviewee = interviewee;
@@ -53,16 +53,16 @@ angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($sc
 
     $scope.addAssessment = function () {
         if ($scope.add_assessment === undefined) {
-            mgaNotifier.error('You must select an assessment from the dropdown!');
+            nrgiNotifier.error('You must select an assessment from the dropdown!');
         } else {
             var new_interviewee_data = $scope.interviewee;
             if (new_interviewee_data.assessments.indexOf($scope.add_assessment) < 0) {
                 new_interviewee_data.assessments.push($scope.add_assessment);
                 mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data).then(function () {
-                    mgaNotifier.notify('Interviewee updated');
+                    nrgiNotifier.notify('Interviewee updated');
                     $route.reload();
                 }, function (reason) {
-                    mgaNotifier.notify(reason);
+                    nrgiNotifier.notify(reason);
                 });
             }
         }

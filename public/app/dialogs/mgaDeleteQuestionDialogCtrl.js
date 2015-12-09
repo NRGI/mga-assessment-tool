@@ -2,16 +2,16 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaDeleteQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaQuestionMethodSrvc, mgaNotifier) {
+angular.module('app').controller('mgaDeleteQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaQuestionMethodSrvc, nrgiNotifier) {
     $scope.questionDelete = function () {
         var question_deletion = $scope.$parent.question._id;
 
         mgaQuestionMethodSrvc.deleteQuestion(question_deletion).then(function () {
             $scope.closeThisDialog();
             $location.path('/admin/question-admin');
-            mgaNotifier.notify('Question has been deleted');
+            nrgiNotifier.notify('Question has been deleted');
         }, function (reason) {
-            mgaNotifier.error(reason);
+            nrgiNotifier.error(reason);
         });
     };
 

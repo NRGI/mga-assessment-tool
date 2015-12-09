@@ -2,7 +2,7 @@
 //var angular;
 /*jslint true*/
 
-angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, mgaNotifier, mgaQuestionMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, mgaQuestionMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
 
     $scope.question = mgaQuestionSrvc.get({_id: $routeParams.id});
     $scope.current_user = mgaIdentitySrvc.currentUser;
@@ -113,9 +113,9 @@ angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope
 
         mgaQuestionMethodSrvc.updateQuestion(new_question_data).then(function () {
             $location.path('/admin/question-admin');
-            mgaNotifier.notify('Question data has been updated');
+            nrgiNotifier.notify('Question data has been updated');
         }, function (reason) {
-            mgaNotifier.error(reason);
+            nrgiNotifier.error(reason);
         });
     };
     $scope.deleteConfirmDialog = function () {
@@ -143,9 +143,9 @@ angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope
         new_question_data.comments.push(new_comment_data);
 
         mgaQuestionMethodSrvc.updateQuestion(new_question_data).then(function () {
-            mgaNotifier.notify('Comment added');
+            nrgiNotifier.notify('Comment added');
         }, function (reason) {
-            mgaNotifier.notify(reason);
+            nrgiNotifier.notify(reason);
         });
     };
 });

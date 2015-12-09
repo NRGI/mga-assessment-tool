@@ -1,5 +1,5 @@
 'use strict';
-angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scope, $route, $routeParams, mgaNotifier, mgaAnswerSrvc, mgaAssessmentSrvc, mgaAnswerMethodSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scope, $route, $routeParams, nrgiNotifier, mgaAnswerSrvc, mgaAssessmentSrvc, mgaAnswerMethodSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
@@ -45,7 +45,7 @@ angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scop
         console.log(answer.value);
 
         if (typeof answer.value !== 'number') {
-            mgaNotifier.error('You must enter a number!');
+            nrgiNotifier.error('You must enter a number!');
         } else {
             if (answer.status === 'created') {
                 answer.status = 'submitted';
@@ -55,10 +55,10 @@ angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scop
             };
             delete answer.value;
             mgaAnswerMethodSrvc.updateAnswer(answer).then(function () {
-                mgaNotifier.notify('Answer saved');
+                nrgiNotifier.notify('Answer saved');
                 //$route.reload();
             }, function (reason) {
-                mgaNotifier.notify(reason);
+                nrgiNotifier.notify(reason);
             });
         }
     };

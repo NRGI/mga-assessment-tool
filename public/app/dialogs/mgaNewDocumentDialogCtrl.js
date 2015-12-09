@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, $route, ngDialog, mgaNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
     $scope.new_document = $scope.$parent.new_document;
 
     if ($scope.new_document.status === 'created') {
@@ -28,7 +28,7 @@ angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, $
 
     $scope.documentRefSubmit = function (new_document) {
         if ($scope.new_document.authors[0].first_name === "" || $scope.new_document.authors[0].last_name === "" || !$scope.new_document.title || !$scope.new_document.type) {
-            mgaNotifier.error('You must provide at least a title, author and publication type!')
+            nrgiNotifier.error('You must provide at least a title, author and publication type!')
         } else {
             var assessment_ID = $scope.$parent.assessment.assessment_ID,
                 question_ID = $scope.$parent.question._id,
@@ -88,10 +88,10 @@ angular.module('app').controller('mgaNewDocumentDialogCtrl', function ($scope, $
                 .then(mgaDocumentMethodSrvc.updateDocument(new_doc_data))
                 .then(function () {
                     $scope.closeThisDialog();
-                    mgaNotifier.notify('reference added');
+                    nrgiNotifier.notify('reference added');
                     $route.reload();
                 }, function (reason) {
-                    mgaNotifier.error(reason);
+                    nrgiNotifier.error(reason);
                 });
         }
     };

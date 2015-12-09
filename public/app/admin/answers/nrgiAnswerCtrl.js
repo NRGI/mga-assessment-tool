@@ -22,7 +22,7 @@ function flagCheck(flags) {
     return disabled;
 };
 
-angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, mgaNotifier, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, nrgiNotifier, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
     $scope.identity = mgaIdentitySrvc;
     $scope.ref_type = [
         {text: 'Add Document', value: 'document'},
@@ -169,9 +169,9 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
         mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
             .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
-                mgaNotifier.notify('Answer saved');
+                nrgiNotifier.notify('Answer saved');
             }, function (reason) {
-                mgaNotifier.notify(reason);
+                nrgiNotifier.notify(reason);
             });
     };
 
@@ -181,12 +181,12 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
             flag_check = flagCheck(new_answer_data.flags);
 
         if (flag_check === true) {
-            mgaNotifier.error('You can only approve an answer when all flags have been dealt with!')
+            nrgiNotifier.error('You can only approve an answer when all flags have been dealt with!')
         } else if (new_answer_data.question_mode === 'desk_research') {
             if (new_answer_data.answer_text === '') {
-                mgaNotifier.error('You must provde justification text to be able to submit this answer! Please save until you are ready.');
+                nrgiNotifier.error('You must provde justification text to be able to submit this answer! Please save until you are ready.');
             } else if (new_answer_data.question_data_type === 'score' && !new_answer_data.answer_score) {
-                mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
+                nrgiNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
             } else {
                 if (new_answer_data.status === 'saved' || new_answer_data.status === 'created') {
                     new_answer_data.status = 'approved';
@@ -210,15 +210,15 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
                         } else {
                             $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_flow_order + 1), 3)));
                         }
-                        mgaNotifier.notify('Answer approved');
+                        nrgiNotifier.notify('Answer approved');
                     }, function (reason) {
-                        mgaNotifier.notify(reason);
+                        nrgiNotifier.notify(reason);
                     });
             }
 
         } else if (new_answer_data.question_mode === 'interview') {
             if (new_answer_data.interview_score.length < 1) {
-                mgaNotifier.error('You must submite at least one supporting interview to approve!');
+                nrgiNotifier.error('You must submite at least one supporting interview to approve!');
             } else {
                 if (new_answer_data.status === 'saved' || new_answer_data.status === 'created') {
                     new_answer_data.status = 'approved';
@@ -240,9 +240,9 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
                         } else {
                             $location.path('/admin/assessments-admin/answer/' + new_answer_data.assessment_ID + "-" + String(zeroFill((new_answer_data.question_flow_order + 1), 3)));
                         }
-                        mgaNotifier.notify('Answer approved');
+                        nrgiNotifier.notify('Answer approved');
                     }, function (reason) {
-                        mgaNotifier.notify(reason);
+                        nrgiNotifier.notify(reason);
                     });
             }
         }
@@ -254,11 +254,11 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
             new_assessment_data = $scope.assessment;
 
         if (!$scope.new_interview_answer.interviewee_ID) {
-            mgaNotifier.error('You must select and interview subject from the dropdown or add a new subject!');
+            nrgiNotifier.error('You must select and interview subject from the dropdown or add a new subject!');
         } else if (!$scope.new_interview_answer.interview_text) {
-            mgaNotifier.error('You must provide a text transcript of the interview answer! Please save until you are ready.');
+            nrgiNotifier.error('You must provide a text transcript of the interview answer! Please save until you are ready.');
         } else if (!$scope.new_interview_answer.score) {
-            mgaNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
+            nrgiNotifier.error('You must provde a score to be able to submit this answer! Please save until you are ready.');
 
         } else {
             if (new_answer_data.status !== 'flagged' || new_answer_data.status !== 'approved') {
@@ -290,10 +290,10 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
                     .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
                     .then(mgaIntervieweeMethodSrvc.updateInterviewee(new_interviewee_data))
                     .then(function () {
-                        mgaNotifier.notify('Interview submitted');
+                        nrgiNotifier.notify('Interview submitted');
                         $route.reload();
                     }, function (reason) {
-                        mgaNotifier.notify(reason);
+                        nrgiNotifier.notify(reason);
                     });
 
             });
@@ -327,10 +327,10 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
         }
 
         mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
-            mgaNotifier.notify('Comment added');
+            nrgiNotifier.notify('Comment added');
             $scope.answer.new_comment = undefined;
         }, function (reason) {
-            mgaNotifier.notify(reason);
+            nrgiNotifier.notify(reason);
         });
     };
 

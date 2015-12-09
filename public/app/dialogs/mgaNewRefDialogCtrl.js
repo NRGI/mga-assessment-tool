@@ -2,7 +2,7 @@
 //var angular;
 
 //angular.module('app').controller('rgiNewRefDialogCtrl', function ($scope, $route, ngDialog, rgiNotifier, rgiDocumentSrvc, rgiDocumentMethodSrvc, rgiAnswerMethodSrvc) {
-angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route, $http, ngDialog, mgaNotifier, FileUploader, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route, $http, ngDialog, nrgiNotifier, FileUploader, mgaAnswerMethodSrvc) {
     $scope.answer_update = $scope.$parent.answer;
     ////TODO REPLACE WITH EXISITING REFERENCE SET
     //$scope.existing_ref = [
@@ -78,7 +78,7 @@ angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route
             url, access_date;
 
         if(!new_answer_data.web_ref_url || !new_answer_data.web_ref_title) {
-            mgaNotifier.error('You must enter a title and a url!')
+            nrgiNotifier.error('You must enter a title and a url!')
         } else {
             if (new_answer_data.web_ref_url.split('://')[0] === 'http' || new_answer_data.web_ref_url.split('://')[0] === 'https') {
                 url = new_answer_data.web_ref_url;
@@ -114,10 +114,10 @@ angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route
 
                     mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
                         $scope.closeThisDialog();
-                        mgaNotifier.notify('Reference added!');
+                        nrgiNotifier.notify('Reference added!');
                         $route.reload();
                     }, function (reason) {
-                        mgaNotifier.error(reason);
+                        nrgiNotifier.error(reason);
                     });
                 });
         }
@@ -131,13 +131,13 @@ angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route
 
 
         if (!new_answer_data.human_ref_first_name || !new_answer_data.human_ref_first_name) {
-            mgaNotifier.error('You must enter an interviewee first and last name!')
+            nrgiNotifier.error('You must enter an interviewee first and last name!')
         } else if (!new_answer_data.human_ref_email) {
-            mgaNotifier.error('You must enter a valid email address!')
+            nrgiNotifier.error('You must enter a valid email address!')
         } else {
             var email_domain = 'http://' + new_answer_data.human_ref_email.split('@')[1];
             if (email_domain === 'http://undefined') {
-                mgaNotifier.error('You must enter a valid email address!');
+                nrgiNotifier.error('You must enter a valid email address!');
             } else {
                 if(!new_answer_data.human_ref_contact_date) {
                     contact_date = $scope.date_default.toISOString();
@@ -166,10 +166,10 @@ angular.module('app').controller('mgaNewRefDialogCtrl', function ($scope, $route
 
                 mgaAnswerMethodSrvc.updateAnswer(new_answer_data).then(function () {
                     $scope.closeThisDialog();
-                    mgaNotifier.notify('Reference added!');
+                    nrgiNotifier.notify('Reference added!');
                     $route.reload();
                 }, function (reason) {
-                    mgaNotifier.error(reason);
+                    nrgiNotifier.error(reason);
                 });
             }
         }

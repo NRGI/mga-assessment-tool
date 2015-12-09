@@ -2,7 +2,7 @@
 //var angular;
 /*jslint newcap: true unparam: true*/
 
-angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $location, mgaNotifier, mgaIdentitySrvc, mgaAuthSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $location, nrgiNotifier, mgaIdentitySrvc, mgaAuthSrvc, mgaAssessmentSrvc) {
     var url_array;
     // assign the identity resource with the current identity using identity service
     $scope.identity = mgaIdentitySrvc;
@@ -66,10 +66,10 @@ angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $locat
                         }
                     });
                 }
-                mgaNotifier.notify('You have successfully signed in!');
+                nrgiNotifier.notify('You have successfully signed in!');
                 $location.path('/');
             } else {
-                mgaNotifier.error('Username/Password combination incorrect');
+                nrgiNotifier.error('Username/Password combination incorrect');
             }
         });
     };
@@ -79,7 +79,7 @@ angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $locat
             $scope.username = "";
             $scope.password = "";
             $scope.assessment_links = [];
-            mgaNotifier.notify('You have successfully signed out!');
+            nrgiNotifier.notify('You have successfully signed out!');
             $location.path('/');
         });
     };

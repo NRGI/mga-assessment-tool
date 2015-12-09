@@ -1,7 +1,7 @@
 'use strict';
 var angular;
 
-angular.module('app').controller('mgaContactTechCtrl', function ($scope, $location, mgaNotifier, mgaContactMethodSrvc) {
+angular.module('app').controller('mgaContactTechCtrl', function ($scope, $location, nrgiNotifier, mgaContactMethodSrvc) {
 
     $scope.request = {tool: 'rgi'}
 
@@ -47,10 +47,10 @@ angular.module('app').controller('mgaContactTechCtrl', function ($scope, $locati
         var contactInfo = $scope.request;
 
         mgaContactMethodSrvc.contact(contactInfo).then(function () {
-            mgaNotifier.notify('Request sent.');
+            nrgiNotifier.notify('Request sent.');
             $location.path('/');
         }, function (reason) {
-            mgaNotifier.error(reason);
+            nrgiNotifier.error(reason);
         });
     };
 

@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $route, $location, mgaNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope, $route, $location, nrgiNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
 
     function zeroFill(number, width) {
         width -= number.toString().length;
@@ -39,7 +39,7 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
     };
     $scope.assessmentDeploy = function () {
         if ($scope.assessments.indexOf($scope.new_assessment.assessment_country.iso2 + '-' + String($scope.new_assessment.year)) > -1) {
-            mgaNotifier.error('Assessment already exists!');
+            nrgiNotifier.error('Assessment already exists!');
         } else {
             var new_assessment_data = [],
                 new_answer_data = [],
@@ -158,13 +158,13 @@ angular.module('app').controller('mgaNewAssessmentDialogCtrl', function ($scope,
                 mgaAssessmentMethodSrvc.createAssessment(new_assessment_data)
                     .then(mgaAnswerMethodSrvc.insertAnswerSet(new_answer_data))
                     .then(function () {
-                        mgaNotifier.notify('Assessment deployed!');
+                        nrgiNotifier.notify('Assessment deployed!');
                         new_assessment_data = undefined;
                         new_answer_data = undefined;
                         $scope.closeThisDialog();
                         $route.reload();
                     }, function (reason) {
-                        mgaNotifier.error(reason);
+                        nrgiNotifier.error(reason);
                     });
 
             });

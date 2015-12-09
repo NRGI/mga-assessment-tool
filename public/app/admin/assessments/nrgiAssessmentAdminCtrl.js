@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location, $routeParams, $scope, mgaNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaAnswerSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc) {
+angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location, $routeParams, $scope, nrgiNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaAnswerSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc) {
     var assessment;
     // filtering options
     $scope.sortOptions = [
@@ -84,9 +84,9 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
             new_assessment_data.status = 'started';
             mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
                 $location.path('/admin/assessments-admin/answer/' + assessment_ID + '-001');
-                mgaNotifier.notify('Assessment review started!');
+                nrgiNotifier.notify('Assessment review started!');
             }, function (reason) {
-                mgaNotifier.error(reason);
+                nrgiNotifier.error(reason);
             });
         });
     };

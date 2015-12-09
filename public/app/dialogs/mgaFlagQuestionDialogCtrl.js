@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, mgaNotifier, mgaAnswerMethodSrvc, mgaAssessmentMethodSrvc) {
+angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, $location, ngDialog, nrgiNotifier, mgaAnswerMethodSrvc, mgaAssessmentMethodSrvc) {
 
     $scope.saveFlag = function () {
         var new_answer_data = $scope.$parent.answer,
@@ -32,12 +32,12 @@ angular.module('app').controller('mgaFlagQuestionDialogCtrl', function ($scope, 
         mgaAnswerMethodSrvc.updateAnswer(new_answer_data)
             .then(mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data))
             .then(function () {
-                mgaNotifier.notify('Answer flagged');
+                nrgiNotifier.notify('Answer flagged');
                 new_assessment_data = undefined;
                 $scope.closeThisDialog();
                 $location.path('/admin/assessments-admin/answer/' + answer_ID);
             }, function (reason) {
-                mgaNotifier.notify(reason);
+                nrgiNotifier.notify(reason);
             });
     };
 

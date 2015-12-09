@@ -1,15 +1,15 @@
 'use strict';
 //var angular, toastr;
-angular.module('app').value('mgaToastr', toastr);
+angular.module('app').value('nrgiToastr', toastr);
 
-angular.module('app').factory('mgaNotifier', function (mgaToastr) {
+angular.module('app').factory('nrgiNotifier', function (nrgiToastr) {
     return {
         notify: function (msg) {
-            mgaToastr.success(msg);
+            nrgiToastr.success(msg);
             console.log(msg);
         },
         error: function (msg) {
-            mgaToastr.error(msg);
+            nrgiToastr.error(msg);
             console.log(msg);
         }
     };
