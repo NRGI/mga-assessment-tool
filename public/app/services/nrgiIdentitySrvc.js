@@ -2,11 +2,11 @@
 var angular;
 /*jslint newcap: true */
 
-angular.module('app').factory('mgaIdentitySrvc', function ($window, mgaUserSrvc) {
+angular.module('app').factory('nrgiIdentitySrvc', function ($window, nrgiUserSrvc) {
     var currentUser;
     // bootstrapped object to keep session alive
     if (!!$window.bootstrappedUserObject) {
-        currentUser = new mgaUserSrvc();
+        currentUser = new nrgiUserSrvc();
         angular.extend(currentUser, $window.bootstrappedUserObject);
     }
     return {

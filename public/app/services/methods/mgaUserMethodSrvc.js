@@ -2,10 +2,10 @@
 /*jslint nomen: true newcap: true */
 //var angular;
 
-angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, mgaUserSrvc) {
+angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, nrgiUserSrvc) {
     return {
         createUser: function (new_user_data) {
-            var new_user = new mgaUserSrvc(new_user_data),
+            var new_user = new nrgiUserSrvc(new_user_data),
                 dfd = $q.defer();
 
             new_user.$save().then(function () {
@@ -17,7 +17,7 @@ angular.module('app').factory('mgaUserMethodSrvc', function ($http, $q, mgaUserS
         },
         deleteUser: function (user_deletion) {
             var dfd = $q.defer(),
-                delete_ID = new mgaUserSrvc();
+                delete_ID = new nrgiUserSrvc();
 
             delete_ID.id = user_deletion;
 

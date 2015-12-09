@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true unparam: true*/
 
-angular.module('app').controller('nrgiQuestionAdminCtrl', function ($scope, mgaQuestionSrvc, ngDialog) {
+angular.module('app').controller('nrgiQuestionAdminCtrl', function ($scope, nrgiQuestionSrvc, ngDialog) {
     // filtering options
     $scope.sort_options = [
         {value: "question_flow_order", text: "Sort by Question Flow Order"},
@@ -16,7 +16,7 @@ angular.module('app').controller('nrgiQuestionAdminCtrl', function ($scope, mgaQ
 
     $scope.sort_order = $scope.sort_options[0].value;
 
-    mgaQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
+    nrgiQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
 
         var question;
         $scope.questions = data;
@@ -46,7 +46,7 @@ angular.module('app').controller('nrgiQuestionAdminCtrl', function ($scope, mgaQ
         });
     });
 
-    // $scope.questions = mgaQuestionSrvc.query();
+    // $scope.questions = nrgiQuestionSrvc.query();
 
     $scope.newQuestionDialog = function () {
         $scope.value = true;

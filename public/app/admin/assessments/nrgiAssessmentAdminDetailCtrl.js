@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, nrgiNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaIntervieweeSrvc, mgaAnswerSrvc) {
+angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($scope, $route, $routeParams, $location, nrgiIdentitySrvc, nrgiNotifier, nrgiAssessmentSrvc, mgaAssessmentMethodSrvc, nrgiUserListSrvc, nrgiIntervieweeSrvc, nrgiAnswerSrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
@@ -16,12 +16,12 @@ angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($sco
     $scope.sort_order = $scope.sort_options[0].value;
 
 
-    $scope.current_user = mgaIdentitySrvc.currentUser;
+    $scope.current_user = nrgiIdentitySrvc.currentUser;
 
     // pull assessment data and add
-    mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
+    nrgiAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
         $scope.answer_list = [];
-        mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
+        nrgiAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
 
             $scope.getArray = [{
                 question_order: 'question_order',
@@ -44,10 +44,10 @@ angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($sco
                 interviewee_role: 'interviewee_role'
             }];
 
-            $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
+            $scope.edited_by = nrgiUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
             $scope.user_list = [];
             data.users.forEach(function (el) {
-                var u = mgaUserListSrvc.get({_id: el});
+                var u = nrgiUserListSrvc.get({_id: el});
                 $scope.user_list.push(u);
             });
             answers.forEach(function (el) {
@@ -66,7 +66,7 @@ angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($sco
                     case 'interview':
                         if (el.interview_score.length > 0) {
                             el.interview_score.forEach(function (interview) {
-                                mgaIntervieweeSrvc.get({_id: interview.interviewee_ID}, function (interviewee) {
+                                nrgiIntervieweeSrvc.get({_id: interview.interviewee_ID}, function (interviewee) {
 
                                     answer_row = {
                                         question_order: el.question_order,
@@ -243,7 +243,7 @@ angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($sco
         });
     });
     //$scope.createArray = function () {
-    //    mgaAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
+    //    nrgiAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
     //
     //    });
     //};
@@ -252,7 +252,7 @@ angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($sco
 
         new_assessment_data.status = 'interview';
         new_assessment_data.questions_complete = 0;
-        mgaAnswerSrvc.query({
+        nrgiAnswerSrvc.query({
             assessment_ID: $routeParams.assessment_ID,
             question_mode: 'interview'
         }, function (answers) {

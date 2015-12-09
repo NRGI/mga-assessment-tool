@@ -22,8 +22,8 @@ function flagCheck(flags) {
     return disabled;
 };
 
-angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, nrgiNotifier, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAnswerSrvc, mgaAnswerMethodSrvc, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
-    $scope.identity = mgaIdentitySrvc;
+angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, nrgiNotifier, nrgiIntervieweeSrvc, mgaIntervieweeMethodSrvc, nrgiAnswerSrvc, mgaAnswerMethodSrvc, nrgiAssessmentSrvc, mgaAssessmentMethodSrvc, nrgiDocumentSrvc, mgaDocumentMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
+    $scope.identity = nrgiIdentitySrvc;
     $scope.ref_type = [
         {text: 'Add Document', value: 'document'},
         {text: 'Add Webpage', value: 'webpage'},
@@ -60,17 +60,17 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
         $location.path('/admin/assessments-admin/answer/' + $scope.assessment.assessment_ID + "-" + String(zeroFill($scope.answer.question_order - 1, 3)));
     };
 
-    mgaAnswerSrvc.get({
+    nrgiAnswerSrvc.get({
         answer_ID: $routeParams.answer_ID,
         assessment_ID: $routeParams.answer_ID.substring(0, 2)
     }, function (answer) {
-        mgaDocumentSrvc.query({}, function (documents) {
-            mgaIntervieweeSrvc.query({assessments: answer.assessment_ID}, function (interviewees) {
+        nrgiDocumentSrvc.query({}, function (documents) {
+            nrgiIntervieweeSrvc.query({assessments: answer.assessment_ID}, function (interviewees) {
                 $scope.interviewees = interviewees;
                 $scope.answer = answer;
-                $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: answer.assessment_ID});
-                $scope.question = mgaQuestionSrvc.get({_id: answer.root_question_ID});
-                $scope.current_user = mgaIdentitySrvc.currentUser;
+                $scope.assessment = nrgiAssessmentSrvc.get({assessment_ID: answer.assessment_ID});
+                $scope.question = nrgiQuestionSrvc.get({_id: answer.root_question_ID});
+                $scope.current_user = nrgiIdentitySrvc.currentUser;
                 $scope.answer_start = angular.copy($scope.answer);
 
                 var document_selectors = [];
@@ -84,7 +84,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
 
                 var interview_scores = [];
                 answer.interview_score.forEach(function (el) {
-                    mgaIntervieweeSrvc.get({_id: el.interviewee_ID}, function (interviewee) {
+                    nrgiIntervieweeSrvc.get({_id: el.interviewee_ID}, function (interviewee) {
                         interview_scores.push({
                             interview_text: el.interview_text,
                             interview_date: el.interview_date,
@@ -98,7 +98,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
 
                 var citations = [];
                 answer.references.citation.forEach(function (el) {
-                    mgaDocumentSrvc.get({_id: el.document_ID}, function (doc) {
+                    nrgiDocumentSrvc.get({_id: el.document_ID}, function (doc) {
                         doc.comment = el.comment;
                         citations.push(doc);
                     });
@@ -265,7 +265,7 @@ angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $ro
                 new_answer_data.status = 'saved';
             }
 
-            mgaIntervieweeSrvc.get({_id: $scope.new_interview_answer.interviewee_ID}, function (new_interviewee_data) {
+            nrgiIntervieweeSrvc.get({_id: $scope.new_interview_answer.interviewee_ID}, function (new_interviewee_data) {
                 new_answer_data.interview_score.push({
                     interviewee_ID: $scope.new_interview_answer.interviewee_ID,
                     option_order: $scope.new_interview_answer.score.option_order,

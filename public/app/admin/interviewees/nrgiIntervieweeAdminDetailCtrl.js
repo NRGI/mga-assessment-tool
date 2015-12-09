@@ -2,9 +2,9 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, nrgiNotifier, mgaUserListSrvc, mgaIntervieweeSrvc, mgaIntervieweeMethodSrvc, mgaAssessmentSrvc) {
-    //mgaAssessmentSrvc.query({}, function (assessments) {
-    //    mgaIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
+angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($scope, $route, $routeParams, ngDialog, nrgiNotifier, nrgiUserListSrvc, nrgiIntervieweeSrvc, mgaIntervieweeMethodSrvc, nrgiAssessmentSrvc) {
+    //nrgiAssessmentSrvc.query({}, function (assessments) {
+    //    nrgiIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
     //        $scope.interviewee = interviewee;
     //        $scope.assessments = [];
     //        assessments.forEach(function (el) {
@@ -19,8 +19,8 @@ angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($sc
     //    });
     //
     //});
-    mgaAssessmentSrvc.query({}, function (assessments) {
-        mgaIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
+    nrgiAssessmentSrvc.query({}, function (assessments) {
+        nrgiIntervieweeSrvc.get({_id: $routeParams.interviewee_ID}, function (interviewee) {
             $scope.interviewee = interviewee;
             $scope.user_list = [];
             $scope.assessments = [];
@@ -33,7 +33,7 @@ angular.module('app').controller('nrgiIntervieweeAdminDetailCtrl', function ($sc
                 }
             });
             interviewee.users.forEach(function (el) {
-                mgaUserListSrvc.get({_id: el}, function (user) {
+                nrgiUserListSrvc.get({_id: el}, function (user) {
                     $scope.user_list.push(user);
                 });
             });

@@ -1,8 +1,8 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('nrgiUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
-// angular.module('app').controller('mgaUserAdminCtrl', function ($scope, mgaUserSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('nrgiUserAdminCtrl', function ($scope, nrgiUserSrvc, nrgiAssessmentSrvc) {
+// angular.module('app').controller('mgaUserAdminCtrl', function ($scope, nrgiUserSrvc, nrgiAssessmentSrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "firstName", text: "Sort by first name"},
@@ -15,12 +15,12 @@ angular.module('app').controller('nrgiUserAdminCtrl', function ($scope, mgaUserS
     $scope.sort_order = $scope.sort_options[1].value;
 
 
-    mgaUserSrvc.query({}, function (users) {
+    nrgiUserSrvc.query({}, function (users) {
         $scope.users = [];
         var u, a;
         for (u = users.length - 1; u >= 0; u -= 1) {
              for (a = users[u].assessments.length - 1; a >= 0; a -= 1) {
-                 users[u].assessments[a].details = mgaAssessmentSrvc.get({assessment_ID: users[u].assessments[a].assessment_ID});
+                 users[u].assessments[a].details = nrgiAssessmentSrvc.get({assessment_ID: users[u].assessments[a].assessment_ID});
              }
             $scope.users.push(users[u]);
         }

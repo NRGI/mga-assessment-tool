@@ -5,17 +5,17 @@ angular.module('app', ['ngResource', 'ngRoute', 'ngDialog', 'ng-form-group', 'ng
 angular.module('app').config(function ($routeProvider, $locationProvider) {
   // role checks
     var routeRoleChecks = {
-            supervisor: {auth: function (mgaAuthSrvc) {
-                return mgaAuthSrvc.authorizeCurrentUserForRoute('supervisor');
+            supervisor: {auth: function (nrgiAuthSrvc) {
+                return nrgiAuthSrvc.authorizeCurrentUserForRoute('supervisor');
             }},
-            researcher: {auth: function (mgaAuthSrvc) {
-                return mgaAuthSrvc.authorizeCurrentUserForRoute('researcher');
+            researcher: {auth: function (nrgiAuthSrvc) {
+                return nrgiAuthSrvc.authorizeCurrentUserForRoute('researcher');
             }},
-            reviewer: {auth: function (mgaAuthSrvc) {
-                return mgaAuthSrvc.authorizeCurrentUserForRoute('reviewer');
+            reviewer: {auth: function (nrgiAuthSrvc) {
+                return nrgiAuthSrvc.authorizeCurrentUserForRoute('reviewer');
             }},
-            user: {auth: function (mgaAuthSrvc) {
-                return mgaAuthSrvc.authorizeAuthenticatedUserForRoute();
+            user: {auth: function (nrgiAuthSrvc) {
+                return nrgiAuthSrvc.authorizeAuthenticatedUserForRoute();
             }}
         };
 

@@ -2,10 +2,10 @@
 //var angular;
 /*jslint true*/
 
-angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, mgaQuestionMethodSrvc, mgaQuestionSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, mgaQuestionMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
 
-    $scope.question = mgaQuestionSrvc.get({_id: $routeParams.id});
-    $scope.current_user = mgaIdentitySrvc.currentUser;
+    $scope.question = nrgiQuestionSrvc.get({_id: $routeParams.id});
+    $scope.current_user = nrgiIdentitySrvc.currentUser;
 
     $scope.mode_options = [
         {value: 'interview', text: 'Interview'},

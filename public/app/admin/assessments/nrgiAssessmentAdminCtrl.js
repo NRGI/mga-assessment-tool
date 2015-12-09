@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location, $routeParams, $scope, nrgiNotifier, ngDialog, mgaIdentitySrvc, mgaAssessmentSrvc, mgaAnswerSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc) {
+angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location, $routeParams, $scope, nrgiNotifier, ngDialog, nrgiIdentitySrvc, nrgiAssessmentSrvc, nrgiAnswerSrvc, mgaAssessmentMethodSrvc, nrgiUserListSrvc) {
     var assessment;
     // filtering options
     $scope.sortOptions = [
@@ -13,10 +13,10 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
     ];
     $scope.sortOrder = $scope.sortOptions[0].value;
 
-    $scope.identity = mgaIdentitySrvc;
+    $scope.identity = nrgiIdentitySrvc;
     $scope.assessments = [];
     if ($scope.identity.currentUser.role === 'supervisor') {
-        mgaAssessmentSrvc.query(function (data) {
+        nrgiAssessmentSrvc.query(function (data) {
             data.forEach(function (el) {
                 assessment = {
                     assessment_ID: el.assessment_ID,
@@ -32,12 +32,12 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
                 };
                 if (el.modified[0] !== undefined) {
                     assessment.modified = el.modified;
-                    assessment.edited_by = mgaUserListSrvc.get({_id: el.modified[el.modified.length - 1].modified_by});
+                    assessment.edited_by = nrgiUserListSrvc.get({_id: el.modified[el.modified.length - 1].modified_by});
                 }
 
                 if (el.users[0] !== undefined) {
                     el.users.forEach(function (element) {
-                        var insert_user = mgaUserListSrvc.get({_id: element});
+                        var insert_user = nrgiUserListSrvc.get({_id: element});
                         assessment.users.push(insert_user);
                     });
                 }
@@ -47,7 +47,7 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
         });
     } else {
         $scope.identity.currentUser.assessments.forEach(function (el) {
-            mgaAssessmentSrvc.get({
+            nrgiAssessmentSrvc.get({
                 assessment_ID: el.assessment_ID}, function (data) {
                 assessment = {
                     assessment_ID: data.assessment_ID,
@@ -63,12 +63,12 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
                 };
                 if (data.modified[0] !== undefined) {
                     assessment.modified = data.modified;
-                    assessment.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
+                    assessment.edited_by = nrgiUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
                 }
 
                 if (data.users[0] !== undefined) {
                     data.users.forEach(function (element) {
-                        var insert_user = mgaUserListSrvc.get({_id: element});
+                        var insert_user = nrgiUserListSrvc.get({_id: element});
                         assessment.users.push(insert_user);
                     });
                 }
@@ -79,7 +79,7 @@ angular.module('app').controller('nrgiAssessmentAdminCtrl', function ($location,
 
     $scope.assessmentStart = function (assessment_ID) {
         var timestamp = new Date().toISOString();
-        mgaAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
+        nrgiAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
             new_assessment_data.start_date = {started_by: $scope.identity.currentUser._id, date: timestamp};
             new_assessment_data.status = 'started';
             mgaAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {

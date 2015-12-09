@@ -2,7 +2,7 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope, $route, $location, nrgiNotifier, ngDialog, mgaAssessmentMethodSrvc, mgaQuestionSrvc, mgaCountrySrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope, $route, $location, nrgiNotifier, ngDialog, mgaAssessmentMethodSrvc, nrgiQuestionSrvc, nrgiCountrySrvc, mgaAnswerMethodSrvc) {
 
     function zeroFill(number, width) {
         width -= number.toString().length;
@@ -22,7 +22,7 @@ angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope
         year: "",
         assessment_country: {}
     };
-    $scope.countries = mgaCountrySrvc.query();
+    $scope.countries = nrgiCountrySrvc.query();
 
     var cur_year = new Date().getFullYear(),
         years = [],
@@ -47,7 +47,7 @@ angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope
                 desk_research_set_length = 0,
                 interview_set_length = 0;
 
-            mgaQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
+            nrgiQuestionSrvc.query({assessment_ID: 'base'}, function (data) {
 
                 data.forEach(function (el) {
                     new_answer_data.push({

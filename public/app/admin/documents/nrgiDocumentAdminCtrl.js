@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('nrgiDocumentAdminCtrl', function ($scope, mgaDocumentSrvc, mgaUserListSrvc) {
+angular.module('app').controller('nrgiDocumentAdminCtrl', function ($scope, nrgiDocumentSrvc, nrgiUserListSrvc) {
     // filtering options
     $scope.sortOptions = [
         {value: 'title', text: 'Sort by document title'},
@@ -12,11 +12,11 @@ angular.module('app').controller('nrgiDocumentAdminCtrl', function ($scope, mgaD
     $scope.sortOrder = $scope.sortOptions[0].value;
 
     $scope.documents = [];
-    mgaDocumentSrvc.query({}, function (documents) {
+    nrgiDocumentSrvc.query({}, function (documents) {
         documents.forEach(function (el) {
             el.user_list = [];
             el.users.forEach(function (element) {
-                mgaUserListSrvc.get({_id: element}, function (user) {
+                nrgiUserListSrvc.get({_id: element}, function (user) {
                     el.user_list.push(user);
                 });
             });

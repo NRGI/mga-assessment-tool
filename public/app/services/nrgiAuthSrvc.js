@@ -2,7 +2,7 @@
 //var angular;
 /*jslint newcap: true */
 
-angular.module('app').factory('mgaAuthSrvc', function ($http, $q, mgaIdentitySrvc, mgaUserSrvc) {
+angular.module('app').factory('nrgiAuthSrvc', function ($http, $q, nrgiIdentitySrvc, nrgiUserSrvc) {
     return {
         // AUTHENTICATION AND AUTHORIZATION
         //authentication
@@ -10,9 +10,9 @@ angular.module('app').factory('mgaAuthSrvc', function ($http, $q, mgaIdentitySrv
             var dfd = $q.defer();
             $http.post('/login', {username: username, password: password}).then(function (response) {
                 if (response.data.success) {
-                    var user = new mgaUserSrvc();
+                    var user = new nrgiUserSrvc();
                     angular.extend(user, response.data.user);
-                    mgaIdentitySrvc.currentUser = user;
+                    nrgiIdentitySrvc.currentUser = user;
                     dfd.resolve(true);
                 } else {
                     dfd.resolve(false);
@@ -24,26 +24,26 @@ angular.module('app').factory('mgaAuthSrvc', function ($http, $q, mgaIdentitySrv
         logoutUser: function () {
             var dfd = $q.defer();
             $http.post('/logout', {logout: true}).then(function () {
-                mgaIdentitySrvc.currentUser = undefined;
+                nrgiIdentitySrvc.currentUser = undefined;
                 dfd.resolve();
             });
             return dfd.promise;
         },
         //authorize for specific route based on role
         authorizeCurrentUserForRoute: function (role) {
-            if (mgaIdentitySrvc.isAuthorized(role)) {
+            if (nrgiIdentitySrvc.isAuthorized(role)) {
                 return true;
             }
-            if (!mgaIdentitySrvc.isAuthorized(role)) {
+            if (!nrgiIdentitySrvc.isAuthorized(role)) {
                 return $q.reject('not authorized');
             }
         },
         //limit route to authenticated users
         authorizeAuthenticatedUserForRoute: function () {
-            if (mgaIdentitySrvc.isAuthenticated()) {
+            if (nrgiIdentitySrvc.isAuthenticated()) {
                 return true;
             }
-            if (!mgaIdentitySrvc.isAuthenticated()) {
+            if (!nrgiIdentitySrvc.isAuthenticated()) {
                 return $q.reject('not authorized');
             }
         }

@@ -2,9 +2,9 @@
 /*jslint unparam: true nomen: true*/
 //var angular;
 
-angular.module('app').controller('nrgiAssignAssessmentDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserSrvc, mgaUserMethodSrvc) {
-    mgaUserSrvc.query({}, function (data) {
-        $scope.assessment = mgaAssessmentSrvc.get({assessment_ID: $scope.$parent.assessment_ID});
+angular.module('app').controller('nrgiAssignAssessmentDialogCtrl', function ($scope, $route, $location, ngDialog, nrgiNotifier, nrgiAssessmentSrvc, mgaAssessmentMethodSrvc, nrgiUserSrvc, mgaUserMethodSrvc) {
+    nrgiUserSrvc.query({}, function (data) {
+        $scope.assessment = nrgiAssessmentSrvc.get({assessment_ID: $scope.$parent.assessment_ID});
         $scope.users = [];
         data.forEach(function (el) {
             var seen = false;
@@ -26,7 +26,7 @@ angular.module('app').controller('nrgiAssignAssessmentDialogCtrl', function ($sc
     $scope.assessmentAssign = function () {
         var new_assessment_data, new_user_data;
 
-        mgaUserSrvc.get({_id: $scope.new_assignment}, function (data) {
+        nrgiUserSrvc.get({_id: $scope.new_assignment}, function (data) {
             new_assessment_data = $scope.assessment;
             new_user_data = data;
 

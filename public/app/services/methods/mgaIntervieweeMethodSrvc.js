@@ -2,10 +2,10 @@
 /*jslint nomen: true newcap: true */
 //var angular;
 
-angular.module('app').factory('mgaIntervieweeMethodSrvc', function ($http, $q, mgaIntervieweeSrvc) {
+angular.module('app').factory('mgaIntervieweeMethodSrvc', function ($http, $q, nrgiIntervieweeSrvc) {
     return {
         createInterviewee: function (new_interviewee_data) {
-            var new_interviewee = new mgaIntervieweeSrvc(new_interviewee_data),
+            var new_interviewee = new nrgiIntervieweeSrvc(new_interviewee_data),
                 dfd = $q.defer();
             new_interviewee.$save().then(function () {
                 dfd.resolve();
@@ -16,7 +16,7 @@ angular.module('app').factory('mgaIntervieweeMethodSrvc', function ($http, $q, m
         },
         deleteInterviewee: function (user_deletion) {
             var dfd = $q.defer(),
-                delete_ID = new mgaIntervieweeSrvc();
+                delete_ID = new nrgiIntervieweeSrvc();
 
             delete_ID.id = user_deletion;
 

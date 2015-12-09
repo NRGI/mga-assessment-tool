@@ -2,14 +2,14 @@
 //var angular;
 /*jslint newcap: true unparam: true*/
 
-angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $location, nrgiNotifier, mgaIdentitySrvc, mgaAuthSrvc, mgaAssessmentSrvc) {
+angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $location, nrgiNotifier, nrgiIdentitySrvc, nrgiAuthSrvc, nrgiAssessmentSrvc) {
     var url_array;
     // assign the identity resource with the current identity using identity service
-    $scope.identity = mgaIdentitySrvc;
+    $scope.identity = nrgiIdentitySrvc;
     $scope.assessment_links = [];
     url_array = [];
-    if (mgaIdentitySrvc.currentUser !== undefined && mgaIdentitySrvc.currentUser.role === 'supervisor') {
-        mgaAssessmentSrvc.query({}, function (data) {
+    if (nrgiIdentitySrvc.currentUser !== undefined && nrgiIdentitySrvc.currentUser.role === 'supervisor') {
+        nrgiAssessmentSrvc.query({}, function (data) {
             data.forEach(function (el) {
                 if (url_array.indexOf(el.assessment_ID) < 0) {
                     url_array.push(el.assessment_ID);
@@ -21,8 +21,8 @@ angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $locat
                 }
             });
         });
-    } else if (mgaIdentitySrvc.currentUser !== undefined) {
-        mgaIdentitySrvc.currentUser.assessments.forEach(function (el) {
+    } else if (nrgiIdentitySrvc.currentUser !== undefined) {
+        nrgiIdentitySrvc.currentUser.assessments.forEach(function (el) {
             if (url_array.indexOf(el.assessment_ID) < 0) {
                 url_array.push(el.assessment_ID);
                 $scope.assessment_links.push({
@@ -36,13 +36,13 @@ angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $locat
 
     // signin function for signin button
     $scope.signin = function (username, password) {
-        mgaAuthSrvc.authenticateUser(username, password).then(function (success) {
+        nrgiAuthSrvc.authenticateUser(username, password).then(function (success) {
             if (success) {
-                $scope.identity = mgaIdentitySrvc;
+                $scope.identity = nrgiIdentitySrvc;
                 $scope.assessment_links = [];
                 url_array = [];
-                if (mgaIdentitySrvc.currentUser !== undefined && mgaIdentitySrvc.currentUser.role === 'supervisor') {
-                    mgaAssessmentSrvc.query({}, function (data) {
+                if (nrgiIdentitySrvc.currentUser !== undefined && nrgiIdentitySrvc.currentUser.role === 'supervisor') {
+                    nrgiAssessmentSrvc.query({}, function (data) {
                         data.forEach(function (el) {
                             if (url_array.indexOf(el.assessment_ID) < 0) {
                                 url_array.push(el.assessment_ID);
@@ -54,8 +54,8 @@ angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $locat
                             }
                         });
                     });
-                } else if (mgaIdentitySrvc.currentUser !== undefined) {
-                    mgaIdentitySrvc.currentUser.assessments.forEach(function (el) {
+                } else if (nrgiIdentitySrvc.currentUser !== undefined) {
+                    nrgiIdentitySrvc.currentUser.assessments.forEach(function (el) {
                         if (url_array.indexOf(el.assessment_ID) < 0) {
                             url_array.push(el.assessment_ID);
                             $scope.assessment_links.push({
@@ -75,7 +75,7 @@ angular.module('app').controller('nrgiNavBarLoginCtrl', function ($scope, $locat
     };
     // signout function for signout button
     $scope.signout = function () {
-        mgaAuthSrvc.logoutUser().then(function () {
+        nrgiAuthSrvc.logoutUser().then(function () {
             $scope.username = "";
             $scope.password = "";
             $scope.assessment_links = [];

@@ -1,15 +1,15 @@
 'use strict';
 //var angular;
 
-angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, mgaIdentitySrvc, mgaUserMethodSrvc, nrgiNotifier) {
+angular.module('app').controller('nrgiProfileCtrl', function ($scope, $route, nrgiIdentitySrvc, mgaUserMethodSrvc, nrgiNotifier) {
     // set page resources to be those of the current identity
-    $scope.fullName = mgaIdentitySrvc.currentUser.firstName + " " + mgaIdentitySrvc.currentUser.lastName;
-    $scope.first_name = mgaIdentitySrvc.currentUser.firstName;
-    $scope.last_name = mgaIdentitySrvc.currentUser.lastName;
-    $scope.email = mgaIdentitySrvc.currentUser.email;
-    $scope.username = mgaIdentitySrvc.currentUser.username;
-    $scope.role = mgaIdentitySrvc.currentUser.role;
-    $scope.user = mgaIdentitySrvc.currentUser;
+    $scope.fullName = nrgiIdentitySrvc.currentUser.firstName + " " + nrgiIdentitySrvc.currentUser.lastName;
+    $scope.first_name = nrgiIdentitySrvc.currentUser.firstName;
+    $scope.last_name = nrgiIdentitySrvc.currentUser.lastName;
+    $scope.email = nrgiIdentitySrvc.currentUser.email;
+    $scope.username = nrgiIdentitySrvc.currentUser.username;
+    $scope.role = nrgiIdentitySrvc.currentUser.role;
+    $scope.user = nrgiIdentitySrvc.currentUser;
     // update functionality for update button
     $scope.update = function () {
         // pass in update data

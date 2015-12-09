@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true regexp: true*/
 
-angular.module('app').controller('nrgiDeskResearchListCtrl', function ($scope, $route, $routeParams, $location, mgaIdentitySrvc, nrgiNotifier, mgaAssessmentSrvc, mgaAssessmentMethodSrvc, mgaUserListSrvc, mgaAnswerSrvc) {
+angular.module('app').controller('nrgiDeskResearchListCtrl', function ($scope, $route, $routeParams, $location, nrgiIdentitySrvc, nrgiNotifier, nrgiAssessmentSrvc, mgaAssessmentMethodSrvc, nrgiUserListSrvc, nrgiAnswerSrvc) {
     //filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
@@ -14,17 +14,17 @@ angular.module('app').controller('nrgiDeskResearchListCtrl', function ($scope, $
     $scope.sort_order = $scope.sort_options[0].value;
 
     // pull assessment data and add
-    mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
+    nrgiAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
         $scope.answer_list = [];
-        mgaAnswerSrvc.query({
+        nrgiAnswerSrvc.query({
             assessment_ID: $routeParams.assessment_ID,
             question_mode: 'desk_research'
         }, function (answers) {
 
-            $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
+            $scope.edited_by = nrgiUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
             $scope.user_list = [];
             data.users.forEach(function (el) {
-                var u = mgaUserListSrvc.get({_id: el});
+                var u = nrgiUserListSrvc.get({_id: el});
                 $scope.user_list.push(u);
             });
             $scope.answer_list = answers;
@@ -37,7 +37,7 @@ angular.module('app').controller('nrgiDeskResearchListCtrl', function ($scope, $
 
         new_assessment_data.status = 'interview';
         new_assessment_data.questions_complete = 0;
-        mgaAnswerSrvc.query({
+        nrgiAnswerSrvc.query({
             assessment_ID: $routeParams.assessment_ID,
             question_mode: 'interview'
         }, function (answers) {

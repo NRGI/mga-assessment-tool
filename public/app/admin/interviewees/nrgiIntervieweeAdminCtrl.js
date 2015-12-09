@@ -2,7 +2,7 @@
 /*jslint nomen: true unparam: true regexp: true*/
 //var angular;
 
-angular.module('app').controller('nrgiIntervieweeAdminCtrl', function ($scope, mgaIntervieweeSrvc) {
+angular.module('app').controller('nrgiIntervieweeAdminCtrl', function ($scope, nrgiIntervieweeSrvc) {
     // filtering options
     $scope.sortOptions = [
         {value: 'lastName', text: 'Sort by last name'},
@@ -14,5 +14,5 @@ angular.module('app').controller('nrgiIntervieweeAdminCtrl', function ($scope, m
     ];
     $scope.sortOrder = $scope.sortOptions[0].value;
 
-    $scope.interviewees = mgaIntervieweeSrvc.query({});
+    $scope.interviewees = nrgiIntervieweeSrvc.query({});
 });

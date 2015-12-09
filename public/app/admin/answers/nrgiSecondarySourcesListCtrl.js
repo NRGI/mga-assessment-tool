@@ -1,5 +1,5 @@
 'use strict';
-angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scope, $route, $routeParams, nrgiNotifier, mgaAnswerSrvc, mgaAssessmentSrvc, mgaAnswerMethodSrvc, mgaUserListSrvc, mgaIdentitySrvc) {
+angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scope, $route, $routeParams, nrgiNotifier, nrgiAnswerSrvc, nrgiAssessmentSrvc, mgaAnswerMethodSrvc, nrgiUserListSrvc, nrgiIdentitySrvc) {
     // filtering options
     $scope.sort_options = [
         {value: "question_order", text: "Sort by question number"},
@@ -11,29 +11,29 @@ angular.module('app').controller('nrgiSecondarySourcesListCtrl', function ($scop
     ];
     $scope.sort_order = $scope.sort_options[0].value;
 
-    $scope.identity = mgaIdentitySrvc;
+    $scope.identity = nrgiIdentitySrvc;
     $scope.new_score = {};
 
-    //$scope.assessment = mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID});
+    //$scope.assessment = nrgiAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID});
     //
-    //$scope.answer_list = mgaAnswerSrvc.query({
+    //$scope.answer_list = nrgiAnswerSrvc.query({
     //    assessment_ID: $routeParams.assessment_ID,
     //    question_mode: 'secondary_source'
     //});
 
     // pull assessment data and add
-    mgaAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
+    nrgiAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
         $scope.answer_list = [];
-        mgaAnswerSrvc.query({
+        nrgiAnswerSrvc.query({
             assessment_ID: $routeParams.assessment_ID,
             question_mode: 'secondary_source'
         }, function (answers) {
             $scope.question_set_length = answers.length;
 
-            $scope.edited_by = mgaUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
+            $scope.edited_by = nrgiUserListSrvc.get({_id: data.modified[data.modified.length - 1].modified_by});
             $scope.user_list = [];
             data.users.forEach(function (el) {
-                var u = mgaUserListSrvc.get({_id: el});
+                var u = nrgiUserListSrvc.get({_id: el});
                 $scope.user_list.push(u);
             });
             $scope.answer_list = answers;

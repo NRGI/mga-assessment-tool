@@ -2,9 +2,9 @@
 //var angular;
 /*jslint true*/
 
-angular.module('app').controller('nrgiUserAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, mgaUserSrvc, mgaUserMethodSrvc) {
+angular.module('app').controller('nrgiUserAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, nrgiUserSrvc, mgaUserMethodSrvc) {
 
-    $scope.user = mgaUserSrvc.get({_id: $routeParams.id});
+    $scope.user = nrgiUserSrvc.get({_id: $routeParams.id});
     $scope.role_options = [
         // {value: 'admin', text: 'Administrator'},
         {value: 'supervisor', text: 'Supervisor'},

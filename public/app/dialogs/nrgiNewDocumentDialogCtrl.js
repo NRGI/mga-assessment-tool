@@ -2,7 +2,7 @@
 //var angular;
 /*jslint nomen: true newcap: true unparam: true*/
 
-angular.module('app').controller('nrgiNewDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, mgaDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
+angular.module('app').controller('nrgiNewDocumentDialogCtrl', function ($scope, $route, ngDialog, nrgiNotifier, nrgiDocumentSrvc, mgaDocumentMethodSrvc, mgaAnswerMethodSrvc) {
     $scope.new_document = $scope.$parent.new_document;
 
     if ($scope.new_document.status === 'created') {
@@ -37,7 +37,7 @@ angular.module('app').controller('nrgiNewDocumentDialogCtrl', function ($scope, 
                 current_user_name = $scope.$parent.current_user.firstName + ' ' + $scope.current_user.lastName,
                 current_user_role = $scope.$parent.current_user.role,
                 new_answer_data = $scope.$parent.answer,
-                new_doc_data = new mgaDocumentSrvc(new_document),
+                new_doc_data = new nrgiDocumentSrvc(new_document),
                 new_ref_data = {
                     document_ID: new_document._id,
                     // mendeley_ID

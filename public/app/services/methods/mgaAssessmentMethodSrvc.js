@@ -2,12 +2,12 @@
 /*jslint newcap: true */
 //var angular;
 
-angular.module('app').factory('mgaAssessmentMethodSrvc', function ($http, $q, mgaIdentitySrvc, mgaAssessmentSrvc) {
+angular.module('app').factory('mgaAssessmentMethodSrvc', function ($http, $q, nrgiIdentitySrvc, nrgiAssessmentSrvc) {
     return {
         createAssessment: function (new_assessment_data) {
 
             var dfd = $q.defer(),
-                new_assessment = new mgaAssessmentSrvc(new_assessment_data);
+                new_assessment = new nrgiAssessmentSrvc(new_assessment_data);
 
             new_assessment.length = new_assessment_data.length;
             new_assessment.$save().then(function () {
