@@ -19,15 +19,19 @@ angular.module('app')
         ];
         $scope.sort_order = $scope.sort_options[1].value;
 
-
         nrgiUserSrvc.query({}, function (users) {
             $scope.users = [];
-            var u, a;
-            for (u = users.length - 1; u >= 0; u -= 1) {
-                for (a = users[u].assessments.length - 1; a >= 0; a -= 1) {
-                    users[u].assessments[a].details = nrgiAssessmentSrvc.get({assessment_ID: users[u].assessments[a].assessment_ID});
-                }
-                $scope.users.push(users[u]);
-            }
+            users.forEach(function (user) {
+                nrgiAuthLogsSrvc.getMostRecent(user._id, 'sign-in')
+                    .then(function (log) {
+                        user.last_sign_in = log.data.logs[0];
+                    });
+
+                //get assessment info
+                user.assessments.forEach(function(el, i) {
+                    user.assessments[i].details = nrgiAssessmentSrvc.get({assessment_ID: el.assessment_ID});
+                });
+                $scope.users.push(user);
+            });
         });
     });
