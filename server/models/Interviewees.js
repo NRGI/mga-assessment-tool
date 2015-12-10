@@ -17,6 +17,7 @@ var intervieweeSchema = mongoose.Schema({
         type: String,
         required: '{PATH} is required!'},
     title: String,
+    salutation: String,
     email: String,
     alt_email: String,
     phone: String,
@@ -34,7 +35,7 @@ var intervieweeSchema = mongoose.Schema({
     users: [ObjectId],
     attribution: {
         type: Boolean,
-        default: false},
+        default: true},
     createdBy: ObjectId,
     creationDate: {
         type: Date,
