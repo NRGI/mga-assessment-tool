@@ -1,18 +1,19 @@
 doctype
 html
-	head
-		title MGA Assessment Tool
-		link(rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.css")
-		link(rel="stylesheet" href="/vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf" type='text/css')
-		link(rel="stylesheet" href="/css/site.css")
-		link(rel="stylesheet" href="/vendor/toastr/toastr.css")
-		link(rel="stylesheet" href="/vendor/ngDialog/css/ngDialog.css")
-		link(rel="stylesheet" href="/vendor/ngDialog/css/ngDialog-theme-default.css")
-		link(rel="stylesheet" href="/vendor/angularjs-datepicker/src/css/angular-datepicker.css")
-		link(rel="stylesheet" href="/vendor/ngDialog/css/ngDialog-theme-plain.css")
-
-	base(href="/")
-	body(ng-app="app")
-		include currentUser
-		block main-content
-		include scripts
+    head
+        title MGA Assessment Tool
+        link(rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.css")
+        link(rel="stylesheet" href="/vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf" type='text/css')
+        link(rel="stylesheet" href="/css/site.css")
+        link(rel="stylesheet" href="/vendor/angularjs-datepicker/src/css/angular-datepicker.css")
+        link(rel="stylesheet" href="/vendor/ngDialog/css/ngDialog.css")
+        link(rel="stylesheet" href="/vendor/ngDialog/css/ngDialog-theme-default.css")
+        link(rel="stylesheet" href="/vendor/ngDialog/css/ngDialog-theme-plain.css")
+        //link(rel="stylesheet" href="/vendor/textAngular/dist/textAngular.min.css")
+        link(rel="stylesheet" href="/vendor/toastr/toastr.css")
+        link(rel="stylesheet" href="/redactor/redactor.css")
+    base(href="/")
+    body(ng-app="app")
+        include currentUser
+        block main-content
+        include scripts

@@ -17,8 +17,6 @@ angular.module('app', [
     'ng-form-group',
     //'textAngular',
     'ui.bootstrap'
-    //require('angular-sanitize'),
-    //require('textAngular')
 ]);
 
 angular.module('app')

@@ -1,97 +1,77 @@
-.container.top-padding-med
-	.well.left-padding-lg
-		div.left-padding-lg.right-padding-lg.top-padding-med
-			legend.h3 Question {{question.question_order}}. {{question.question_text}}
-			.row.left-padding-lg.right-padding-lg
-				.form-horizontal(name="question_content_form")
-					fieldset
-						div(id="question_text_div").bottom-padding-med.padding-top-lg
-							label Question Text
-							.form-group.left-padding-lg.right-padding-lg(required)
-								textarea.form-control(
-								name="question_text"
-								type="textbox"
-								ng-model="question.question_text")
+.container-fluid.page-container
+    .well
+        div.page-well
+            legend.h3.page-header Question {{question.question_order}}. {{question.question_text}}
+            .form-horizontal(name="question_content_form").row-fluid.right-padding-lg.left-padding-lg
+                fieldset
+                    div(id="question_text_div").row-fluid.right-padding-lg.left-padding-lg
+                        label Question Text
+                        .form-group.left-padding-lg.right-padding-lg(required)
+                            textarea.form-control(
+                            name="question_text"
+                            type="textbox"
+                            ng-model="question.question_text")
+                    div(id="question_details_div")
+                        .row
+                            label.col-md-2.control-label(form="order") Question Order
+                            .col-md-1
+                                input.form-group.form-control(
+                                name="order"
+                                type="number"
+                                ng-model="question.question_order")
 
-						div(id="question_details_div")
-							.row
-								label.col-md-2.control-label(form="order") Question Order
-								.col-md-1
-									input.form-group.form-control(
-									name="order"
-									type="number"
-									ng-model="question.question_order")
+                            label.col-md-2.control-label(form="mode") Question Mode
+                            .col-md-2
+                                select.form-group.form-control(
+                                ng-model="question.question_mode"
+                                ng-options="item.value as item.text for item in mode_options")
 
-								label.col-md-2.control-label(form="mode") Question Mode
-								.col-md-2
-									select.form-group.form-control(
-									ng-model="question.question_mode"
-									ng-options="item.value as item.text for item in mode_options")
+                            label.col-md-2.control-label(form="type") Data Type
+                            .col-md-2
+                                select.form-group.form-control(
+                                ng-model="question.question_data_type"
+                                ng-options="item.value as item.text for item in type_options")
+                        .row
+                            label.col-md-1.control-label(form="order") Theme
+                            .col-md-3
+                                select.form-group.form-control(
+                                ng-model="question.question_theme_ID"
+                                ng-options="item.value as (item.value + ': ' + item.text) for item in theme_options")
 
-								label.col-md-2.control-label(form="type") Data Type
-								.col-md-2
-									select.form-group.form-control(
-									ng-model="question.question_data_type"
-									ng-options="item.value as item.text for item in type_options")
-							.row
-								label.col-md-1.control-label(form="order") Theme
-								.col-md-3
-									select.form-group.form-control(
-									ng-model="question.question_theme_ID"
-									ng-options="item.value as (item.value + ': ' + item.text) for item in theme_options")
+                            label.col-md-1.control-label(form="mode") Value Chain
+                            .col-md-3
+                                select.form-group.form-control(
+                                ng-model="question.question_value_chain_ID"
+                                ng-options="item.value as (item.value + ': ' + item.text) for item in value_chain_options")
 
-								label.col-md-1.control-label(form="mode") Value Chain
-								.col-md-3
-									select.form-group.form-control(
-									ng-model="question.question_value_chain_ID"
-									ng-options="item.value as (item.value + ': ' + item.text) for item in value_chain_options")
+                            label.col-md-1.control-label(form="type") Indicator
+                            .col-md-3
+                                select.form-group.form-control(
+                                ng-model="question.question_indicator_ID"
+                                ng-options="item.value as (item.value + ': ' + item.text) for item in indicator_options")
 
-								label.col-md-1.control-label(form="type") Indicator
-								.col-md-3
-									select.form-group.form-control(
-									ng-model="question.question_indicator_ID"
-									ng-options="item.value as (item.value + ': ' + item.text) for item in indicator_options")
+                    div.row-fluid.right-padding-lg.left-padding-lg.bottom-padding-lg.top-padding-med
+                        .pull-left
+                            button.btn.btn-primary(
+                            ng-click="questionUpdate()"
+                            ng-disabled="profileForm.$invalid") Save question
+                            | &nbsp;
+                            button.btn.btn-danger(ng-click="deleteConfirmDialog()") Delete question
+                            | &nbsp;
+                            button.btn.btn-warning(ng-click="questionClear()") Reset question
+                            | &nbsp;
+                            a.btn.btn-default(href="/admin/question-admin") Cancel
+                    //TODO: PLACEHOLDER FOR IF/WHEN GUIDANCE TEXT IS ADDED
+                    //div(id="guidance_text_div").row-fluid.right-padding-lg.left-padding-lg
+                    //    label Guidance Text
+                    //    //- ng-form(name="question_text_form")
+                    //    .form-group.left-padding-lg.right-padding-lg(required)
+                    //        textarea.form-control(
+                    //        name="question_text"
+                    //        type="text"
+                    //        ng-model="question.question_guidance_text"
+                    //        redactor) {{question.question_guidance_text}}
+                    //    div(ng-bind-html="question.question_guidance_text")
 
-						.row
-						.row.top-padding-med
-							.form-group(name="control_buttons").top-padding-med.left-padding-lg.right-padding-lg
-								button.btn.btn-primary(
-								ng-click="questionUpdate()"
-								ng-disabled="profileForm.$invalid") Save question
-								| &nbsp;
-								button.btn.btn-danger(ng-click="deleteConfirmDialog()") Delete question
-								| &nbsp;
-								//button.btn.btn-warning(ng-click="questionClear()") Reset question
-								//| &nbsp;
-								a.btn.btn-default(href="/admin/question-admin") Cancel
-
-						div(id="comments_div").top-padding-lg
-							legend NRGI Comments:
-
-							div(id="prev_comments_div")
-								.row.left-padding-lg.bottom-padding-med(ng-repeat="comment in question.comments")
-									.row
-										b {{comment.author_name}} (
-										b {{comment.role}}
-										b ):
-									.row.col-md-11 {{comment.content}}
-									.row.col-md-offset-9.col-md-3
-										date
-											small
-												em {{comment.date | date:'MM/dd/yyyy @ h:mma' : timezone}}
-
-							br
-							div(id="new_comment_div").bottom-padding-med
-								.form-group(name="new_comment_form").top-padding-med
-									.row.left-padding-lg
-										label.col-md-1 New comment
-										.col-md-8
-											textarea.form-control(
-											name="comment"
-											type="text"
-											ng-model="question.new_comment"
-											required)
-										.col-md-1
-											button.btn.btn-success(
-											ng-click="commentSubmit(current_user)"
-											ng-disabled="new_comment_form.$invalid") Submit comment
+                    div(id="comments").row-fluid.right-padding-lg.left-padding-lg
+                        nrgi-comments(update="question")

@@ -1,16 +1,26 @@
 'use strict';
 /*jslint nomen: true unparam: true*/
 
-var mongoose = require('mongoose');
+var mongoose        = require('mongoose'),
+    mongooseHistory = require('mongoose-history'),
+    Schema          = mongoose.Schema,
+    options = {customCollectionName: "question_hst"};
 
 //noinspection JSUnusedGlobalSymbols
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var Schemaless = mongoose.Schema.Types.Mixed;
+var Schemaless = Schema.Types.Mixed;
+require('mongoose-html-2').loadType(mongoose);
+var Html = mongoose.Types.Html;
 
-var modificationSchema = new mongoose.Schema({
-    modifiedBy: Schemaless, // Pull from current user _id value but needs to handle legacy comments
-    modifiedDate: {type: Date, default: Date.now}
-});
+var htmlSettings = {
+    type: Html,
+    setting: {
+        allowedTags: ['p', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'del'],
+        allowedAttributes: {
+            'a': ['href']
+        }
+    }
+};
 
 var commentSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
@@ -50,8 +60,14 @@ var questionSchema = mongoose.Schema({
     question_value_chain_ID: String,
     question_tags: Array,
     comments: [commentSchema],
-    modified: [modificationSchema]
+    last_modified: {
+        modifiedBy: ObjectId, // Pull from current user _id value but needs to handle legacy comments
+        modifiedDate: {
+            type: Date,
+            default: Date.now}}
 });
+
+questionSchema.plugin(mongooseHistory, options);
 
 var Question = mongoose.model('Question', questionSchema);
 

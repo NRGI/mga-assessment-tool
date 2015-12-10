@@ -2,10 +2,11 @@
 //var angular;
 /*jslint true*/
 
-angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $routeParams, $location, ngDialog, nrgiNotifier, nrgiQuestionMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
+angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope, $route, $routeParams, $location, ngDialog, nrgiNotifier, nrgiQuestionMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
 
     $scope.question = nrgiQuestionSrvc.get({_id: $routeParams.id});
     $scope.current_user = nrgiIdentitySrvc.currentUser;
+    $scope.page_type = 'question';
 
     $scope.mode_options = [
         {value: 'interview', text: 'Interview'},
@@ -102,11 +103,9 @@ angular.module('app').controller('nrgiQuestionAdminDetailCtrl', function ($scope
         {text:"Economic impact of mining",value:"M-5-0"}
     ];
     //TODO fix question reset
-    //$scope.question_start = angular.copy($scope.question);
-    //
-    //$scope.questionClear = function () {
-    //    $scope.question = angular.copy($scope.question_start);
-    //};
+    $scope.questionClear = function () {
+        $route.reload();
+    };
     //TODO fix reording questions---update happens in question controller
     $scope.questionUpdate = function () {
         var new_question_data = $scope.question;

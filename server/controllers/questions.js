@@ -99,14 +99,15 @@ exports.updateQuestion = function (req, res) {
         question.question_theme_ID = question_update.question_theme_ID;
         question.question_value_chain_ID = question_update.question_value_chain_ID;
         question.question_tags = question_update.question_tags;
+        question.last_modified = {modifiedBy: req.user._id, modifiedDate: timestamp};
 
         question.comments = question_update.comments;
 
-        if (question.modified) {
-            question.modified.push({modifiedBy: req.user._id, modifiedDate: timestamp});
-        } else {
-            question.modified = {modifiedBy: req.user._id, modifiedDate: timestamp};
-        }
+        //if (question.modified) {
+        //    question.modified.push({modifiedBy: req.user._id, modifiedDate: timestamp});
+        //} else {
+        //    question.modified = {modifiedBy: req.user._id, modifiedDate: timestamp};
+        //}
 
         question.save(function (err) {
             if (err) {
