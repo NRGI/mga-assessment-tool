@@ -1,5 +1,6 @@
 'use strict';
-var passport = require('passport');
+var AuthLog     = require('mongoose').model('AuthLog'),
+    passport = require('passport');
 
 exports.authenticate = function (req, res, next) {
     req.body.username = req.body.username.toLowerCase();
@@ -10,12 +11,19 @@ exports.authenticate = function (req, res, next) {
             // if (err) {return next(err); }
             if (err) { res.send({success: false}); }
             req.user = user;
+            AuthLog.log(req.user._id, 'sign-in');
             req.clientId = 1560;
             // res.send({success: true, user: user});
             next();
         });
     });
     auth(req, res, next);
+};
+
+exports.logout = function (req, res) {
+    AuthLog.log(req.user._id, 'sign-out');
+    req.logout();
+    res.end();
 };
 
 //noinspection JSUnusedLocalSymbols

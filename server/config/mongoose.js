@@ -1,15 +1,22 @@
 'use strict';
 //noinspection JSUnusedGlobalSymbols
-var mongoose = require('mongoose'),
-    userModel = require('../models/User'),
-    users = require('mongoose').model('User'),
-    // mendelyTokenModel = require('../models/MendeleyToken'),
-    questionModel = require('../models/Question'),
-    answerModel = require('../models/Answers'),
-    countryModel = require('../models/Countries'),
-    documentModel = require('../models/Documents'),
-    intervieweeModel = require('../models/Interviewees'),
-    assessmentModel = require('../models/Assessment');
+// mendelyTokenModel = require('../models/MendeleyToken'),
+var mongoose            = require('mongoose'),
+    userModel           = require('../models/User'),
+    countryModel        = require('../models/Countries'),
+    questionModel       = require('../models/Question'),
+    intervieweeModel    = require('../models/Interviewees'),
+    model_load = [
+        'Answers',
+        'Assessment',
+        'AuthLog',
+        'Documents',
+        'FileUploadStatus',
+        'ResetPasswordToken'
+    ];
+model_load.forEach(function(modelName) {
+        require('../models/' + modelName);
+    });
 
 module.exports = function (config, user, pass, env) {
     // connect to mongo

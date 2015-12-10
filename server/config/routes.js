@@ -1,20 +1,22 @@
 'use strict';
 
 //noinspection JSUnusedGlobalSymbols
-var auth = require('./auth'),
-    // authMendeley = require('./authMendeley'),
-    bodyParser = require('body-parser'),
-    users = require('../controllers/users'),
-    // mendeley = require('../controllers/mendeley.js'),
-    answers = require('../controllers/answers'),
-    questions = require('../controllers/questions'),
-    assessments = require('../controllers/assessments'),
-    interviewees = require('../controllers/interviewees'),
-    countries = require('../controllers/countries'),
-    documents = require('../controllers/documents'),
-    contact = require('../utilities/contact'),
-    multipart = require('connect-multiparty'),
-    multipartMiddleware = multipart();
+var answers             = require('../controllers/answers'),
+    assessments         = require('../controllers/assessments'),
+    auth                = require('./auth'),
+    authLogs            = require('../controllers/auth-logs'),
+    //authMendeley        = require('./authMendeley'),
+    bodyParser          = require('body-parser'),
+    contact             = require('../utilities/contact'),
+    countries           = require('../controllers/countries'),
+    documents           = require('../controllers/documents'),
+    interviewees        = require('../controllers/interviewees'),
+    //mendeley            = require('../controllers/mendeley.js'),
+    multipart           = require('connect-multiparty'),
+    multipartMiddleware = multipart(),
+    questions           = require('../controllers/questions'),
+    resetPasswordTokens = require('../controllers/reset-password-tokens'),
+    users               = require('../controllers/users');
 
 module.exports = function (app) {
 
@@ -34,6 +36,15 @@ module.exports = function (app) {
 
     // DELETE
     app.delete('/api/users/:id', auth.requiresRole('supervisor'), users.deleteUser);
+
+    // USER AUTH LOGS
+    app.get('/api/auth-logs/number/:user', auth.requiresRole('supervisor'),  authLogs.getNumber);
+    app.get('/api/auth-logs/recent/:user/:action', auth.requiresRole('supervisor'), authLogs.getMostRecent);
+    app.get('/api/auth-logs/list/:user/:itemsPerPage/:page', auth.requiresRole('supervisor'),  authLogs.list);
+
+    // PASSWORD TOKEN HANDLING
+    app.post('/api/reset-password-token/add', resetPasswordTokens.create);
+    app.post('/api/reset-password-token/reset', resetPasswordTokens.reset);
 
     /////////////////////////////
     ///// QUESTIONS CRUD ////////
