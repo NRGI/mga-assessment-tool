@@ -1,69 +1,73 @@
-.container.top-padding-med
-	.well.left-padding-lg
-		div.left-padding-lg.right-padding-lg.top-padding-med
-			form.form-horizontal(name='profileForm')
-				fieldset.left-padding-med.right-padding-lg
-					//- Profile page
-					legend.h3 {{user.firstName}} {{user.lastName}}'s Profile
-					.row.right-padding-lg.top-padding-med
-						.form-group
-							label.col-md-2.control-label(form="first_name") First Name
-							.col-md-4
-								input.form-control(
-								name="first_name"
-								type="text"
-								placeholder="First Name"
-								ng-model="user.firstName"
-								required)
-							label.col-md-2.control-label(form="last_name") Last Name
-							.col-md-4
-								input.form-control(
-								name="last_name"
-								type="text"
-								placeholder="Last Name"
-								ng-model="user.lastName"
-								required)
-					.row.right-padding-lg
-						.form-group
-							label.col-md-2.control-label(form="username") Username
-							.col-md-4
-								input.form-control(
-								name="username"
-								type="text"
-								placeholder="Username"
-								ng-model="user.username"
-								readonly)
-							label.col-md-2.control-label(form="email") Email
-							.col-md-4
-								input.form-control(
-								name="email"
-								type="email"
-								placeholder="Email"
-								ng-model="user.email"
-								required)
-					.row.right-padding-lg
-						.form-group
-							label.col-md-2.control-label(form="password") Password
-							.col-md-4
-								input.form-control(
-								name="password"
-								type="password"
-								placeholder="New password"
-								ng-model="password")
-							label.col-md-2.control-label(form="password") Repeat Password
-							.col-md-4
-								input.form-control(
-								name="password"
-								type="password"
-								placeholder="Repeat password"
-								ng-model="password_rep")
-
-
-					.form-group
-						.col-md-10.col-md-offset-2
-							.pull-right.right-padding-lg
-								button.btn.btn-primary(ng-click="userUpdate()" ng-disabled="") Save user
-								| &nbsp;
-								button.btn.btn-danger(ng-click="deleteConfirmDialog()" ng-disabled="") Delete user
-								| &nbsp;
-								a.btn.btn-default(href="/admin/user-admin") Cancel
+.container-fluid.page-container
+	.well
+		div.page-well
+			legend.h3.page-header {{user.firstName}} {{user.lastName}}'s Profile
+			div.left-padding-lg.right-padding-lg
+				.row-fluid
+					button.btn.btn-warning(ng-click="editUserDialog()") Edit user
+					| &nbsp;
+					a(href="mailto:{{user.email}}").btn.btn-default Email
+					| &nbsp;
+					button.btn.btn-danger(ng-click="deleteConfirmDialog()") Delete
+				.row-fluid.top-padding-med(ng-if="user.role!=='supervisor'")
+					table.table.table-hover.table-striped.table-condensed
+						thead
+							tr
+								th Linked assessments
+								th Linked interviewees
+								th Linked documents
+						tbody
+							tr
+								td
+									.row(ng-repeat="assessment in user.assessments").left-padding-lg
+										a(href="/admin/assessment-admin/{{assessment.assessment_ID}}") {{assessment.assessment_ID}}
+								td
+									.row(ng-repeat="interviewee in user.interviewees").left-padding-lg {{interviewee}}
+										//a(href="/admin/assessments-admin/interviewee/{{interviewee}}") {{interviewee}}
+								td
+									.row(ng-repeat="document in user.document_details").left-padding-lg
+										a(href="/admin/documents-admin/{{document._id}}") {{document.title}}
+			div.left-padding-lg.right-padding-lg
+				h3 Information
+				.row-fluid.right-padding-med.left-padding-med
+					table.table.table-condensed
+						tbody
+							tr
+								td.col-med-3
+									.row
+										label First name:
+									.row
+										text {{user.firstName | ucfirst}}
+								td.col-med-3
+									.row
+										label Last name:
+									.row
+										text {{user.lastName | ucfirst}}
+								td.col-med-3
+									.row
+										label Username:
+									.row
+										text {{user.username}}
+							tr
+								td.col-med-3
+									.row
+										label Role:
+									.row
+										text {{user.role | ucfirst}}
+								td.col-med-3
+									.row
+										label Email:
+									.row(ng-if="user.email")
+										text {{user.email}}
+									.row(ng-if="!user.email")
+										text N/A
+								td.col-med-3
+									.row
+										label Address:
+									.row(ng-if="user.address")
+										text {{user.address}}
+									.row(ng-if="!user.address")
+										text N/A
+			div.left-padding-lg.right-padding-lg
+				h3 Login info
+				nrgi-auth-logs(user="user")

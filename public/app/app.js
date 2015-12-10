@@ -75,7 +75,7 @@ angular.module('app')
                 resolve: routeRoleChecks.supervisor
             })
             .when('/admin/user-admin/:id', {
-                templateUrl: '/partials/admin/users/user-admin',
+                templateUrl: '/partials/admin/users/user-admin-detail',
                 controller: 'nrgiUserAdminDetailCtrl',
                 resolve: routeRoleChecks.supervisor
             })

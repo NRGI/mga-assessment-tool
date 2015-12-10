@@ -41,6 +41,8 @@ var userSchema = mongoose.Schema({
         country:  String, // Text name of country
         year: String // Year of assessment
     }],
+    documents: [ObjectId],
+    interviewees: [ObjectId],
     createdBy:  ObjectId,
     creationDate:  {type:  Date, default: Date.now},
     ///////////////////Add modification array on the ser update ctrl///////////////////
