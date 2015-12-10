@@ -12,14 +12,14 @@
 								name="first_name"
 								type="text"
 								placeholder="First Name"
-								ng-model="first_name"
+								ng-model="new_user_data.firstName"
 								required)
 							label.col-md-2.control-label(form="last_name") Last Name *
 							.col-md-4
 								input.form-control(name="last_name"
 								type="text"
 								placeholder="Last Name"
-								ng-model="last_name"
+								ng-model="new_user_data.lastName"
 								required)
 
 					.row.right-padding-lg
@@ -29,32 +29,32 @@
 								input.form-control(name="username"
 								type="text"
 								placeholder="Username"
-								ng-model="username"
+								ng-model="new_user_data.username"
 								required)
 							label.col-md-2.control-label(form="email") Email *
 							.col-md-4
 								input.form-control(name="email"
 								type="email"
 								placeholder="Email"
-								ng-model="email"
+								ng-model="new_user_data.email"
 								required)
 
-					.row.right-padding-lg
-						.form-group
-							label.col-md-2.control-label(form="password") Password *
-							.col-md-4
-								input.form-control(name="password"
-								type="password"
-								placeholder="Password"
-								ng-model="password"
-								required)
-							label.col-md-2.control-label(form="password_repeat") Password repeat *
-							.col-md-4
-								input.form-control(name="password_repeat"
-								type="password"
-								placeholder="Retype password"
-								ng-model="password_repeat"
-								required)
+					//.row.right-padding-lg
+					//	.form-group
+					//		label.col-md-2.control-label(form="password") Password *
+					//		.col-md-4
+					//			input.form-control(name="password"
+					//			type="password"
+					//			placeholder="Password"
+					//			ng-model="password"
+					//			required)
+					//		label.col-md-2.control-label(form="password_repeat") Password repeat *
+					//		.col-md-4
+					//			input.form-control(name="password_repeat"
+					//			type="password"
+					//			placeholder="Retype password"
+					//			ng-model="password_repeat"
+					//			required)
 
 					.row.right-padding-lg
 						.form-group

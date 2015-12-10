@@ -42,12 +42,9 @@ exports.techSend = function (req, res) {
             + "<ul><li><b>Issue</b>: " + message_content.issue.name + "</li><<li><b>Issue description</b>: " + message_content.issue_description + "</li>"
             + "<li><b>OS</b>: " + issue_os + "</li><li><b>Browser</b>: " + issue_browser + "</li><li><b>Browser version</b>: " + issue_browser_ver + "</li></ul>"
         }
-    }, function (error, response) {
-        //uh oh, there was an error
-        if (error) console.log( JSON.stringify(error) );
-
-        //everything's good, lets see what mandrill said
-        else console.log(response);
+    }, function (err, res) {
+        if (err) console.log( JSON.stringify(err) );
+        else console.log(res);
     });
 
     //send a confirmation e-mail to user
@@ -63,12 +60,35 @@ exports.techSend = function (req, res) {
             + "<ul><li><b>Issue</b>: " + message_content.issue.name + "</li><<li><b>Issue description</b>: " + message_content.issue_description + "</li>"
             + "<li><b>OS</b>: " + issue_os + "</li><li><b>Browser</b>: " + issue_browser + "</li><li><b>Browser version</b>: " + issue_browser_ver + "</li></ul>"
         }
-    }, function (error, response) {
-        //uh oh, there was an error
-        if (error) console.log( JSON.stringify(error) );
-
-        //everything's good, lets see what mandrill said
-        else console.log(response);
+    }, function (err, res) {
+        if (err) console.log( JSON.stringify(err) );
+        else console.log(res);
     });
     res.send();
+};
+
+
+/////////////////////////////////
+///////USER RECORD EMAILS////////
+/////////////////////////////////
+
+// send email to new user
+exports.new_user_confirmation = function (contact_packet, token) {
+    mandrill('/messages/send', {
+        message: {
+            to: [{email: contact_packet.rec_email, name: contact_packet.rec_name}],
+            from_email: contact_packet.send_email,
+            subject: contact_packet.rec_role + ' account created!',
+            html: 'Hello ' + contact_packet.rec_name + ',<p>' +
+            'an MGA ' + contact_packet.rec_role + 'account was just set up for you by <a href="' +
+            contact_packet.send_email + '">' + contact_packet.send_name + '</a>.<p>' +
+            'The user name is <b>' + contact_packet.rec_username + '</b>.' +
+            'Please, <a href="' + config.baseUrl + '/reset-password/' + token + '">set password</a> before login.<p>' +
+            'Thanks!<p>' +
+            'The MGA Team.'
+        }
+    }, function (err, res) {
+        if (err) { console.log( JSON.stringify(err) ); }
+        else { console.log(res); }
+    });
 };

@@ -66,7 +66,7 @@ angular.module('app')
             // USERS
             .when('/admin/user-create', {
                 templateUrl: '/partials/admin/users/user-create',
-                controller: 'nrgiCreateUserCtrl',
+                controller: 'nrgiUserCreateCtrl',
                 resolve: routeRoleChecks.supervisor
             })
             .when('/admin/user-admin', {
