@@ -210,7 +210,7 @@ angular
                     className: 'ngdialog-theme-default dialogwidth800',
                     scope: scope
                 });
-            }
+            },
             //questionNew: function($scope) {
             //    var scope = $scope;
             //    scope.value = true;
@@ -221,16 +221,16 @@ angular
             //        scope: scope
             //    });
             //},
-            //questionDelete: function($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/questions/delete-question-confirmation-dialog',
-            //        controller: 'nrgiDeleteQuestionDialogCtrl',
-            //        className: 'ngdialog-theme-default',
-            //        scope: scope
-            //    });
-            //},
+            questionDelete: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+                ngDialog.open({
+                    template: 'partials/dialogs/questions/delete-question-confirmation-dialog',
+                    controller: 'nrgiDeleteQuestionDialogCtrl',
+                    className: 'ngdialog-theme-default',
+                    scope: scope
+                });
+            }
             //referenceSelect: function ($scope, value){
             //    var scope = $scope;
             //    scope.value = true;

@@ -120,12 +120,12 @@ exports.updateQuestion = function (req, res) {
 
 exports.deleteQuestion = function (req, res) {
 
-    // Question.remove({_id: req.params.id}, function (err) {
-    //     if (!err) {
-    //         res.send();
-    //     } else {
-    //         return res.send({ reason: err.toString() });
-    //     }
-    // });
-    // res.send();
+    Question.remove({_id: req.params.id}, function (err) {
+        if (!err) {
+            res.send();
+        } else {
+            return res.send({ reason: err.toString() });
+        }
+    });
+    res.send();
 };
