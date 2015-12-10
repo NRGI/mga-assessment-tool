@@ -1,17 +1,14 @@
 'use strict';
-/*jslint nomen: true unparam: true*/
+var userSchema, User,
+    mongoose        = require('mongoose'),
+    mongooseHistory = require('mongoose-history'),
+    options         = {customCollectionName: "user_hst"},
+    Schema          = mongoose.Schema,
+    validate        = require('mongoose-validate'),
+    encrypt         = require('../utilities/encryption'),
+    ObjectId        = Schema.Types.ObjectId;
 
-var mongoose    = require('mongoose'),
-    encrypt     = require('../utilities/encryption');
-
-var ObjectId    = mongoose.Schema.Types.ObjectId;
-
-var modificationSchema = new mongoose.Schema({
-    modifiedBy:  String,
-    modifiedDate:  {type:  Date, default: Date.now}
-});
-
-var userSchema = mongoose.Schema({
+var userSchema = new Schema({
     firstName: {
         type: String,
         required: '{PATH} is required!'},
@@ -46,7 +43,6 @@ var userSchema = mongoose.Schema({
     createdBy:  ObjectId,
     creationDate:  {type:  Date, default: Date.now},
     ///////////////////Add modification array on the ser update ctrl///////////////////
-    modified:  [modificationSchema]
     // address:  String,
     // language:  String
     // groups:  [String]
@@ -58,8 +54,15 @@ userSchema.methods = {
     },
     hasRole:  function (role) {
         return this.role === role;
+    },
+    setPassword: function (password, callback) {
+        this.salt = encrypt.createSalt();
+        this.hashed_pwd = encrypt.hashPwd(this.salt, password);
+        this.save(callback);
     }
 };
+
+userSchema.plugin(mongooseHistory, options);
 
 var User = mongoose.model('User', userSchema);
 

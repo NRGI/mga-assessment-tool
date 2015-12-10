@@ -230,7 +230,7 @@ angular
                     className: 'ngdialog-theme-default',
                     scope: scope
                 });
-            }
+            },
             //referenceSelect: function ($scope, value){
             //    var scope = $scope;
             //    scope.value = true;
@@ -242,25 +242,25 @@ angular
             //        scope: scope
             //    });
             //},
-            //userEdit: function($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/users/edit-user-dialog',
-            //        controller: 'nrgiEditUserDialogCtrl',
-            //        className: 'ngdialog-theme-default',
-            //        scope: scope
-            //    });
-            //},
-            //userDelete: function($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/users/delete-user-confirmation-dialog',
-            //        controller: 'nrgiDeleteUserDialogCtrl',
-            //        className: 'ngdialog-theme-default',
-            //        scope: scope
-            //    });
-            //}
+            userEdit: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+                ngDialog.open({
+                    template: 'partials/dialogs/users/edit-user-dialog',
+                    controller: 'nrgiEditUserDialogCtrl',
+                    className: 'ngdialog-theme-default',
+                    scope: scope
+                });
+            },
+            userDelete: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+                ngDialog.open({
+                    template: 'partials/dialogs/users/delete-user-confirmation-dialog',
+                    controller: 'nrgiDeleteUserDialogCtrl',
+                    className: 'ngdialog-theme-default',
+                    scope: scope
+                });
+            }
         };
     });
