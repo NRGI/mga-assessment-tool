@@ -3,9 +3,9 @@
 angular
     .module('app')
     .factory('nrgiDialogFactory', function (
-        ngDialog,
-        nrgiNotifier,
-        nrgiUtilsSrvc
+        ngDialog
+        //nrgiNotifier,
+        //nrgiUtilsSrvc
     ) {
         return {
             //assessmentAssign: function ($scope, assessment) {
@@ -166,7 +166,7 @@ angular
                     className: 'ngdialog-theme-default dialogwidth800',
                     scope: scope
                 });
-            }
+            },
 
             //        if (scope.ref_selection === 'document') {
 
@@ -201,16 +201,16 @@ angular
             //        scope: scope
             //    });
             //},
-            //intervieweeEdit: function($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/references/edit-interviewee-dialog',
-            //        controller: 'nrgiEditIntervieweeDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: scope
-            //    });
-            //},
+            intervieweeEdit: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+                ngDialog.open({
+                    template: 'partials/dialogs/references/edit-interviewee-dialog',
+                    controller: 'nrgiEditIntervieweeDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
+            }
             //questionNew: function($scope) {
             //    var scope = $scope;
             //    scope.value = true;
