@@ -1,0 +1,16 @@
+div.left-padding-lg.right-padding-lg
+    div.modal-header
+        h3 Assign Assessment
+    div.modal-body
+        fieldset
+            .row.top-padding-med
+                label.col-md-4  User
+                .form-group.col-md-7
+                    select.form-group.form-control.right-padding-med(name="user" ng-model="new_assignment" required)
+                        option(value="" selected disabled) Select user assignment
+                        option(ng-repeat="user in users" value="{{user._id}}") {{user.firstName}} {{user.lastName}} - {{user.role}}
+    div.modal-footer
+        button.btn.btn-success(ng-click="assessmentAssign()" ng-disabled="assignAssessment.$invalid") Assign user to assessment
+            | &nbsp;
+            button.btn.btn-danger(ng-click="closeDialog()") Cancel
+

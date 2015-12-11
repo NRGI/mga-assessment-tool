@@ -22,13 +22,13 @@
         //- ASSESSMENT ADMIN
         ul.nav.navbar-nav.dropdown
             li.dropdown
-                a.dropdown-toggle(data-toggle="dropdown") Assessment Admin
+                a.dropdown-toggle(data-toggle="dropdown") Assessments
                     b.caret
                 ul.dropdown-menu
                     li
-                        a(href="/admin/assessment-admin") All assessments
+                        a(href="/admin/assessments") All assessments
                     li(ng-repeat="assessment_link in assessment_links")
-                        a(href="/admin/assessments-admin/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
+                        a(href="/admin/assessments/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
 
         //- ADMIN DROPDOWN
         ul.nav.navbar-nav.dropdown

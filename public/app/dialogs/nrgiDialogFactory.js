@@ -8,17 +8,17 @@ angular
         //nrgiUtilsSrvc
     ) {
         return {
-            //assessmentAssign: function ($scope, assessment) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    scope.assessment_update_ID = assessment.assessment_ID;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/assessments/assign-assessment-dialog',
-            //        controller: 'nrgiAssignAssessmentDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: scope
-            //    });
-            //},
+            assessmentAssign: function ($scope, assessment) {
+                var scope = $scope;
+                scope.value = true;
+                scope.assessment_update_ID = assessment.assessment_ID;
+                ngDialog.open({
+                    template: 'partials/dialogs/assessments/assign-assessment-dialog',
+                    controller: 'nrgiAssignAssessmentDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
+            },
             //assessmentReassign: function ($scope) {
             //    //var scope = $scope;
             //    //if (scope.assessment_counters.length !== (scope.assessment_counters.flagged + scope.assessment_counters.approved)) {
@@ -62,16 +62,16 @@ angular
             //        });
             //    }
             //},
-            //assessmentNew: function ($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/assessments/new-assessment-dialog',
-            //        controller: 'nrgiNewAssessmentDialogCtrl',
-            //        className: 'ngdialog-theme-default',
-            //        scope: scope
-            //    });
-            //},
+            assessmentNew: function ($scope) {
+                var scope = $scope;
+                scope.value = true;
+                ngDialog.open({
+                    template: 'partials/dialogs/assessments/new-assessment-dialog',
+                    controller: 'nrgiNewAssessmentDialogCtrl',
+                    className: 'ngdialog-theme-default',
+                    scope: scope
+                });
+            },
             //assessmentSubmit: function ($scope) {
             //    var scope = $scope;
             //    if (scope.assessment_counters.length !== scope.assessment_counters.complete) {

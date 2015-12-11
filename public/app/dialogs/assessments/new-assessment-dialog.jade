@@ -1,6 +1,8 @@
-div.left-padding-lg.right-padding-lg
-    h3 New assessment deployment
-        .row.form-horizontal.left-padding-lg.top-padding-lg
+div
+    div.modal-header
+        h3 New assessment deployment
+    div.modal-body
+        .form-horizontal
             form.form-horizontal(name="deployAssessment")
                 fieldset
                     .row
@@ -31,9 +33,9 @@ div.left-padding-lg.right-padding-lg
                                 selected
                                 disabled) Select country
 
-                    .row.right-padding-lg.pull-right
-                        button.btn.btn-success(
-                        ng-click="assessmentDeploy()"
-                        ng-disabled="deployAssessment.$invalid") Deploy new assessment
-                        | &nbsp;
-                        button.btn.btn-danger(ng-click="closeDialog()") Cancel
+    div.modal-footer
+        button.btn.btn-success(
+        ng-click="assessmentDeploy()"
+        ng-disabled="deployAssessment.$invalid") Deploy new assessment
+        | &nbsp;
+        button.btn.btn-danger(ng-click="closeDialog()") Cancel

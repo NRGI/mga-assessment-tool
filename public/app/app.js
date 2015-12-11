@@ -90,15 +90,6 @@ angular.module('app')
                 controller: 'nrgiQuestionAdminDetailCtrl',
                 resolve: routeRoleChecks.supervisor
             })
-            // ASSESSMENTS
-            .when('/admin/assessment-admin', {
-                templateUrl: '/partials/assessments/assessment-admin',
-                controller: 'nrgiAssessmentAdminCtrl'
-            })
-            .when('/admin/assessments-admin/:assessment_ID', {
-                templateUrl: '/partials/assessments/assessment-admin-detail',
-                controller: 'nrgiAssessmentAdminDetailCtrl'
-            })
             // ANSWERS
             .when('/admin/assessments-admin/interviews/:assessment_ID', {
                 templateUrl: '/partials/answers/interviews-list',
@@ -133,6 +124,16 @@ angular.module('app')
             .when('/admin/interviewees-admin/:interviewee_ID', {
                 templateUrl: '/partials/admin/interviewees/interviewee-admin-detail',
                 controller: 'nrgiIntervieweeAdminDetailCtrl'
+            })
+            ///// General Routes
+            // ASSESSMENTS
+            .when('/admin/assessments', {
+                templateUrl: '/partials/assessments/assessment-list',
+                controller: 'nrgiAssessmentListCtrl'
+            })
+            .when('/admin/assessments/:assessment_ID', {
+                templateUrl: '/partials/assessments/assessment-detail',
+                controller: 'nrgiAssessmentDetailCtrl'
             });
 
         // .when('/admin/assessment-admin/subs/:version', {
