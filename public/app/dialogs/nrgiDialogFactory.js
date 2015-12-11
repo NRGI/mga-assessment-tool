@@ -62,7 +62,7 @@ angular
             //        });
             //    }
             //},
-            assessmentNew: function ($scope) {
+            assessmentCreate: function ($scope) {
                 var scope = $scope;
                 scope.value = true;
                 ngDialog.open({

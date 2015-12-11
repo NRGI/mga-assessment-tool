@@ -12,7 +12,6 @@ angular.module('app')
         nrgiAssessmentMethodSrvc
     ) {
         $scope.current_user = nrgiIdentitySrvc.currentUser;
-
         $scope.assessmentStart = function (assessment_ID) {
             var timestamp = new Date().toISOString();
             nrgiAssessmentSrvc.get({assessment_ID: assessment_ID}, function (new_assessment_data) {
@@ -26,17 +25,20 @@ angular.module('app')
                 });
             });
         };
-        //
-        // Deploy new assessment
-        $scope.newAssessmentDialog = function () {
-            $scope.value = true;
-            ngDialog.open({
-                template: 'partials/dialogs/new-assessment-dialog',
-                controller: 'nrgiNewAssessmentDialogCtrl',
-                className: 'ngdialog-theme-default',
-                scope: $scope
-            });
+        $scope.assessmentAssign = function (assessment) {
+            nrgiDialogFactory.assessmentAssign($scope, assessment);
         };
+        //
+        //// Deploy new assessment
+        //$scope.newAssessmentDialog = function () {
+        //    $scope.value = true;
+        //    ngDialog.open({
+        //        template: 'partials/dialogs/new-assessment-dialog',
+        //        controller: 'nrgiNewAssessmentDialogCtrl',
+        //        className: 'ngdialog-theme-default',
+        //        scope: $scope
+        //    });
+        //};
 
         //// Deploy new assessment
         //$scope.assignAssessmentDialog = function (assessment_ID) {
@@ -49,10 +51,5 @@ angular.module('app')
         //        scope: $scope
         //    });
         //};
-        $scope.assignAssessmentDialog = function (assessment) {
-            nrgiDialogFactory.assessmentAssign($scope, assessment);
-        };
-        //$scope.newAssessmentDialog = function (assessment) {
-        //    nrgiDialogFactory.assessmentAssign($scope, assessment);
-        //};
+
     });
