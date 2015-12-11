@@ -1,9 +1,8 @@
-
 .container-fluid.page-container
     .well
         div.page-well
             img.mapsicon.left-padding-lg(src="assets/mapsicon/all/{{assessment.assessment_ID | lowercase | limitTo: 2}}/vector.svg")
-            legend.h3.page-header {{assessment.country}} {{assessment.year}} {{assessment.version | ucfirst}} Assessment
+            legend.h3.page-header {{assessment.country}} {{assessment.year}} {{assessment.version | ucfirst}} {{mode}} questions
             .pull-right
                 form.form-inline
                     .form-group
@@ -42,14 +41,22 @@
                     text  on
                     span(ng-repeat="mod in assessment.modified")
                         em(ng-show="$last")  {{mod.modified_date | date}}
-                .row Questions flagged: {{assessment.questions_flagged}}
-                .row Questions complete: {{assessment.questions_complete}}
-                .row Desk research questions: {{assessment.desk_research_set_length}}
-                .row Interview questions: {{assessment.interview_set_length}}
+                //.row Questions flagged: {{assessment.questions_flagged}}
+                //.row Questions complete: {{assessment.questions_complete}}
+                //.row Desk research questions: {{assessment.desk_research_set_length}}
+                //.row Interview questions: {{assessment.interview_set_length}}
                 .row.top-padding-med
-                    a.btn.center-block.btn-primary.pull-left.col-md-9(href="/assessments/desk-research/{{assessment.assessment_ID}}") Desk research
+                    a.btn.center-block.btn-primary.pull-left.col-md-9(
+                    href="/assessments/{{assessment.assessment_ID}}"
+                    ng-if="mode!=='assessment'") Interviews
                 .row.top-padding-med
-                    a.btn.center-block.btn-primary.pull-left.col-md-9(href="/assessments/interviews/{{assessment.assessment_ID}}") Interviews
+                    a.btn.center-block.btn-primary.pull-left.col-md-9(
+                    href="/assessments/desk_research/{{assessment.assessment_ID}}"
+                    ng-if="mode!=='desk research'") Desk research
+                .row.top-padding-med
+                    a.btn.center-block.btn-primary.pull-left.col-md-9(
+                    href="/assessments/interview/{{assessment.assessment_ID}}"
+                    ng-if="mode!=='interview'") Interviews
                 .row.top-padding-med
                     a.btn.center-block.btn-primary.pull-left.col-md-9(href="/assessments/secondary-sources/{{assessment.assessment_ID}}") Secondary sources
                 .row.top-padding-med

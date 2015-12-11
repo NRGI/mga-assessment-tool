@@ -145,17 +145,17 @@ angular.module('app')
                 controller: 'nrgiAssessmentDetailCtrl',
                 resolve: routeRoleChecks.user
             })
-            .when('/assessments/desk-research/:assessment_ID', {
-                templateUrl: '/partials/assessments/desk-research-list',
+            .when('/assessments/desk_research/:assessment_ID', {
+                templateUrl: '/partials/assessments/assessment-detail',
                 controller: 'nrgiAssessmentDetailCtrl',
                 resolve: routeRoleChecks.user
             })
-            .when('/assessments/interviews/:assessment_ID', {
-                templateUrl: '/partials/assessments/interview-list',
+            .when('/assessments/interview/:assessment_ID', {
+                templateUrl: '/partials/assessments/assessment-detail',
                 controller: 'nrgiAssessmentDetailCtrl',
                 resolve: routeRoleChecks.user
             })
-            .when('/assessments/secondary-sources/:assessment_ID', {
+            .when('/assessments/secondary_sources/:assessment_ID', {
                 templateUrl: '/partials/assessments/secondary-source-list',
                 controller: 'nrgiAssessmentDetailCtrl',
                 resolve: routeRoleChecks.user
