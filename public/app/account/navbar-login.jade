@@ -26,9 +26,9 @@
                     b.caret
                 ul.dropdown-menu
                     li
-                        a(href="/admin/assessments") All assessments
+                        a(href="/assessments") All assessments
                     li(ng-repeat="assessment_link in assessment_links")
-                        a(href="/admin/assessments/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
+                        a(href="/assessments/{{assessment_link.url}}") {{assessment_link.country | ucfirst}} - {{assessment_link.year}}
 
         //- ADMIN DROPDOWN
         ul.nav.navbar-nav.dropdown

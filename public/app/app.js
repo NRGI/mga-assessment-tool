@@ -93,48 +93,89 @@ angular.module('app')
             // ANSWERS
             .when('/admin/assessments-admin/interviews/:assessment_ID', {
                 templateUrl: '/partials/answers/interviews-list',
-                controller: 'nrgiInterviewsListCtrl'
+                controller: 'nrgiInterviewsListCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             .when('/admin/assessments-admin/desk-research/:assessment_ID', {
                 templateUrl: '/partials/answers/desk-research-list',
-                controller: 'nrgiDeskResearchListCtrl'
+                controller: 'nrgiDeskResearchListCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             .when('/admin/assessments-admin/secondary-sources/:assessment_ID', {
                 templateUrl: '/partials/answers/secondary-sources-list',
-                controller: 'nrgiSecondarySourcesListCtrl'
+                controller: 'nrgiSecondarySourcesListCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             .when('/admin/assessments-admin/answer/:answer_ID', {
                 templateUrl: '/partials/answers/answer-page-edit',
-                controller: 'nrgiAnswerCtrl'
+                controller: 'nrgiAnswerCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             // DOCUMENTS
             .when('/admin/documents-admin', {
                 templateUrl: '/partials/admin/documents/document-admin',
-                controller: 'nrgiDocumentAdminCtrl'
+                controller: 'nrgiDocumentAdminCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             .when('/admin/documents-admin/:document_ID', {
                 templateUrl: '/partials/admin/documents/document-admin-detail',
-                controller: 'nrgiDocumentAdminDetailCtrl'
+                controller: 'nrgiDocumentAdminDetailCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             // INTERVIEWEES
             .when('/admin/interviewees-admin', {
                 templateUrl: '/partials/admin/interviewees/interviewee-admin',
-                controller: 'nrgiIntervieweeAdminCtrl'
+                controller: 'nrgiIntervieweeAdminCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             .when('/admin/interviewees-admin/:interviewee_ID', {
                 templateUrl: '/partials/admin/interviewees/interviewee-admin-detail',
-                controller: 'nrgiIntervieweeAdminDetailCtrl'
+                controller: 'nrgiIntervieweeAdminDetailCtrl',
+                resolve: routeRoleChecks.supervisor
             })
             ///// General Routes
             // ASSESSMENTS
-            .when('/admin/assessments', {
+            .when('/assessments', {
                 templateUrl: '/partials/assessments/assessment-list',
-                controller: 'nrgiAssessmentListCtrl'
+                controller: 'nrgiAssessmentListCtrl',
+                resolve: routeRoleChecks.user
             })
-            .when('/admin/assessments/:assessment_ID', {
+            .when('/assessments/:assessment_ID', {
                 templateUrl: '/partials/assessments/assessment-detail',
-                controller: 'nrgiAssessmentDetailCtrl'
+                controller: 'nrgiAssessmentDetailCtrl',
+                resolve: routeRoleChecks.user
+            })
+            .when('/assessments/desk-research/:assessment_ID', {
+                templateUrl: '/partials/assessments/desk-research-list',
+                controller: 'nrgiAssessmentDetailCtrl',
+                resolve: routeRoleChecks.user
+            })
+            .when('/assessments/interviews/:assessment_ID', {
+                templateUrl: '/partials/assessments/interview-list',
+                controller: 'nrgiAssessmentDetailCtrl',
+                resolve: routeRoleChecks.user
+            })
+            .when('/assessments/secondary-sources/:assessment_ID', {
+                templateUrl: '/partials/assessments/secondary-source-list',
+                controller: 'nrgiAssessmentDetailCtrl',
+                resolve: routeRoleChecks.user
             });
+            //// Assessment overview routes
+            //.when('/assessments', {
+            //    templateUrl: '/partials/assessments/assessments-list',
+            //    controller:  'rgiAssessmentsListCtrl',
+            //    resolve: routeRoleChecks.user
+            //})
+            //.when('/assessments/:assessment_ID', {
+            //    templateUrl: '/partials/assessments/assessment-detail',
+            //    controller:  'rgiAssessmentDetailCtrl',
+            //    resolve: routeRoleChecks.user
+            //})
+            //.when('/assessments-review/:assessment_ID', {
+            //    templateUrl: '/partials/assessments/assessment-review',
+            //    controller:  'rgiAssessmentDetailCtrl',
+            //    resolve: routeRoleChecks.user
+            //});
 
         // .when('/admin/assessment-admin/subs/:version', {
         //     templateUrl: '/partials/admin/assessments/assessment-admin',
@@ -160,22 +201,7 @@ angular.module('app')
         //     controller:  'rgiAnswerCtrl'
         // })
 
-        // // Assessment overview routes
-        // .when('/assessments', {
-        //     templateUrl: '/partials/assessments/assessments-list',
-        //     controller:  'rgiAssessmentsListCtrl',
-        //     resolve: routeRoleChecks.user
-        // })
-        // .when('/assessments/:assessment_ID', {
-        //     templateUrl: '/partials/assessments/assessment-detail',
-        //     controller:  'rgiAssessmentDetailCtrl',
-        //     resolve: routeRoleChecks.user
-        // })
-        // .when('/assessments-review/:assessment_ID', {
-        //     templateUrl: '/partials/assessments/assessment-review',
-        //     controller:  'rgiAssessmentDetailCtrl',
-        //     resolve: routeRoleChecks.user
-        // })
+
         // .when('/assessments/assessment-view/:answer_ID', {
         //     templateUrl: '/partials/assessments/answer-page-view',
         //     controller:  'rgiAnswerCtrl'

@@ -28,28 +28,4 @@ angular.module('app')
         $scope.assessmentAssign = function (assessment) {
             nrgiDialogFactory.assessmentAssign($scope, assessment);
         };
-        //
-        //// Deploy new assessment
-        //$scope.newAssessmentDialog = function () {
-        //    $scope.value = true;
-        //    ngDialog.open({
-        //        template: 'partials/dialogs/new-assessment-dialog',
-        //        controller: 'nrgiNewAssessmentDialogCtrl',
-        //        className: 'ngdialog-theme-default',
-        //        scope: $scope
-        //    });
-        //};
-
-        //// Deploy new assessment
-        //$scope.assignAssessmentDialog = function (assessment_ID) {
-        //    $scope.value = true;
-        //    $scope.assessment_ID = assessment_ID;
-        //    ngDialog.open({
-        //        template: 'partials/dialogs/assign-assessment-dialog',
-        //        controller: 'nrgiAssignAssessmentDialogCtrl',
-        //        className: 'ngdialog-theme-default',
-        //        scope: $scope
-        //    });
-        //};
-
     });
