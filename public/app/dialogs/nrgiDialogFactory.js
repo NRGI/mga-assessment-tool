@@ -11,7 +11,7 @@ angular
             assessmentAssign: function ($scope, assessment) {
                 var scope = $scope;
                 scope.value = true;
-                scope.assessment_update_ID = assessment.assessment_ID;
+                scope.assessment_update_ID = assessment;
                 ngDialog.open({
                     template: 'partials/dialogs/assessments/assign-assessment-dialog',
                     controller: 'nrgiAssignAssessmentDialogCtrl',
