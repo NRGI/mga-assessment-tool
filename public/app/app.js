@@ -155,9 +155,10 @@ angular.module('app')
                 controller: 'nrgiAssessmentDetailCtrl',
                 resolve: routeRoleChecks.user
             })
+            // ANSWERS
             .when('/assessments/secondary_sources/:assessment_ID', {
-                templateUrl: '/partials/assessments/secondary-source-list',
-                controller: 'nrgiAssessmentDetailCtrl',
+                templateUrl: '/partials/answers/secondary-source-list',
+                controller: 'nrgiSecondarySourceListCtrl',
                 resolve: routeRoleChecks.user
             });
             //// Assessment overview routes

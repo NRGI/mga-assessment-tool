@@ -1,34 +1,36 @@
-.container
-    .well.left-padding-lg.right-padding-lg
-        img.mapsicon(src="assets/mapsicon/all/{{assessment.assessment_ID | lowercase | limitTo: 2}}/vector.svg")
-        legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} secondary data sources
-        .pull-right
-            form.form-inline.left-padding-lg.right-padding-lg
-                .form-group
-                    input.form-control(ng-model="search_text" placeholder="Filter")
-                .form-group.margin-left-med
-                    select.form-control(ng-model="sort_order" ng-options="item.value as item.text for item in sort_options")
-        .pull-left.left-padding-lg.bottom-padding-lg
-            .row
-                text Users:
-            .row(ng-repeat="user in user_list").left-padding-lg
-                text(ng-if="assessment.users.length===0") No users
-                a(href="mailto:{{user.email}}" ng-if="assessment.users.length!==0")  {{user.firstName}}  {{user.lastName}}
-                text  - {{user.role}}
-            .row
-                text Status: {{assessment.status| addSpaces | ucfirst}}
-            .row
-                text Last edited by
-                a(href="mailto:{{edited_by.email}}")  {{edited_by.firstName}}  {{edited_by.lastName}}
-                text  on
-                span(ng-repeat="mod in assessment.modified")
-                    em(ng-show="$last")  {{mod.modified_date | date}}
-            .row.top-padding-med
-                a.btn.center-block.btn-primary(href="/admin/assessments-admin/{{assessment.assessment_ID}}") Go to main page
-            .row.top-padding-med
-                a.btn.center-block.btn-primary(href="/admin/assessments-admin/desk-research/{{assessment.assessment_ID}}") Go to desk research
-            .row.top-padding-med
-                a.btn.center-block.btn-primary(href="/admin/assessments-admin/interviews/{{assessment.assessment_ID}}") Go to interviews
+.container-fluid.page-container
+    .well
+        div.page-well
+            img.mapsicon(src="assets/mapsicon/all/{{assessment.assessment_ID | lowercase | limitTo: 2}}/vector.svg")
+            legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} secondary data sources
+            .pull-right
+                form.form-inline.left-padding-lg.right-padding-lg
+                    .form-group
+                        input.form-control(ng-model="search_text" placeholder="Filter")
+                    .form-group.margin-left-med
+                        select.form-control(ng-model="sort_order" ng-options="item.value as item.text for item in sort_options")
+            .pull-left.left-padding-lg.bottom-padding-lg
+                .row
+                    text Users:
+                .row(ng-repeat="user in user_list").left-padding-lg
+                    text(ng-if="assessment.users.length===0") No users
+                    a(href="mailto:{{user.email}}" ng-if="assessment.users.length!==0")  {{user.firstName}}  {{user.lastName}}
+                    text  - {{user.role}}
+                .row
+                    text Status: {{assessment.status| addSpaces | ucfirst}}
+                .row
+                    text Last edited by
+                    a(href="mailto:{{edited_by.email}}")  {{edited_by.firstName}}  {{edited_by.lastName}}
+                    text  on
+                    span(ng-repeat="mod in assessment.modified")
+                        em(ng-show="$last")  {{mod.modified_date | date}}
+
+                .row.top-padding-med
+                    a.btn.center-block.btn-primary.pull-left.col-md-9(href="/assessments/{{assessment.assessment_ID}}") Go to main page
+                .row.top-padding-med
+                    a.btn.center-block.btn-primary.pull-left.col-md-9(href="/assessments/desk_research/{{assessment.assessment_ID}}") Go to desk research
+                .row.top-padding-med
+                    a.btn.center-block.btn-primary.pull-left.col-md-9(href="/assessments/interview/{{assessment.assessment_ID}}") Go to interviews
 
         table.table.table-hover.table-striped.table-condensed
             thead
