@@ -179,28 +179,28 @@ angular
             //        scope: scope
             //    });
             //}
-            //flagCreate: function($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/flags/flag-answer-dialog',
-            //        controller: 'nrgiFlagAnswerDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: $scope
-            //    });
-            //},
-            //flagEdit: function($scope, flag, index) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    scope.index = index;
-            //    scope.flag = flag;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/flags/flag-answer-dialog',
-            //        controller: 'nrgiFlagEditDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: scope
-            //    });
-            //},
+            flagCreate: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+                ngDialog.open({
+                    template: 'partials/dialogs/flags/flag-answer-dialog',
+                    controller: 'nrgiFlagAnswerDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: $scope
+                });
+            },
+            flagEdit: function($scope, flag, index) {
+                var scope = $scope;
+                scope.value = true;
+                scope.index = index;
+                scope.flag = flag;
+                ngDialog.open({
+                    template: 'partials/dialogs/flags/flag-answer-dialog',
+                    controller: 'nrgiFlagEditDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
+            },
             intervieweeEdit: function($scope) {
                 var scope = $scope;
                 scope.value = true;

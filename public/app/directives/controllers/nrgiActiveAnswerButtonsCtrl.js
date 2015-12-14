@@ -24,31 +24,52 @@ angular.module('app')
         $scope.answerSubmit = function () {
             var new_answer_data = $scope.answer;
 
-            if (!new_answer_data[$scope.current_user.role + '_score'] && !new_answer_data.new_answer_selection) {
-                nrgiNotifier.error('You must pick a score');
-            } else if (!new_answer_data[$scope.current_user.role + '_justification']) {
-                nrgiNotifier.error('You must provide a justification');
-            } else {
-                if (new_answer_data.status !== 'submitted') {
-                    new_answer_data.status = 'submitted';
-                }
-                if (new_answer_data.new_answer_selection) {
-                    new_answer_data[$scope.current_user.role + '_score'] = $scope.question.question_criteria[new_answer_data.new_answer_selection];
-                }
+            //if (!new_answer_data[$scope.current_user.role + '_score'] && !new_answer_data.new_answer_selection) {
+            //    nrgiNotifier.error('You must pick a score');
+            //} else if (!new_answer_data[$scope.current_user.role + '_justification']) {
+            //    nrgiNotifier.error('You must provide a justification');
+            //} else {
+            //    if (new_answer_data.status !== 'submitted') {
+            //        new_answer_data.status = 'submitted';
+            //    }
+            //    if (new_answer_data.new_answer_selection) {
+            //        new_answer_data[$scope.current_user.role + '_score'] = $scope.question.question_criteria[new_answer_data.new_answer_selection];
+            //    }
+            //
+            //    nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+            //        .then(function () {
+            //            if (new_answer_data.question_order !== $scope.question_length) {
+            //
+            //                $location.path(root_url + '/answer/' + new_answer_data.assessment_ID + "-" + String(nrgiUtilsSrvc.zeroFill((new_answer_data.question_order + 1), 3)));
+            //            } else {
+            //                $location.path(root_url + '/' + new_answer_data.assessment_ID);
+            //            }
+            //            nrgiNotifier.notify('Answer submitted');
+            //        }, function (reason) {
+            //            nrgiNotifier.error(reason);
+            //        });
+            //}
+        };
+        $scope.answerApprove = function () {
+            var new_answer_data = $scope.answer,
+                flag_check = nrgiUtilsSrvc.flagCheck(new_answer_data.flags);
 
-                nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
-                    .then(function () {
-                        if (new_answer_data.question_order !== $scope.question_length) {
-
-                            $location.path(root_url + '/answer/' + new_answer_data.assessment_ID + "-" + String(nrgiUtilsSrvc.zeroFill((new_answer_data.question_order + 1), 3)));
-                        } else {
-                            $location.path(root_url + '/' + new_answer_data.assessment_ID);
-                        }
-                        nrgiNotifier.notify('Answer submitted');
-                    }, function (reason) {
-                        nrgiNotifier.error(reason);
-                    });
-            }
+            //if (new_answer_data.status !== 'approved' && flag_check === true) {
+            //    nrgiNotifier.error('You can only approve an answer when all flags have been dealt with!');
+            //} else {
+            //    new_answer_data.status = 'approved';
+            //    nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+            //        .then(function () {
+            //            if (new_answer_data.question_order !== $scope.question_length) {
+            //                $location.path(root_url + '/answer/' + new_answer_data.assessment_ID + "-" + String(nrgiUtilsSrvc.zeroFill((new_answer_data.question_order + 1), 3)));
+            //            } else {
+            //                $location.path(root_url + '/' + new_answer_data.assessment_ID);
+            //            }
+            //            nrgiNotifier.notify('Answer approved');
+            //        }, function (reason) {
+            //            nrgiNotifier.notify(reason);
+            //        });
+            //}
         };
         $scope.answerClear = function () {
             $route.reload();
@@ -68,27 +89,7 @@ angular.module('app')
         $scope.answerReturnSecondary = function () {
             $location.path(root_url + '/secondary_sources/' + $scope.answer.assessment_ID);
         };
-        $scope.answerApprove = function () {
-            var new_answer_data = $scope.answer,
-                flag_check = nrgiUtilsSrvc.flagCheck(new_answer_data.flags);
 
-            if (new_answer_data.status !== 'approved' && flag_check === true) {
-                nrgiNotifier.error('You can only approve an answer when all flags have been dealt with!');
-            } else {
-                new_answer_data.status = 'approved';
-                nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
-                    .then(function () {
-                        if (new_answer_data.question_order !== $scope.question_length) {
-                            $location.path(root_url + '/answer/' + new_answer_data.assessment_ID + "-" + String(nrgiUtilsSrvc.zeroFill((new_answer_data.question_order + 1), 3)));
-                        } else {
-                            $location.path(root_url + '/' + new_answer_data.assessment_ID);
-                        }
-                        nrgiNotifier.notify('Answer approved');
-                    }, function (reason) {
-                        nrgiNotifier.notify(reason);
-                    });
-            }
-        };
 
         //$scope.answerSave = function () {
         //    var new_answer_data = $scope.answer,

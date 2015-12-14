@@ -1,5 +1,4 @@
 'use strict';
-//var angular;
 /*jslint nomen: true*/
 
 function zeroFill(number, width) {
