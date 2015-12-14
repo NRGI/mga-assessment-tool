@@ -196,7 +196,7 @@ angular
                 scope.flag = flag;
                 ngDialog.open({
                     template: 'partials/dialogs/flags/flag-answer-dialog',
-                    controller: 'nrgiFlagEditDialogCtrl',
+                    controller: 'nrgiFlagAnswerDialogCtrl',
                     className: 'ngdialog-theme-default dialogwidth800',
                     scope: scope
                 });
