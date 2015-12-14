@@ -52,21 +52,32 @@ exports.getAnswersByID = function (req, res, next) {
 
 //noinspection JSUnusedLocalSymbols
 exports.createAnswers = function (req, res, next) {
-    var new_answers, i;
-    new_answers = req.body;
+    var new_answers = req.body;
 
-    for (i = 0; i < new_answers.length; i += 1) {
-        //noinspection JSUnusedLocalSymbols
-        Answer.create(new_answers[i], function (err, answer) {
+    new_answers.forEach(function (new_answer) {
+        Answer.create(new_answer, function(err, ans) {
             if (err) {
-                if (err.toString().indexOf('E11000') > -1) {
+                if(err.toString().indexOf('E11000') > -1) {
                     err = new Error('Duplicate answer');
                 }
                 res.status(400);
                 return res.send({reason: err.toString()});
             }
         });
-    }
+    });
+
+    //for (i = 0; i < new_answers.length; i += 1) {
+    //    //noinspection JSUnusedLocalSymbols
+    //    Answer.create(new_answers[i], function (err, answer) {
+    //        if (err) {
+    //            if (err.toString().indexOf('E11000') > -1) {
+    //                err = new Error('Duplicate answer');
+    //            }
+    //            res.status(400);
+    //            return res.send({reason: err.toString()});
+    //        }
+    //    });
+    //}
     res.send();
 };
 
@@ -94,7 +105,7 @@ exports.updateAnswer = function (req, res) {
             if (!answer.interview_score.interview_date) {
                 answer_update.interview_score.interview_date = timestamp;
             }
-            answer.modified.push({modifiedBy: req.user._id, modifiedDate: timestamp});
+            answer.last_modified = {modified_by: req.user._id, modified_date: timestamp};
 
             if (answer_update.hasOwnProperty('answer_score') && answer_update.hasOwnProperty('answer_text')) {
                 answer_history_update.date = timestamp;

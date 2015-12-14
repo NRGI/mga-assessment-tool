@@ -5,3 +5,9 @@ data model changes
     - add documents: []
     - add interviewees: []
     - modfied removed
+
+-Answer
+    - modfied -> last_modified
+    - moved webSchema to citationSchema
+    - moved humanSchema to interviewSchema
+    - moved references.web to references.citation

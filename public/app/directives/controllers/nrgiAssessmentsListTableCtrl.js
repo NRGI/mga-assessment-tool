@@ -18,7 +18,7 @@ angular.module('app')
                 new_assessment_data.start_date = {started_by: $scope.identity.currentUser._id, date: timestamp};
                 new_assessment_data.status = 'started';
                 nrgiAssessmentMethodSrvc.updateAssessment(new_assessment_data).then(function () {
-                    $location.path('/admin/assessments-admin/answer/' + assessment_ID + '-001');
+                    $location.path('/assessments/answer/' + assessment_ID + '-001');
                     nrgiNotifier.notify('Assessment review started!');
                 }, function (reason) {
                     nrgiNotifier.error(reason);

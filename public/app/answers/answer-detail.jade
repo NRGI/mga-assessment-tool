@@ -122,39 +122,39 @@
             //        href="/admin/assessments-admin/desk-research/{{answer.assessment_ID}}"
             //        ng-if="answer.question_mode==='desk_research'") Return to menu
 
-            // DESK RESEARCH ANSWER DISPLAY
-            .row(ng-if="answer.question_mode==='desk_research'")
-                .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'")
-                    div(ng-if="answer.answer_score")
-                        label.col-med-2 Selected Score:
-                        text  {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
-                    div(ng-if="!answer.answer_score") No answer selected
-                .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='int'")
-                    div(ng-if="answer.answer_score")
-                        label.col-med-2 Inputed Score:
-                        text  {{answer.answer_score.value}}
-                    div(ng-if="!answer.answer_score") No answer inputed
-                .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='perc'")
-                    div(ng-if="answer.answer_score")
-                        label.col-med-2 Inputed Score:
-                        text  {{answer.answer_score.value}}
-                    div(ng-if="!answer.answer_score") No answer inputed
-            // INTERVIEW ANSWER DISPLAY
-            div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.interview_score.length > 0")
-                legend Interview scores
-                .row
-                    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
-                        .row(ng-repeat="score in interview_scores")
-                            .row
-                                b Interviewee:
-                                text  {{score.interviewee.firstName}} {{score.interviewee.lastName}} ({{score.interview_date | date:'MM/dd/yyyy'}})
-                            .row
-                                b Score:
-                                text  {{score.option_text}} - {{score.value}}
-                            .row
-                                b Transcript:
-                                text  {{score.interview_text}}
-                            br
+            //// DESK RESEARCH ANSWER DISPLAY
+            //.row(ng-if="answer.question_mode==='desk_research'")
+            //    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'")
+            //        div(ng-if="answer.answer_score")
+            //            label.col-med-2 Selected Score:
+            //            text  {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
+            //        div(ng-if="!answer.answer_score") No answer selected
+            //    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='int'")
+            //        div(ng-if="answer.answer_score")
+            //            label.col-med-2 Inputed Score:
+            //            text  {{answer.answer_score.value}}
+            //        div(ng-if="!answer.answer_score") No answer inputed
+            //    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='perc'")
+            //        div(ng-if="answer.answer_score")
+            //            label.col-med-2 Inputed Score:
+            //            text  {{answer.answer_score.value}}
+            //        div(ng-if="!answer.answer_score") No answer inputed
+            //// INTERVIEW ANSWER DISPLAY
+            //div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.interview_score.length > 0")
+            //    legend Interview scores
+            //    .row
+            //        .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
+            //            .row(ng-repeat="score in interview_scores")
+            //                .row
+            //                    b Interviewee:
+            //                    text  {{score.interviewee.firstName}} {{score.interviewee.lastName}} ({{score.interview_date | date:'MM/dd/yyyy'}})
+            //                .row
+            //                    b Score:
+            //                    text  {{score.option_text}} - {{score.value}}
+            //                .row
+            //                    b Transcript:
+            //                    text  {{score.interview_text}}
+            //                br
             ////FLAG ACCORDION
             //.row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
             //    div(id="flags_div").bottom-padding-med
@@ -231,78 +231,78 @@
 
 
 
-            //// DESK RESEARCH ANSWER FORM
-            .row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='desk_research'")
-                .form-horizontal(name="desk_research_answer_form")
-                    fieldset(ng-if="answer.question_mode==='desk_research'")
-                        div(id="answer_choice_div").bottom-padding-med
-                            legend(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'") Choose one of the following answers (required):
-                            ng-form(name="answer_choice_form")
-                                .form-group.left-padding-lg(ng-repeat="option in answer.answer_options" required)
-                                    input(
-                                    type="radio"
-                                    ng-value="option"
-                                    ng-model="answer.answer_score")
-                                    text.left-padding-med {{option.option_text | ucfirst}}
-
-                        div(id="answer_value_div").bottom-padding-med
-                            legend(ng-if="answer.question_data_type==='perc' || answer.question_data_type==='int' ") Please provide a value (required):
-                            .form-group.left-padding-lg.col-md-2(required)
-                                label(ng-if="answer.question_data_type==='int'") Whole number
-                                label(ng-if="answer.question_data_type==='perc'") Percentage as decimal
-                                input.form-control(type="number" ng-if="answer.question_data_type==='int'" ng-model="answer.answer_score.value")
-                                input.form-control(type="number" step="any" ng-if="answer.question_data_type==='perc'" ng-model="answer.answer_score.value")
-
-                        div(id="answer_justification_div").bottom-padding-med
-                            legend(ng-if="answer.question_data_type==='text'") Please provide a text based response (required):
-                            ng-form(name="answer_justification_form")
-                                .form-group.top-padding-med
-                                    .row.left-padding-lg
-                                        .col-md-11
-                                            textarea.form-control(
-                                            name="answer_text"
-                                            type="text"
-                                            ng-model="answer.answer_text"
-                                            placeholder="Please provide supporting evidence... (required)"
-                                            autocomplete="off")
-
-            // INTERVIEW ANSWER FORM
-            .row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='interview'")
-                .form-horizontal(name="interview_answer_form")
-                    fieldset
-                        div(id="answer_choice_div").bottom-padding-med
-                            legend(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'") Choose one of the following answers (required):
-                            ng-form.col-md-6(name="answer_choice_form")
-                                .form-group.left-padding-lg(ng-repeat="option in answer.answer_options")
-                                    input(
-                                    type="radio"
-                                    ng-value="option"
-                                    ng-model="new_interview_answer.score"
-                                    required)
-                                    text.left-padding-med {{option.option_text}}
-                            .col-md-5.pull-left.top-padding-med
-                                .row
-                                    ng-form(name="interviewee_selection_form")
-                                        select.form-group.form-control(ng-model="new_interview_answer.interviewee_ID" required)
-                                            option(value="" selected disabled) Select interviewee
-                                            option(ng-repeat="interviewee in interviewees" value="{{interviewee._id}}") {{interviewee.firstName}} {{interviewee.lastName}} - {{interviewee.role}}
-                                .row
-                                    button.form-group.form-control.btn.center-block.btn-primary(ng-click="intervieweeAdd()") Add new interviewee
-
-                        div(id="answer_text_div").bottom-padding-med
-                            ng-form(name="interview_answer_text_form")
-                                .form-group.top-padding-med
-                                    .row.left-padding-lg
-                                        .col-md-10
-                                            textarea.form-control(
-                                            name="answer_text"
-                                            type="text"
-                                            ng-model="new_interview_answer.interview_text"
-                                            placeholder="Please provide interview transcription... (required)"
-                                            autocomplete="off"
-                                            required)
-                                        .col-md-1
-                                            button.btn.btn-success(ng-click="answerSubmit()") Submit interview
+            ////// DESK RESEARCH ANSWER FORM
+            //.row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='desk_research'")
+            //    .form-horizontal(name="desk_research_answer_form")
+            //        fieldset(ng-if="answer.question_mode==='desk_research'")
+            //            div(id="answer_choice_div").bottom-padding-med
+            //                legend(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'") Choose one of the following answers (required):
+            //                ng-form(name="answer_choice_form")
+            //                    .form-group.left-padding-lg(ng-repeat="option in answer.answer_options" required)
+            //                        input(
+            //                        type="radio"
+            //                        ng-value="option"
+            //                        ng-model="answer.answer_score")
+            //                        text.left-padding-med {{option.option_text | ucfirst}}
+            //
+            //            div(id="answer_value_div").bottom-padding-med
+            //                legend(ng-if="answer.question_data_type==='perc' || answer.question_data_type==='int' ") Please provide a value (required):
+            //                .form-group.left-padding-lg.col-md-2(required)
+            //                    label(ng-if="answer.question_data_type==='int'") Whole number
+            //                    label(ng-if="answer.question_data_type==='perc'") Percentage as decimal
+            //                    input.form-control(type="number" ng-if="answer.question_data_type==='int'" ng-model="answer.answer_score.value")
+            //                    input.form-control(type="number" step="any" ng-if="answer.question_data_type==='perc'" ng-model="answer.answer_score.value")
+            //
+            //            div(id="answer_justification_div").bottom-padding-med
+            //                legend(ng-if="answer.question_data_type==='text'") Please provide a text based response (required):
+            //                ng-form(name="answer_justification_form")
+            //                    .form-group.top-padding-med
+            //                        .row.left-padding-lg
+            //                            .col-md-11
+            //                                textarea.form-control(
+            //                                name="answer_text"
+            //                                type="text"
+            //                                ng-model="answer.answer_text"
+            //                                placeholder="Please provide supporting evidence... (required)"
+            //                                autocomplete="off")
+            //
+            //// INTERVIEW ANSWER FORM
+            //.row.left-padding-lg.right-padding-lg(ng-if="answer.question_mode==='interview'")
+            //    .form-horizontal(name="interview_answer_form")
+            //        fieldset
+            //            div(id="answer_choice_div").bottom-padding-med
+            //                legend(ng-if="answer.question_data_type==='multi' || answer.question_data_type==='bool'") Choose one of the following answers (required):
+            //                ng-form.col-md-6(name="answer_choice_form")
+            //                    .form-group.left-padding-lg(ng-repeat="option in answer.answer_options")
+            //                        input(
+            //                        type="radio"
+            //                        ng-value="option"
+            //                        ng-model="new_interview_answer.score"
+            //                        required)
+            //                        text.left-padding-med {{option.option_text}}
+            //                .col-md-5.pull-left.top-padding-med
+            //                    .row
+            //                        ng-form(name="interviewee_selection_form")
+            //                            select.form-group.form-control(ng-model="new_interview_answer.interviewee_ID" required)
+            //                                option(value="" selected disabled) Select interviewee
+            //                                option(ng-repeat="interviewee in interviewees" value="{{interviewee._id}}") {{interviewee.firstName}} {{interviewee.lastName}} - {{interviewee.role}}
+            //                    .row
+            //                        button.form-group.form-control.btn.center-block.btn-primary(ng-click="intervieweeAdd()") Add new interviewee
+            //
+            //            div(id="answer_text_div").bottom-padding-med
+            //                ng-form(name="interview_answer_text_form")
+            //                    .form-group.top-padding-med
+            //                        .row.left-padding-lg
+            //                            .col-md-10
+            //                                textarea.form-control(
+            //                                name="answer_text"
+            //                                type="text"
+            //                                ng-model="new_interview_answer.interview_text"
+            //                                placeholder="Please provide interview transcription... (required)"
+            //                                autocomplete="off"
+            //                                required)
+            //                            .col-md-1
+            //                                button.btn.btn-success(ng-click="answerSubmit()") Submit interview
 
 
 

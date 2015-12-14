@@ -1,17 +1,24 @@
 'use strict';
 
 var mongoose = require('mongoose');
+require('mongoose-html-2').loadType(mongoose);
 
-var ObjectId = mongoose.Schema.Types.ObjectId;
-
-var modificationSchema = new mongoose.Schema({
-    modifiedBy: ObjectId,
-    modifiedDate: {
-        type: Date,
-        default: Date.now}
-});
-
-var commentSchema = new mongoose.Schema({
+var commentSchema, citationSchema, interviewSchema, scoreHistorySchema, interviewScoreSchema, answerOptionSchema, answerSchema, Answer,
+    ObjectId        = mongoose.Schema.Types.ObjectId,
+    mongooseHistory = require('mongoose-history'),
+    Schema          = mongoose.Schema,
+    options         = {customCollectionName: "answer_hst"},
+    HTML            = mongoose.Types.Html,
+    htmlSettings    = {
+        type: HTML,
+        setting: {
+            allowedTags: ['p', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'del'],
+            allowedAttributes: {
+                'a': ['href']
+            }
+        }
+    };
+commentSchema = new Schema({
     date: {
         type: Date,
         default: Date.now},
@@ -22,59 +29,36 @@ var commentSchema = new mongoose.Schema({
     addressed: Boolean
 });
 
-var citationSchema = new mongoose.Schema({
+citationSchema = new Schema({
     document_ID: String,
     mendeley_ID: String,
     file_hash: String,
-    comment: {
-        date: {
-            type: Date,
-            default: Date.now},
-        content: String,
-        author: ObjectId, // Pull from current user _id value
-        author_name: String,
-        role: String,
-        addressed: Boolean
-    }
-});
-
-var webSchema = new mongoose.Schema({
-    title: String,
-    URL: String, // generated from upload path in S3
-    access_date: {
+    date: {
         type: Date,
         default: Date.now},
-    comment: {
-        date: {
-            type: Date,
-            default: Date.now},
-        content: String,
-        author: ObjectId, // Pull from current user _id value
-        author_name: String,
-        role: String,
-        addressed: Boolean
-    }
+    date_accessed: Date,
+    author: ObjectId, // Pull from current user _id value
+    author_name: String,
+    role: String,
+    comment: htmlSettings,
+    location: String
 });
 
-var humanSchema = new mongoose.Schema({
-    first_name: String,
-    last_name: String, // generated from upload path in S3
-    phone: String,
-    email: String,
+interviewSchema = new Schema({
+    interviewee_ID: ObjectId,
     contact_date: {
         type: Date,
         default: Date.now},
-    comment: {
-        date: {type: Date, default: Date.now},
-        content: String,
-        author: ObjectId, // Pull from curretn user _id value
-        author_name: String,
-        role: String,
-        addressed: Boolean
-    }
+    date: {
+        type: Date,
+        default: Date.now},
+    comment: htmlSettings,
+    author: ObjectId, // Pull from curretn user _id value
+    author_name: String,
+    author_role: String
 });
 
-var scoreHistorySchema = new mongoose.Schema({
+scoreHistorySchema = new Schema({
     date: {
         type: Date,
         default: Date.now},
@@ -89,7 +73,7 @@ var scoreHistorySchema = new mongoose.Schema({
     answer_num: Number
 });
 
-var interviewScoreSchema = new mongoose.Schema({
+interviewScoreSchema = new Schema({
     interviewee_ID: ObjectId,
     option_order: Number,
     option_text: String,
@@ -102,13 +86,13 @@ var interviewScoreSchema = new mongoose.Schema({
         default: Date.now}
 });
 
-var answerOptionSchema = new mongoose.Schema({
+answerOptionSchema = new Schema({
     option_order: Number,
     option_text: String,
     value: Number
 });
 
-var answerSchema = mongoose.Schema({
+answerSchema = new Schema({
     answer_ID: {
         type: String,
         required: '{PATH} is required',
@@ -162,10 +146,54 @@ var answerSchema = mongoose.Schema({
     comments: [commentSchema],
     references: {
         citation: [citationSchema],
-        web: [webSchema],
-        human: [humanSchema]},
-    modified: [modificationSchema]
+        human: [interviewSchema]},
+    last_modified: {
+        modified_by: ObjectId,
+        modified_date: Date},
 });
 
-var Answer = mongoose.model('Answer', answerSchema);
+answerSchema.plugin(mongooseHistory, options);
+
+Answer = mongoose.model('Answer', answerSchema);
+
+//var webSchema = new mongoose.Schema({
+//    title: String,
+//    URL: String, // generated from upload path in S3
+//    access_date: {
+//        type: Date,
+//        default: Date.now},
+//    comment: {
+//        date: {
+//            type: Date,
+//            default: Date.now},
+//        content: String,
+//        author: ObjectId, // Pull from current user _id value
+//        author_name: String,
+//        role: String,
+//        addressed: Boolean
+//    }
+//});
+//
+//var humanSchema = new mongoose.Schema({
+//    first_name: String,
+//    last_name: String, // generated from upload path in S3
+//    phone: String,
+//    email: String,
+//    contact_date: {
+//        type: Date,
+//        default: Date.now},
+//    comment: {
+//        date: {type: Date, default: Date.now},
+//        content: String,
+//        author: ObjectId, // Pull from curretn user _id value
+//        author_name: String,
+//        role: String,
+//        addressed: Boolean
+//    }
+//});
+
+
+
+
+
 

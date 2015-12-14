@@ -105,7 +105,7 @@ angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope
                                 value: 0
                             });
                             break;
-                        case "multi":
+                        case "score":
                             new_answer_data[new_answer_data.length - 1]['answer_options'].push({
                                 option_order: 1,
                                 option_text: 'high',
