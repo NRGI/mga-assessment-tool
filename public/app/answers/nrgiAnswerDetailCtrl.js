@@ -22,7 +22,7 @@ function flagCheck(flags) {
     return disabled;
 };
 
-angular.module('app').controller('nrgiAnswerCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, nrgiNotifier, nrgiIntervieweeSrvc, nrgiIntervieweeMethodSrvc, nrgiAnswerSrvc, nrgiAnswerMethodSrvc, nrgiAssessmentSrvc, nrgiAssessmentMethodSrvc, nrgiDocumentSrvc, nrgiDocumentMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
+angular.module('app').controller('nrgiAnswerDetailCtrl', function ($scope, $route, $routeParams, $q, $location, FileUploader, ngDialog, nrgiNotifier, nrgiIntervieweeSrvc, nrgiIntervieweeMethodSrvc, nrgiAnswerSrvc, nrgiAnswerMethodSrvc, nrgiAssessmentSrvc, nrgiAssessmentMethodSrvc, nrgiDocumentSrvc, nrgiDocumentMethodSrvc, nrgiQuestionSrvc, nrgiIdentitySrvc) {
     $scope.identity = nrgiIdentitySrvc;
     $scope.ref_type = [
         {text: 'Add Document', value: 'document'},

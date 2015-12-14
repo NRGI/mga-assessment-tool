@@ -24,7 +24,5 @@ table.table.table-hover.table-striped.table-condensed
                 .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
             //TODO fix handling of non submitted scores
             td.col-sm-1.text-center {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
-            //td.col-sm-1(ng-if="answer.summary_score===undefined && answer.question_data_type!=='text'") None
-            //td.col-sm-1(ng-if="(answer.question_data_type==='bool' || answer.question_data_type==='multi') && answer.summary_score!==undefined") {{answer.summary_score.option_text}} - {{answer.answer_score.value}}
             td
-                a.btn.center-block.btn-default(href="/admin/assessments-admin/answer/{{answer.answer_ID}}") Go to answer page
+                a.btn.center-block.btn-default(href="/assessments/answer/{{answer.answer_ID}}") Go to answer page

@@ -1,3 +1,36 @@
+.container-fluid.page-container
+    .well
+        div.page-well
+            //Navigation
+            .row-fluid.right-padding-lg
+            nrgi-answer-nav(assessment="assessment")
+            div
+                text.pull-right.right-padding-lg.text-primary.glyphicon.glyphicon-floppy-disk(ng-if="answer.status==='saved'")  {{answer.status | ucfirst}}
+                text.pull-right.right-padding-lg.text-success.glyphicon.glyphicon-ok-circle(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
+                text.pull-right.right-padding-lg.text-danger.glyphicon.glyphicon-flag(ng-if="answer.status==='flagged'")  {{answer.status | ucfirst}}
+                text.pull-right.right-padding-lg.text-warning(ng-if="answer.status==='created'")  {{answer.status | ucfirst}}
+
+            legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} assessment
+
+            div.right-padding-lg.left-padding-lg
+                .row.bottom-padding-med
+                    h3: em.bottom-padding-med.col-md-11 Question {{answer.question_order}}. {{answer.question_text}}
+                    //i.glyphicon.glyphicon-question-sign(
+                    //popover-template="dynamicPopover.templateUrl"
+                    //popover-title="Guidance note"
+                    //popover-placement="bottom")
+                    //script(type="text/ng-template" id="myPopoverTemplate.html")
+                    //    div(ng-bind-html="question.question_guidance_text")
+
+
+            // Active buttons
+            .row.bottom-padding-lg
+                nrgi-active-answer-buttons
+
+
+
+
+
 .container.top-padding-med
     .well.left-padding-lg
         div.left-padding-lg.right-padding-lg.top-padding-med

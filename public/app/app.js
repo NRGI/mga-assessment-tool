@@ -160,6 +160,11 @@ angular.module('app')
                 templateUrl: '/partials/answers/secondary-source-list',
                 controller: 'nrgiSecondarySourceListCtrl',
                 resolve: routeRoleChecks.user
+            })
+            .when('/assessments/answer/:answer_ID', {
+                templateUrl: '/partials/answers/answer-detail',
+                controller: 'nrgiAnswerDetailCtrl',
+                resolve: routeRoleChecks.user
             });
             //// Assessment overview routes
             //.when('/assessments', {
