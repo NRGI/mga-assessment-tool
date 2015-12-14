@@ -1,0 +1,118 @@
+//div(ng-if="answer.final_score"): .well
+//    h5 Final answer:
+//    div.left-padding-lg
+//        .text-success {{answer.final_score.letter | ucfirst}} - {{answer.final_score.text}}
+//    h5 Final justification:
+//    div.left-padding-lg
+//        .text-success(ng-bind-html="answer.final_justification")
+//    h5 Final role:
+//    div.left-padding-lg
+//        .text-success {{answer.final_role | ucfirst}}
+//div(ng-if="current_user.role === 'researcher'")
+//    //div.bottom-padding-med
+//    //    div(ng-if="!answer.researcher_score.letter")
+//    //        h5 Your previous score:
+//    //        div.left-padding-lg
+//    //            em.text-danger Not submitted
+//    //    div(ng-if="answer.researcher_score.letter")
+//    //        h5 Your previous score:
+//    //        div.left-padding-lg
+//    //            .text-primary {{answer.researcher_score.letter| ucfirst}} - {{answer.researcher_score.text}}
+//    //        h5 Your previous justification:
+//    //        div.left-padding-lg
+//    //            .text-primary(ng-bind-html="answer.researcher_justification")
+//    div.bottom-padding-med
+//        div(ng-if="!answer.reviewer_score.letter")
+//            h5 Reviewer answer:
+//            div.left-padding-lg
+//                em.text-danger Not submitted
+//        div(ng-if="answer.reviewer_score.letter")
+//            h5 Reviewer answer:
+//            div.left-padding-lg
+//                .text-primary {{answer.reviewer_score.letter | ucfirst}} - {{answer.reviewer_score.text}}
+//            h5 Reviewer justification:
+//            div.left-padding-lg
+//                .text-primary(ng-bind-html="answer.reviewer_justification")
+//div(ng-if="current_user.role === 'reviewer'")
+//    //div.bottom-padding-lg(ng-if="!answer.reviewer_score.letter")
+//    //    h5 Your previous score:
+//    //    div.left-padding-lg
+//    //        em.text-danger Not submitted
+//    //div(ng-if="answer.reviewer_score.letter")
+//    //    h5 Your previous score:
+//    //    div.left-padding-lg
+//    //        .text-primary {{answer.reviewer_score.letter | ucfirst}} - {{answer.reviewer_score.text}}
+//    //    h5 Your previous justification:
+//    //    div.left-padding-lg
+//    //        .text-primary(ng-bind-html="answer.reviewer_justification")
+//    div(ng-if="!answer.researcher_score.letter")
+//        h5 Researcher answer:
+//        div.left-padding-lg
+//            em.text-danger Not submitted
+//    div(ng-if="answer.researcher_score.letter")
+//        h5 Researcher answer:
+//        div.left-padding-lg
+//            .text-primary {{answer.researcher_score.letter| ucfirst}} - {{answer.researcher_score.text}}
+//        h5 Researcher justification:
+//        div.left-padding-lg
+//            .text-primary(ng-bind-html="answer.researcher_justification")
+//div(ng-if="current_user.isSupervisor()")
+//    div.bottom-padding-med
+//        div(ng-if="!answer.researcher_score.letter")
+//            h5 Researcher answer:
+//            div.left-padding-lg
+//                em.text-danger Not submitted
+//        div(ng-if="answer.researcher_score.letter")
+//            h5 Researcher answer:
+//            div.left-padding-lg
+//                .text-primary {{answer.researcher_score.letter| ucfirst}} - {{answer.researcher_score.text}}
+//            h5 Researcher justification:
+//            div.left-padding-lg
+//                .text-primary(ng-bind-html="answer.researcher_justification")
+//    div.bottom-padding-med
+//        div(ng-if="!answer.reviewer_score.letter")
+//            h5 Reviewer answer:
+//            div.left-padding-lg
+//                em.text-danger Not submitted
+//        div(ng-if="answer.reviewer_score.letter")
+//            h5 Reviewer answer:
+//            div.left-padding-lg
+//                .text-primary {{answer.reviewer_score.letter | ucfirst}} - {{answer.reviewer_score.text}}
+//            h5 Reviewer justification:
+//            div.left-padding-lg
+//                .text-primary(ng-bind-html="answer.reviewer_justification")
+
+
+// DESK RESEARCH ANSWER DISPLAY
+.row(ng-if="answer.question_mode==='desk_research'")
+    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='score' || answer.question_data_type==='bool'")
+        div(ng-if="answer.answer_score")
+            label.col-med-2 Selected Score:
+            text  {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
+        div(ng-if="!answer.answer_score"): em.text-warning No answer selected
+    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='int'")
+        div(ng-if="answer.answer_score")
+            label.col-med-2 Inputed Score:
+            text  {{answer.answer_score.value}}
+        div(ng-if="!answer.answer_score"): em.text-warning No answer inputed
+    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='perc'")
+        div(ng-if="answer.answer_score")
+            label.col-med-2 Inputed Score:
+            text  {{answer.answer_score.value}}
+        div(ng-if="!answer.answer_score"): em.text-warning No answer inputed
+// INTERVIEW ANSWER DISPLAY
+div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.interview_score.length > 0")
+    legend Interview scores
+    .row
+        .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.interview_score.length > 0")
+            .row(ng-repeat="score in interview_scores")
+                .row
+                    b Interviewee:
+                    text  {{score.interviewee.firstName}} {{score.interviewee.lastName}} ({{score.interview_date | date:'MM/dd/yyyy'}})
+                .row
+                    b Score:
+                    text  {{score.option_text}} - {{score.value}}
+                .row
+                    b Transcript:
+                    text  {{score.interview_text}}
+                br

@@ -27,14 +27,18 @@
                 .row.bottom-padding-lg
                     nrgi-active-answer-buttons
 
+                // Previous answers
+                .row.bottom-padding-med
+                    nrgi-prev-answers(answer="answer")
+
                 //.row.bottom-padding-lg(ng-if="answer.flags.length!==0 && ((['flagged', 'unresolved'].indexOf(answer.status) > -1) || current_user.isSupervisor())")
-                .row.bottom-padding-lg(ng-if="answer.flags.length!==0 && (['flagged', 'unresolved'].indexOf(answer.status) > -1)")
+                .row(ng-if="answer.flags.length!==0 && (['flagged', 'unresolved'].indexOf(answer.status) > -1)")
                     nrgi-flag-tabs
 
-                //// Answer form
-                //.row.bottom-padding-med(ng-if="assessment.edit_control===current_user._id")
-                //    rgi-answer-form
-                //
+                // Answer form
+                .row.bottom-padding-med
+                    nrgi-answer-form
+
                 //// Comments
                 //.row.bottom-padding-med
                 //    rgi-comments(update="answer")
@@ -50,50 +54,50 @@
 .container.top-padding-med
     .well.left-padding-lg
         div.left-padding-lg.right-padding-lg.top-padding-med
-            legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}
-                .text-success.pull-right(ng-if="answer.status==='approved'")  (approved)
-                .text-danger.pull-right(ng-if="answer.status==='flagged'")  (flagged)
-                .text-info.pull-right(ng-if="answer.status==='saved'")  (saved)
-
-                //TODO dyanamical go to end of section
-                //    answer[current_user.role + '_score']
-                //a.text-info.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
-                //href="assessments/assessment-edit/{{assessment.assessment_ID}}-{{assessment.question_length | zpad:3}}"
-                //ng-if="assessment.question_length!==answer.question_order")
-                //glyphicon.text-muted.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
-                //ng-if="assessment.question_length===answer.question_order"
-                //disabled)
-
-                //glyphicon.text-info.glyphicon.glyphicon-forward.pull-right.left-padding-med(
-                //ng-click="moveForward()"
-                //ng-if="answer.question_order!==assessment.question_length")
-                //glyphicon.text-muted.glyphicon.glyphicon-forward.pull-right.left-padding-med(
-                //ng-if="answer.question_order===assessment.question_length"
-                //disabled)
-
-                //TODO prototype for glyphicons showing answer status
-                //glyphicon.text-success.glyphicon.glyphicon-ok-sign.pull-right.right-padding-lg(ng-if="answer.status==='submitted'")
-                //glyphicon.text-danger.glyphicon.glyphicon-flag.pull-right.right-padding-lg(ng-if="answer.status==='flagged'")
-                //glyphicon.text-info.glyphicon.glyphicon-floppy-saved.pull-right(ng-if="answer.status==='saved'")
-                //text.pull-right.right-padding-lg(ng-if="answer.status!=='saved' && answer.status!=='submitted' && answer.status!=='flagged'") none
-                //text.pull-right.right-padding-lg Status:
-
-                //glyphicon.text-info.glyphicon.glyphicon-backward.pull-right.right-padding-med(
-                //ng-click="moveBackward()"
-                //ng-if="answer.question_order!==1")
-                //glyphicon.text-muted.glyphicon.glyphicon-backward.pull-right.right-padding-med(ng-if="answer.question_order===1")
-
-                //TODO dyanamical go to beginning of section
-                //a.text-info.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
-                //href="assessments/assessment-edit/{{assessment.assessment_ID}}-001"
-                //ng-if="answer.question_order!==1")
-                //glyphicon.text-muted.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
-                //ng-if="answer.question_order===1"
-                //disabled)
-
-            .row.left-padding-lg.bottom-padding-med
-                h3
-                    em Question {{answer.question_order}}. {{answer.question_text}}
+            //legend.h3 {{assessment.country}} {{assessment.year}} {{assessment.version}} {{answer.question_mode | addSpaces}}
+            //    .text-success.pull-right(ng-if="answer.status==='approved'")  (approved)
+            //    .text-danger.pull-right(ng-if="answer.status==='flagged'")  (flagged)
+            //    .text-info.pull-right(ng-if="answer.status==='saved'")  (saved)
+            //
+            //    //TODO dyanamical go to end of section
+            //    //    answer[current_user.role + '_score']
+            //    //a.text-info.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
+            //    //href="assessments/assessment-edit/{{assessment.assessment_ID}}-{{assessment.question_length | zpad:3}}"
+            //    //ng-if="assessment.question_length!==answer.question_order")
+            //    //glyphicon.text-muted.glyphicon.glyphicon-fast-forward.pull-right.left-padding-med(
+            //    //ng-if="assessment.question_length===answer.question_order"
+            //    //disabled)
+            //
+            //    //glyphicon.text-info.glyphicon.glyphicon-forward.pull-right.left-padding-med(
+            //    //ng-click="moveForward()"
+            //    //ng-if="answer.question_order!==assessment.question_length")
+            //    //glyphicon.text-muted.glyphicon.glyphicon-forward.pull-right.left-padding-med(
+            //    //ng-if="answer.question_order===assessment.question_length"
+            //    //disabled)
+            //
+            //    //TODO prototype for glyphicons showing answer status
+            //    //glyphicon.text-success.glyphicon.glyphicon-ok-sign.pull-right.right-padding-lg(ng-if="answer.status==='submitted'")
+            //    //glyphicon.text-danger.glyphicon.glyphicon-flag.pull-right.right-padding-lg(ng-if="answer.status==='flagged'")
+            //    //glyphicon.text-info.glyphicon.glyphicon-floppy-saved.pull-right(ng-if="answer.status==='saved'")
+            //    //text.pull-right.right-padding-lg(ng-if="answer.status!=='saved' && answer.status!=='submitted' && answer.status!=='flagged'") none
+            //    //text.pull-right.right-padding-lg Status:
+            //
+            //    //glyphicon.text-info.glyphicon.glyphicon-backward.pull-right.right-padding-med(
+            //    //ng-click="moveBackward()"
+            //    //ng-if="answer.question_order!==1")
+            //    //glyphicon.text-muted.glyphicon.glyphicon-backward.pull-right.right-padding-med(ng-if="answer.question_order===1")
+            //
+            //    //TODO dyanamical go to beginning of section
+            //    //a.text-info.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
+            //    //href="assessments/assessment-edit/{{assessment.assessment_ID}}-001"
+            //    //ng-if="answer.question_order!==1")
+            //    //glyphicon.text-muted.glyphicon.glyphicon-fast-backward.pull-right.right-padding-med(
+            //    //ng-if="answer.question_order===1"
+            //    //disabled)
+            //
+            //.row.left-padding-lg.bottom-padding-med
+            //    h3
+            //        em Question {{answer.question_order}}. {{answer.question_text}}
 
             //- ACTIVE BUTTONS
             //.row answer.question_mode - {{answer.question_mode}}
@@ -101,22 +105,22 @@
             //.row assessment.interview_set_length - {{assessment.interview_set_length}}
             //.row test - {{assessment.[{{answer.question_mode}}]_set_length}}
             //- Active buttons
-            .row.left-padding-lg.bottom-padding-lg
-                .col-md-pull-2
-                    button.btn.btn-primary(ng-click="answerSave()") Save answer
-                    | &nbsp;
-                    button.btn.btn-success(ng-click="answerApprove()") Approve answer
-                    | &nbsp;
-                    button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
-                    | &nbsp;
-                    button.btn.btn-danger(ng-click="answerClear()") Clear answer
-                    | &nbsp;
-                    a.btn.btn-default(
-                    href="/admin/assessments-admin/interviews/{{answer.assessment_ID}}"
-                    ng-if="answer.question_mode==='interview'") Return to menu
-                    a.btn.btn-default(
-                    href="/admin/assessments-admin/desk-research/{{answer.assessment_ID}}"
-                    ng-if="answer.question_mode==='desk_research'") Return to menu
+            //.row.left-padding-lg.bottom-padding-lg
+            //    .col-md-pull-2
+            //        button.btn.btn-primary(ng-click="answerSave()") Save answer
+            //        | &nbsp;
+            //        button.btn.btn-success(ng-click="answerApprove()") Approve answer
+            //        | &nbsp;
+            //        button.btn.btn-warning(ng-click="answerFlag(current_user)") Flag answer
+            //        | &nbsp;
+            //        button.btn.btn-danger(ng-click="answerClear()") Clear answer
+            //        | &nbsp;
+            //        a.btn.btn-default(
+            //        href="/admin/assessments-admin/interviews/{{answer.assessment_ID}}"
+            //        ng-if="answer.question_mode==='interview'") Return to menu
+            //        a.btn.btn-default(
+            //        href="/admin/assessments-admin/desk-research/{{answer.assessment_ID}}"
+            //        ng-if="answer.question_mode==='desk_research'") Return to menu
 
             // DESK RESEARCH ANSWER DISPLAY
             .row(ng-if="answer.question_mode==='desk_research'")
@@ -151,79 +155,79 @@
                                 b Transcript:
                                 text  {{score.interview_text}}
                             br
-            //FLAG ACCORDION
-            .row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
-                div(id="flags_div").bottom-padding-med
-                    legend Flags:
-                    div.panel-group(
-                    id="prev_flags_div"
-                    role="tablist"
-                    aria-multiselectable="true")
-                        div.panel(ng-repeat="flag in answer.flags")
-                            .panel-success(ng-if="flag.addressed===true")
-                                div.panel-heading(
-                                role="tab"
-                                id="heading{{$index}}")
-                                    h4.panel-title
-                                        a.btn.btn-block.button.button-success(
-                                        style="text-align: left;"
-                                        role="button"
-                                        data-toggle="collapse"
-                                        data-parent="#accordion"
-                                        href="#collapse{{$index}}"
-                                        aria-expanded="false"
-                                        aria-controls="collapse{{$index}}")
-                                            b Flag {{$index+1}} - {{flag.author_name}} (
-                                            b {{flag.role}}
-                                            b ):
-                                            em  {{flag.date | date:'MM/dd/yyyy'}}
-                                div(
-                                id="collapse{{$index}}"
-                                class="panel-collapse collapse in"
-                                role="tabpanel"
-                                aria-labelledby="heading{{$index}}")
-                                    div.panel-body
-                                        .row.left-padding-lg
-                                            text Addressed?
-                                            text
-                                            input(
-                                            type="checkbox"
-                                            ng-model="flag.addressed")
-                                        .row.left-padding-lg.right-padding-lg
-                                            text {{flag.content}}
-                                        .row.pull-right.right-padding-lg(ng-if="flag.author === current_user._id")
-                                            button.btn.btn-primary(ng-click="flagEdit(flag, $index)") Edit
-                            .panel-danger(ng-if="flag.addressed===false")
-                                div.panel-heading(
-                                role="tab"
-                                id="heading{{$index}}")
-                                    h4.panel-title
-                                        a.btn.btn-block.button.button-success(
-                                        style="text-align: left;"
-                                        role="button"
-                                        data-toggle="collapse"
-                                        data-parent="#accordion"
-                                        href="#collapse{{$index}}"
-                                        aria-expanded="false"
-                                        aria-controls="collapse{{$index}}")
-                                            b Flag {{$index+1}} - {{flag.author_name}} (
-                                            b {{flag.role}}
-                                            b ):
-                                            em  {{flag.date | date:'MM/dd/yyyy'}}
-                                div(
-                                id="collapse{{$index}}"
-                                class="panel-collapse collapse in"
-                                role="tabpanel"
-                                aria-labelledby="heading{{$index}}")
-                                    div.panel-body
-                                        .row.left-padding-lg
-                                            text Addressed?
-                                            text
-                                            input(type="checkbox" ng-model="flag.addressed")
-                                        .row.left-padding-lg.right-padding-lg
-                                            text {{flag.content}}
-                                        .row.pull-right.right-padding-lg(ng-if="flag.author === current_user._id")
-                                            button.btn.btn-primary(ng-click="flagEdit(flag, $index)") Edit
+            ////FLAG ACCORDION
+            //.row.left-padding-lg.bottom-padding-lg(ng-if="answer.flags.length!==0")
+            //    div(id="flags_div").bottom-padding-med
+            //        legend Flags:
+            //        div.panel-group(
+            //        id="prev_flags_div"
+            //        role="tablist"
+            //        aria-multiselectable="true")
+            //            div.panel(ng-repeat="flag in answer.flags")
+            //                .panel-success(ng-if="flag.addressed===true")
+            //                    div.panel-heading(
+            //                    role="tab"
+            //                    id="heading{{$index}}")
+            //                        h4.panel-title
+            //                            a.btn.btn-block.button.button-success(
+            //                            style="text-align: left;"
+            //                            role="button"
+            //                            data-toggle="collapse"
+            //                            data-parent="#accordion"
+            //                            href="#collapse{{$index}}"
+            //                            aria-expanded="false"
+            //                            aria-controls="collapse{{$index}}")
+            //                                b Flag {{$index+1}} - {{flag.author_name}} (
+            //                                b {{flag.role}}
+            //                                b ):
+            //                                em  {{flag.date | date:'MM/dd/yyyy'}}
+            //                    div(
+            //                    id="collapse{{$index}}"
+            //                    class="panel-collapse collapse in"
+            //                    role="tabpanel"
+            //                    aria-labelledby="heading{{$index}}")
+            //                        div.panel-body
+            //                            .row.left-padding-lg
+            //                                text Addressed?
+            //                                text
+            //                                input(
+            //                                type="checkbox"
+            //                                ng-model="flag.addressed")
+            //                            .row.left-padding-lg.right-padding-lg
+            //                                text {{flag.content}}
+            //                            .row.pull-right.right-padding-lg(ng-if="flag.author === current_user._id")
+            //                                button.btn.btn-primary(ng-click="flagEdit(flag, $index)") Edit
+            //                .panel-danger(ng-if="flag.addressed===false")
+            //                    div.panel-heading(
+            //                    role="tab"
+            //                    id="heading{{$index}}")
+            //                        h4.panel-title
+            //                            a.btn.btn-block.button.button-success(
+            //                            style="text-align: left;"
+            //                            role="button"
+            //                            data-toggle="collapse"
+            //                            data-parent="#accordion"
+            //                            href="#collapse{{$index}}"
+            //                            aria-expanded="false"
+            //                            aria-controls="collapse{{$index}}")
+            //                                b Flag {{$index+1}} - {{flag.author_name}} (
+            //                                b {{flag.role}}
+            //                                b ):
+            //                                em  {{flag.date | date:'MM/dd/yyyy'}}
+            //                    div(
+            //                    id="collapse{{$index}}"
+            //                    class="panel-collapse collapse in"
+            //                    role="tabpanel"
+            //                    aria-labelledby="heading{{$index}}")
+            //                        div.panel-body
+            //                            .row.left-padding-lg
+            //                                text Addressed?
+            //                                text
+            //                                input(type="checkbox" ng-model="flag.addressed")
+            //                            .row.left-padding-lg.right-padding-lg
+            //                                text {{flag.content}}
+            //                            .row.pull-right.right-padding-lg(ng-if="flag.author === current_user._id")
+            //                                button.btn.btn-primary(ng-click="flagEdit(flag, $index)") Edit
 
 
 
