@@ -95,14 +95,35 @@ angular.module('app')
                     });
                     $scope.interview_scores = interview_scores;
 
-                    var citations = [];
+                    var citations = [],
+                        interviews = [],
+                        flags = [];
+                    answer.flags.forEach(function (el) {
+                        var flag = el;
+                        nrgiUserListSrvc.get({_id: el.addressed_to}, function(user) {
+                            flag.addressee = user;
+                        });
+                        flags.push(flag);
+                    });
+
                     answer.references.citation.forEach(function (el) {
                         nrgiDocumentSrvc.get({_id: el.document_ID}, function (doc) {
-                            doc.comment = el.comment;
+                            doc.comment = el;
                             citations.push(doc);
                         });
                     });
+
+                    answer.references.human.forEach(function (el) {
+                        nrgiIntervieweeSrvc.get({_id: el.interviewee_ID}, function (interviewee) {
+                            interviewee.comment = el;
+                            interviews.push(interviewee);
+                        });
+                    });
+
+
+                    $scope.flags = flags;
                     $scope.citations = citations;
+                    $scope.interviews = interviews;
                 });
 
             });

@@ -2,7 +2,7 @@
 
 angular
     .module('app')
-    .controller('rgiNewRefDialogCtrl', function (
+    .controller('nrgiNewRefDialogCtrl', function (
         $q,
         $scope,
         $route,

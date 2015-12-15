@@ -133,30 +133,30 @@ angular
                     scope: scope
                 });
             },
-            //documentCreate: function($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //
-            //    ngDialog.close('ngdialog1');
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/references/new-document-dialog',
-            //        controller: 'nrgiNewDocumentDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: scope
-            //    });
-            //},
-            //webpageCreate: function($scope) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //
-            //    ngDialog.close('ngdialog1');
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/references/new-webpage-dialog',
-            //        controller: 'nrgiNewWebpageDialogCtrl',
-            //        className: 'ngdialog-theme-default',
-            //        scope: scope
-            //    });
-            //},
+            documentCreate: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+
+                ngDialog.close('ngdialog1');
+                ngDialog.open({
+                    template: 'partials/dialogs/references/new-document-dialog',
+                    controller: 'nrgiNewDocumentDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
+            },
+            webpageCreate: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+
+                ngDialog.close('ngdialog1');
+                ngDialog.open({
+                    template: 'partials/dialogs/references/new-webpage-dialog',
+                    controller: 'nrgiNewWebpageDialogCtrl',
+                    className: 'ngdialog-theme-default',
+                    scope: scope
+                });
+            },
             documentEdit: function($scope) {
                 var scope = $scope;
                 scope.value = true;

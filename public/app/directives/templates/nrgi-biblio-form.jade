@@ -14,7 +14,7 @@ div.bottom-padding-med(id="biblio_div")
 div(id="prev_bib")
     .row.left-padding-lg.right-padding-lg
         h4 Citations
-        .row.left-padding-lg.bottom-padding-med(ng-repeat="ref in citations")
+        div.left-padding-lg.bottom-padding-med(ng-repeat="ref in citations")
             .row(ng-if="ref.type !== 'web_page'")
                 b Title:
                 text  {{ref.title}} (

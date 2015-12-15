@@ -2,7 +2,7 @@
 //var angular;
 angular.module('app', [
     '720kb.datepicker',
-    //'angucomplete',
+    'angucomplete',
     'angular.filter',
     'angularFileUpload',
     'angular-redactor',

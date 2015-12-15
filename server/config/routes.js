@@ -5,13 +5,13 @@ var answers             = require('../controllers/answers'),
     assessments         = require('../controllers/assessments'),
     auth                = require('./auth'),
     authLogs            = require('../controllers/auth-logs'),
-    //authMendeley        = require('./authMendeley'),
+//authMendeley        = require('./authMendeley'),
     bodyParser          = require('body-parser'),
     contact             = require('../utilities/contact'),
     countries           = require('../controllers/countries'),
     documents           = require('../controllers/documents'),
     interviewees        = require('../controllers/interviewees'),
-    //mendeley            = require('../controllers/mendeley.js'),
+//mendeley            = require('../controllers/mendeley.js'),
     multipart           = require('connect-multiparty'),
     multipartMiddleware = multipart(),
     questions           = require('../controllers/questions'),
@@ -62,18 +62,18 @@ module.exports = function (app) {
     // DELETE
     app.delete('/api/questions/:id', auth.requiresRole('supervisor'), questions.deleteQuestion);
 
-     //////////////////////////////////////
-     ///// ASSESSMENT ANSWERS CRUD ////////
-     //////////////////////////////////////
-     // GET
-     app.get('/api/answers', auth.requiresApiLogin, answers.getAnswers);
-     app.get('/api/answers/:answer_ID', auth.requiresApiLogin, answers.getAnswersByID);
+    //////////////////////////////////////
+    ///// ASSESSMENT ANSWERS CRUD ////////
+    //////////////////////////////////////
+    // GET
+    app.get('/api/answers', auth.requiresApiLogin, answers.getAnswers);
+    app.get('/api/answers/:answer_ID', auth.requiresApiLogin, answers.getAnswersByID);
 
-     // POST
-     app.post('/api/answers', auth.requiresApiLogin, answers.createAnswers);
+    // POST
+    app.post('/api/answers', auth.requiresApiLogin, answers.createAnswers);
 
-     // PUT
-     app.put('/api/answers/:answer_ID', auth.requiresApiLogin, answers.updateAnswer);
+    // PUT
+    app.put('/api/answers/:answer_ID', auth.requiresApiLogin, answers.updateAnswer);
 
     // ///////////////////////////////////////
     // ///// ASSESSMENT OVERVIEW CRUD/////////
@@ -88,25 +88,28 @@ module.exports = function (app) {
     // PUT
     app.put('/api/assessments/:assessment_ID', auth.requiresApiLogin, assessments.updateAssessment);
 
-     /////////////////////////
-     //// DOCUMENTS  /////////
-     /////////////////////////
-     // GET
-     app.get('/api/documents', auth.requiresApiLogin, documents.getDocuments);
-     app.get('/api/documents/:id', auth.requiresApiLogin, documents.getDocumentsByID);
+    /////////////////////////
+    //// DOCUMENTS  /////////
+    /////////////////////////
+    // GET
+    app.get('/api/documents', auth.requiresApiLogin, documents.getDocuments);
+    app.get('/api/documents/:id', auth.requiresApiLogin, documents.getDocumentsByID);
 
-      //// POST
-      //app.post('/api/documents', auth.requiresApiLogin, documents.createDocuments);
+    //// POST
+    //app.post('/api/documents', auth.requiresApiLogin, documents.createDocuments);
 
-     // PUT
-     app.put('/api/documents', auth.requiresApiLogin, documents.updateDocument);
+    // PUT
+    app.put('/api/documents', auth.requiresApiLogin, documents.updateDocument);
 
 
-     /////////////////////////
-     //// UPLOAD DOCUMENTS ///
-     /////////////////////////
+    /////////////////////////
+    //// UPLOAD DOCUMENTS ///
+    /////////////////////////
 
-     app.post('/file-upload', auth.requiresApiLogin,  multipartMiddleware, documents.fileCheck);
+    app.post('/file-upload', auth.requiresApiLogin,  multipartMiddleware, documents.fileCheck);
+    app.get('/api/remote-file-upload', auth.requiresApiLogin,  documents.uploadRemoteFile);
+    app.get('/api/remote-file/upload-progress/:statusId', auth.requiresApiLogin,  documents.getRemoteFileUploadStatus);
+    app.get('/api/remote-file/document/:statusId', auth.requiresApiLogin,  documents.getUploadStatusDocument);
 
     /////////////////////////
     ///// INTERVIEWEE CRUD ////////
@@ -127,12 +130,13 @@ module.exports = function (app) {
     ////////////////////
     ///// OTHER ////////
     ////////////////////
-     // GET COUNTRY
-    app.get('/api/countries', countries.getCountries);
-    app.get('/api/countries/:country_ID', countries.getCountriesByID);
     app.get('/partials/*', function (req, res) {
         res.render('../../public/app/' + req.params[0]);
     });
+
+    // GET COUNTRY
+    app.get('/api/countries', countries.getCountries);
+    app.get('/api/countries/:country_ID', countries.getCountriesByID);
 
     // Send tech contact
     app.post('/contact_tech', contact.techSend);
