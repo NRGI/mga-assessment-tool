@@ -231,17 +231,17 @@ angular
                     scope: scope
                 });
             },
-            //referenceSelect: function ($scope, value){
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    scope.ref_selection = value;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/references/new-ref-dialog',
-            //        controller: 'nrgiNewRefDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: scope
-            //    });
-            //},
+            referenceSelect: function ($scope, value){
+                var scope = $scope;
+                scope.value = true;
+                scope.ref_selection = value;
+                ngDialog.open({
+                    template: 'partials/dialogs/references/new-ref-dialog',
+                    controller: 'nrgiNewRefDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
+            },
             userEdit: function($scope) {
                 var scope = $scope;
                 scope.value = true;
