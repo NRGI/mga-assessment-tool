@@ -77,7 +77,7 @@ interviewScoreSchema = new Schema({
     interviewee_ID: ObjectId,
     option_order: Number,
     option_text: String,
-    answer_text: String,
+    answer_text: htmlSettings,
     answer_num: Number,
     value: Number,
     interview_text: String,
@@ -139,7 +139,7 @@ answerSchema = new Schema({
     interview_score: [interviewScoreSchema],
     answer_score: {
         option_order: Number,
-        option_text: String,
+        option_text: htmlSettings,
         value: Number,
         _id: ObjectId},
     score_history: [scoreHistorySchema],
