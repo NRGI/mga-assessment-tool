@@ -22,6 +22,7 @@ angular.module('app')
         nrgiQuestionSrvc
     ) {
         $scope.identity = nrgiIdentitySrvc;
+        $scope.page_type = 'answer';
         $scope.ref_type = [
             {text: 'Add Document', value: 'document'},
             {text: 'Add Webpage', value: 'webpage'},

@@ -16,17 +16,17 @@ angular.module('app')
                 index = $scope.$parent.index,
                 answer_ID = $scope.$parent.update.answer_ID;
             if (new_comment_data.content === $scope.comment_content) {
-                rgiNotifier.error('Do you have edits to submit?');
+                nrgiNotifier.error('Do you have edits to submit?');
             } else {
                 new_answer_data.comments[index].content = $scope.comment_content;
 
-                rgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+                nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
                     .then(function () {
-                        rgiNotifier.notify('Comment edited');
+                        nrgiNotifier.notify('Comment edited');
                         $scope.closeThisDialog();
                         $route.reload();
                     }, function (reason) {
-                        rgiNotifier.notify(reason);
+                        nrgiNotifier.notify(reason);
                     });
             }
         };

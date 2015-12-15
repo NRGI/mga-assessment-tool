@@ -12,7 +12,7 @@ angular
         nrgiQuestionMethodSrvc,
         nrgiNotifier
     ) {
-        //$scope.current_user = nrgiIdentitySrvc.currentUser;
+        $scope.current_user = nrgiIdentitySrvc.currentUser;
 
         $scope.commentSubmit = function () {
             var current_user = nrgiIdentitySrvc.currentUser,

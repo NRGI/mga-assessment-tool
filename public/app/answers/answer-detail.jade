@@ -39,9 +39,9 @@
                 .row.bottom-padding-med
                     nrgi-answer-form
 
-                //// Comments
-                //.row.bottom-padding-med
-                //    rgi-comments(update="answer")
+                // Comments
+                .row.bottom-padding-med
+                    nrgi-comments(update="answer")
                 //
                 //// Biblio
                 //.row.bottom-padding-lg
@@ -305,43 +305,43 @@
             //                                button.btn.btn-success(ng-click="answerSubmit()") Submit interview
 
 
-
-            // COMMENTING
-            .row.left-padding-lg.right-padding-lg
-                div(id="comments_div").bottom-padding-med
-                    legend Comments:
-
-                    div(id="prev_comments_div" ng-if="answer.comments.length!==0")
-                        .row.left-padding-lg.bottom-padding-med(ng-repeat="comment in answer.comments")
-                            .row
-                                b {{comment.author_name}} (
-                                b {{comment.role}}
-                                b ):
-                            .row
-                                date
-                                    small
-                                        em  {{comment.date | date:'MM/dd/yyyy @ h:mma' : timezone}}
-                            .row.col-md-11 {{comment.content}}
-                            .row.pull-right.right-padding-lg(ng-if="comment.author === current_user._id")
-                                button.btn.btn-primary(ng-click="commentEdit(comment, $index)") Edit
-                    br
-                    div(id="new_comment_div").bottom-padding-med
-                        ng-form(name="new_comment_form")
-                            .form-group.top-padding-med
-                                .row.left-padding-lg
-                                    .col-md-10
-                                        textarea.form-control(
-                                        name="comment"
-                                        type="text"
-                                        ng-model="answer.new_comment"
-                                        placeholder="New comment..."
-                                        autocomplete="off"
-                                        required)
-                                    .col-md-1
-                                        button.btn.btn-success(
-                                        ng-click="commentSubmit(current_user)"
-                                        ng-disabled="new_comment_form.$invalid"
-                                        ) Submit comment
+            //
+            //// COMMENTING
+            //.row.left-padding-lg.right-padding-lg
+            //    div(id="comments_div").bottom-padding-med
+            //        legend Comments:
+            //
+            //        div(id="prev_comments_div" ng-if="answer.comments.length!==0")
+            //            .row.left-padding-lg.bottom-padding-med(ng-repeat="comment in answer.comments")
+            //                .row
+            //                    b {{comment.author_name}} (
+            //                    b {{comment.role}}
+            //                    b ):
+            //                .row
+            //                    date
+            //                        small
+            //                            em  {{comment.date | date:'MM/dd/yyyy @ h:mma' : timezone}}
+            //                .row.col-md-11 {{comment.content}}
+            //                .row.pull-right.right-padding-lg(ng-if="comment.author === current_user._id")
+            //                    button.btn.btn-primary(ng-click="commentEdit(comment, $index)") Edit
+            //        br
+            //        div(id="new_comment_div").bottom-padding-med
+            //            ng-form(name="new_comment_form")
+            //                .form-group.top-padding-med
+            //                    .row.left-padding-lg
+            //                        .col-md-10
+            //                            textarea.form-control(
+            //                            name="comment"
+            //                            type="text"
+            //                            ng-model="answer.new_comment"
+            //                            placeholder="New comment..."
+            //                            autocomplete="off"
+            //                            required)
+            //                        .col-md-1
+            //                            button.btn.btn-success(
+            //                            ng-click="commentSubmit(current_user)"
+            //                            ng-disabled="new_comment_form.$invalid"
+            //                            ) Submit comment
             // TODO reset ref_selection and popups for each ref type
             // REFERENCE ADD
             div(id="biblio_div").bottom-padding-med

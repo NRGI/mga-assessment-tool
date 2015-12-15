@@ -1,20 +1,24 @@
 // DESK RESEARCH ANSWER DISPLAY
 .row(ng-if="answer.question_mode==='desk_research'")
-    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='score' || answer.question_data_type==='bool'")
-        div(ng-if="answer.answer_score")
-            label.col-med-2 Selected Score:
-            text  {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
-        div(ng-if="!answer.answer_score"): em.text-warning No answer selected
-    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='int'")
-        div(ng-if="answer.answer_score")
-            label.col-med-2 Inputed Score:
-            text  {{answer.answer_score.value}}
-        div(ng-if="!answer.answer_score"): em.text-warning No answer inputed
-    .left-padding-lg.right-padding-lg.bottom-padding-med(ng-if="answer.question_data_type==='perc'")
-        div(ng-if="answer.answer_score")
-            label.col-med-2 Inputed Score:
-            text  {{answer.answer_score.value}}
-        div(ng-if="!answer.answer_score"): em.text-warning No answer inputed
+    .left-padding-lg.right-padding-lg.bottom-padding-med
+        div(ng-if="answer.question_data_type==='score' || answer.question_data_type==='bool'")
+            div(ng-if="answer.answer_score")
+                label.col-med-2 Selected Score:
+                text  {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
+            div(ng-if="!answer.answer_score"): em.text-warning No answer selected
+        div(ng-if="answer.question_data_type==='int'")
+            div(ng-if="answer.answer_score")
+                label.col-med-2 Inputed Score:
+                text  {{answer.answer_score.value}}
+            div(ng-if="!answer.answer_score"): em.text-warning No answer inputed
+        div(ng-if="answer.question_data_type==='perc'")
+            div(ng-if="answer.answer_score")
+                label.col-med-2 Inputed Score:
+                text  {{answer.answer_score.value}}
+            div(ng-if="!answer.answer_score"): em.text-warning No answer inputed
+        div(ng-if="answer.answer_text")
+            label.col-med-2 Justification:
+            .row.left-padding-lg.right-padding-lg(ng-bind-html="answer.answer_text")
 // INTERVIEW ANSWER DISPLAY
 div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.interview_score.length > 0")
     legend Interview scores

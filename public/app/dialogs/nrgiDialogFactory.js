@@ -121,18 +121,18 @@ angular
             //    });
             //
             //},
-            //commentEdit: function($scope, comment, index) {
-            //    var scope = $scope;
-            //    scope.value = true;
-            //    scope.index = index;
-            //    scope.comment = comment;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/comments/comment-edit-dialog',
-            //        controller: 'nrgiCommentEditDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: scope
-            //    });
-            //},
+            commentEdit: function($scope, comment, index) {
+                var scope = $scope;
+                scope.value = true;
+                scope.index = index;
+                scope.comment = comment;
+                ngDialog.open({
+                    template: 'partials/dialogs/comments/comment-edit-dialog',
+                    controller: 'nrgiCommentEditDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
+            },
             //documentCreate: function($scope) {
             //    var scope = $scope;
             //    scope.value = true;
