@@ -30,11 +30,10 @@ angular.module('app')
             $scope.answer_list = [];
             nrgiAnswerSrvc.query({
                 assessment_ID: $routeParams.assessment_ID,
-                question_mode: 'secondary_sources'
+                question_mode: 'secondary_source'
             }, function (answers) {
                 $scope.question_set_length = answers.length;
-
-                $scope.edited_by = nrgiUserListSrvc.get({_id: assessment.modified[assessment.modified.length - 1].modified_by});
+                $scope.edited_by = nrgiUserListSrvc.get({_id: assessment.last_modified.modified_by});
                 $scope.user_list = [];
                 assessment.users.forEach(function (user) {
                     var u = nrgiUserListSrvc.get({_id: user});
@@ -49,9 +48,7 @@ angular.module('app')
             if (typeof answer.value !== 'number') {
                 nrgiNotifier.error('You must enter a number!');
             } else {
-                if (answer.status === 'created') {
-                    answer.status = 'submitted';
-                }
+                answer.status = 'submitted';
                 answer.answer_score = {
                     value: answer.value
                 };
@@ -63,5 +60,38 @@ angular.module('app')
                     nrgiNotifier.notify(reason);
                 });
             }
+        };
+        $scope.answerApprove = function (answer) {
+            if (answer.value) {
+                if (typeof answer.value !== 'number') {
+                    nrgiNotifier.error('You must enter a number!');
+                } else {
+                    answer.answer_score = {
+                        value: answer.value
+                    };
+                }
+            }
+
+            delete answer.value;
+            if (!answer.answer_score) {
+                nrgiNotifier.error('You must enter a value!');
+            } else {
+                answer.status = 'approved';
+                nrgiAnswerMethodSrvc.updateAnswer(answer).then(function () {
+                    nrgiNotifier.notify('Answer approved');
+                    //$route.reload();
+                }, function (reason) {
+                    nrgiNotifier.notify(reason);
+                });
+            }
+        };
+        $scope.answerUnapprove = function (answer) {
+            answer.status = 'submitted';
+            nrgiAnswerMethodSrvc.updateAnswer(answer).then(function () {
+                nrgiNotifier.notify('Answer unapproved');
+                //$route.reload();
+            }, function (reason) {
+                nrgiNotifier.notify(reason);
+            });
         };
     });

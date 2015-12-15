@@ -23,6 +23,7 @@ table.table.table-hover.table-striped.table-condensed
                 .text-success(ng-if="answer.status==='approved'") {{answer.status | ucfirst}}
                 .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
             //TODO fix handling of non submitted scores
-            td.col-sm-1.text-center {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
+            td.col-sm-1.text-center(ng-if="answer.question_mode==='secondary_source'") {{answer.answer_score.value}}
+            td.col-sm-1.text-center(ng-if="answer.question_mode!=='secondary_source'") {{answer.answer_score.option_text}} - {{answer.answer_score.value}}
             td
                 a.btn.center-block.btn-default(href="/assessments/answer/{{answer.answer_ID}}") Go to answer page

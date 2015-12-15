@@ -16,23 +16,27 @@
 
             .pull-left.left-padding-lg.bottom-padding-lg
                 .row
-                    text Users:
+                    | Users:
                 .row(ng-repeat="user in user_list").left-padding-lg
                     text(ng-if="assessment.users.length===0") No users
                     a(href="mailto:{{user.email}}" ng-if="assessment.users.length!==0")  {{user.firstName}}  {{user.lastName}}
-                    text  - {{user.role}}
+                    |  - {{user.role}}
                 .row
-                    text Status: {{assessment.status| addSpaces | ucfirst}}
+                    | Status: {{assessment.status| addSpaces | ucfirst}}
                 .row
-                    text Last edit by
+                    | Last edit by
                     a(href="mailto:{{edited_by.email}}")  {{edited_by.firstName}}  {{edited_by.lastName}}
-                    text  on
-                    span(ng-repeat="mod in assessment.modified")
-                        em(ng-show="$last")  {{mod.modified_date | date}}
-                //.row Questions flagged: {{assessment.questions_flagged}}
-                //.row Questions complete: {{assessment.questions_complete}}
-                //.row Desk research questions: {{assessment.desk_research_set_length}}
-                //.row Interview questions: {{assessment.interview_set_length}}
+                    |  on
+                    em  {{assessment.last_modified.modified_date | date}}
+                div(ng-if="mode=='assessment'")
+                    .row Total: {{assessment_counters.length}}
+                    .row Approved: {{assessment_counters.approved}}
+                    .row Flagged: {{assessment_counters.flagged}}
+                    .row Submitted: {{assessment_counters.submitted}}
+                    .row Created: {{assessment_counters.created}}
+                    .row Desk Research: {{assessment_counters.desk_research}}
+                    .row Interview: {{assessment_counters.interview}}
+                    .row Secondary Sources: {{assessment_counters.secondary_source}}
                 .row.top-padding-med
                     a.btn.center-block.btn-primary.pull-left.col-md-9(
                     href="/assessments/{{assessment.assessment_ID}}"

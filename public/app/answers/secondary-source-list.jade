@@ -22,8 +22,7 @@
                     text Last edited by
                     a(href="mailto:{{edited_by.email}}")  {{edited_by.firstName}}  {{edited_by.lastName}}
                     text  on
-                    span(ng-repeat="mod in assessment.modified")
-                        em(ng-show="$last")  {{mod.modified_date | date}}
+                    em  {{assessment.last_modified.modified_date | date}}
 
                 .row.top-padding-med
                     a.btn.center-block.btn-primary.pull-left.col-md-9(href="/assessments/{{assessment.assessment_ID}}") Go to main page
@@ -55,7 +54,8 @@
                     td.col-md-1 {{answer.question_data_type}}
                     td.col-md-1
                         .text-danger(ng-if="answer.status==='created'") {{answer.status | ucfirst}}
-                        .text-success(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
+                        .text-primary(ng-if="answer.status==='submitted'") {{answer.status | ucfirst}}
+                        .text-success(ng-if="answer.status==='approved'") {{answer.status | ucfirst}}
                         .text-warning(ng-if="answer.status==='flagged'") {{answer.status | ucfirst}}
                     td.col-md-1
                         input.form-control(type="number" step="any" ng-if="answer.question_data_type==='percentage'" ng-model="answer.value")
@@ -67,4 +67,7 @@
                         .col-md-1(ng-if="answer.question_data_type!=='percentage'")
                             text(ng-if="answer.answer_score.value") {{answer.answer_score.value}}
                     td.col-md-1
-                        button.btn.btn-primary(ng-click="answerSave(answer, new_score)") Save
+                        button.btn.btn-primary(ng-click="answerSave(answer)") Save
+                    td.col-md-1
+                        button.btn.btn-success(ng-if="answer.status!=='approved'" ng-click="answerApprove(answer)") Approve
+                        button.btn.btn-danger(ng-if="answer.status==='approved'" ng-click="answerUnapprove(answer)") Unapprove
