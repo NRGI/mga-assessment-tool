@@ -83,7 +83,7 @@ function createDefaultQuestions() {
                 "question_data_type": "bool",
                 "question_order": 3,
                 "question_theme_ID": "A",
-                "question_flow_order": 2,
+                "question_flow_order": 1,
                 "question_mode": "desk_research"
             });
             Question.create({
@@ -96,7 +96,7 @@ function createDefaultQuestions() {
                 "question_data_type": "multi",
                 "question_order": 357,
                 "question_theme_ID": "M",
-                "question_flow_order": 168,
+                "question_flow_order": 2,
                 "question_mode": "desk_research"
             });
             Question.create({
@@ -109,7 +109,7 @@ function createDefaultQuestions() {
                 "question_data_type": "text",
                 "question_order": 318,
                 "question_theme_ID": "X",
-                "question_flow_order": 136,
+                "question_flow_order": 3,
                 "question_mode": "desk_research"
             });
             Question.create({
@@ -120,9 +120,9 @@ function createDefaultQuestions() {
                 "question_value_chain_ID": "1",
                 "assessment_ID": "base",
                 "question_data_type": "multi",
-                "question_order": 46,
+                "question_order": 4,
                 "question_theme_ID": "C",
-                "question_flow_order": 194,
+                "question_flow_order": 4,
                 "question_mode": "interview"
             });
             Question.create({
@@ -133,9 +133,9 @@ function createDefaultQuestions() {
                 "question_value_chain_ID": "1",
                 "assessment_ID": "base",
                 "question_data_type": "bool",
-                "question_order": 4,
+                "question_order": 56,
                 "question_theme_ID": "A",
-                "question_flow_order": 174,
+                "question_flow_order": 5,
                 "question_mode": "interview"
             });
             Question.create({
@@ -149,7 +149,7 @@ function createDefaultQuestions() {
                 "question_data_type": "float",
                 "question_order": 71,
                 "question_theme_ID": "D",
-                "question_flow_order": 303,
+                "question_flow_order": 6,
                 "question_mode": "secondary_source"
             });
             Question.create({
@@ -163,7 +163,7 @@ function createDefaultQuestions() {
                 "question_data_type": "float",
                 "question_order": 76,
                 "question_theme_ID": "D",
-                "question_flow_order": 308,
+                "question_flow_order": 7,
                 "question_mode": "secondary_source"
             });
         }

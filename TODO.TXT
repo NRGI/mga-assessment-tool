@@ -11,3 +11,7 @@ data model changes
     - moved webSchema to citationSchema
     - moved humanSchema to interviewSchema
     - moved references.web to references.citation
+
+-Assessment
+    -removed desk_research_set_length, question_length, questions_unfinalized, questions_complete, questions_flagged
+    - added documents and interviews array

@@ -26,30 +26,19 @@ angular.module('app')
 
         $scope.identity = nrgiIdentitySrvc;
         $scope.assessments = [];
+        //nrgiAssessmentSrvc.query(function (assessments) {
+        //
+        //});
+
         if ($scope.identity.currentUser.role === 'supervisor') {
-            nrgiAssessmentSrvc.query(function (data) {
-                data.forEach(function (el) {
-                    assessment = {
-                        assessment_ID: el.assessment_ID,
-                        country: el.country,
-                        start_date: el.start_date,
-                        year: el.year,
-                        status: el.status,
-                        ISO3: el.ISO3,
-                        question_length: el.question_length,
-                        questions_flagged: el.questions_flagged,
-                        questions_unfinalized: el.questions_unfinalized,
-                        users: []
-                    };
-                    if (el.modified[0] !== undefined) {
-                        assessment.modified = el.modified;
-                        assessment.edited_by = nrgiUserListSrvc.get({_id: el.modified[el.modified.length - 1].modified_by});
-                    }
+            nrgiAssessmentSrvc.query(function (assessments) {
+                assessments.forEach(function (el) {
+                    var assessment = el;
+                    assessment.edited_by = nrgiUserListSrvc.get({_id: el.last_modified.modified_by});
 
                     if (el.users[0] !== undefined) {
-                        el.users.forEach(function (element) {
-                            var insert_user = nrgiUserListSrvc.get({_id: element});
-                            assessment.users.push(insert_user);
+                        el.users.forEach(function (user, i) {
+                            assessment.users[i] = nrgiUserListSrvc.get({_id: user});
                         });
                     }
 

@@ -26,9 +26,8 @@ div.top-padding-lg
                 td.col-med-1 {{assessment.start_date.date | date}}
                 td.col-med-2(ng-if="assessment.edited_by")
                     a(href="mailto:{{assessment.edited_by.email}}") {{assessment.edited_by.lastName}}
-                    text -
-                    span(ng-repeat="mod in assessment.modified")
-                        em(ng-show="$last") {{mod.modified_date | date}}
+                    text  -
+                    em  {{assessment.last_modified.modified_date | date}}
                 td.col-med-2(ng-if="!assessment.edited_by")
                 td.col-med-1(ng-show="identity.currentUser.isSupervisor()")
                     button.btn.btn-col.btn-default(ng-click="assessmentAssign(assessment.assessment_ID)") Assign

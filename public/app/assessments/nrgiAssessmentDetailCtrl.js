@@ -57,6 +57,16 @@ angular.module('app')
             nrgiAssessmentSrvc.get({assessment_ID: $routeParams.assessment_ID}, function (data) {
                 $scope.answer_list = [];
                 nrgiAnswerSrvc.query({assessment_ID: $routeParams.assessment_ID}, function (answers) {
+                    $scope.assessment_counters = {
+                        length: answers.length,
+                        approved: 0,
+                        flagged: 0,
+                        submitted: 0,
+                        created: 0,
+                        desk_research: 0,
+                        interview: 0,
+                        secondary_source: 0
+                    };
 
                     $scope.getArray = [{
                         question_order: 'question_order',
@@ -95,10 +105,28 @@ angular.module('app')
                         } else {
                             $scope.answer_list[$scope.answer_list.length - 1].summary_score = el.answer_score.value;
                         }
+                        switch (answer.status) {
+                            case 'flagged':
+                                $scope.assessment_counters.flagged +=1;
+                                $scope.assessment_counters.complete +=1;
+                                break;
+                            case 'submitted':
+                                $scope.assessment_counters.submitted +=1;
+                                $scope.assessment_counters.complete +=1;
+                                break;
+                            case 'approved':
+                                $scope.assessment_counters.approved +=1;
+                                $scope.assessment_counters.complete +=1;
+                                break;
+                            case 'created':
+                                $scope.assessment_counters.created +=1;
+                                break;
+                        }
 
                         //TODO extract this into a function that is only called on export load or cache
                         switch (el.question_mode) {
                             case 'interview':
+                                $scope.assessment_counters.interview +=1;
                                 if (el.interview_score.length > 0) {
                                     el.interview_score.forEach(function (interview) {
                                         nrgiIntervieweeSrvc.get({_id: interview.interviewee_ID}, function (interviewee) {
@@ -180,6 +208,7 @@ angular.module('app')
 
                                 break;
                             case 'desk_research':
+                                $scope.assessment_counters.desk_research +=1;
                                 answer_row = {
                                     question_order: el.question_order,
                                     question_text: el.question_text,
@@ -224,6 +253,7 @@ angular.module('app')
                                 $scope.getArray.push(answer_row);
                                 break;
                             case 'secondary_source':
+                                $scope.assessment_counters.secondary_source +=1;
                                 answer_row = {
                                     question_order: el.question_order,
                                     question_text: el.question_text,

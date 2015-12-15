@@ -52,32 +52,18 @@ exports.getAnswersByID = function (req, res, next) {
 
 //noinspection JSUnusedLocalSymbols
 exports.createAnswers = function (req, res, next) {
-    var new_answers = req.body;
-
-    new_answers.forEach(function (new_answer) {
-        Answer.create(new_answer, function(err, ans) {
+    var i, new_answers = req.body;
+    for (i=0; i<new_answers.length; i+=1) {
+        Answer.create(new_answers[i], function (err, answer) {
             if (err) {
-                if(err.toString().indexOf('E11000') > -1) {
+                if (err.toString().indexOf('E11000') > -1) {
                     err = new Error('Duplicate answer');
                 }
                 res.status(400);
                 return res.send({reason: err.toString()});
             }
         });
-    });
-
-    //for (i = 0; i < new_answers.length; i += 1) {
-    //    //noinspection JSUnusedLocalSymbols
-    //    Answer.create(new_answers[i], function (err, answer) {
-    //        if (err) {
-    //            if (err.toString().indexOf('E11000') > -1) {
-    //                err = new Error('Duplicate answer');
-    //            }
-    //            res.status(400);
-    //            return res.send({reason: err.toString()});
-    //        }
-    //    });
-    //}
+    }
     res.send();
 };
 

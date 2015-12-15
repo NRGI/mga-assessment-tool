@@ -51,37 +51,32 @@ angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope
 
                 data.forEach(function (el) {
                     new_answer_data.push({
-                        root_question_ID: el._id,
                         answer_ID: $scope.new_assessment.assessment_country.iso2 + '-' + String($scope.new_assessment.year) + '-' + String(zeroFill(el.question_flow_order, 3)),
-                        year: String($scope.new_assessment.year),
                         assessment_ID: $scope.new_assessment.assessment_country.iso2 + '-' + String($scope.new_assessment.year),
                         country: $scope.new_assessment.assessment_country.country,
-                        status: 'created',
+                        year: String($scope.new_assessment.year),
+                        question_order: el.question_order,
+                        question_flow_order: el.question_flow_order,
                         question_text: el.question_text,
                         question_secondary_source: el.question_secondary_source,
                         question_mode: el.question_mode,
                         question_data_type: el.question_data_type,
-                        question_order: el.question_order,
-                        question_flow_order: el.question_flow_order,
                         question_indicator: el.question_indicator,
                         question_indicator_ID: el.question_indicator_ID,
                         question_theme_ID: el.question_theme_ID,
                         question_value_chain_ID: el.question_value_chain_ID,
+                        root_question_ID: el._id,
+                        status: 'created',
                         answer_text: "",
                         answer_options: [],
                         answer_score: {},
-                        modified: [{
-                            modifiedBy: $scope.$parent.identity.currentUser._id,
-                            modifiedDate: timestamp
-                        }]
+                        last_modified: {
+                            modified_by: $scope.$parent.identity.currentUser._id,
+                            modified_date: timestamp}
+
                     });
 
-                    if (el.question_mode === 'desk_research') {
-                        desk_research_set_length += 1;
-                    }
-                    if (el.question_mode === 'interview') {
-                        interview_set_length += 1;
-                    }
+
                     switch (el.question_data_type) {
                         case "bool":
                             new_answer_data[new_answer_data.length - 1]['answer_options'].push({
@@ -140,19 +135,16 @@ angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope
                     country: $scope.new_assessment.assessment_country.country,
                     year: $scope.new_assessment.year,
                     status: 'created',
-                    questions_flagged: 0,
-                    questions_unfinalized: data.length,
-                    question_length: data.length,
-                    desk_research_set_length: desk_research_set_length,
-                    interview_set_length: interview_set_length,
-                    modified: [{
+                    last_modified: {
                         modified_by: $scope.$parent.identity.currentUser._id,
-                        modified_date: timestamp
-                    }],
+                        modified_date: timestamp},
                     create_date: {
                         created_by: $scope.$parent.identity.currentUser._id,
                         date: timestamp
-                    }
+                    },
+                    users: [],
+                    documents: [],
+                    interviewees: []
                 });
                 //send to mongo
                 nrgiAssessmentMethodSrvc.createAssessment(new_assessment_data)
@@ -166,7 +158,6 @@ angular.module('app').controller('nrgiNewAssessmentDialogCtrl', function ($scope
                     }, function (reason) {
                         nrgiNotifier.error(reason);
                     });
-
             });
         }
     };

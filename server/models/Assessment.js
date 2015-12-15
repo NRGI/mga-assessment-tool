@@ -1,17 +1,14 @@
 'use strict';
 /*jslint unparam: true*/
 
-var mongoose = require('mongoose');
+var assessmentSchema, Assessment, modificationSchema,
+    mongoose        = require('mongoose'),
+    mongooseHistory = require('mongoose-history'),
+    Schema          = mongoose.Schema,
+    options = {customCollectionName: "assessment_hst"},
+    ObjectId = mongoose.Schema.Types.ObjectId;
 
-var ObjectId = mongoose.Schema.Types.ObjectId;
-
-var modificationSchema = new mongoose.Schema({
-    modified_by: ObjectId,
-    modified_date: Date
-});
-
-
-var assessmentSchema = mongoose.Schema({
+assessmentSchema = new Schema({
     assessment_ID: {
         type: String,
         required: '{PATH} is required',
@@ -40,28 +37,14 @@ var assessmentSchema = mongoose.Schema({
     approve_date: {
         approved_by: ObjectId,
         date: Date},
-    modified: [modificationSchema],
-    questions_flagged: {
-        type: Number,
-        default: 0},
-    questions_complete: {
-        type: Number,
-        default: 0},
-    questions_unfinalized: {
-        type: Number,
-        required: '{PATH} is required'},
-    //question_length: {type: Number, required: '{PATH} is required'},
-    desk_research_set_length: Number,
-    interview_set_length: Number,
-    users: [ObjectId]
-    // researcher_ID: {type: ObjectId, index: true}, // pulled from user_id
-    // reviewer_ID: {type: ObjectId, index: true}, // pulled from user_id
-    // edit_control: ObjectId, // user_ID of editing rights
-    // first_pass: {type: Boolean, default: true},
-    // submit_date: {submitted_by: ObjectId, date: Date},
-    // review_date: {reviewed_by: ObjectId, date: Date},
-    // approval: {approved_by: ObjectId, date: Date},
-    // questions_resubmitted: {type: Number, default: 0}
+    documents: [ObjectId],
+    interviewees: [ObjectId],
+    users: [ObjectId],
+    last_modified: {
+        modified_by: ObjectId,
+        modified_date: Date}
 });
 
-var Assessment = mongoose.model('Assessment', assessmentSchema);
+assessmentSchema.plugin(mongooseHistory, options);
+
+Assessment = mongoose.model('Assessment', assessmentSchema);
