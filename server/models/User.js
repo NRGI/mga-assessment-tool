@@ -4,11 +4,11 @@ var userSchema, User,
     mongooseHistory = require('mongoose-history'),
     options         = {customCollectionName: "user_hst"},
     Schema          = mongoose.Schema,
-    validate        = require('mongoose-validate'),
+    //validate        = require('mongoose-validate'),
     encrypt         = require('../utilities/encryption'),
     ObjectId        = Schema.Types.ObjectId;
 
-var userSchema = new Schema({
+userSchema = new Schema({
     firstName: {
         type: String,
         required: '{PATH} is required!'},
@@ -41,7 +41,12 @@ var userSchema = new Schema({
     documents: [ObjectId],
     interviewees: [ObjectId],
     createdBy:  ObjectId,
-    creationDate:  {type:  Date, default: Date.now}
+    creationDate:  {type:  Date, default: Date.now},
+    last_modified: {
+        modified_by: ObjectId,
+        modified_date: {
+            type: Date,
+            default: Date.now}}
     ///////////////////Add modification array on the ser update ctrl///////////////////
     // address:  String,
     // language:  String
@@ -64,7 +69,7 @@ userSchema.methods = {
 
 userSchema.plugin(mongooseHistory, options);
 
-var User = mongoose.model('User', userSchema);
+User = mongoose.model('User', userSchema);
 
 function createDefaultUsers() {
     User.find({}).exec(function (err, collection) {

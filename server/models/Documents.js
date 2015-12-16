@@ -2,11 +2,6 @@ var mongoose = require('mongoose');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-var modificationSchema = new mongoose.Schema({
-    modifiedBy: ObjectId,
-    modifiedDate: {type: Date, default: Date.now}
-});
-
 var authorSchema = new mongoose.Schema({
     first_name: String,
     last_name: String
@@ -40,7 +35,11 @@ var documentSchema = mongoose.Schema({
     questions: [ObjectId],
     answers: [String],
     users: [ObjectId],
-    modified: [modificationSchema],
+    last_modified: {
+        modified_by: ObjectId,
+        modified_date: {
+            type: Date,
+            default: Date.now}},
     createdBy: ObjectId,
     creationDate: {type: Date, default: Date.now},
     status: {type: String, default: 'created'}

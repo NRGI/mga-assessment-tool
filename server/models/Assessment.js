@@ -1,7 +1,7 @@
 'use strict';
 /*jslint unparam: true*/
 
-var assessmentSchema, Assessment, modificationSchema,
+var assessmentSchema, Assessment,
     mongoose        = require('mongoose'),
     mongooseHistory = require('mongoose-history'),
     Schema          = mongoose.Schema,
@@ -42,7 +42,9 @@ assessmentSchema = new Schema({
     users: [ObjectId],
     last_modified: {
         modified_by: ObjectId,
-        modified_date: Date}
+        modified_date: {
+            type: Date,
+            default: Date.now}}
 });
 
 assessmentSchema.plugin(mongooseHistory, options);

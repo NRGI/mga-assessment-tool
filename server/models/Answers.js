@@ -149,7 +149,9 @@ answerSchema = new Schema({
         human: [interviewSchema]},
     last_modified: {
         modified_by: ObjectId,
-        modified_date: Date},
+        modified_date: {
+            type: Date,
+            default: Date.now}}
 });
 
 answerSchema.plugin(mongooseHistory, options);
