@@ -33,5 +33,5 @@ div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.intervie
                     text  {{score.option_text}} - {{score.value}}
                 .row
                     b Transcript:
-                    text  {{score.interview_text}}
+                    text(ng-bind-html="score.interview_text")
                 br

@@ -19,49 +19,6 @@ angular
                     scope: scope
                 });
             },
-            //assessmentReassign: function ($scope) {
-            //    //var scope = $scope;
-            //    //if (scope.assessment_counters.length !== (scope.assessment_counters.flagged + scope.assessment_counters.approved)) {
-            //    //    rgiNotifier.error('You must approve or flag all questions!');
-            //    //} else {
-            //    //    scope.value = true;
-            //    //    ngDialog.open({
-            //    //        template: 'partials/dialogs/move-assessment-dialog',
-            //    //        controller: 'rgiMoveAssessmentDialogCtrl',
-            //    //        className: 'ngdialog-theme-default',
-            //    //        scope: scope
-            //    //    });
-            //    //}
-            //},
-            //assessmentMove: function ($scope) {
-            //    var scope = $scope;
-            //    if (scope.assessment_counters.length!==((scope.assessment_counters.flagged + scope.assessment_counters.approved + scope.assessment_counters.unresolved) || scope.assessment_counters.finalized)) {
-            //        rgiNotifier.error('You must approve or flag all questions!');
-            //    } else {
-            //        scope.value = true;
-            //        ngDialog.open({
-            //            template: 'partials/dialogs/assessments/move-assessment-dialog',
-            //            controller: 'nrgiMoveAssessmentDialogCtrl',
-            //            className: 'ngdialog-theme-default',
-            //            scope: scope
-            //        });
-            //    }
-            //},
-            //assessmentMoveConfirm: function ($scope) {
-            //    if (!$scope.action) {
-            //        rgiNotifier.error('You must select an action!');
-            //    } else {
-            //        var scope = $scope.$parent;
-            //        scope.action = $scope.action;
-            //        ngDialog.close('ngdialog1');
-            //        ngDialog.open({
-            //            template: 'partials/dialogs/assessments/move-assessment-confirmation-dialog',
-            //            controller: 'nrgiMoveAssessmentConfirmationDialogCtrl',
-            //            className: 'ngdialog-theme-default',
-            //            scope: scope
-            //        });
-            //    }
-            //},
             assessmentCreate: function ($scope) {
                 var scope = $scope;
                 scope.value = true;
@@ -72,55 +29,19 @@ angular
                     scope: scope
                 });
             },
-            //assessmentSubmit: function ($scope) {
-            //    var scope = $scope;
-            //    if (scope.assessment_counters.length !== scope.assessment_counters.complete) {
-            //        rgiNotifier.error('You must complete all assessment questions');
-            //    } else {
-            //        scope.value = true;
-            //        ngDialog.open({
-            //            template: 'partials/dialogs/assessments/submit-confirmation-dialog',
-            //            controller: 'nrgiSubmitAssessmentConfirmationDialogCtrl',
-            //            className: 'ngdialog-theme-default',
-            //            scope: scope
-            //        });
-            //    }
-            //},
-            //assessmentResubmit: function ($scope) {
-            //    var scope = $scope;
-            //    if (scope.assessment_counters.flagged !== 0) {
-            //        rgiNotifier.error('You must resubmit all flagged answers!');
-            //    } else {
-            //        scope.value = true;
-            //        ngDialog.open({
-            //            template: 'partials/dialogs/assessments/resubmit-confirmation-dialog',
-            //            controller: 'nrgiResubmitAssessmentConfirmationDialogCtrl',
-            //            className: 'ngdialog-theme-default',
-            //            scope: scope
-            //        });
-            //        //var new_assessment_data = scope.assessment;
-            //        //new_assessment_data.status = 'resubmitted';
-            //        //
-            //        //rgiAssessmentMethodSrvc.updateAssessment(new_assessment_data)
-            //        //    .then(function () {
-            //        //        $location.path('/assessments');
-            //        //        rgiNotifier.notify('Assessment submitted!');
-            //        //    }, function (reason) {
-            //        //        rgiNotifier.error(reason);
-            //        //    });
-            //    }
-            //},
-            //answerFinalChoice: function ($scope) {
-            //    var scope = $scope;
-            //    $scope.value = true;
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/answers/final-choice-dialog',
-            //        controller: 'nrgiFinalChoiceDialogCtrl',
-            //        className: 'ngdialog-theme-default dialogwidth800',
-            //        scope: $scope
-            //    });
-            //
-            //},
+            interviewAnswerNew: function($scope) {
+                var scope = $scope;
+                scope.value = true;
+                ngDialog.open({
+                    template: 'partials/dialogs/answers/new-interview-answer-dialog',
+                    controller: 'nrgiNewInterviewAnswerDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
+            },
+            interviewAnswerEdit: function($scope) {
+
+            },
             commentEdit: function($scope, comment, index) {
                 var scope = $scope;
                 scope.value = true;
@@ -167,18 +88,6 @@ angular
                     scope: scope
                 });
             },
-
-            //        if (scope.ref_selection === 'document') {
-
-            //} else if (scope.ref_selection === 'webpage') {
-            //    ngDialog.close('ngdialog1');
-            //    ngDialog.open({
-            //        template: 'partials/dialogs/new-webpage-dialog',
-            //        controller: 'rgiNewWebpageDialogCtrl',
-            //        className: 'ngdialog-theme-default',
-            //        scope: scope
-            //    });
-            //}
             flagCreate: function($scope) {
                 var scope = $scope;
                 scope.value = true;

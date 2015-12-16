@@ -80,7 +80,7 @@ interviewScoreSchema = new Schema({
     answer_text: htmlSettings,
     answer_num: Number,
     value: Number,
-    interview_text: String,
+    interview_text: htmlSettings,
     interview_date: {
         type: Date,
         default: Date.now}

@@ -4,7 +4,6 @@ var Interviewee = require('mongoose').model('Interviewee');
 
 exports.getInterviewees = function (req, res, next) {
     var query = Interviewee.find(req.query);
-
     query.exec(function (err, interviewees) {
         if (err) { return next(err); }
         if (!interviewees) { return next(new Error('No interviewees found')); }

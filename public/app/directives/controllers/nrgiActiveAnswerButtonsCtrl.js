@@ -86,6 +86,9 @@ angular.module('app')
         $scope.answerClear = function () {
             $route.reload();
         };
+        $scope.newInterview = function () {
+            nrgiDialogFactory.interviewAnswerNew($scope);
+        };
         $scope.answerFlag = function () {
             nrgiDialogFactory.flagCreate($scope);
         };

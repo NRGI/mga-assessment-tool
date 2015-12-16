@@ -44,7 +44,7 @@ div(id="prev_bib")
                 text(ng-if="ref.comment")  {{ref.comment.comment}}
                 text(ng-if="!ref.comment")  N/A
             hr
-    .row.left-padding-lg.right-padding-lg
+    .row.left-padding-lg.right-padding-lg(ng-if="question_mode!=='interview'")
         h4 Interviews
         .row.left-padding-lg(ng-repeat="ref in interviews")
             .row

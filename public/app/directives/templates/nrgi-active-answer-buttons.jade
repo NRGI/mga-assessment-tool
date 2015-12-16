@@ -1,6 +1,8 @@
 //- Active buttons
 .col-md-pull-2
-    button.btn.btn-primary(ng-click="answerSubmit('submitted')") Submit answer
+    button.btn.btn-primary(ng-click="answerSubmit('submitted')" ng-if="answer.question_mode!=='interview'") Submit answer
+    | &nbsp;
+    button.btn.btn-primary(ng-click="newInterview()" ng-if="answer.question_mode==='interview'") New interview
     | &nbsp;
     button.btn.btn-danger(ng-click="answerClear()") Reset answer
     | &nbsp;
