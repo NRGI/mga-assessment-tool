@@ -242,7 +242,7 @@ exports.updateDocument = function (req, res) {
             }
         });
     });
-    // res.send();
+    res.send();
 };
 
 exports.deleteDocument = function (req, res) {

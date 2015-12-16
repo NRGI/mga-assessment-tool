@@ -51,28 +51,23 @@ angular
         };
 
         $scope.documentSave = function (new_doc_data) {
-            nrgiDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
-                // TODO fix save notification
-                nrgiNotifier.notify('Document has been updated');
-                ngDialog.close();
-            }, function (reason) {
-                nrgiNotifier.error(reason);
-            });
-            //if (new_doc_data.authors[0].first_name === "" || new_doc_data.authors[0].last_name === "" || !new_doc_data.title || !new_doc_data.type) {
-            //    nrgiNotifier.error('You must provide at least a title, author and publication type!')
-            //} else {
-            //
-            //    if (new_doc_data.status === 'created') {
-            //        new_doc_data.status = 'submitted';
-            //    }
-            //    nrgiDocumentMethodSrvc.updateDocument(new_doc_data).then(function () {
-            //        nrgiNotifier.notify('Document has been updated');
-            //        ngDialog.close();
-            //    }, function (reason) {
-            //        nrgiNotifier.error(reason);
-            //    });
-            //}
+            if (new_doc_data.authors[0].first_name === "" || new_doc_data.authors[0].last_name === "" || !new_doc_data.title || !new_doc_data.type) {
+                nrgiNotifier.error('You must provide at least a title, author and publication type!')
+            } else {
 
+                if (new_doc_data.status === 'created') {
+                    new_doc_data.status = 'submitted';
+                }
+
+                nrgiDocumentMethodSrvc.updateDocument(new_doc_data)
+                    .then(function () {
+                        // TODO fix save notification
+                        $scope.closeThisDialog();
+                        nrgiNotifier.notify('Document has been updated');
+                    }, function (reason) {
+                        nrgiNotifier.error(reason);
+                    });
+            }
         };
 
         $scope.closeDialog = function () {
