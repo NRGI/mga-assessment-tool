@@ -35,3 +35,6 @@ div.left-padding-lg(ng-if="answer.question_mode==='interview' && answer.intervie
                     b Transcript:
                     text(ng-bind-html="score.interview_text")
                 br
+
+                .row.pull-right.right-padding-lg
+                    button.btn.btn-primary(ng-click="interviewEdit(score, $index)") Edit interview

@@ -39,8 +39,17 @@ angular
                     scope: scope
                 });
             },
-            interviewAnswerEdit: function($scope) {
-
+            interviewAnswerEdit: function($scope, score, index) {
+                var scope = $scope;
+                scope.value = true;
+                scope.index = index;
+                scope.score = score;
+                ngDialog.open({
+                    template: 'partials/dialogs/answers/',
+                    controller: 'nrgiInterviewAnswerEditDialogCtrl',
+                    className: 'ngdialog-theme-default dialogwidth800',
+                    scope: scope
+                });
             },
             commentEdit: function($scope, comment, index) {
                 var scope = $scope;
