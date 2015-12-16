@@ -23,9 +23,11 @@ exports.getIntervieweesByID = function (req, res, next) {
 };
 //noinspection JSUnusedLocalSymbols
 exports.createInterviewee = function (req, res, next) {
-    var interviewee_data = req.body;
+    var interviewee_data = req.body,
+        timestamp = new Date().toISOString();
 
     interviewee_data.createdBy = req.user._id;
+    interviewee_data.last_modified = {modified_by: req.user._id, modified_date: timestamp};
 
     //noinspection JSUnusedLocalSymbols
     Interviewee.create(interviewee_data, function (err, interviewee) {
@@ -49,6 +51,7 @@ exports.updateInterviewee = function (req, res) {
         }
         interviewee.firstName = interviewee_updates.firstName;
         interviewee.lastName = interviewee_updates.lastName;
+        interviewee.salutation = interviewee_updates.salutation;
         interviewee.title = interviewee_updates.title;
         interviewee.email = interviewee_updates.email;
         interviewee.phone = interviewee_updates.phone;
@@ -63,8 +66,7 @@ exports.updateInterviewee = function (req, res) {
         interviewee.answers = interviewee_updates.answers;
         interviewee.questions = interviewee_updates.questions;
         interviewee.users = interviewee_updates.users;
-        interviewee.modified.push({modifiedBy: req.user._id});
-        interviewee.last_modified = {modified_by: ObjectId, modified_date: timestamp};
+        interviewee.last_modified = {modified_by: req.user._id, modified_date: timestamp};
 
         interviewee.save(function (err) {
             if (err) {

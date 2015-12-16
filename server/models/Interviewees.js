@@ -41,7 +41,7 @@ var intervieweeSchema = Schema({
         modified_date: Date}
 });
 
-assessmentSchema.plugin(mongooseHistory, options);
+intervieweeSchema.plugin(mongooseHistory, options);
 
 var Interviewee = mongoose.model('Interviewee', intervieweeSchema);
 
