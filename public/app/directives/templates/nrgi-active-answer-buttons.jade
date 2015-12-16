@@ -1,12 +1,12 @@
 //- Active buttons
 .col-md-pull-2
-    button.btn.btn-primary(ng-click="answerSubmit()") Submit answer
+    button.btn.btn-primary(ng-click="answerSubmit('submitted')") Submit answer
     | &nbsp;
     button.btn.btn-danger(ng-click="answerClear()") Reset answer
     | &nbsp;
     button.btn.btn-warning(ng-click="answerFlag()") Flag answer
     | &nbsp;
-    button.btn.btn-success(ng-click="answerApprove()") Approve answer
+    button.btn.btn-success(ng-click="answerSubmit('approved')") Approve answer
     | &nbsp;
     button.btn.btn-default(ng-click="answerReturnMain()") Main menu
     | &nbsp;
