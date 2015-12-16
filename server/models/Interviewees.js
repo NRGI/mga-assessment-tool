@@ -1,15 +1,11 @@
 'use strict';
+var mongoose        = require('mongoose'),
+    mongooseHistory = require('mongoose-history'),
+    Schema          = mongoose.Schema,
+    options         = {customCollectionName: "interviewee_hst"},
+    ObjectId        = mongoose.Schema.Types.ObjectId;
 
-var mongoose = require('mongoose');
-
-var ObjectId = mongoose.Schema.Types.ObjectId;
-
-var modificationSchema = new mongoose.Schema({
-    modifiedBy: ObjectId,
-    modifiedDate: {type: Date, default: Date.now}
-});
-
-var intervieweeSchema = mongoose.Schema({
+var intervieweeSchema = Schema({
     firstName: {
         type: String,
         required: '{PATH} is required!'},
@@ -40,8 +36,12 @@ var intervieweeSchema = mongoose.Schema({
     creationDate: {
         type: Date,
         default: Date.now},
-    modified: [modificationSchema]
+    last_modified: {
+        modified_by: ObjectId,
+        modified_date: Date}
 });
+
+assessmentSchema.plugin(mongooseHistory, options);
 
 var Interviewee = mongoose.model('Interviewee', intervieweeSchema);
 

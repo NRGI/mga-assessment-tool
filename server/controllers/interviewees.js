@@ -39,8 +39,8 @@ exports.createInterviewee = function (req, res, next) {
 
 exports.updateInterviewee = function (req, res) {
     var interviewee_updates = req.body,
-        query = Interviewee.findOne({_id: req.body._id});
-    console.log(req.body);
+        query = Interviewee.findOne({_id: req.body._id}),
+        timestamp = new Date().toISOString();
 
     query.exec(function (err, interviewee) {
         if (err) {
@@ -64,6 +64,7 @@ exports.updateInterviewee = function (req, res) {
         interviewee.questions = interviewee_updates.questions;
         interviewee.users = interviewee_updates.users;
         interviewee.modified.push({modifiedBy: req.user._id});
+        interviewee.last_modified = {modified_by: ObjectId, modified_date: timestamp};
 
         interviewee.save(function (err) {
             if (err) {

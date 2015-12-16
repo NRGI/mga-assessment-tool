@@ -41,7 +41,7 @@ var userSchema = new Schema({
     documents: [ObjectId],
     interviewees: [ObjectId],
     createdBy:  ObjectId,
-    creationDate:  {type:  Date, default: Date.now},
+    creationDate:  {type:  Date, default: Date.now}
     ///////////////////Add modification array on the ser update ctrl///////////////////
     // address:  String,
     // language:  String
