@@ -18,8 +18,8 @@ angular.module('app')
             users.forEach(function (user) {
                 var assigned = false;
                 if (user.role !== 'supervisor') {
-                    user.assessments.forEach(function (el) {
-                        if (assessment.assessment_ID === $scope.$parent.assessment_ID) {
+                    user.assessments.forEach(function (assessment) {
+                        if (assessment.assessment_ID === $scope.$parent.assessment_update_ID) {
                             assigned = true;
                         }
                     });
