@@ -62,6 +62,7 @@ angular
                     assessment_countries: []
                 };
                 interviewee.assessments.forEach(function (assessment_ID) {
+                    console.log(assessment_ID);
                     nrgiAssessmentSrvc.get({assessment_ID: assessment_ID}, function (assessment) {
                         interviewee_add.assessment_countries.push(assessment.country);
                     });

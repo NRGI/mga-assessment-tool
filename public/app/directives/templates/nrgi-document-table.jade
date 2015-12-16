@@ -31,7 +31,7 @@ div.table-responsive
                     .row(ng-repeat="user in doc.user_list")
                         a(href="mailto:{{user.email}}") {{user.firstName}} {{user.lastName}}
                 td
-                    a(href="/admin/assessments-admin/{{assessment}}" ng-repeat="assessment in doc.assessments") {{assessment}}
+                    a(href="/assessments/{{assessment}}" ng-repeat="assessment in doc.assessments") {{assessment}}
                 td
                     a(href="/admin/documents-admin/{{doc._id}}").btn-block.btn.btn-warning Metadata
                 td
