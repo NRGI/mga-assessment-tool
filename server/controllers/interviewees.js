@@ -31,13 +31,18 @@ exports.createInterviewee = function (req, res, next) {
     //noinspection JSUnusedLocalSymbols
     Interviewee.create(interviewee_data, function (err, interviewee) {
         if (err) {
+            if (err.toString().indexOf('E11000') > -1) {
+                err = new Error('Duplicate email');
+            }
             res.status(400);
             return res.send({reason: err.toString()});
+        } else {
+            console.log(interviewee);
+            res.send(interviewee);
         }
     });
-    res.send();
-};
 
+};
 exports.updateInterviewee = function (req, res) {
     var interviewee_updates = req.body,
         query = Interviewee.findOne({_id: req.body._id}),

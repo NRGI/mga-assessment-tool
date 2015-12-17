@@ -70,7 +70,6 @@ angular.module('app')
             var new_interview_answer = $scope.new_interview_answer,
                 new_answer_data = $scope.answer_update,
                 current_user = nrgiIdentitySrvc.currentUser;
-            console.log(new_answer_data);
 
             if (!new_interview_answer.interview_text) {
                 nrgiNotifier.error('You must enter interview content!');
@@ -81,9 +80,47 @@ angular.module('app')
             } else {
                 new_interview_answer.interview_date = new Date(new_interview_answer.interview_date).toISOString();
                 switch ($scope.interviewee_selection) {
-            //        case 'new':
-            //            console.log(new_interview_answer);
-            //            break;
+                    case 'new':
+                        if (!selected_interviewee.firstName || !selected_interviewee.lastName) {
+                            nrgiNotifier.error('You must enter a first and last name for new interviewees!');
+                        } else if (!selected_interviewee.role) {
+                            nrgiNotifier.error('You must select a role for new interviewees!');
+                        } else {
+                            if (!selected_interviewee.email) {
+                                nrgiNotifier.error('You must enter a valid email address!');
+                            } else {
+                                email_domain = 'http://' + selected_interviewee.email.split('@')[1];
+                                if (email_domain === 'http://undefined') {
+                                    nrgiNotifier.error('You must enter a valid email address!');
+                                } else {
+                                    selected_interviewee.answers = [new_answer_data.answer_ID];
+                                    selected_interviewee.assessments = [new_answer_data.assessment_ID];
+                                    selected_interviewee.questions = [new_answer_data.root_question_ID];
+                                    selected_interviewee.users = [current_user._id];
+
+                                    nrgiIntervieweeMethodSrvc.createInterviewee(selected_interviewee)
+                                        .then(function (interviewee) {
+                                            new_interview_answer.interviewee_ID = interviewee._id;
+                                            new_interview_answer.option_order = new_interview_answer.score.option_order;
+                                            new_interview_answer.option_text = new_interview_answer.score.option_text;
+                                            new_interview_answer.value = new_interview_answer.score.value;
+                                            new_answer_data.interview_score.push(new_interview_answer);
+                                            nrgiAnswerMethodSrvc.updateAnswer(new_answer_data);
+                                        })
+                                        .then(function () {
+                                            $scope.closeThisDialog();
+                                            nrgiNotifier.notify('Interview added');
+                                            $route.reload();
+                                        }, function (reason) {
+                                            nrgiNotifier.notify(reason);
+                                        });
+                                }
+                            }
+                        }
+
+
+
+                        break;
                     case 'existing':
                         if (!selected_interviewee) {
                             nrgiNotifier.error('You must select an interviewee or create a new one!');

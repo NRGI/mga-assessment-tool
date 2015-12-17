@@ -78,9 +78,26 @@ angular.module('app')
                             });
                     }
                     break;
-                //case 'interview':
-                //    code block
-                //    break;
+                case 'interview':
+                    if (new_answer_data.interview_score.length < 1) {
+                        nrgiNotifier.error('You must provide at least one interview!');
+                    } else if (flag_check===true && status==='approved') {
+                        nrgiNotifier.error('You can only submit an answer when all flags have been dealt with!')
+                    } else {
+                        new_answer_data.status = status;
+                        nrgiAnswerMethodSrvc.updateAnswer(new_answer_data)
+                            .then(function () {
+                                if (new_answer_data.question_order !== $scope.assessment_counters.length) {
+                                    $location.path(root_url + '/answer/' + new_answer_data.assessment_ID + "-" + String(nrgiUtilsSrvc.zeroFill((new_answer_data.question_order + 1), 3)));
+                                } else {
+                                    $location.path(root_url + '/' + new_answer_data.assessment_ID);
+                                }
+                                nrgiNotifier.notify('Answer submitted');
+                            }, function (reason) {
+                                nrgiNotifier.notify(reason);
+                            });
+                    }
+                    break;
             }
         };
         $scope.answerClear = function () {

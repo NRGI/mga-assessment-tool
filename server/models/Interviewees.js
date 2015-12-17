@@ -14,7 +14,9 @@ var intervieweeSchema = Schema({
         required: '{PATH} is required!'},
     title: String,
     salutation: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true},
     alt_email: String,
     phone: String,
     alt_phone: String,
