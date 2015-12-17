@@ -64,6 +64,7 @@ angular.module('app').controller('nrgiAssessmentAdminDetailCtrl', function ($sco
                 //TODO extract this into a function that is only called on export load or cache
                 switch (el.question_mode) {
                     case 'interview':
+                        console.log(el.interview_score.length);
                         if (el.interview_score.length > 0) {
                             el.interview_score.forEach(function (interview) {
                                 mgaIntervieweeSrvc.get({_id: interview.interviewee_ID}, function (interviewee) {
